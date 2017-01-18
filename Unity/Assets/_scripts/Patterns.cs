@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 
@@ -7,39 +6,34 @@ public class Patterns : MonoBehaviour
 {
     [SerializeField]
     private Transform bullet = null;
-    [SerializeField]
-    private Transform emitter;
 
-    private int bulletQuantity = 20; //Quantity of bullets to fire
-    private int floret = 1; //Number of the current floret
+    private int bulletQuantityPhyllotaxis = 500; //Quantity of bullets to fire
+    private int bulletQuantityBurst = 50;
     private float divergence = 137.5f; //Divergence angle
-    private float bulletDelay = 0.0005f; //Delay between bullets
+    private float bulletDelay = 0.005f; //Delay between bullets
 
     void Start()
     {
-        emitter = transform;
         StartCoroutine(StartPattern());
     }
 
     IEnumerator StartPattern()
     {
-        //StartCoroutine(Phyllotaxis(emitter, bullet, divergence, floret, bulletQuantity));
-        StartCoroutine(Burst(emitter, bullet, bulletQuantity));
+        StartCoroutine(Phyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis));
+        //StartCoroutine(Burst(emitter, bullet, bulletQuantityBurst));
         yield return new WaitForSeconds(2.0f);
     }
 
-    private IEnumerator Phyllotaxis(Transform emitter, Transform bullet, float divergence, int floret, int bulletQuantity)
+    private IEnumerator Phyllotaxis(Transform bullet, float divergence, int bulletQuantity)
     {
-        for (int i = 0; i < bulletQuantity; i++)
+        for (int floret = 0; floret < bulletQuantity; floret++)
         {
             float phi = floret * divergence;
 
-            Instantiate(bullet, emitter.position, Quaternion.Euler(0, phi, 0));
-
-            floret++;
+            Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
 
             yield return new WaitForSeconds(bulletDelay);
-        }   
+        }
     }
 
     private IEnumerator Burst(Transform emitter, Transform bullet, int bulletQuantity)
