@@ -19,7 +19,7 @@ public class Patterns : MonoBehaviour
 
     IEnumerator StartPattern()
     {
-        StartCoroutine(Phyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis));
+        StartCoroutine(OpenPhyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis));
         //StartCoroutine(Burst(emitter, bullet, bulletQuantityBurst));
         yield return new WaitForSeconds(2.0f);
     }
@@ -49,5 +49,29 @@ public class Patterns : MonoBehaviour
         }
 
         yield return new WaitForSeconds(2.0f);
+    }
+
+    private IEnumerator FocusedPhyllotaxis(Transform bullet, float divergence, int bulletQuantity)
+    {
+        for (int floret = 0; floret < bulletQuantity; floret++)
+        {
+            float phi = floret * divergence;
+            if ((phi % 360 > 200) && (phi % 360 < 250))
+                Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
+
+            yield return new WaitForSeconds(bulletDelay);
+        }
+    }
+
+    private IEnumerator OpenPhyllotaxis(Transform bullet, float divergence, int bulletQuantity)
+    {
+        for (int floret = 0; floret < bulletQuantity; floret++)
+        {
+            float phi = floret * divergence;
+            if ((phi % 360 < 150) && (phi % 360 > 170))
+                Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
+
+            yield return new WaitForSeconds(bulletDelay);
+        }
     }
 }
