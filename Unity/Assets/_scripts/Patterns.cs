@@ -2,6 +2,19 @@
 using UnityEngine;
 
 
+/// <summary>
+/// PATTERNS FILE
+/// At the moment, contains all the boss patterns algorithms.
+/// 
+/// TO DO
+/// - Split the file if possible and convenient
+/// - Add additional parameters to the methods so they can be modulated from the Update
+/// - Now that the test panel is implemented, serialize fields that make sense for quick editor tests
+/// - Correct the angle bug when angle2 hits 361° (making angle2 % 360 smaller than angle1 % 360)
+/// - Test all kinds of bullets
+/// - General miscellaneous cleanup if possible
+/// </summary>
+
 public class Patterns : MonoBehaviour
 {
     [SerializeField]
@@ -12,13 +25,12 @@ public class Patterns : MonoBehaviour
     private float divergence = 137.5f; //Divergence angle
     private float bulletDelay = 0.005f; //Delay between bullets
 
-    void Start()
-    {
-        //StartCoroutine(StartPattern());
-    }
+    int angle1 = 100;
+    int angle2 = 170;
 
     void Update()
     {
+        //Test panel for patterns : 1-3 phyllotaxis | 4-5 burst
         if (Input.GetKeyDown(KeyCode.Alpha1))
             StartCoroutine(Phyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis));
 
@@ -32,10 +44,10 @@ public class Patterns : MonoBehaviour
             StartCoroutine(Burst(bullet, bulletQuantityBurst));
 
         if (Input.GetKeyDown(KeyCode.Alpha5))
-            StartCoroutine(OpenBurst(bullet, bulletQuantityBurst, i1, i2));
+            StartCoroutine(OpenBurst(bullet, bulletQuantityBurst, angle1, angle2));
     }
 
-    IEnumerator StartPattern()
+    private IEnumerator StartPattern()
     {
         //int i1 = 100;
         //int i2 = 170;
