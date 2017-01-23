@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
 
     private string m_RotateAxisName;
     private Rigidbody m_Rb;
+    [SerializeField]
     private Transform m_Tr;
 
     [SerializeField]
@@ -31,6 +32,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float m_LMoveInputValue_Y;
 
+    [SerializeField]
+    float LAngle;
+    [SerializeField]
+    float RAngle;
 
     [SerializeField]    
     private float m_RotateInputValue;
@@ -71,14 +76,26 @@ public class Player : MonoBehaviour
 
     void MovePlayer()
     {
-        Vector3 MovePERSO = new Vector3(((m_LMoveInputValue_Y/-1)/10), 0, ((m_LMoveInputValue_X/-1)/10));
-        Debug.Log(MovePERSO);
-        m_Tr.position += MovePERSO; 
+        if (m_LMoveInputValue_Y > 1 || m_LMoveInputValue_Y < 1)
+        {
+            Vector3 direction = Camera.main.transform.forward;
+            direction.y = 0;
+            direction.Normalize();
+            m_Tr.position += ((direction * -m_LMoveInputValue_Y));
+        }
+
+        if (m_LMoveInputValue_X > 1 || m_LMoveInputValue_X < 1)
+        {
+            Vector3 direction = Camera.main.transform.right;
+            direction.x = 0;
+            direction.Normalize();
+            m_Tr.position += ((direction * -m_LMoveInputValue_X));
+        }
     }
 
     void Rotate()
     {
-
+        m_Tr.eulerAngles = new Vector3(0, -RAngle,0);
     }
     // Update is called once per frame
     void Update()
@@ -88,9 +105,14 @@ public class Player : MonoBehaviour
 
         m_RMoveInputValue_X = Input.GetAxisRaw(m_RMoveAxisName_X);
         m_RMoveInputValue_Y = Input.GetAxisRaw(m_RMoveAxisName_Y);
-        float Angle = Mathf
-        Debug.Log(Angle);
+        RAngle = (Mathf.Atan2(m_RMoveInputValue_X, m_RMoveInputValue_Y) * Mathf.Rad2Deg);
+        Debug.Log(RAngle);
+        LAngle = (Mathf.Atan2(m_LMoveInputValue_X, m_LMoveInputValue_Y) * Mathf.Rad2Deg);
+        Debug.Log(LAngle);
+
+
         MovePlayer();
+        Rotate();
        // Debug.Log("Left Stick X Player " + m_PlayerNumber + " = " + m_MoveInputValue_X);
        // Debug.Log("Left Stick Y Player " + m_PlayerNumber + " = " + m_MoveInputValue_Y);
     }
