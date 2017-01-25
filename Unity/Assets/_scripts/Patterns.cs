@@ -38,7 +38,7 @@ public class Patterns : MonoBehaviour
 
     void Awake()
     {
-        StartCoroutine(AI1());
+        //StartCoroutine(AI1());
     }
 
     void Update()
@@ -160,7 +160,7 @@ public class Patterns : MonoBehaviour
             if ((phi < angle1) || (phi > angle2))
             {
                 Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
-                Debug.Log(angle1 + " " + angle2 + " " + phi);
+                //Debug.Log(angle1 + " " + angle2 + " " + phi);
                 //if (angle1 > 360)
                 //    angle1 = 0;
                 //if (angle2 > 360)
@@ -176,7 +176,7 @@ public class Patterns : MonoBehaviour
 
             phi += additiveAngle;
 
-            Debug.Log(phi);
+            //Debug.Log(phi);
         }
 
         yield return new WaitForSeconds(0.2f);
