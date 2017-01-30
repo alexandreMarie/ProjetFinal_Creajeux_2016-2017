@@ -5,7 +5,7 @@ public class bulletScript : MonoBehaviour
     #region Serialized fields
     [SerializeField]
     [Range(1.0f, 20.0f)]
-    private float speed = 10.0f;
+    private float speed = 15.0f;
 
     [SerializeField]
     [Range(1.0f, 20.0f)]
