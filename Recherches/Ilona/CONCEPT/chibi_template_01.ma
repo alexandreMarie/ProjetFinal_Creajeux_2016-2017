@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: chibi_template_01.ma
-//Last modified: Mon, Jan 30, 2017 03:03:47 PM
+//Last modified: Mon, Jan 30, 2017 03:26:26 PM
 //Codeset: 1252
 requires maya "2016";
 requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOptions" -nodeType "mentalrayGlobals"
@@ -14,13 +14,13 @@ fileInfo "osv" "Microsoft Windows 8 Business Edition, 64-bit  (Build 9200)\n";
 createNode transform -s -n "persp";
 	rename -uid "D8BEB9CE-44D8-A514-D4FA-48B085EC31B0";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -0.11059333973158303 8.2999351274419801 9.1757258343971575 ;
-	setAttr ".r" -type "double3" -11.73835278804169 -8279.3999999984935 -2.4849445959829223e-017 ;
+	setAttr ".t" -type "double3" 0.60705123276919437 9.3577454973560918 26.232761554543892 ;
+	setAttr ".r" -type "double3" -6.3383527879589119 -8278.200000001214 -6.2150876327977704e-017 ;
 createNode camera -s -n "perspShape" -p "persp";
 	rename -uid "277217EE-4568-ECEA-04CE-198387AB8431";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999993;
-	setAttr ".coi" 8.8525192360336202;
+	setAttr ".coi" 25.894933643287516;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
