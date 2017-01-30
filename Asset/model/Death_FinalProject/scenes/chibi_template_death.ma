@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
-//Name: chibi_template_01.ma
-//Last modified: Mon, Jan 30, 2017 05:53:03 PM
+//Name: chibi_template_death.ma
+//Last modified: Mon, Jan 30, 2017 05:53:11 PM
 //Codeset: 1252
 requires maya "2016";
 requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOptions" -nodeType "mentalrayGlobals"
@@ -3662,4 +3662,4 @@ connectAttr "pPlaneShape4.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "groupId6.msg" ":initialShadingGroup.gn" -na;
 connectAttr "groupId13.msg" ":initialShadingGroup.gn" -na;
 connectAttr "groupId14.msg" ":initialShadingGroup.gn" -na;
-// End of chibi_template_01.ma
+// End of chibi_template_death.ma
