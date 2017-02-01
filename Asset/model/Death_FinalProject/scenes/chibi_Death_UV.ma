@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
-//Name: chibi_template_death.ma
-//Last modified: Wed, Feb 01, 2017 04:22:16 PM
+//Name: chibi_Death_UV.ma
+//Last modified: Wed, Feb 01, 2017 04:22:54 PM
 //Codeset: 1252
 requires maya "2016";
 requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOptions" -nodeType "mentalrayGlobals"
@@ -7447,4 +7447,4 @@ connectAttr "polysurface_skullShape.iog" ":initialShadingGroup.dsm" -na;
 connectAttr "polysurface_body2Shape.iog.og[0]" ":initialShadingGroup.dsm" -na;
 connectAttr "groupId6.msg" ":initialShadingGroup.gn" -na;
 connectAttr "groupId7.msg" ":initialShadingGroup.gn" -na;
-// End of chibi_template_death.ma
+// End of chibi_Death_UV.ma
