@@ -1,18 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
-
 
 /// <summary>
 /// PATTERNS FILE
-/// At the moment, contains all the boss patterns algorithms.
-/// 
+/// Contains all the pattern algorithms.
+/// </summary>
+
+/// <summary>
 /// TO DO
-/// - Split the file if possible and convenient (possible with a dummy instance)
-/// - Add additional parameters to the methods so they can be modulated from the Update
-/// - Now that the test panel is implemented, serialize fields that make sense for quick editor tests
+/// - Add additional parameters to the methods so they can be modulated from the Update (what I need TBC)
 /// - Correct the angle bug when angle2 hits 361° (making angle2 % 360 smaller than angle1 % 360)
-/// - Test all kinds of bullets
-/// - General miscellaneous cleanup if possible
 /// - Pattern ideas : Malthaël
 /// </summary>
 
@@ -35,22 +33,7 @@ public class Patterns : MonoBehaviour
 
     private const float bps = 60.38f; // 60.38 bullets per second (generic phyllotaxis)
 
-    private IEnumerator AI1()
-    {
-        while (true)
-        {
-            int i1 = 100;
-            int i2 = 170;
-
-            //StartCoroutine(Phyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis));
-            yield return new WaitForSeconds(12.0f);
-
-            //StartCoroutine(Burst(bullet, bulletQuantityBurst));
-            //yield return new WaitForSeconds(Random.value * 5);
-
-            //StartCoroutine(OpenPhyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis));
-            //yield return new WaitForSeconds(10.0f);
-
+    
             //for (int i = 0; i < 35; i++)
             //{
             //    StartCoroutine(OpenBurst(bullet, bulletQuantityBurst));
@@ -59,12 +42,7 @@ public class Patterns : MonoBehaviour
             //    yield return new WaitForSeconds(0.2f);
             //}
 
-            //StartCoroutine(FocusedPhyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis));
-            //yield return new WaitForSeconds(2.0f);
-        }
-    }
-
-    private IEnumerator Phyllotaxis(Transform bullet, float divergence, uint bulletQuantity, float time, bool continueRoutine)
+    private IEnumerator Phyllotaxis(Transform bullet, float divergence, uint bulletQuantity)
     {
             float phi = 0.0f;
 
@@ -77,7 +55,6 @@ public class Patterns : MonoBehaviour
                 yield return new WaitForSeconds(0.05f);
             }
 
-            yield return null;
     }
 
     private IEnumerator FocusedPhyllotaxis(Transform bullet, float divergence, uint bulletQuantity)
@@ -161,6 +138,7 @@ public class Patterns : MonoBehaviour
 
     private IEnumerator QuadLasers(LineRenderer laser)
     {
+        throw 
         while (true)
         {
             Ray ray1 = new Ray(transform.position, transform.forward);
@@ -174,12 +152,12 @@ public class Patterns : MonoBehaviour
         }
     }
 
-    public void LaunchPhyllotaxis(Transform bullet, float divergence, uint bulletQuantity, float time, bool continueRoutine)
+    public void LaunchPhyllotaxis(Transform bullet, float divergence, uint bulletQuantity)
     {
-        StartCoroutine(Phyllotaxis(bullet, divergence, bulletQuantity, time, continueRoutine));
+        StartCoroutine(Phyllotaxis(bullet, divergence, bulletQuantity));
     }
 
-    public void LaunchBurst(Transform bullet , uint bulletQuantity)
+    public void LaunchBurst(Transform bullet, uint bulletQuantity)
     {
         StartCoroutine(Burst(bullet, bulletQuantity));
     }

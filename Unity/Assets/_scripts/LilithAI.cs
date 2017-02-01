@@ -21,8 +21,6 @@ public class LilithAI : MonoBehaviour
     private float dTime = 0.0f;
     bool continueRoutine = true;
 
-    bool phasing = false;
-
     private Patterns Lilith; // Uppercase L on purpose
 
     void Start()
@@ -73,7 +71,7 @@ public class LilithAI : MonoBehaviour
             if (continueRoutine)
             {
                 continueRoutine = false;
-                StartCoroutine(AI4(bulletQuantityPhyllotaxis));
+                Lilith.LaunchPhyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis, time, continueRoutine);
             }
         }
 
