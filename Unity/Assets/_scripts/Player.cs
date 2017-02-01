@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     private string m_RotateAxisName;
     private Rigidbody m_Rb;
 
+    [SerializeField]
     private Transform m_Tr;
 
     private string m_LMoveInputValue_RB;
