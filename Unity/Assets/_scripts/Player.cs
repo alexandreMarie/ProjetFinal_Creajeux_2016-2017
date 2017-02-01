@@ -138,7 +138,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(transform.rotation.y);
+        //Debug.Log(transform.rotation.y);
         m_LMoveInputValue_X = Input.GetAxisRaw(m_LMoveAxisName_X);
         m_LMoveInputValue_Y = Input.GetAxisRaw(m_LMoveAxisName_Y);
 
