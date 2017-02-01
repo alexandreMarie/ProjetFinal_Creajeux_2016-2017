@@ -5,7 +5,7 @@ public class bulletScript : MonoBehaviour
     #region Serialized fields
     [SerializeField]
     [Range(1.0f, 20.0f)]
-    private float speed = 10.0f;
+    private float speed = 15.0f;
 
     [SerializeField]
     [Range(1.0f, 20.0f)]
@@ -21,7 +21,9 @@ public class bulletScript : MonoBehaviour
     }
     void Update()
     {
+        float i = Random.value;
         transform.position += transform.forward * speed * Time.deltaTime;
+        transform.position.Set(0, Mathf.Cos(i), 0);
     }
 
     void OnCollisionEnter(Collision col)

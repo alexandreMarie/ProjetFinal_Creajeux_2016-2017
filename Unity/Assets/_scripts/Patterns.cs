@@ -13,7 +13,7 @@ using UnityEngine;
 /// - Correct the angle bug when angle2 hits 361° (making angle2 % 360 smaller than angle1 % 360)
 /// - Test all kinds of bullets
 /// - General miscellaneous cleanup if possible
-///
+/// - Pattern ideas : Malthaël
 /// </summary>
 
 public class Patterns : MonoBehaviour
@@ -22,43 +22,18 @@ public class Patterns : MonoBehaviour
     private Transform bullet = null;
 
     [SerializeField]
-    private uint bulletQuantityPhyllotaxis = 604; //Quantity of bullets to fire for the phyllotaxis
+    private static uint bulletQuantityPhyllotaxis = 604; //Quantity of bullets to fire for the phyllotaxis
     [SerializeField]
-    private uint bulletQuantityBurst = 30; //Quantity of bullets to fire for the bursts
+    private static uint bulletQuantityBurst = 30; //Quantity of bullets to fire for the bursts
     [SerializeField]
-    private float divergence = 137.5f; //Divergence angle
+    private static float divergence = 137.5f; //Divergence angle
     [SerializeField]
-    private float bulletDelay = 0.005f; //Delay between bullets
+    private static float bulletDelay = 0.005f; //Delay between bullets
 
     uint angle1 = 200;
     uint angle2 = 220;
 
-
     private const float bps = 60.38f; // 60.38 bullets per second (generic phyllotaxis)
-
-    void Awake()
-    {
-        //StartCoroutine(AI1());
-    }
-
-    void Update()
-    {
-        //Test panel for patterns : 1-3 phyllotaxis | 4-5 burst
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            StartCoroutine(Phyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis));
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            StartCoroutine(OpenPhyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis));
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            StartCoroutine(FocusedPhyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis));
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            StartCoroutine(Burst(bullet, bulletQuantityBurst));
-
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-            StartCoroutine(OpenBurst(bullet, bulletQuantityBurst));
-    }
 
     private IEnumerator AI1()
     {
@@ -67,7 +42,7 @@ public class Patterns : MonoBehaviour
             int i1 = 100;
             int i2 = 170;
 
-            StartCoroutine(Phyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis));
+            //StartCoroutine(Phyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis));
             yield return new WaitForSeconds(12.0f);
 
             //StartCoroutine(Burst(bullet, bulletQuantityBurst));
@@ -89,18 +64,20 @@ public class Patterns : MonoBehaviour
         }
     }
 
-    private IEnumerator Phyllotaxis(Transform bullet, float divergence, uint bulletQuantity)
+    private IEnumerator Phyllotaxis(Transform bullet, float divergence, uint bulletQuantity, float time, bool continueRoutine)
     {
-        for (int floret = 0; floret < bulletQuantity; floret++)
-        {
-            float phi = floret * divergence;
+            float phi = 0.0f;
 
-            Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
+            for (int floret = 0; floret < bulletQuantity; floret++)
+            {
+                phi = floret * divergence;
 
-            //bps += Time.deltaTime;
-            //Debug.Log(bps);
-            yield return new WaitForSeconds(bulletDelay);
-        }
+                Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
+
+                yield return new WaitForSeconds(0.05f);
+            }
+
+            yield return null;
     }
 
     private IEnumerator FocusedPhyllotaxis(Transform bullet, float divergence, uint bulletQuantity)
@@ -180,5 +157,30 @@ public class Patterns : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.2f);
+    }
+
+    private IEnumerator QuadLasers(LineRenderer laser)
+    {
+        while (true)
+        {
+            Ray ray1 = new Ray(transform.position, transform.forward);
+            Ray ray2 = new Ray(transform.position, transform.right);
+            Ray ray3 = new Ray(transform.position, -transform.right);
+            Ray ray4 = new Ray(transform.position, -transform.forward);
+
+            //thenstantiate(laser, );
+
+            yield return null;
+        }
+    }
+
+    public void LaunchPhyllotaxis(Transform bullet, float divergence, uint bulletQuantity, float time, bool continueRoutine)
+    {
+        StartCoroutine(Phyllotaxis(bullet, divergence, bulletQuantity, time, continueRoutine));
+    }
+
+    public void LaunchBurst(Transform bullet , uint bulletQuantity)
+    {
+        StartCoroutine(Burst(bullet, bulletQuantity));
     }
 }
