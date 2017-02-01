@@ -4,7 +4,7 @@ public class PlayerBullet : MonoBehaviour
 {
     #region Serialized fields
     [SerializeField]
-    [Range(1.0f, 20.0f)]
+    [Range(1.0f, 200.0f)]
     private float speed = 10.0f;
 
     [SerializeField]
@@ -16,8 +16,11 @@ public class PlayerBullet : MonoBehaviour
     void Start()
     {
         count++;
-        Debug.Log(count);
+        //Debug.Log(count);
         Destroy(gameObject, destroyTime);
+      //  Mater = GetComponent<Material>();
+        //Color couleur = new Color(Random.Range(0,255), Random.Range(0, 255), Random.Range(0, 255));
+        //Mater.color = couleur;
     }
     void Update()
     {
