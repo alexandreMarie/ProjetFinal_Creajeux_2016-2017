@@ -32,6 +32,9 @@ public class LilithAI : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetButton("Fire1"))
+            life -= 0.5f;
+
         if (life >= 75.1f)
         {
             divergence = 111.0f;
