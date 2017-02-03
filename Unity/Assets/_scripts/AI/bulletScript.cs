@@ -4,7 +4,7 @@ public class bulletScript : MonoBehaviour
 {
     #region Serialized fields
     [SerializeField]
-    [Range(1.0f, 20.0f)]
+    [Range(1.0f, 500.0f)]
     private float speed = 15.0f;
 
     [SerializeField]
@@ -32,7 +32,7 @@ public class bulletScript : MonoBehaviour
         if (col.collider.tag == "Player")
         {
             //ONLY WORKS WITH NON KINEMATIC OBJECTS
-            col.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+            //col.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
             Destroy(gameObject);
         }
 
