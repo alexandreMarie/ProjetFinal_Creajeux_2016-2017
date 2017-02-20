@@ -5,9 +5,10 @@ public class Hit_Boss : MonoBehaviour {
 
     static float Attack;
 
-
+    [SerializeField]
+    private LifeManager Lief_Bar;
     static float lifeBar = 0.0f;
-
+    static float Max_Life;
     public static float LifeBar
     {
         get
@@ -18,6 +19,7 @@ public class Hit_Boss : MonoBehaviour {
         set
         {
             lifeBar = value;
+            Max_Life = value;
         }
     }
 
@@ -33,7 +35,8 @@ public class Hit_Boss : MonoBehaviour {
         {
             Debug.Log("Boss toucher" + lifeBar);
             lifeBar -= 1;
-            Destroy(col);
+            Lief_Bar.UpdateLifeBar((int)Max_Life,(int)lifeBar);
+            Destroy(col.gameObject);
         }
     }
 }
