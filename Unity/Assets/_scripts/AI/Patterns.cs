@@ -2,9 +2,11 @@
 using System.Collections;
 using UnityEngine;
 
+//DISABLING "Code cannot be reached" WARNINGS
 //DISABLING "XX is never used" WARNINGS
 //Please be a responsible developer and do NOT use those.
 //Do what I say, not what I do.
+#pragma warning disable 0162
 #pragma warning disable 0169
 
 /// <summary>
