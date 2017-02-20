@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public class LilithAI : MonoBehaviour
+public class LilithAI : MonoBehaviour, IBoss
 {
     [SerializeField]
     private Transform bullet = null;
@@ -14,7 +15,7 @@ public class LilithAI : MonoBehaviour
     [SerializeField]
     private float time = 10.0f;
     [SerializeField]
-    private uint bulletQuantityPhyllotaxis = 150; //Quantity of bullets to fire for the full phyllotaxis
+    private uint bulletQuantityPhyllotaxis = 1000; //Quantity of bullets to fire for the full phyllotaxis
     [SerializeField]
     private uint bulletQuantityBurst = 30; //Quantity of bullets to fire for each burst
 
@@ -32,7 +33,23 @@ public class LilithAI : MonoBehaviour
         LilithEvents += LilithAI_LilithEvents;
     }
 
-    enum LifeState { ONE, TWO, FREE, FOUR };
+    enum LifeState { LAST, ONE, TWO, THREE, FOUR };
+    LifeState lifeState = LifeState.FOUR;
+
+    Coroutine co;
+
+    float IBoss.life
+    {
+        get
+        {
+            return life;
+        }
+
+        set
+        {
+            life = value;
+        }
+    }
 
     private void LilithAI_LilithEvents()
     {
@@ -45,22 +62,35 @@ public class LilithAI : MonoBehaviour
         if (Input.GetButton("Fire1"))
             life -= 0.5f;
 
+        if (Input.GetButton("Jump"))
+        {
+            StopCoroutine(co);
+            Debug.Log("Stop");
+        }
+
         if (life >= 75.1f)
         {
-            divergence = 111.0f;
-            bulletQuantityPhyllotaxis = 150;
-
-            if (continueRoutine)
+            if (lifeState == LifeState.FOUR)
             {
-                continueRoutine = false;
-                StartCoroutine(AI1(bulletQuantityPhyllotaxis));
+                divergence = 111.0f;
+
+                LilithEvents.Invoke();
+                lifeState = LifeState.THREE;
+                LilithEvents += LilithAI_LilithEvents;
+
+                co = StartCoroutine(AI1(bulletQuantityPhyllotaxis));
             }
         }
 
         if (life >= 50.1f && life <= 75.0f)
         {
-            LilithEvents.Invoke();
-            LilithEvents -= LilithAI_LilithEvents;
+            if (lifeState == LifeState.THREE)
+            {
+                LilithEvents.Invoke();
+                lifeState = LifeState.TWO;
+                LilithEvents += LilithAI_LilithEvents;
+            }
+
             divergence = 100.0f;
 
             if (continueRoutine)
@@ -72,6 +102,12 @@ public class LilithAI : MonoBehaviour
 
         if (life >= 25.1f && life <= 50.0f)
         {
+            if (lifeState == LifeState.TWO)
+            {
+                LilithEvents.Invoke();
+                lifeState = LifeState.ONE;
+            }
+
             divergence = 75.0f;
 
             if (continueRoutine)
@@ -83,6 +119,13 @@ public class LilithAI : MonoBehaviour
 
         if (life <= 25.0f)
         {
+
+            if (lifeState == LifeState.ONE)
+            {
+                LilithEvents.Invoke();
+                lifeState = LifeState.LAST;
+            }
+
             divergence = 178.5f;
 
             if (continueRoutine)
@@ -99,15 +142,9 @@ public class LilithAI : MonoBehaviour
 
         for (int i = 0; i < 100; i++)
         {
-            if (life < 75)
-            {
-                continueRoutine = true;
-                yield break;
-            }
             Lilith.LaunchBurst(bullet, bulletQuantityBurst);
             yield return new WaitForSeconds(time / 2);
         }
-        continueRoutine = true;
     }
 
     private IEnumerator AI2(uint bulletQtyPhyl)
@@ -117,10 +154,8 @@ public class LilithAI : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             if (life < 50)
-            {
-                continueRoutine = true;
-                yield break;
-            }
+                StopCoroutine(AI2(bulletQuantityPhyllotaxis));
+
             Lilith.LaunchBurst(bullet, bulletQuantityBurst);
             yield return new WaitForSeconds(time / 3);
         }
@@ -134,10 +169,8 @@ public class LilithAI : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             if (life < 25)
-            {
-                continueRoutine = true;
-                yield break;
-            }
+                StopCoroutine(AI3(bulletQuantityPhyllotaxis));
+
             Lilith.LaunchBurst(bullet, bulletQuantityBurst);
             yield return new WaitForSeconds(time / 4);
         }
