@@ -32,6 +32,8 @@ public class LilithAI : MonoBehaviour
         LilithEvents += LilithAI_LilithEvents;
     }
 
+    enum LifeState { ONE, TWO, FREE, FOUR };
+
     private void LilithAI_LilithEvents()
     {
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("EnnemyBullet"))
@@ -57,8 +59,8 @@ public class LilithAI : MonoBehaviour
 
         if (life >= 50.1f && life <= 75.0f)
         {
-            //LilithEvents.Invoke();
-            //LilithEvents -= LilithAI_LilithEvents;
+            LilithEvents.Invoke();
+            LilithEvents -= LilithAI_LilithEvents;
             divergence = 100.0f;
 
             if (continueRoutine)

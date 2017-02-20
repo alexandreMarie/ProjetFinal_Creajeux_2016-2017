@@ -26,17 +26,17 @@ public class bulletScript : MonoBehaviour
         transform.position.Set(0, Mathf.Cos(i), 0);
     }
 
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider col)
     {
         //Debug.Log("Hit");
-        if (col.collider.tag == "Player")
+        if (col.tag == "Player")
         {
             //ONLY WORKS WITH NON KINEMATIC OBJECTS
             //col.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
             Destroy(gameObject);
         }
 
-        if (col.collider.tag == "Wall")
+        if (col.tag == "Wall")
             Destroy(gameObject, 0.1f);
     }
     public void OnDestroy()
