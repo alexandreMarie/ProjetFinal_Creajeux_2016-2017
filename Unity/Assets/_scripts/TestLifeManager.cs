@@ -6,10 +6,14 @@ public class TestLifeManager : MonoBehaviour {
     [SerializeField]
     private LifeManager lifeManager;
 
-    private int life = 10;
+    [SerializeField]
+    private LifeManager bossLifeManager;
 
-	// Use this for initialization
-	void Start () {
+    private int life = 10;
+    private int bossLife = 10;
+
+    // Use this for initialization
+    void Start () {
 	
 	}
 	
@@ -18,6 +22,11 @@ public class TestLifeManager : MonoBehaviour {
         if (Input.GetButtonDown("Jump"))
         {
             lifeManager.UpdateLifeBar(10, --life);
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            bossLifeManager.UpdateLifeBar(10, --bossLife);
         }
 	}
 }
