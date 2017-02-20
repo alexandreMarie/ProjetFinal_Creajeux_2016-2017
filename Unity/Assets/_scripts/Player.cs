@@ -15,15 +15,24 @@ public class Player : MonoBehaviour
     private int m_PlayerNumber = 1;
 
     [SerializeField]
+    private int Life;
+
+    [SerializeField]
+    private int Life_Max;
+
+    [SerializeField]
+    private LifeManager life_Bar;
+
+    [SerializeField]
     private float m_Speed = 1;
 
     [SerializeField]
     private int number_of_bullets_spe_attack;
-   
+
     private string m_RMoveAxisName_X;  // Will have the correct axis name according to the player number
     private string m_RMoveAxisName_Y;  // Will have the correct axis name according to the player number
 
-   
+
     private string m_LMoveAxisName_X;  // Will have the correct axis name according to the player number
     private string m_LMoveAxisName_Y;  // Will have the correct axis name according to the player number
 
@@ -40,15 +49,15 @@ public class Player : MonoBehaviour
     private Transform m_Tr;
 
     private string m_LMoveInputValue_RB;
-    
+
     private string m_LMoveInputValue_RT;
 
     private float m_RMoveInputValue_X;
 
     private float m_RMoveInputValue_Y;
- 
+
     private float m_LMoveInputValue_X;
- 
+
     private float m_LMoveInputValue_Y;
 
 
@@ -57,13 +66,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     float RAngle;
 
-    [SerializeField]    
+    [SerializeField]
     private float m_RotateInputValue;
 
     public void Awake()
     {
         m_Rb = GetComponentInChildren<Rigidbody>();
-       //m_Tr = GetComponent<Transform>();
+        //m_Tr = GetComponent<Transform>();
         m_Tr = GameObject.FindGameObjectWithTag("Player").transform;
         //s_add_bullet = FindObjectOfType<Add_Bullet>();
         s_Bullet = GetComponentInChildren<Add_Bullet>();
@@ -101,7 +110,7 @@ public class Player : MonoBehaviour
         m_KeyBoard_Axe_X = "Horizontal";
         m_KeyBoard_Axe_Y = "Vertical";
 
-}
+    }
     //Deplacement en diagonale 
     void MovePlayer()
     {
@@ -119,10 +128,10 @@ public class Player : MonoBehaviour
 
         if (m_LMoveInputValue_X > 0.1 || m_LMoveInputValue_X < -0.1)
         {
-            Vector3 direction = Camera.main.transform.right ;
+            Vector3 direction = Camera.main.transform.right;
             //Debug.Log("RIGHT :" + Camera.main.transform.forward * m_AngleX);
             m_Tr.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed);
-            
+
             //Debug.Log(direction);
             //Debug.Log("Right : " + Camera.main.transform.right);
             //Debug.Log("Direction X" + direction.x);
@@ -130,7 +139,7 @@ public class Player : MonoBehaviour
             //Debug.Log(direction * m_LMoveInputValue_X);
         }
 
-        
+
         if (m_LMoveInputValue_Y > 0.1 || m_LMoveInputValue_Y < -0.1)
         {
             Vector3 direction = Camera.main.transform.forward;
@@ -140,21 +149,21 @@ public class Player : MonoBehaviour
             direction.Normalize();
 
 
-           // m_Tr.position += (((direction * -m_LMoveInputValue_Y)) * Time.deltaTime * m_Speed);
-           // Debug.Log(direction * -m_LMoveInputValue_Y);
+            // m_Tr.position += (((direction * -m_LMoveInputValue_Y)) * Time.deltaTime * m_Speed);
+            // Debug.Log(direction * -m_LMoveInputValue_Y);
 
-            m_Tr.position += (((direction * -(m_LMoveInputValue_Y)  * Time.deltaTime * m_Speed)));
+            m_Tr.position += (((direction * -(m_LMoveInputValue_Y) * Time.deltaTime * m_Speed)));
             //Debug.Log("Forward : " + Camera.main.transform.forward);
             // Debug.Log(direction * -m_LMoveInputValue_Y);
-            
+
 
         }
-  
+
         ////////////////\\\\\\\\\\\\\\\\\
         //////////!\ CLAVIER /!\\\\\\\\\\\
         ////////////////\\\\\\\\\\\\\\\\\\
 
-        if(m_KeyBoard_X_Value > 0.1 || m_KeyBoard_X_Value < -0.1)
+        if (m_KeyBoard_X_Value > 0.1 || m_KeyBoard_X_Value < -0.1)
         {
             Vector3 direction = Camera.main.transform.right;
 
@@ -172,11 +181,11 @@ public class Player : MonoBehaviour
             direction.Normalize();
 
 
-           //m_Tr.position += (((direction * -m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed));
+            //m_Tr.position += (((direction * -m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed));
             // Debug.Log(direction * -m_LMoveInputValue_Y);
 
             m_Tr.position += (((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed)));
-           // Debug.Log("Forward : " + Camera.main.transform.forward);
+            // Debug.Log("Forward : " + Camera.main.transform.forward);
         }
 
 
@@ -198,7 +207,7 @@ public class Player : MonoBehaviour
 
     void Rotate()
     {
-        m_Tr.eulerAngles = new Vector3(0, -RAngle,0);
+        m_Tr.eulerAngles = new Vector3(0, -RAngle, 0);
     }
     // Update is called once per frame
     void Update()
@@ -229,8 +238,14 @@ public class Player : MonoBehaviour
 
         MovePlayer();
         Rotate();
-       // Debug.Log("Left Stick X Player " + m_PlayerNumber + " = " + m_MoveInputValue_X);
-       // Debug.Log("Left Stick Y Player " + m_PlayerNumber + " = " + m_MoveInputValue_Y);
+        // Debug.Log("Left Stick X Player " + m_PlayerNumber + " = " + m_MoveInputValue_X);
+        // Debug.Log("Left Stick Y Player " + m_PlayerNumber + " = " + m_MoveInputValue_Y);
+    }
+    public void HitByBullet()
+    {
+        Life -= 1;
+        life_Bar.UpdateLifeBar(Life_Max, Life);
+        Debug.Log("Hit ! \n Life : " + Life);
     }
 }
 
@@ -240,7 +255,7 @@ public class Player : MonoBehaviour
 //Donc, un dash, c'est un mouvement direct, dans une direction donner
 //Etape 1 : Demander a seb'
 //Etape 2 : faire quelque chose
-//Etape 3 : RE-demander a seb' (si il refuse, tentative de corruption avec du café
+//Etape 3 : RE-demander a seb' (si il refuse, tentative de corruption avec du café)
 
 /*
 Plus serieusement 
