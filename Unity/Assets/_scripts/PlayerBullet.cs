@@ -24,7 +24,7 @@ public class PlayerBullet : MonoBehaviour
     }
     void Update()
     {
-        transform.position += transform.up * Time.deltaTime * speed;
+        transform.position -= transform.up * Time.deltaTime * speed;
     }
 
     public void OnDestroy()

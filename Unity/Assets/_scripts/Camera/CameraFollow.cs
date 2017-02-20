@@ -30,21 +30,38 @@ public class CameraFollow : MonoBehaviour {
     {
         camDistance = 100.0f;
         bounds = 12.0f;
+        setFieldOfView = 60;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.B))
+        {
+            CameraManager.Instance.Change = true;
+        }
+        if (Input.GetKey(KeyCode.N))
+        {
+            CameraManager.Instance.Change = false;
+        }
 
-        Gravity();
-        DistanceMax();
-    
-        Vector3 delta = gravity - GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camDistance + CamOffset));
-        Vector3 destinationPos = transform.position + delta;
-        Quaternion destinationRot = Quaternion.Euler(rotateCam, camRotation.y, camRotation.z);
-        transform.position = Vector3.SmoothDamp(transform.position, destinationPos, ref velocity, dampTime);
-        transform.rotation = Quaternion.Slerp(transform.rotation, destinationRot, 0.03f);
-        Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, setFieldOfView, 0.03f);
+        if (!CameraManager.Instance.Change)
+        {
+            Gravity();
+            DistanceMax();
+
+            Vector3 delta = gravity - GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camDistance + CamOffset));
+            Vector3 destinationPos = transform.position + delta;
+            Quaternion destinationRot = Quaternion.Euler(rotateCam, camRotation.y, camRotation.z);
+            transform.position = Vector3.SmoothDamp(transform.position, destinationPos, ref velocity, dampTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, destinationRot, 0.03f);
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, setFieldOfView, 0.03f);
+        }
+        else
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, CameraManager.Instance.PosViewTarget[0].transform.position, ref velocity, dampTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, CameraManager.Instance.PosViewTarget[0].transform.rotation, 0.1f);
+        }
     }
 
    
