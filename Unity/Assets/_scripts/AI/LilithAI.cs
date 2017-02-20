@@ -28,6 +28,14 @@ public class LilithAI : MonoBehaviour
     void Start()
     {
         Lilith = GetComponentInParent<Patterns>();
+
+        LilithEvents += LilithAI_LilithEvents;
+    }
+
+    private void LilithAI_LilithEvents()
+    {
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("EnnemyBullet"))
+            Destroy(go);
     }
 
     void Update()
@@ -49,6 +57,8 @@ public class LilithAI : MonoBehaviour
 
         if (life >= 50.1f && life <= 75.0f)
         {
+            //LilithEvents.Invoke();
+            //LilithEvents -= LilithAI_LilithEvents;
             divergence = 100.0f;
 
             if (continueRoutine)
