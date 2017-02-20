@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 
-public class LilithAI : MonoBehaviour, IBoss
+public class LilithAI : MonoBehaviour
 {
     [SerializeField]
     private Transform bullet = null;
@@ -32,26 +31,15 @@ public class LilithAI : MonoBehaviour, IBoss
 
         Lilith = GetComponentInParent<Patterns>();
 
-        LilithEvents += LilithAI_LilithEvents;
+        for (int i = 0; i < System.Enum.GetNames(typeof(LifeState)).Length; i++)
+        {
+            LilithEvents += LilithAI_LilithEvents;
+        }
     }
 
     enum LifeState { LAST, ONE, TWO, THREE, FOUR };
     LifeState lifeState = LifeState.FOUR;
 
-    Coroutine co;
-
-    float IBoss.life
-    {
-        get
-        {
-            return life;
-        }
-
-        set
-        {
-            life = value;
-        }
-    }
 
     private void LilithAI_LilithEvents()
     {
@@ -62,29 +50,31 @@ public class LilithAI : MonoBehaviour, IBoss
     void Update()
     {
         if (Input.GetButton("Fire1"))
-            life -= 0.5f;
+        {
+            Hit_Boss hb;
+        }
 
         if (Input.GetButton("Jump"))
         {
-            StopCoroutine(co);
+            Lilith.StopAllCoroutines();
             Debug.Log("Stop");
         }
 
-        if (life >= 75.1f)
+        if (Hit_Boss.LifeBar >= 75.1f)
         {
             if (lifeState == LifeState.FOUR)
             {
-                divergence = 111.0f;
+                divergence = 111.5f;
 
                 LilithEvents.Invoke();
                 lifeState = LifeState.THREE;
                 LilithEvents += LilithAI_LilithEvents;
 
-                co = StartCoroutine(AI1(bulletQuantityPhyllotaxis));
+                StartCoroutine(AI1(bulletQuantityPhyllotaxis));
             }
         }
 
-        if (life >= 50.1f && life <= 75.0f)
+        if (Hit_Boss.LifeBar >= 50.1f && Hit_Boss.LifeBar <= 75.0f)
         {
             if (lifeState == LifeState.THREE)
             {
@@ -102,7 +92,7 @@ public class LilithAI : MonoBehaviour, IBoss
             }
         }
 
-        if (life >= 25.1f && life <= 50.0f)
+        if (Hit_Boss.LifeBar >= 25.1f && Hit_Boss.LifeBar <= 50.0f)
         {
             if (lifeState == LifeState.TWO)
             {
@@ -119,7 +109,7 @@ public class LilithAI : MonoBehaviour, IBoss
             }
         }
 
-        if (life <= 25.0f)
+        if (Hit_Boss.LifeBar <= 25.0f)
         {
 
             if (lifeState == LifeState.ONE)
