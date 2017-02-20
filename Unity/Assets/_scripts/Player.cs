@@ -245,7 +245,7 @@ public class Player : MonoBehaviour
     {
         Life -= 1;
         life_Bar.UpdateLifeBar(Life_Max, Life);
-        Debug.Log("Hit ! \n Life : " + Life);
+        //Debug.Log("Hit ! \n Life : " + Life);
     }
 }
 

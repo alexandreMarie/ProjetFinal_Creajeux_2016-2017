@@ -9,7 +9,7 @@ public class LilithAI : MonoBehaviour, IBoss
 
     [SerializeField]
     private float life = 100.0f;
-
+    
     [SerializeField]
     private float divergence = 137.5f; //Angular divergence
     [SerializeField]
@@ -28,6 +28,8 @@ public class LilithAI : MonoBehaviour, IBoss
 
     void Start()
     {
+        Hit_Boss.LifeBar = life;
+
         Lilith = GetComponentInParent<Patterns>();
 
         LilithEvents += LilithAI_LilithEvents;
