@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
     private int m_PlayerNumber = 1;
 
     [SerializeField]
+    private int Life;
+
+    [SerializeField]
     private float m_Speed = 1;
 
     [SerializeField]
@@ -232,6 +235,11 @@ public class Player : MonoBehaviour
        // Debug.Log("Left Stick X Player " + m_PlayerNumber + " = " + m_MoveInputValue_X);
        // Debug.Log("Left Stick Y Player " + m_PlayerNumber + " = " + m_MoveInputValue_Y);
     }
+    public void HitByBullet()
+    {
+        Life -= 1;
+        Debug.Log("Hit ! \n Life : " + Life);
+    }
 }
 
 
@@ -240,7 +248,7 @@ public class Player : MonoBehaviour
 //Donc, un dash, c'est un mouvement direct, dans une direction donner
 //Etape 1 : Demander a seb'
 //Etape 2 : faire quelque chose
-//Etape 3 : RE-demander a seb' (si il refuse, tentative de corruption avec du café
+//Etape 3 : RE-demander a seb' (si il refuse, tentative de corruption avec du café)
 
 /*
 Plus serieusement 
