@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float m_Speed = 1;
 
+    [SerializeField]
+    private int number_of_bullets_spe_attack;
    
     private string m_RMoveAxisName_X;  // Will have the correct axis name according to the player number
     private string m_RMoveAxisName_Y;  // Will have the correct axis name according to the player number
@@ -221,7 +223,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetButton(m_LMoveInputValue_RT))
         {
-            SpecialShoot(20);
+            SpecialShoot(number_of_bullets_spe_attack);
         }
 
 
