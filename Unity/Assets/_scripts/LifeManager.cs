@@ -4,12 +4,21 @@ using System.Collections;
 
 public class LifeManager : MonoBehaviour
 {
+    
     Image imgFilledBar;
 
     public void Start()
     {
         // Récup de l'image configurée en filled
-        imgFilledBar = GetComponentInChildren<Image>();
+        Image[] imgsFilledBar = GetComponentsInChildren<Image>();
+        foreach (Image image in imgsFilledBar)
+        {
+            if (image.transform.tag == "LifeBar")
+            {
+                imgFilledBar = image;
+            }
+        }
+
         if (imgFilledBar == null)
         {
             Debug.Log("Aucune image trouvée");
