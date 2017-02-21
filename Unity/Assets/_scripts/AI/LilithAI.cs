@@ -1,8 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// LILITH'S AI FILE
+/// Contains the Lilith AI using the Patterns file.
+/// She phases and cancels bullets every 25%.
+/// </summary>
+
+/// <summary>
+/// TODO
+/// - Correct the Burst bug (the bullet burst doesn't stops with StopAllCoroutines).
+/// - Check if bulletQuantityPhyllotaxis can be altered or, ideally, fully removed.
+/// - Inheritence : Hit_Boss
+/// </summary>
+
 public class LilithAI : MonoBehaviour
 {
+    #region Variables
     [SerializeField]
     private Transform bullet = null;
 
@@ -23,6 +37,7 @@ public class LilithAI : MonoBehaviour
 
     public delegate void LilithEventsHandler();
     private event LilithEventsHandler LilithEvents;
+    #endregion
 
     enum LifeState { LAST, ONE, TWO, THREE, FOUR };
 
@@ -35,10 +50,10 @@ public class LilithAI : MonoBehaviour
         Lilith = GetComponentInParent<Patterns>();
 
         for (int i = 0; i < System.Enum.GetNames(typeof(LifeState)).Length; i++)
-            LilithEvents += LilithAI_LilithEvents;
+            LilithEvents += BulletCancel;
     }
 
-    private void LilithAI_LilithEvents()
+    private void BulletCancel()
     {
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("EnnemyBullet"))
             Destroy(go);
@@ -62,7 +77,7 @@ public class LilithAI : MonoBehaviour
 
                 LilithEvents.Invoke();
                 lifeState = LifeState.THREE;
-                LilithEvents += LilithAI_LilithEvents;
+                LilithEvents += BulletCancel;
 
                 StartCoroutine(AI1(bulletQuantityPhyllotaxis));
             }
@@ -77,7 +92,7 @@ public class LilithAI : MonoBehaviour
                 Lilith.StopAllCoroutines();
                 LilithEvents.Invoke();
                 lifeState = LifeState.TWO;
-                LilithEvents += LilithAI_LilithEvents;
+                LilithEvents += BulletCancel;
 
                 StartCoroutine(AI2(bulletQuantityPhyllotaxis));
             }
@@ -92,7 +107,7 @@ public class LilithAI : MonoBehaviour
                 Lilith.StopAllCoroutines();
                 LilithEvents.Invoke();
                 lifeState = LifeState.ONE;
-                LilithEvents += LilithAI_LilithEvents;
+                LilithEvents += BulletCancel;
 
                 StartCoroutine(AI3(bulletQuantityPhyllotaxis));
             }
@@ -108,7 +123,7 @@ public class LilithAI : MonoBehaviour
                 Lilith.StopAllCoroutines();
                 LilithEvents.Invoke();
                 lifeState = LifeState.LAST;
-                LilithEvents += LilithAI_LilithEvents;
+                LilithEvents += BulletCancel;
 
                 StartCoroutine(AI4(bulletQuantityPhyllotaxis));
             }
