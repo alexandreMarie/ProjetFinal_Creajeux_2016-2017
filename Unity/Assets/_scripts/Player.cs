@@ -230,6 +230,11 @@ public class Player : MonoBehaviour
             Shoot(-RAngle);
         }
 
+        if (Input.GetButton("Fire1"))
+        {
+            Shoot(90);
+        }
+
         if (Input.GetButton(m_LMoveInputValue_RT))
         {
             SpecialShoot(number_of_bullets_spe_attack);
