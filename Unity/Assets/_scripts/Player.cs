@@ -2,10 +2,20 @@
 
 public class Player : MonoBehaviour
 {
+
+    [SerializeField]
+    private float Slowed;//Stats apply on the the speed of the player, when he shoot
+
     [SerializeField]
     private GameObject Bullet;
 
-    Add_Bullet s_Bullet;
+    [SerializeField]
+    private short Nb_Player;// Number of player max
+
+    [SerializeField]
+    private short Id_Player; //Id of the connected controller
+
+    Add_Bullet s_Bullet;//Script Add_bullet
 
     [SerializeField]
     private float m_AngleX = 0;
@@ -15,29 +25,29 @@ public class Player : MonoBehaviour
     private int m_PlayerNumber = 1;
 
     [SerializeField]
-    private int Life;
+    private int Life;//actual life of the player
 
     [SerializeField]
-    private int Life_Max;
+    private int Life_Max;//Maximum life of the player
 
     [SerializeField]
-    private LifeManager life_Bar;
+    private LifeManager life_Bar;//Prefabs of the life bars on the UI
 
     [SerializeField]
-    private float m_Speed = 1;
+    private float m_Speed = 1;//Speed of the joueur
 
     [SerializeField]
     private int number_of_bullets_spe_attack;
 
-    private string m_RMoveAxisName_X;  // Will have the correct axis name according to the player number
-    private string m_RMoveAxisName_Y;  // Will have the correct axis name according to the player number
+    private string  m_RMoveAxisName_X;  // Will have the correct axis name according to the player number
+    private string  m_RMoveAxisName_Y;  // Will have the correct axis name according to the player number
 
 
     private string m_LMoveAxisName_X;  // Will have the correct axis name according to the player number
     private string m_LMoveAxisName_Y;  // Will have the correct axis name according to the player number
 
-    private string m_KeyBoard_Axe_X;
-    private string m_KeyBoard_Axe_Y;
+    private string  m_KeyBoard_Axe_X;
+    private string  m_KeyBoard_Axe_Y;
 
     private float m_KeyBoard_X_Value;
     private float m_KeyBoard_Y_Value;
@@ -48,18 +58,20 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Transform m_Tr;
 
-    private string m_LMoveInputValue_RB;
+    private string  m_LMoveInputValue_RB;
 
-    private string m_LMoveInputValue_RT;
+    private string  m_LMoveInputValue_RT;
 
-    private float m_RMoveInputValue_X;
+    private float  m_RMoveInputValue_X;
 
-    private float m_RMoveInputValue_Y;
+    private float  m_RMoveInputValue_Y;
 
-    private float m_LMoveInputValue_X;
+    private float  m_LMoveInputValue_X;
 
-    private float m_LMoveInputValue_Y;
+    private float  m_LMoveInputValue_Y;
 
+    bool DashButton_Isrealeasd;
+    bool Is_Fired;
 
     [SerializeField]
     float LAngle;
@@ -68,6 +80,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float m_RotateInputValue;
+
+    private string m_LMoveInputValue_LT;
 
     public void Awake()
     {
@@ -81,13 +95,15 @@ public class Player : MonoBehaviour
     public void OnEnable()
     {
         m_Rb.isKinematic = false;
-        m_RMoveInputValue_X = 0f;
-        m_RMoveInputValue_Y = 0f;
-
-        m_LMoveInputValue_X = 0;
-        m_LMoveInputValue_Y = 0;
+ 
 
         m_RotateInputValue = 0f;
+
+        m_RMoveInputValue_X = 0.0f;
+        m_RMoveInputValue_Y = 0.0f;
+
+        m_LMoveInputValue_X = 0.0f;
+        m_LMoveInputValue_Y = 0.0f;
     }
 
     public void OnDisable()
@@ -98,17 +114,41 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        m_LMoveAxisName_X = "LSX"; // + m_PlayerNumber
-        m_LMoveAxisName_Y = "LSY";
 
-        m_RMoveAxisName_X = "RSX";
-        m_RMoveAxisName_Y = "RSY";
 
-        m_LMoveInputValue_RB = "RB";
-        m_LMoveInputValue_RT = "A";//Retweet lel
 
-        m_KeyBoard_Axe_X = "Horizontal";
-        m_KeyBoard_Axe_Y = "Vertical";
+       
+            m_LMoveAxisName_X = "LSX"; // + m_PlayerNumber
+            m_LMoveAxisName_Y = "LSY";
+
+            m_RMoveAxisName_X = "RSX";
+            m_RMoveAxisName_Y = "RSY";
+
+            m_LMoveInputValue_RB = "RT";
+            m_LMoveInputValue_RT = "A";//Retweet lel
+            m_LMoveInputValue_LT = "LT";
+
+
+            m_KeyBoard_Axe_X = "Horizontal";
+            m_KeyBoard_Axe_Y = "Vertical";
+        
+
+        //else if(Id_Player ==1)
+        //{
+        //    m_LMoveAxisName_X[Id_Player] = "LSX_J2"; // + m_PlayerNumber
+        //    m_LMoveAxisName_Y[Id_Player] = "LSY_J2";
+
+        //    m_RMoveAxisName_X[Id_Player] = "RSX_J2";
+        //    m_RMoveAxisName_Y[Id_Player] = "RSY_J2";
+
+        //    m_LMoveInputValue_RB[Id_Player] = "RB_J2";
+        //    m_LMoveInputValue_RT[Id_Player] = "A_J2";//Retweet lel
+
+        //    m_KeyBoard_Axe_X[Id_Player] = "Horizontal_P2";
+        //    m_KeyBoard_Axe_Y[Id_Player] = "Vertical_P2";
+        //}
+
+
 
     }
     //Deplacement en diagonale 
@@ -130,8 +170,14 @@ public class Player : MonoBehaviour
         {
             Vector3 direction = Camera.main.transform.right;
             //Debug.Log("RIGHT :" + Camera.main.transform.forward * m_AngleX);
-            m_Tr.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed);
-
+            if (Is_Fired == false)
+            {
+                m_Tr.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed);
+            }
+            else
+            {
+                m_Tr.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed)/ Slowed;
+            }
             //Debug.Log(direction);
             //Debug.Log("Right : " + Camera.main.transform.right);
             //Debug.Log("Direction X" + direction.x);
@@ -151,9 +197,17 @@ public class Player : MonoBehaviour
 
             // m_Tr.position += (((direction * -m_LMoveInputValue_Y)) * Time.deltaTime * m_Speed);
             // Debug.Log(direction * -m_LMoveInputValue_Y);
+            if (Is_Fired == false)
+            {
+                m_Tr.position += (((direction * -(m_LMoveInputValue_Y) * Time.deltaTime * m_Speed)));
+            }
+            else
+            {
+                m_Tr.position += ((((direction * -(m_LMoveInputValue_Y) * Time.deltaTime * m_Speed)))/ Slowed);
+            }
 
-            m_Tr.position += (((direction * -(m_LMoveInputValue_Y) * Time.deltaTime * m_Speed)));
-            //Debug.Log("Forward : " + Camera.main.transform.forward);
+            
+                //Debug.Log("Forward : " + Camera.main.transform.forward);
             // Debug.Log(direction * -m_LMoveInputValue_Y);
 
 
@@ -166,9 +220,14 @@ public class Player : MonoBehaviour
         if (m_KeyBoard_X_Value > 0.1 || m_KeyBoard_X_Value < -0.1)
         {
             Vector3 direction = Camera.main.transform.right;
-
-            m_Tr.position += (direction * m_KeyBoard_X_Value * Time.deltaTime * m_Speed);
-
+            if (Is_Fired == false)
+            {
+                m_Tr.position += (direction * m_KeyBoard_X_Value * Time.deltaTime * m_Speed);
+            }
+            else
+            {
+                m_Tr.position += ((direction * m_KeyBoard_X_Value * Time.deltaTime * m_Speed)/ Slowed);
+            }
             //Debug.Log(direction);
             //Debug.Log("Right : " + Camera.main.transform.right);
         }
@@ -183,9 +242,15 @@ public class Player : MonoBehaviour
 
             //m_Tr.position += (((direction * -m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed));
             // Debug.Log(direction * -m_LMoveInputValue_Y);
-
-            m_Tr.position += (((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed)));
-            // Debug.Log("Forward : " + Camera.main.transform.forward);
+            if (Is_Fired == false)
+            {
+                m_Tr.position += (((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed)));
+            }
+            else
+            {
+                m_Tr.position += ((((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed)))/ Slowed);
+            }
+                // Debug.Log("Forward : " + Camera.main.transform.forward);
         }
 
 
@@ -205,9 +270,14 @@ public class Player : MonoBehaviour
         s_Bullet.Special_Attack(Numberbullets);
     }
 
+
+    void Dash()
+    {
+        transform.position += transform.forward * 20;
+    }
     void Rotate()
     {
-        m_Tr.eulerAngles = new Vector3(0, -RAngle, 0);
+        m_Tr.eulerAngles = new Vector3(0, -LAngle, 0);
     }
     // Update is called once per frame
     void Update()
@@ -219,25 +289,60 @@ public class Player : MonoBehaviour
         m_RMoveInputValue_X = Input.GetAxisRaw(m_RMoveAxisName_X);
         m_RMoveInputValue_Y = Input.GetAxisRaw(m_RMoveAxisName_Y);
         RAngle = (Mathf.Atan2(m_RMoveInputValue_X, m_RMoveInputValue_Y) * Mathf.Rad2Deg);
-        //Debug.Log(RAngle);
+        //if (Id_Player == 0)
+        //{
+        //    Debug.Log(RAngle);
+        //}
         LAngle = (Mathf.Atan2(m_LMoveInputValue_X, m_LMoveInputValue_Y) * Mathf.Rad2Deg);
         //Debug.Log(LAngle);
 
         m_KeyBoard_X_Value = Input.GetAxisRaw(m_KeyBoard_Axe_X);
         m_KeyBoard_Y_Value = Input.GetAxisRaw(m_KeyBoard_Axe_Y);
-        if (Input.GetButton(m_LMoveInputValue_RB))
+        Debug.Log("Valeur de l'axis RT" + Input.GetAxis(m_LMoveInputValue_RB));
+
+
+        if (Input.GetAxis(m_LMoveInputValue_RB ) > 0.0f)
         {
             Shoot(-RAngle);
+            Is_Fired = true;
         }
+        else
+        {
+            Is_Fired = false;
+        }
+
+
+        Debug.Log("Is_fireded" + Is_Fired);
+
 
         if (Input.GetButton(m_LMoveInputValue_RT))
         {
-            SpecialShoot(number_of_bullets_spe_attack);
+            SpecialShoot(number_of_bullets_spe_attack);//Special attack function
         }
 
+        if(Input.GetButton(m_LMoveInputValue_LT))
+        {
+            /*
+            When dash button is pressed 
+            the bool "DashButton_Isrealeasd" set to false
 
-        MovePlayer();
-        Rotate();
+            and he was only set at true whene the dash button is releasd 
+            */
+            if (DashButton_Isrealeasd == true)
+            {
+                Dash();//Dash Function
+                DashButton_Isrealeasd = false;
+            }
+            if(Input.GetButtonDown(m_LMoveInputValue_LT))
+            {
+                DashButton_Isrealeasd = true;
+            }
+        }
+
+        MovePlayer();//Movement of the player
+        Rotate();//Rotation of the player
+
+
         // Debug.Log("Left Stick X Player " + m_PlayerNumber + " = " + m_MoveInputValue_X);
         // Debug.Log("Left Stick Y Player " + m_PlayerNumber + " = " + m_MoveInputValue_Y);
     }
@@ -265,3 +370,16 @@ Plus serieusement
     le personnage fait une transition droite devant lui sur une position donner
     
 */
+
+
+    /**
+    Priorité 1 : le Dash //En cours et bien avancer
+    Priorité 2 : faire des tires en cones //Ok
+    Priotité 3 : tools mapping //Gné ?
+
+    équilibrage : ralentir la vitesse du perso quand on tire//Ok
+    
+    feedback : le hit //
+    
+    Bonus : Gameplay J2
+    */

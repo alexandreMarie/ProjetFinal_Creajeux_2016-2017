@@ -4,7 +4,7 @@ public class PlayerBullet : MonoBehaviour
 {
     #region Serialized fields
     [SerializeField]
-    [Range(1.0f, 200.0f)]
+    [Range(1.0f, 2000.0f)]
     private float speed = 10.0f;
 
     [SerializeField]
