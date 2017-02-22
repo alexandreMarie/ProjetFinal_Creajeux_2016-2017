@@ -35,7 +35,7 @@ public class LifeManager : MonoBehaviour
         // MAJ de l'UI seulement quand appelée
         if (imgFilledBar != null)
         {
-            Debug.Log("Max_Value : " + _value / (float)_maxValue);
+            //Debug.Log("Max_Value : " + _value / (float)_maxValue);
             imgFilledBar.fillAmount = _value / (float)_maxValue;
         }
     }

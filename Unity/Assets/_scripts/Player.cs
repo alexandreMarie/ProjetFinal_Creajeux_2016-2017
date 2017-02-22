@@ -230,6 +230,11 @@ public class Player : MonoBehaviour
             Shoot(-RAngle);
         }
 
+        if (Input.GetButton("Fire1"))
+        {
+            Shoot(90);
+        }
+
         if (Input.GetButton(m_LMoveInputValue_RT))
         {
             SpecialShoot(number_of_bullets_spe_attack);
@@ -245,7 +250,7 @@ public class Player : MonoBehaviour
     {
         Life -= 1;
         life_Bar.UpdateLifeBar(Life_Max, Life);
-        Debug.Log("Hit ! \n Life : " + Life);
+        //Debug.Log("Hit ! \n Life : " + Life);
     }
 }
 
