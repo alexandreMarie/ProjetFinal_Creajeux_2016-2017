@@ -25,7 +25,7 @@ public class Hit_Boss : MonoBehaviour {
 
     void Update()
     {
-        //Debug.Log("lifeBar : " + lifeBar);
+        Debug.Log("lifeBar : " + lifeBar);
     }
 
     // Use this for initialization
@@ -33,7 +33,7 @@ public class Hit_Boss : MonoBehaviour {
     {
         if(col.tag == "Bullet")
         {
-            //Debug.Log("Boss toucher" + lifeBar);
+            Debug.Log("Boss toucher" + lifeBar);
             lifeBar -= 1;
             Lief_Bar.UpdateLifeBar((int)Max_Life,(int)lifeBar);
             Destroy(col.gameObject);

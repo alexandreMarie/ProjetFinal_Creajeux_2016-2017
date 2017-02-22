@@ -16,7 +16,7 @@ public class Add_Bullet : MonoBehaviour {
     public void Shoot(float Rotation)
     {
         //Transform  Temps_Transform = m_Tr;
-        //Debug.Log("Test");
+        Debug.Log("Test");
         //Transform Temp_Transforme = Player_Transform;
         Vector3 PosBalle = new Vector3(transform.position.x, transform.position.y + 20, transform.position.z);
         Quaternion Quater_Bullet = transform.rotation;
