@@ -33,7 +33,7 @@ public class bulletScript : MonoBehaviour
         {
             //ONLY WORKS WITH NON KINEMATIC OBJECTS
             //col.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
-            Debug.Log("Destroy all bullets");
+            //Debug.Log("Destroy all bullets");
             col.GetComponent<Player>().HitByBullet();
             Destroy(gameObject);
         }
