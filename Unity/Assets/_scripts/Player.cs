@@ -311,9 +311,16 @@ public class Player : MonoBehaviour
             Is_Fired = false;
         }
 
+<<<<<<< HEAD
 
         Debug.Log("Is_fireded" + Is_Fired);
 
+=======
+        if (Input.GetButton("Fire1"))
+        {
+            Shoot(90);
+        }
+>>>>>>> 7debedbeba009f79efc586c53bd33e7e0e81450b
 
         if (Input.GetButton(m_LMoveInputValue_RT))
         {

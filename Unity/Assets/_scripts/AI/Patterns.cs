@@ -23,29 +23,32 @@ using UnityEngine;
 
 public class Patterns : MonoBehaviour
 {
-    private const float bps = 60.38f; // 60.38 bullets per second (generic phyllotaxis)
-
     #region Patterns Coroutines
-    private IEnumerator Phyllotaxis(Transform bullet, float divergence, uint bulletQuantity)
+    private IEnumerator Phyllotaxis(Transform bullet, float divergence)
     {
         float phi = 0.0f;
+        uint floret = 0;
 
-        for (int floret = 0; floret < bulletQuantity; floret++)
+        while (true)
         {
             phi = floret * divergence;
 
             Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
 
+            floret++;
             yield return new WaitForSeconds(0.05f);
         }
 
     }
 
-    private IEnumerator FocusedPhyllotaxis(Transform bullet, float divergence, uint bulletQuantity)
+    private IEnumerator FocusedPhyllotaxis(Transform bullet, float divergence)
     {
-        for (int floret = 0; floret < bulletQuantity; floret++)
+        float phi = 0.0f;
+        uint floret = 0;
+
+        while (true)
         {
-            float phi = floret * divergence;
+            phi = floret * divergence;
             if ((phi % 360 > 200) && (phi % 360 < 250))
                 Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
 
@@ -53,12 +56,14 @@ public class Patterns : MonoBehaviour
         }
     }
 
-    private IEnumerator OpenPhyllotaxis(Transform bullet, float divergence, uint bulletQuantity)
+    private IEnumerator OpenPhyllotaxis(Transform bullet, float divergence)
     {
         int i1 = 100;
         int i2 = 170;
 
-        for (int floret = 0; floret < bulletQuantity; floret++)
+        uint floret = 0;
+
+        while (true)
         {
             float phi = floret * divergence;
             if ((phi % 360 < i1) || (phi % 360 > i2))
@@ -121,19 +126,19 @@ public class Patterns : MonoBehaviour
     #endregion
 
     #region Accessors
-    public void LaunchPhyllotaxis(Transform bullet, float divergence, uint bulletQuantity)
+    public void LaunchPhyllotaxis(Transform bullet, float divergence)
     {
-        StartCoroutine(Phyllotaxis(bullet, divergence, bulletQuantity));
+        StartCoroutine(Phyllotaxis(bullet, divergence));
     }
 
-    public void LaunchFocusedPhyllotaxis(Transform bullet, float divergence, uint bulletQuantity)
+    public void LaunchFocusedPhyllotaxis(Transform bullet, float divergence)
     {
-        StartCoroutine(FocusedPhyllotaxis(bullet, divergence, bulletQuantity));
+        StartCoroutine(FocusedPhyllotaxis(bullet, divergence));
     }
 
-    public void LaunchOpenPhyllotaxis(Transform bullet, float divergence, uint bulletQuantity)
+    public void LaunchOpenPhyllotaxis(Transform bullet, float divergence)
     {
-        StartCoroutine(OpenPhyllotaxis(bullet, divergence, bulletQuantity));
+        StartCoroutine(OpenPhyllotaxis(bullet, divergence));
     }
 
     public void LaunchBurst(Transform bullet, uint bulletQuantity)
@@ -141,9 +146,9 @@ public class Patterns : MonoBehaviour
         StartCoroutine(Burst(bullet, bulletQuantity));
     }
 
-    public void LaunchOpenBurst(Transform bullet, uint bulletQuantity)
+    public void LaunchOpenBurst(Transform bullet, uint bulletQuantity, uint angle1 = 0, uint angle2 = 100)
     {
-        StartCoroutine(OpenBurst(bullet, bulletQuantity, 0, 100));
+        StartCoroutine(OpenBurst(bullet, bulletQuantity, angle1, angle2));
     }
     #endregion
 }
