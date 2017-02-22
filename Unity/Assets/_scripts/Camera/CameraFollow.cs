@@ -89,10 +89,9 @@ public class CameraFollow : MonoBehaviour {
         for (int i = 0; i<distanceAll.Count;i++)
             distanceMax = Mathf.Max(distanceMax, distanceAll[i]);
             CamOffset = distanceMax * 0.9f;
-        
-        if (distanceMax < 140)
+        if (distanceMax > 180 && distanceMax <280)
         {
-            rotateCam = 65.0f;
+            rotateCam = 40.0f;
         }
         else if(distanceMax >280)
         {
@@ -107,8 +106,9 @@ public class CameraFollow : MonoBehaviour {
         for (int i = 0; i < targets.Length; i++)
         {
             float distanceZTargetToCam = transform.position.z - targets[i].position.z;
-            if (distanceZTargetToCam < 20)
+            if (distanceZTargetToCam > 200)
                 setFieldOfView = 65;
+           // Debug.Log(distanceZTargetToCam);
 
         }
         
