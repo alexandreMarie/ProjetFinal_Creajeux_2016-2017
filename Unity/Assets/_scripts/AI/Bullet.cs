@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class bulletScript : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
     #region Serialized fields
     [SerializeField]
@@ -16,7 +16,6 @@ public class bulletScript : MonoBehaviour
     void Start()
     {
         count++;
-        //Debug.Log(count);
         Destroy(gameObject, destroyTime);
     }
     void Update()
@@ -28,12 +27,9 @@ public class bulletScript : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        //Debug.Log("Hit");
         if (col.tag == "Player")
         {
             //ONLY WORKS WITH NON KINEMATIC OBJECTS
-            //col.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
-            //Debug.Log("Destroy all bullets");
             col.GetComponent<Player>().HitByBullet();
             Destroy(gameObject);
         }

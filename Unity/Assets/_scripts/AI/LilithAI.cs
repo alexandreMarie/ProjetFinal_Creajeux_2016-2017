@@ -9,26 +9,20 @@ using System.Collections;
 
 /// <summary>
 /// TODO
-/// - Check if bulletQuantityPhyllotaxis can be altered or, ideally, fully removed.
-/// - Inheritance : Hit_Boss
+/// - stuffs
 /// </summary>
 
-public class LilithAI : MonoBehaviour
+public class LilithAI : BossManager
 {
     #region Variables
     [SerializeField]
     private Transform bullet = null;
 
     [SerializeField]
-    private float life = 100.0f;
-    
-    [SerializeField]
     private float divergence = 137.5f; //Angular divergence
     [SerializeField]
     private float time = 15.0f;
 
-    [SerializeField]
-    private uint bulletQuantityPhyllotaxis = 10000;
     [SerializeField]
     private uint bulletQuantityBurst = 20; //Quantity of bullets to fire for each burst
 
@@ -44,7 +38,7 @@ public class LilithAI : MonoBehaviour
 
     void Start()
     {
-        Hit_Boss.LifeBar = life;
+        Life = 10000.0f;
 
         Lilith = GetComponentInParent<Patterns>();
 
@@ -66,22 +60,21 @@ public class LilithAI : MonoBehaviour
             Debug.Log("Stop");
         }
 
-        if (Hit_Boss.LifeBar / life >= 0.751f)
+        if (Life / MaxLife >= 0.751f)
         {
             if (lifeState == LifeState.FOUR)
             {
                 divergence = 111.5f;
 
                 LilithEvents.Invoke();
-                LilithEvents += BulletCancel;
 
                 lifeState = LifeState.THREE;
 
-                StartCoroutine(AI1(bulletQuantityPhyllotaxis));
+                StartCoroutine(AI1());
             }
         }
 
-        if (Hit_Boss.LifeBar / life >= 0.501f && Hit_Boss.LifeBar / life <= 0.750f)
+        if (Life / MaxLife >= 0.501f && Life / MaxLife <= 0.750f)
         {
             if (lifeState == LifeState.THREE)
             {
@@ -91,15 +84,14 @@ public class LilithAI : MonoBehaviour
                 StopAllCoroutines();
 
                 LilithEvents.Invoke();
-                LilithEvents += BulletCancel;
 
                 lifeState = LifeState.TWO;
 
-                StartCoroutine(AI2(bulletQuantityPhyllotaxis));
+                StartCoroutine(AI2());
             }
         }
 
-        if (Hit_Boss.LifeBar / life >= 0.251f && Hit_Boss.LifeBar / life <= 0.500f)
+        if (Life / MaxLife >= 0.251f && Life / MaxLife <= 0.500f)
         {
             if (lifeState == LifeState.TWO)
             {
@@ -109,15 +101,14 @@ public class LilithAI : MonoBehaviour
                 StopAllCoroutines();
 
                 LilithEvents.Invoke();
-                LilithEvents += BulletCancel;
 
                 lifeState = LifeState.ONE;
 
-                StartCoroutine(AI3(bulletQuantityPhyllotaxis));
+                StartCoroutine(AI3());
             }
         }
 
-        if (Hit_Boss.LifeBar / life <= 0.250f)
+        if (Life / MaxLife <= 0.250f)
         {
 
             if (lifeState == LifeState.ONE)
@@ -128,18 +119,17 @@ public class LilithAI : MonoBehaviour
                 StopAllCoroutines();
 
                 LilithEvents.Invoke();
-                LilithEvents += BulletCancel;
 
                 lifeState = LifeState.LAST;
 
-                StartCoroutine(AI4(bulletQuantityPhyllotaxis));
+                StartCoroutine(AI4());
             }
         }
     }
 
-    private IEnumerator AI1(uint bulletQtyPhyl)
+    private IEnumerator AI1()
     {
-        Lilith.LaunchPhyllotaxis(bullet, divergence, bulletQtyPhyl);
+        Lilith.LaunchPhyllotaxis(bullet, divergence);
 
         while (true)
         {
@@ -148,9 +138,9 @@ public class LilithAI : MonoBehaviour
         }
     }
 
-    private IEnumerator AI2(uint bulletQtyPhyl)
+    private IEnumerator AI2()
     {
-        Lilith.LaunchPhyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis);
+        Lilith.LaunchPhyllotaxis(bullet, divergence);
 
         while (true)
         {
@@ -159,9 +149,9 @@ public class LilithAI : MonoBehaviour
         }
     }
 
-    private IEnumerator AI3(uint bulletQtyPhyl)
+    private IEnumerator AI3()
     {
-        Lilith.LaunchPhyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis);
+        Lilith.LaunchPhyllotaxis(bullet, divergence);
 
         while (true)
         {
@@ -170,9 +160,9 @@ public class LilithAI : MonoBehaviour
         }
     }
 
-    private IEnumerator AI4(uint bulletQtyPhyl)
+    private IEnumerator AI4()
     {
-        Lilith.LaunchPhyllotaxis(bullet, divergence, bulletQuantityPhyllotaxis);
+        Lilith.LaunchPhyllotaxis(bullet, divergence);
 
         while (true)
         {
