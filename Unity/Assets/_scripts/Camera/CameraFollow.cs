@@ -36,18 +36,8 @@ public class CameraFollow : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.A))
-        {
-            CameraManager.Instance.Change = true;
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-            CameraManager.Instance.Change = false;
-        }
-
         if (!CameraManager.Instance.Change)
         {
             Gravity();
@@ -61,11 +51,25 @@ public class CameraFollow : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, destinationRot, 0.03f);
             Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, setFieldOfView, 0.03f);
         }
-       /* else
+        /* else
+         {
+             transform.position = Vector3.SmoothDamp(transform.position, CameraManager.Instance.CameraDoor[0].transform.position, ref velocity, dampTime);
+             transform.rotation = Quaternion.Slerp(transform.rotation, CameraManager.Instance.CameraDoor[0].transform.rotation, 0.1f);
+         }*/
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.A))
         {
-            transform.position = Vector3.SmoothDamp(transform.position, CameraManager.Instance.CameraDoor[0].transform.position, ref velocity, dampTime);
-            transform.rotation = Quaternion.Slerp(transform.rotation, CameraManager.Instance.CameraDoor[0].transform.rotation, 0.1f);
-        }*/
+            CameraManager.Instance.Change = true;
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            CameraManager.Instance.Change = false;
+        }
+
+        
         //Debug.Log(dampTime);
     }
 
