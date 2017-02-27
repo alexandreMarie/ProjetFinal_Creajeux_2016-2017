@@ -17,6 +17,8 @@ public class LilithAI : BossManager
     #region Variables
     [SerializeField]
     private Transform bullet = null;
+    [SerializeField]
+    private Transform snake = null;
 
     [SerializeField]
     private float divergence = 137.5f; //Angular divergence
@@ -71,6 +73,7 @@ public class LilithAI : BossManager
                 lifeState = LifeState.THREE;
 
                 StartCoroutine(AI1());
+                StartCoroutine(Snake()); 
             }
         }
 
@@ -168,6 +171,18 @@ public class LilithAI : BossManager
         {
             Lilith.LaunchBurst(bullet, bulletQuantityBurst);
             yield return new WaitForSeconds(time / 6);
+        }
+    }
+
+    private IEnumerator Snake() // SNEK
+    {
+        while (true)
+        {
+            Vector3 angle = players[0].transform.position - transform.position;
+
+            Instantiate(snake, transform.position, Quaternion.LookRotation(angle));
+
+            yield return new WaitForSeconds(1.0f);
         }
     }
 }

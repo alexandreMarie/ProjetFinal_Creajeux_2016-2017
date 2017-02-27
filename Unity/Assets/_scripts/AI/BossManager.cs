@@ -1,9 +1,22 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// BOSS MANAGER FILE
+/// Contains all the common boss behaviors.
+/// </summary>
+
+/// <summary>
+/// TO DO
+/// - Add more common behaviors
+/// </summary>
+
 public class BossManager : MonoBehaviour
 {
     [SerializeField]
     private LifeManager lifeManager;
+
+    [SerializeField]
+    private Transform[] players = null;
 
     static float maxLife;
     public static float MaxLife

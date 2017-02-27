@@ -252,6 +252,17 @@ public class Player : MonoBehaviour
         life_Bar.UpdateLifeBar(Life_Max, Life);
         //Debug.Log("Hit ! \n Life : " + Life);
     }
+
+    public void OnTriggerEnter(Collider col)
+    {
+        if (col.tag == "Bullet")
+        {
+            //ONLY WORKS WITH NON KINEMATIC OBJECTS
+            HitByBullet();
+            Destroy(col.gameObject);
+        }
+
+    }
 }
 
 
