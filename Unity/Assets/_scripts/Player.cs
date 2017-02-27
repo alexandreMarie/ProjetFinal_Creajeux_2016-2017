@@ -7,6 +7,12 @@ public class Player : MonoBehaviour
 
     Add_Bullet s_Bullet;
 
+    bool DashButton_Isrealeasd;
+    bool Is_Fired;
+
+    [SerializeField]
+    private float Slowed;//Stats apply on the the speed of the player, when he shoot
+
     [SerializeField]
     private float m_AngleX = 0;
     [SerializeField]
@@ -47,6 +53,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private Transform m_Tr;
+
+    private string m_LMoveInputValue_LT;
 
     private string m_LMoveInputValue_RB;
 
@@ -104,6 +112,7 @@ public class Player : MonoBehaviour
         m_RMoveAxisName_X = "RSX";
         m_RMoveAxisName_Y = "RSY";
 
+        m_LMoveInputValue_LT = "LB";
         m_LMoveInputValue_RB = "RB";
         m_LMoveInputValue_RT = "A";//Retweet lel
 
@@ -167,8 +176,14 @@ public class Player : MonoBehaviour
         {
             Vector3 direction = Camera.main.transform.right;
 
-            m_Tr.position += (direction * m_KeyBoard_X_Value * Time.deltaTime * m_Speed);
-
+            if (Is_Fired == false)
+            {
+                m_Tr.position += (((direction * (m_KeyBoard_X_Value) * Time.deltaTime * m_Speed)));
+            }
+            else
+            {
+                m_Tr.position += ((((direction * (m_KeyBoard_X_Value) * Time.deltaTime * m_Speed))) / Slowed);
+            }
             //Debug.Log(direction);
             //Debug.Log("Right : " + Camera.main.transform.right);
         }
@@ -184,7 +199,16 @@ public class Player : MonoBehaviour
             //m_Tr.position += (((direction * -m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed));
             // Debug.Log(direction * -m_LMoveInputValue_Y);
 
-            m_Tr.position += (((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed)));
+            //m_Tr.position += (((direction * -m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed));
+            // Debug.Log(direction * -m_LMoveInputValue_Y);
+            if (Is_Fired == false)
+            {
+                m_Tr.position += (((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed)));
+            }
+            else
+            {
+                m_Tr.position += ((((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed))) / Slowed);
+            }
             // Debug.Log("Forward : " + Camera.main.transform.forward);
         }
 
@@ -207,7 +231,7 @@ public class Player : MonoBehaviour
 
     void Rotate()
     {
-        m_Tr.eulerAngles = new Vector3(0, -RAngle, 0);
+        m_Tr.eulerAngles = new Vector3(0, -LAngle, 0);
     }
     // Update is called once per frame
     void Update()
@@ -225,26 +249,59 @@ public class Player : MonoBehaviour
 
         m_KeyBoard_X_Value = Input.GetAxisRaw(m_KeyBoard_Axe_X);
         m_KeyBoard_Y_Value = Input.GetAxisRaw(m_KeyBoard_Axe_Y);
-        if (Input.GetButton(m_LMoveInputValue_RB))
+
+        if (Input.GetAxis(m_LMoveInputValue_RB) > 0.0f)
         {
             Shoot(-RAngle);
+            Is_Fired = true;
         }
+        else
+        {
+            Is_Fired = false;
+        }
+
+      
 
         if (Input.GetButton("Fire1"))
         {
+          
             Shoot(90);
         }
-
+        
         if (Input.GetButton(m_LMoveInputValue_RT))
         {
             SpecialShoot(number_of_bullets_spe_attack);
         }
 
 
+        if (Input.GetButton(m_LMoveInputValue_LT))
+        {
+            /*
+            When dash button is pressed 
+            the bool "DashButton_Isrealeasd" set to false
+
+            and he was only set at true whene the dash button is releasd 
+            */
+            if (DashButton_Isrealeasd == true)
+            {
+                Debug.Log("Dash Test");
+                Dash();//Dash Function
+                DashButton_Isrealeasd = false;
+            }
+            if (Input.GetButtonDown(m_LMoveInputValue_LT))
+            {
+                DashButton_Isrealeasd = true;
+            }
+        }
+
         MovePlayer();
         Rotate();
         // Debug.Log("Left Stick X Player " + m_PlayerNumber + " = " + m_MoveInputValue_X);
         // Debug.Log("Left Stick Y Player " + m_PlayerNumber + " = " + m_MoveInputValue_Y);
+    }
+    void Dash()
+    {
+        transform.position += transform.forward * 20;
     }
     public void HitByBullet()
     {
