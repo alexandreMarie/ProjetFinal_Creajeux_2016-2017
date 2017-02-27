@@ -1,7 +1,18 @@
 ﻿using UnityEngine;
-
+using UnityEditor;
 public class Player : MonoBehaviour
 {
+
+
+    [SerializeField]
+    bool Invicible;
+
+    [SerializeField]
+    int Distance_moved;
+
+
+
+
     [SerializeField]
     private GameObject Bullet;
 
@@ -77,6 +88,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float m_RotateInputValue;
 
+
+    [Range(10, 20)]
+    public int Distance_Max = 0;
+    //    public Slider Frame_Of_Invicibility;
+
     public void Awake()
     {
         m_Rb = GetComponentInChildren<Rigidbody>();
@@ -119,6 +135,7 @@ public class Player : MonoBehaviour
         m_KeyBoard_Axe_X = "Horizontal";
         m_KeyBoard_Axe_Y = "Vertical";
 
+       
     }
     //Deplacement en diagonale 
     void MovePlayer()
@@ -273,7 +290,20 @@ public class Player : MonoBehaviour
             SpecialShoot(number_of_bullets_spe_attack);
         }
 
-
+        if (Distance_moved > 0)
+        {
+            Debug.Log("Dash Test");
+            Dash();//Dash Function
+            if (Distance_moved > 1  && Distance_moved <Distance_Max)
+            {
+                Set_Invicible(true);
+            }
+            else
+            {
+                Set_Invicible(false);
+            }
+            Distance_moved -=  1;
+        }
         if (Input.GetButton(m_LMoveInputValue_LT))
         {
             /*
@@ -284,8 +314,7 @@ public class Player : MonoBehaviour
             */
             if (DashButton_Isrealeasd == true)
             {
-                Debug.Log("Dash Test");
-                Dash();//Dash Function
+                Distance_moved = 15;
                 DashButton_Isrealeasd = false;
             }
             if (Input.GetButtonDown(m_LMoveInputValue_LT))
@@ -301,7 +330,7 @@ public class Player : MonoBehaviour
     }
     void Dash()
     {
-        transform.position += transform.forward * 20;
+        transform.position += transform.forward  * 3;
     }
     public void HitByBullet()
     {
@@ -309,6 +338,17 @@ public class Player : MonoBehaviour
         life_Bar.UpdateLifeBar(Life_Max, Life);
         //Debug.Log("Hit ! \n Life : " + Life);
     }
+
+    public bool Get_Invicible()
+    {
+        return Invicible;
+    }
+
+    public void Set_Invicible(bool _State)
+    {
+        Invicible = _State;
+    }
+
 }
 
 
