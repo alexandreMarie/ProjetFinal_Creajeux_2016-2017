@@ -10,7 +10,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     int Distance_moved;
 
-
+    float Regen_Stamina;
+    int Distance_Maked;
 
 
     [SerializeField]
@@ -61,6 +62,9 @@ public class Player : MonoBehaviour
 
     private string m_RotateAxisName;
     private Rigidbody m_Rb;
+
+    [SerializeField]
+    private float CoolDown_Dash;
 
     [SerializeField]
     private Transform m_Tr;
@@ -140,47 +144,30 @@ public class Player : MonoBehaviour
     //Deplacement en diagonale 
     void MovePlayer()
     {
-        //if (m_LMoveInputValue_X > 2 || m_LMoveInputValue_X < 2)
-        //{
-        //    Vector3 direction = Camera.main.transform.right;
 
-        //    direction.x = 0;
-        //    direction.Normalize();
-        //    m_Tr.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed);
-        //    //Debug.Log(direction * m_LMoveInputValue_X);
-        //}
-
-        //if (m_LMoveInputValue_Y > 2 || m_LMoveInputValue_Y < 2)
 
         if (m_LMoveInputValue_X > 0.1 || m_LMoveInputValue_X < -0.1)
         {
             Vector3 direction = Camera.main.transform.right;
-            //Debug.Log("RIGHT :" + Camera.main.transform.forward * m_AngleX);
+          
             m_Tr.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed);
 
-            //Debug.Log(direction);
-            //Debug.Log("Right : " + Camera.main.transform.right);
-            //Debug.Log("Direction X" + direction.x);
-            //Debug.Log("Direction X" + -(m_LMoveInputValue_X * Mathf.Sin(45.0f)));
-            //Debug.Log(direction * m_LMoveInputValue_X);
+
         }
 
 
         if (m_LMoveInputValue_Y > 0.1 || m_LMoveInputValue_Y < -0.1)
         {
             Vector3 direction = Camera.main.transform.forward;
-            //direction /= -1;
-            //Debug.Log("Forward :" + Camera.main.transform.forward * m_AngleY);
+
             direction.y = 0;
             direction.Normalize();
 
 
-            // m_Tr.position += (((direction * -m_LMoveInputValue_Y)) * Time.deltaTime * m_Speed);
-            // Debug.Log(direction * -m_LMoveInputValue_Y);
+
 
             m_Tr.position += (((direction * -(m_LMoveInputValue_Y) * Time.deltaTime * m_Speed)));
-            //Debug.Log("Forward : " + Camera.main.transform.forward);
-            // Debug.Log(direction * -m_LMoveInputValue_Y);
+
 
 
         }
@@ -201,8 +188,7 @@ public class Player : MonoBehaviour
             {
                 m_Tr.position += ((((direction * (m_KeyBoard_X_Value) * Time.deltaTime * m_Speed))) / Slowed);
             }
-            //Debug.Log(direction);
-            //Debug.Log("Right : " + Camera.main.transform.right);
+
         }
 
         if (m_KeyBoard_Y_Value > 0.1 || m_KeyBoard_Y_Value < -0.1)
@@ -213,11 +199,7 @@ public class Player : MonoBehaviour
             direction.Normalize();
 
 
-            //m_Tr.position += (((direction * -m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed));
-            // Debug.Log(direction * -m_LMoveInputValue_Y);
 
-            //m_Tr.position += (((direction * -m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed));
-            // Debug.Log(direction * -m_LMoveInputValue_Y);
             if (Is_Fired == false)
             {
                 m_Tr.position += (((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed)));
@@ -226,7 +208,7 @@ public class Player : MonoBehaviour
             {
                 m_Tr.position += ((((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed))) / Slowed);
             }
-            // Debug.Log("Forward : " + Camera.main.transform.forward);
+          
         }
 
 
@@ -234,9 +216,7 @@ public class Player : MonoBehaviour
 
     void Shoot(float Rot)
     {
-        //Transform  Temps_Transform = m_Tr;
-        //s_add_bullet.Shoot();
-        //s_Bullet.Shoot(Rot);
+
         s_Bullet.Shoot(Rot);
     }
 
@@ -290,11 +270,11 @@ public class Player : MonoBehaviour
             SpecialShoot(number_of_bullets_spe_attack);
         }
 
-        if (Distance_moved > 0)
+        if (Distance_Maked < Distance_Max)
         {
             Debug.Log("Dash Test");
             Dash();//Dash Function
-            if (Distance_moved > 1  && Distance_moved <Distance_Max)
+            if (Distance_Maked > 1  && Distance_Maked < Distance_Max)
             {
                 Set_Invicible(true);
             }
@@ -302,7 +282,8 @@ public class Player : MonoBehaviour
             {
                 Set_Invicible(false);
             }
-            Distance_moved -=  1;
+            Distance_Maked +=  1;
+  
         }
         if (Input.GetButton(m_LMoveInputValue_LT))
         {
@@ -312,15 +293,20 @@ public class Player : MonoBehaviour
 
             and he was only set at true whene the dash button is releasd 
             */
-            if (DashButton_Isrealeasd == true)
+            if (DashButton_Isrealeasd == true && CoolDown_Dash <= 0)
             {
-                Distance_moved = 15;
+                Distance_Maked = 0;
+                CoolDown_Dash = 5;
                 DashButton_Isrealeasd = false;
             }
             if (Input.GetButtonDown(m_LMoveInputValue_LT))
             {
                 DashButton_Isrealeasd = true;
             }
+        }
+        if(CoolDown_Dash > 0)
+        {
+            CoolDown_Dash -= Time.deltaTime;
         }
 
         MovePlayer();

@@ -6,7 +6,7 @@ public class LifeManager : MonoBehaviour
 {
     
     Image imgFilledBar;
-
+    Image ImgFille_Endurance_Bar;
     public void Start()
     {
         // Récup de l'image configurée en filled
@@ -16,6 +16,10 @@ public class LifeManager : MonoBehaviour
             if (image.transform.tag == "LifeBar")
             {
                 imgFilledBar = image;
+            }
+            if (image.transform.tag == "StaminaBar")
+            {
+                ImgFille_Endurance_Bar = image;
             }
         }
 
@@ -38,5 +42,14 @@ public class LifeManager : MonoBehaviour
             //Debug.Log("Max_Value : " + _value / (float)_maxValue);
             imgFilledBar.fillAmount = _value / (float)_maxValue;
         }
+
+      
     }
-}
+    public void UpdateStaminaBar(int _maxValue, int _value)
+    {
+        if (ImgFille_Endurance_Bar != null)
+        {
+            ImgFille_Endurance_Bar.fillAmount = _value / (float)_maxValue;
+        }
+    }
+ }
