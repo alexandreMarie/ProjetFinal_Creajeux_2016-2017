@@ -1,1 +1,0 @@
-Dossier contenant les images servant à l'ui
