@@ -20,6 +20,7 @@ public class CameraFollow : MonoBehaviour {
     private float rotateCam;
     private Quaternion camRotation = new Quaternion(0,180,0,0);
     private int setFieldOfView;
+    private bool distance = true;
 
     [SerializeField]
     private Vector3 gravity;
@@ -64,7 +65,11 @@ public class CameraFollow : MonoBehaviour {
         }
     }
 
-   
+    bool IsVisibleFrom(Renderer renderer)
+    {
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+        return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
+    }
 
     void DistanceMax()
     {
@@ -73,7 +78,8 @@ public class CameraFollow : MonoBehaviour {
 
         for (int i = 0; i < targets.Length; i++)
         {
-
+            if (!IsVisibleFrom(targets[i].GetComponent<Renderer>()))
+                distance = false;
             if (targets[i] != targets[targets.Length-1]) // Condition pour que la dernière target du tableau ne passe pas dans la boucle
             {
                 for (int y = i + 1; y < targets.Length; y++)
@@ -88,33 +94,41 @@ public class CameraFollow : MonoBehaviour {
        
         for (int i = 0; i<distanceAll.Count;i++)
             distanceMax = Mathf.Max(distanceMax, distanceAll[i]);
-            CamOffset = distanceMax * 0.9f;
-        if (distanceMax > 180 && distanceMax <280)
+        CamOffset = distanceMax * 0.9f;
+        if (distanceMax < 140)
         {
-            rotateCam = 40.0f;
+            rotateCam = 65.0f;
+            if (distance)
+                camDistance = 100;
         }
-        else if(distanceMax >280)
+        else if (distanceMax > 280)
         {
             rotateCam = 35.0f;
+            if (!distance)
+                camDistance = 130;
         }
         else
-        {
             rotateCam = 50.0f;
-        }
-        if(distanceMax < 150)
+
+        if (distanceMax < 150)
             setFieldOfView = 60;
         for (int i = 0; i < targets.Length; i++)
         {
             float distanceZTargetToCam = transform.position.z - targets[i].position.z;
-            if (distanceZTargetToCam > 200)
+            if (distanceZTargetToCam < 20)
                 setFieldOfView = 65;
-           // Debug.Log(distanceZTargetToCam);
 
         }
-        
+        if (!distance)
+        {
+            dampTime = 0.05f;
+            distance = true;
+        }
+        else
+            dampTime = 0.15f;
 
         distanceAll.Clear();
-       
+
     }
 
    
