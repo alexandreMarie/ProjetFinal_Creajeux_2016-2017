@@ -29,9 +29,12 @@ public class Bullet : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            //ONLY WORKS WITH NON KINEMATIC OBJECTS
-            col.GetComponent<Player>().HitByBullet();
-            Destroy(gameObject);
+            if (col.GetComponent<Player>().Get_Invicible() == false)
+            {
+                //ONLY WORKS WITH NON KINEMATIC OBJECTS
+                col.GetComponent<Player>().HitByBullet();
+                Destroy(gameObject);
+            }
         }
 
         if (col.tag == "Wall")
