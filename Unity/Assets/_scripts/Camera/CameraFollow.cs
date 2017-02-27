@@ -66,7 +66,7 @@ public class CameraFollow : MonoBehaviour
             transform.position = Vector3.SmoothDamp(transform.position, CameraManager.Instance.CameraDoor[0].transform.position, ref velocity, dampTime);
             transform.rotation = Quaternion.Slerp(transform.rotation, CameraManager.Instance.CameraDoor[0].transform.rotation, 0.1f);
         }*/
-        Debug.Log(dampTime);
+        //Debug.Log(dampTime);
     }
 
     bool IsVisibleFrom(Renderer renderer)
@@ -111,10 +111,10 @@ public class CameraFollow : MonoBehaviour
         else if (distanceMax > 280)
         {
             rotateCam = 35.0f;
-            if (!distance)
+            /*if (!distance)
             {
                 camDistance = 130;
-            }
+            }*/
         }
         else
         {
@@ -131,7 +131,7 @@ public class CameraFollow : MonoBehaviour
         }
         if (!distance)
         {
-
+            //camDistance = 130;
             dampTime = 0.05f;
             distance = true;
         }
