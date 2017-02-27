@@ -10,7 +10,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     int Distance_moved;
 
-    float Regen_Stamina;
+    [SerializeField]
+    int Regen_Stamina;
     int Distance_Maked;
 
 
@@ -223,7 +224,13 @@ public class Player : MonoBehaviour
     void SpecialShoot(int Numberbullets)
     {
         Debug.Log("SpecialShoot");
-        s_Bullet.Special_Attack(Numberbullets);
+        if(Regen_Stamina >= 20)
+        {
+            s_Bullet.Special_Attack(Numberbullets);
+            Regen_Stamina = 0;
+            life_Bar.UpdateStaminaBar(20, 0);
+        }
+      
     }
 
     void Rotate()
@@ -333,6 +340,12 @@ public class Player : MonoBehaviour
     public void Set_Invicible(bool _State)
     {
         Invicible = _State;
+    }
+
+    public void Add_Stamina(int Stamina_Added)
+    {
+        Regen_Stamina += Stamina_Added;
+        life_Bar.UpdateStaminaBar(20, Regen_Stamina);
     }
 
 }

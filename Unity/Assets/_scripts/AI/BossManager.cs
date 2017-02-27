@@ -16,7 +16,7 @@ public class BossManager : MonoBehaviour
     private LifeManager lifeManager;
 
     [SerializeField]
-    private Transform[] players = null;
+    protected Transform[] players;
 
     static float maxLife;
     public static float MaxLife
@@ -57,6 +57,7 @@ public class BossManager : MonoBehaviour
             //stamina ++;
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
             //lifeManager.UpdateStaminaBar(20, (int)stamina);
+            players[1].GetComponent<Player>().Add_Stamina(1);
             Destroy(col.gameObject);
         }
     }
