@@ -16,7 +16,7 @@ public class BossManager : MonoBehaviour
     private LifeManager lifeManager;
 
     [SerializeField]
-    protected Transform[] players;
+    static protected Transform[] players = new Transform[2];
 
     static float maxLife;
     public static float MaxLife
@@ -39,15 +39,16 @@ public class BossManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        int idPlayer = 0;
 
-    //public static float Stamina
-    //{
-    //    get { return stamina; }
-    //    set
-    //    {
-    //        stamina = value;
-    //    }
-    //}
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            players[idPlayer] = go.transform;
+            idPlayer++;
+        }
+    }
 
     void OnTriggerEnter(Collider col)
     {
@@ -57,7 +58,7 @@ public class BossManager : MonoBehaviour
             //stamina ++;
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
             //lifeManager.UpdateStaminaBar(20, (int)stamina);
-            players[1].GetComponent<Player>().Add_Stamina(1);
+            //players[1].GetComponent<Player>().Add_Stamina(1);
             Destroy(col.gameObject);
         }
     }

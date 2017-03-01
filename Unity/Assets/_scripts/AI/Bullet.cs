@@ -29,6 +29,12 @@ public class Bullet : MonoBehaviour
     {
         if (col.tag == "Wall")
             Destroy(gameObject, 0.1f);
+
+        if (col.tag == "Player")
+        {
+            col.GetComponent<Player>().HitByBullet();
+            Destroy(gameObject);
+        }
     }
     public void OnDestroy()
     {

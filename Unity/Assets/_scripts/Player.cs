@@ -2,7 +2,8 @@
 using UnityEditor;
 public class Player : MonoBehaviour
 {
-
+    //A VIRER POUR FAIRE LE CLEANUP
+#pragma warning disable 0414
 
     [SerializeField]
     bool Invicible;
@@ -279,7 +280,7 @@ public class Player : MonoBehaviour
 
         if (Distance_Maked < Distance_Max)
         {
-            Debug.Log("Dash Test");
+            //Debug.Log("Dash Test");
             Dash();//Dash Function
             if (Distance_Maked > 1  && Distance_Maked < Distance_Max)
             {

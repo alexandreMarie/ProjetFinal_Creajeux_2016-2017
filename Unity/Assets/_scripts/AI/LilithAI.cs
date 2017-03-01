@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 /// <summary>
 /// LILITH'S AI FILE
@@ -21,12 +22,12 @@ public class LilithAI : BossManager
     private Transform snake = null;
 
     [SerializeField]
-    private float divergence = 137.5f; //Angular divergence
+    private float divergence = 137.5f; //Angular divergence of the phyllotaxis
     [SerializeField]
     private float time = 15.0f;
 
     [SerializeField]
-    private uint bulletQuantityBurst = 20; //Quantity of bullets to fire for each burst
+    private uint bulletQuantityBurst = 200; //Quantity of bullets to fire for each burst
 
     private Patterns Lilith; // Uppercase L on purpose
 
@@ -73,7 +74,7 @@ public class LilithAI : BossManager
                 lifeState = LifeState.THREE;
 
                 StartCoroutine(AI1());
-                StartCoroutine(Snake()); 
+                //StartCoroutine(Snake());
             }
         }
 
@@ -176,9 +177,11 @@ public class LilithAI : BossManager
 
     private IEnumerator Snake() // SNEK
     {
+        Vector3 angle;
+
         while (true)
         {
-            Vector3 angle = players[0].transform.position - transform.position;
+            angle = players[0].position - transform.position;
 
             Instantiate(snake, transform.position, Quaternion.LookRotation(angle));
 
