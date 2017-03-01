@@ -30,7 +30,7 @@ public class CameraFollow : MonoBehaviour
 
     void Start()
     {
-        camDistance = 100.0f;
+        camDistance = 120.0f;
         bounds = 12.0f;
         setFieldOfView = 60;
 
@@ -108,17 +108,14 @@ public class CameraFollow : MonoBehaviour
 
         if (distanceMax < 140)
         {
-            rotateCam = 65.0f;
+            //rotateCam = 65.0f;
             if (distance)
-                camDistance = 100;
+                camDistance = 120;
         }
         else if (distanceMax > 280)
         {
             rotateCam = 35.0f;
-            /*if (!distance)
-            {
-                camDistance = 130;
-            }*/
+           
         }
         else
         {
@@ -134,7 +131,7 @@ public class CameraFollow : MonoBehaviour
         }
         if (!distance)
         {
-            //camDistance = 130;
+            camDistance = 150;
             dampTime = 0.05f;
             distance = true;
         }
