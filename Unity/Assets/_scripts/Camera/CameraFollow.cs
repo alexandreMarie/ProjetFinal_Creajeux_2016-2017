@@ -129,9 +129,8 @@ public class CameraFollow : MonoBehaviour
         for (int i = 0; i < targets.Length; i++)
         {
             float distanceZTargetToCam = transform.position.z - targets[i].position.z;
-            if (distanceZTargetToCam < 20)
+            if (distanceZTargetToCam < 40)
                 setFieldOfView = 65;
-
         }
         if (!distance)
         {
