@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: chibi_Death_UV.ma
-//Last modified: Fri, Mar 03, 2017 03:33:04 PM
+//Last modified: Fri, Mar 03, 2017 03:34:33 PM
 //Codeset: 1252
 requires maya "2016";
 requires -nodeType "Unfold3DUnfold" "Unfold3D" "Trunk.r2128.release.Feb  3 2015|16:08:48";
@@ -15,8 +15,8 @@ fileInfo "osv" "Microsoft Windows 8 Home Premium Edition, 64-bit  (Build 9200)\n
 createNode transform -s -n "persp";
 	rename -uid "D8BEB9CE-44D8-A514-D4FA-48B085EC31B0";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 0.43667852560193765 5.5782346831929184 25.138154477827086 ;
-	setAttr ".r" -type "double3" -5.1383527546599108 -5758.9999999998445 -1.4289824392606883e-016 ;
+	setAttr ".t" -type "double3" 5.5383218436413149 7.9148860413629407 24.189436093962982 ;
+	setAttr ".r" -type "double3" -10.538352754646144 -6107.0000000000628 -2.0401352091541798e-016 ;
 	setAttr ".rp" -type "double3" -5.3290705182007514e-015 7.9936057773011271e-015 0 ;
 	setAttr ".rpt" -type "double3" -9.4514513059555358e-014 3.6293184146773423e-013 
 		1.0266806412419882e-013 ;
