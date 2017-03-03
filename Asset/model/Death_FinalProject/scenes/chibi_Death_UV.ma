@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: chibi_Death_UV.ma
-//Last modified: Fri, Mar 03, 2017 11:55:13 AM
+//Last modified: Fri, Mar 03, 2017 03:33:04 PM
 //Codeset: 1252
 requires maya "2016";
 requires -nodeType "Unfold3DUnfold" "Unfold3D" "Trunk.r2128.release.Feb  3 2015|16:08:48";
@@ -15,8 +15,8 @@ fileInfo "osv" "Microsoft Windows 8 Home Premium Edition, 64-bit  (Build 9200)\n
 createNode transform -s -n "persp";
 	rename -uid "D8BEB9CE-44D8-A514-D4FA-48B085EC31B0";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 0.43827693720153427 4.0081207898998148 25.229727266915702 ;
-	setAttr ".r" -type "double3" -1.5383527522019185 -5398.9999999938491 -4.8150495236045919e-017 ;
+	setAttr ".t" -type "double3" 0.43667852560193765 5.5782346831929184 25.138154477827086 ;
+	setAttr ".r" -type "double3" -5.1383527546599108 -5758.9999999998445 -1.4289824392606883e-016 ;
 	setAttr ".rp" -type "double3" -5.3290705182007514e-015 7.9936057773011271e-015 0 ;
 	setAttr ".rpt" -type "double3" -9.4514513059555358e-014 3.6293184146773423e-013 
 		1.0266806412419882e-013 ;
@@ -5050,15 +5050,15 @@ createNode mentalrayOptions -s -n "miDefaultOptions";
 createNode mentalrayFramebuffer -s -n "miDefaultFramebuffer";
 	rename -uid "414409E1-417F-A01B-8F6D-A58188DE0A3F";
 createNode lightLinker -s -n "lightLinker1";
-	rename -uid "E8571CC6-4643-F8ED-5554-DE97BB57EA6B";
+	rename -uid "5039A781-4793-3F5C-A326-07BFB5541A76";
 	setAttr -s 3 ".lnk";
 	setAttr -s 3 ".slnk";
 createNode displayLayerManager -n "layerManager";
-	rename -uid "52B0C54D-4218-28DF-F2FF-52A19F06C88D";
+	rename -uid "0241F24F-485E-3426-EFBF-179756A8D2D4";
 createNode displayLayer -n "defaultLayer";
 	rename -uid "4A1DDEA8-484C-06E0-3A8B-1ABCC89C6D0D";
 createNode renderLayerManager -n "renderLayerManager";
-	rename -uid "7C215B35-46B1-C021-3038-828C426415E4";
+	rename -uid "4EF4263B-48B7-F34C-63C4-9EA7AF682714";
 createNode renderLayer -n "defaultRenderLayer";
 	rename -uid "A7D71220-4D78-706F-28C4-098E34D77CE4";
 	setAttr ".g" yes;
