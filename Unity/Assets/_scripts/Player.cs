@@ -346,7 +346,7 @@ public class Player : MonoBehaviour
     public void Add_Stamina(int Stamina_Added)
     {
         Regen_Stamina += Stamina_Added;
-        life_Bar.UpdateStaminaBar(20, Regen_Stamina);
+        life_Bar.UpdateStaminaBar(500, Regen_Stamina);
     }
 
 }
