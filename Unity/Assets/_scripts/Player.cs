@@ -1,11 +1,31 @@
 ﻿using UnityEngine;
-
+using UnityEditor;
 public class Player : MonoBehaviour
 {
+    //A VIRER POUR FAIRE LE CLEANUP
+#pragma warning disable 0414
+
+    [SerializeField]
+    bool Invicible;
+
+    [SerializeField]
+    int Distance_moved;
+
+    [SerializeField]
+    int Regen_Stamina;
+    int Distance_Maked;
+
+
     [SerializeField]
     private GameObject Bullet;
 
     Add_Bullet s_Bullet;
+
+    bool DashButton_Isrealeasd;
+    bool Is_Fired;
+
+    [SerializeField]
+    private float Slowed;//Stats apply on the the speed of the player, when he shoot
 
     [SerializeField]
     private float m_AngleX = 0;
@@ -46,7 +66,12 @@ public class Player : MonoBehaviour
     private Rigidbody m_Rb;
 
     [SerializeField]
+    private float CoolDown_Dash;
+
+    [SerializeField]
     private Transform m_Tr;
+
+    private string m_LMoveInputValue_LT;
 
     private string m_LMoveInputValue_RB;
 
@@ -68,6 +93,11 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float m_RotateInputValue;
+
+
+    [Range(10, 20)]
+    public int Distance_Max = 0;
+    //    public Slider Frame_Of_Invicibility;
 
     public void Awake()
     {
@@ -104,57 +134,42 @@ public class Player : MonoBehaviour
         m_RMoveAxisName_X = "RSX";
         m_RMoveAxisName_Y = "RSY";
 
+        m_LMoveInputValue_LT = "LB";
         m_LMoveInputValue_RB = "RB";
         m_LMoveInputValue_RT = "A";//Retweet lel
 
         m_KeyBoard_Axe_X = "Horizontal";
         m_KeyBoard_Axe_Y = "Vertical";
 
+       
     }
     //Deplacement en diagonale 
     void MovePlayer()
     {
-        //if (m_LMoveInputValue_X > 2 || m_LMoveInputValue_X < 2)
-        //{
-        //    Vector3 direction = Camera.main.transform.right;
 
-        //    direction.x = 0;
-        //    direction.Normalize();
-        //    m_Tr.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed);
-        //    //Debug.Log(direction * m_LMoveInputValue_X);
-        //}
-
-        //if (m_LMoveInputValue_Y > 2 || m_LMoveInputValue_Y < 2)
 
         if (m_LMoveInputValue_X > 0.1 || m_LMoveInputValue_X < -0.1)
         {
             Vector3 direction = Camera.main.transform.right;
-            //Debug.Log("RIGHT :" + Camera.main.transform.forward * m_AngleX);
+          
             m_Tr.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed);
 
-            //Debug.Log(direction);
-            //Debug.Log("Right : " + Camera.main.transform.right);
-            //Debug.Log("Direction X" + direction.x);
-            //Debug.Log("Direction X" + -(m_LMoveInputValue_X * Mathf.Sin(45.0f)));
-            //Debug.Log(direction * m_LMoveInputValue_X);
+
         }
 
 
         if (m_LMoveInputValue_Y > 0.1 || m_LMoveInputValue_Y < -0.1)
         {
             Vector3 direction = Camera.main.transform.forward;
-            //direction /= -1;
-            //Debug.Log("Forward :" + Camera.main.transform.forward * m_AngleY);
+
             direction.y = 0;
             direction.Normalize();
 
 
-            // m_Tr.position += (((direction * -m_LMoveInputValue_Y)) * Time.deltaTime * m_Speed);
-            // Debug.Log(direction * -m_LMoveInputValue_Y);
+
 
             m_Tr.position += (((direction * -(m_LMoveInputValue_Y) * Time.deltaTime * m_Speed)));
-            //Debug.Log("Forward : " + Camera.main.transform.forward);
-            // Debug.Log(direction * -m_LMoveInputValue_Y);
+
 
 
         }
@@ -167,10 +182,15 @@ public class Player : MonoBehaviour
         {
             Vector3 direction = Camera.main.transform.right;
 
-            m_Tr.position += (direction * m_KeyBoard_X_Value * Time.deltaTime * m_Speed);
+            if (Is_Fired == false)
+            {
+                m_Tr.position += (((direction * (m_KeyBoard_X_Value) * Time.deltaTime * m_Speed)));
+            }
+            else
+            {
+                m_Tr.position += ((((direction * (m_KeyBoard_X_Value) * Time.deltaTime * m_Speed))) / Slowed);
+            }
 
-            //Debug.Log(direction);
-            //Debug.Log("Right : " + Camera.main.transform.right);
         }
 
         if (m_KeyBoard_Y_Value > 0.1 || m_KeyBoard_Y_Value < -0.1)
@@ -181,11 +201,16 @@ public class Player : MonoBehaviour
             direction.Normalize();
 
 
-            //m_Tr.position += (((direction * -m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed));
-            // Debug.Log(direction * -m_LMoveInputValue_Y);
 
-            m_Tr.position += (((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed)));
-            // Debug.Log("Forward : " + Camera.main.transform.forward);
+            if (Is_Fired == false)
+            {
+                m_Tr.position += (((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed)));
+            }
+            else
+            {
+                m_Tr.position += ((((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed))) / Slowed);
+            }
+          
         }
 
 
@@ -193,21 +218,25 @@ public class Player : MonoBehaviour
 
     void Shoot(float Rot)
     {
-        //Transform  Temps_Transform = m_Tr;
-        //s_add_bullet.Shoot();
-        //s_Bullet.Shoot(Rot);
+
         s_Bullet.Shoot(Rot);
     }
 
     void SpecialShoot(int Numberbullets)
     {
         Debug.Log("SpecialShoot");
-        s_Bullet.Special_Attack(Numberbullets);
+        if(Regen_Stamina >= 20)
+        {
+            s_Bullet.Special_Attack(Numberbullets);
+            Regen_Stamina = 0;
+            life_Bar.UpdateStaminaBar(20, 0);
+        }
+      
     }
 
     void Rotate()
     {
-        m_Tr.eulerAngles = new Vector3(0, -RAngle, 0);
+        m_Tr.eulerAngles = new Vector3(0, -LAngle, 0);
     }
     // Update is called once per frame
     void Update()
@@ -225,26 +254,77 @@ public class Player : MonoBehaviour
 
         m_KeyBoard_X_Value = Input.GetAxisRaw(m_KeyBoard_Axe_X);
         m_KeyBoard_Y_Value = Input.GetAxisRaw(m_KeyBoard_Axe_Y);
-        if (Input.GetButton(m_LMoveInputValue_RB))
+
+        if (Input.GetAxis(m_LMoveInputValue_RB) > 0.0f)
         {
             Shoot(-RAngle);
+            Is_Fired = true;
         }
+        else
+        {
+            Is_Fired = false;
+        }
+
+      
 
         if (Input.GetButton("Fire1"))
         {
+          
             Shoot(90);
         }
-
+        
         if (Input.GetButton(m_LMoveInputValue_RT))
         {
             SpecialShoot(number_of_bullets_spe_attack);
         }
 
+        if (Distance_Maked < Distance_Max)
+        {
+            //Debug.Log("Dash Test");
+            Dash();//Dash Function
+            if (Distance_Maked > 1  && Distance_Maked < Distance_Max)
+            {
+                Set_Invicible(true);
+            }
+            else
+            {
+                Set_Invicible(false);
+            }
+            Distance_Maked +=  1;
+  
+        }
+        if (Input.GetButton(m_LMoveInputValue_LT))
+        {
+            /*
+            When dash button is pressed 
+            the bool "DashButton_Isrealeasd" set to false
+
+            and he was only set at true whene the dash button is releasd 
+            */
+            if (DashButton_Isrealeasd == true && CoolDown_Dash <= 0)
+            {
+                Distance_Maked = 0;
+                CoolDown_Dash = 5;
+                DashButton_Isrealeasd = false;
+            }
+            if (Input.GetButtonDown(m_LMoveInputValue_LT))
+            {
+                DashButton_Isrealeasd = true;
+            }
+        }
+        if(CoolDown_Dash > 0)
+        {
+            CoolDown_Dash -= Time.deltaTime;
+        }
 
         MovePlayer();
         Rotate();
         // Debug.Log("Left Stick X Player " + m_PlayerNumber + " = " + m_MoveInputValue_X);
         // Debug.Log("Left Stick Y Player " + m_PlayerNumber + " = " + m_MoveInputValue_Y);
+    }
+    void Dash()
+    {
+        transform.position += transform.forward  * 3;
     }
     public void HitByBullet()
     {
@@ -252,6 +332,23 @@ public class Player : MonoBehaviour
         life_Bar.UpdateLifeBar(Life_Max, Life);
         //Debug.Log("Hit ! \n Life : " + Life);
     }
+
+    public bool Get_Invicible()
+    {
+        return Invicible;
+    }
+
+    public void Set_Invicible(bool _State)
+    {
+        Invicible = _State;
+    }
+
+    public void Add_Stamina(int Stamina_Added)
+    {
+        Regen_Stamina += Stamina_Added;
+        life_Bar.UpdateStaminaBar(500, Regen_Stamina);
+    }
+
 }
 
 

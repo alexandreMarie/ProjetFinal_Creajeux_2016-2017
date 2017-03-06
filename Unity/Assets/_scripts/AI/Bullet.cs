@@ -27,15 +27,14 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
+        if (col.tag == "Wall")
+            Destroy(gameObject, 0.1f);
+
         if (col.tag == "Player")
         {
-            //ONLY WORKS WITH NON KINEMATIC OBJECTS
             col.GetComponent<Player>().HitByBullet();
             Destroy(gameObject);
         }
-
-        if (col.tag == "Wall")
-            Destroy(gameObject, 0.1f);
     }
     public void OnDestroy()
     {

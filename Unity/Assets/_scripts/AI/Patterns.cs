@@ -7,6 +7,7 @@ using UnityEngine;
 //Please be a responsible developer and do NOT use those.
 //Do what I say, not what I do.
 #pragma warning disable 0162
+#pragma warning disable 0168
 #pragma warning disable 0169
 
 /// <summary>
@@ -115,7 +116,7 @@ public class Patterns : MonoBehaviour
     private IEnumerator QuadLasers(LineRenderer laser)
     {
         throw new NotImplementedException();
-
+        
         Ray ray1 = new Ray(transform.position, transform.forward);
         Ray ray2 = new Ray(transform.position, transform.right);
         Ray ray3 = new Ray(transform.position, -transform.right);
