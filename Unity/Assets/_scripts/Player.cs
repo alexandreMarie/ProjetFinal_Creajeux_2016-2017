@@ -225,11 +225,11 @@ public class Player : MonoBehaviour
     void SpecialShoot(int Numberbullets)
     {
         Debug.Log("SpecialShoot");
-        if(Regen_Stamina >= 20)
+        if(Regen_Stamina >= 500)
         {
             s_Bullet.Special_Attack(Numberbullets);
             Regen_Stamina = 0;
-            life_Bar.UpdateStaminaBar(20, 0);
+            life_Bar.UpdateStaminaBar(500, 0);
         }
       
     }
