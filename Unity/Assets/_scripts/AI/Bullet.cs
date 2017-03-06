@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
@@ -32,10 +33,14 @@ public class Bullet : MonoBehaviour
 
         if (col.tag == "Player")
         {
-            col.GetComponent<Player>().HitByBullet();
+            if (tag != "Snake")
+                col.GetComponent<Player>().HitByBullet();
+            else
+                col.GetComponent<Player>().FreezePlayer();
             Destroy(gameObject);
         }
     }
+
     public void OnDestroy()
     {
         count--;

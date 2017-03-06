@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 
 /// <summary>
 /// LILITH'S AI FILE
@@ -26,6 +25,8 @@ public class LilithAI : BossManager
     [SerializeField]
     private float time = 15.0f;
 
+    private Vector3 destination;
+
     [SerializeField]
     private uint bulletQuantityBurst = 200; //Quantity of bullets to fire for each burst
 
@@ -47,6 +48,8 @@ public class LilithAI : BossManager
 
         for (int i = 0; i < System.Enum.GetNames(typeof(LifeState)).Length; i++)
             LilithEvents += BulletCancel;
+
+        destination.y = transform.position.y;
     }
 
     private void BulletCancel()
@@ -57,6 +60,11 @@ public class LilithAI : BossManager
 
     void Update()
     {
+        destination.x = -players[0].transform.position.x;
+        destination.z = -players[0].transform.position.z;
+
+        transform.position = destination;
+
         if (Input.GetButton("Jump"))
         {
             Lilith.StopAllCoroutines();
@@ -74,7 +82,7 @@ public class LilithAI : BossManager
                 lifeState = LifeState.THREE;
 
                 StartCoroutine(AI1());
-                //StartCoroutine(Snake());
+                StartCoroutine(Snake());
             }
         }
 
@@ -92,6 +100,7 @@ public class LilithAI : BossManager
                 lifeState = LifeState.TWO;
 
                 StartCoroutine(AI2());
+                StartCoroutine(Snake());
             }
         }
 
@@ -109,6 +118,7 @@ public class LilithAI : BossManager
                 lifeState = LifeState.ONE;
 
                 StartCoroutine(AI3());
+                StartCoroutine(Snake());
             }
         }
 
@@ -127,6 +137,7 @@ public class LilithAI : BossManager
                 lifeState = LifeState.LAST;
 
                 StartCoroutine(AI4());
+                StartCoroutine(Snake());
             }
         }
     }
@@ -182,10 +193,11 @@ public class LilithAI : BossManager
         while (true)
         {
             angle = players[0].position - transform.position;
+            angle.y = 2.0f;
 
-            Instantiate(snake, transform.position, Quaternion.LookRotation(angle));
+            Instantiate(snake, transform.position, Quaternion.LookRotation(angle, Vector3.forward));
 
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(5.0f);
         }
     }
 }

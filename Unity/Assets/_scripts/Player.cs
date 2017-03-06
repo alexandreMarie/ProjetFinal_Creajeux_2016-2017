@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections;
+
 public class Player : MonoBehaviour
 {
     //A VIRER POUR FAIRE LE CLEANUP
@@ -349,6 +351,23 @@ public class Player : MonoBehaviour
         life_Bar.UpdateStaminaBar(500, Regen_Stamina);
     }
 
+    private IEnumerator Freeze()
+    {
+        Player controls = GetComponent<Player>();
+
+        controls.enabled = false;
+        GetComponentInChildren<Renderer>().material.color = Color.white;
+
+        yield return new WaitForSeconds(2.0f);
+
+        controls.enabled = true;
+        GetComponentInChildren<Renderer>().material.color = Color.grey;
+    }
+
+    public void FreezePlayer()
+    {
+        StartCoroutine(Freeze());
+    }
 }
 
 
