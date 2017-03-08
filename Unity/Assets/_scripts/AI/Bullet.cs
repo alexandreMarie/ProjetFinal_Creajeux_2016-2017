@@ -33,11 +33,16 @@ public class Bullet : MonoBehaviour
 
         if (col.tag == "Player")
         {
-            if (tag != "Snake")
-                col.GetComponent<Player>().HitByBullet();
-            else
-                col.GetComponent<Player>().FreezePlayer();
-            Destroy(gameObject);
+            if (col.GetComponent<Player>().Get_Invicible() == false)
+            {
+                if (tag != "Snake")
+                    col.GetComponent<Player>().HitByBullet();
+                else
+                    col.GetComponent<Player>().FreezePlayer();
+
+                Destroy(gameObject);
+            }
+           
         }
     }
 

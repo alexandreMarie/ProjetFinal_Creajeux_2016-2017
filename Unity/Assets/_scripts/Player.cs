@@ -243,6 +243,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(Invicible);
         //Debug.Log(transform.rotation.y);
         m_LMoveInputValue_X = Input.GetAxisRaw(m_LMoveAxisName_X);
         m_LMoveInputValue_Y = Input.GetAxisRaw(m_LMoveAxisName_Y);
@@ -280,7 +281,7 @@ public class Player : MonoBehaviour
             SpecialShoot(number_of_bullets_spe_attack);
         }
 
-        if (Distance_Maked < Distance_Max)
+        if (Distance_Maked <= Distance_Max)
         {
             //Debug.Log("Dash Test");
             Dash();//Dash Function
@@ -306,7 +307,7 @@ public class Player : MonoBehaviour
             if (DashButton_Isrealeasd == true && CoolDown_Dash <= 0)
             {
                 Distance_Maked = 0;
-                CoolDown_Dash = 5;
+                CoolDown_Dash = 1;
                 DashButton_Isrealeasd = false;
             }
             if (Input.GetButtonDown(m_LMoveInputValue_LT))
