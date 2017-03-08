@@ -34,7 +34,8 @@ public class DialogParser : MonoBehaviour
 
     public void Start()
     {
-        string file = "Assets/Data/Dialog";
+        //string file = "Assets/Data/Dialog";
+        string file = Application.dataPath + "/Dialogs/" + "Dialog";
         //string sceneNum = EditorApplication.currentScene; 
         string sceneNum = EditorSceneManager.GetActiveScene().name;
         sceneNum = Regex.Replace(sceneNum, "[^0-9]", "");
@@ -76,7 +77,7 @@ public class DialogParser : MonoBehaviour
                         lines.Add(lineEntry);
                     }
                 }
-            } while (line != string.Empty);
+            } while (line != null);
             r.Close();
         }
     }
