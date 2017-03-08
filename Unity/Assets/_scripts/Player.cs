@@ -21,10 +21,20 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject Bullet;
 
+    [SerializeField]
     Add_Bullet s_Bullet;
 
     bool DashButton_Isrealeasd;
     bool Is_Fired;
+
+    [SerializeField]
+    float Last_Rotation_X;
+    [SerializeField]
+    float Last_Rotation_Y;
+    [SerializeField]
+    float Last_Angle_Player;
+    [SerializeField]
+    float Last_Angle_Bullet;
 
     [SerializeField]
     private float Slowed;//Stats apply on the the speed of the player, when he shoot
@@ -50,6 +60,10 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private int number_of_bullets_spe_attack;
+
+    [SerializeField]
+    int ID_Player;
+
 
     private string m_RMoveAxisName_X;  // Will have the correct axis name according to the player number
     private string m_RMoveAxisName_Y;  // Will have the correct axis name according to the player number
@@ -105,9 +119,18 @@ public class Player : MonoBehaviour
     {
         m_Rb = GetComponentInChildren<Rigidbody>();
         //m_Tr = GetComponent<Transform>();
-        m_Tr = GameObject.FindGameObjectWithTag("Player").transform;
+        switch(ID_Player)
+        {
+            case 1:
+                m_Tr = GameObject.FindGameObjectWithTag("Player").transform;
+                break;
+            case 2:
+                m_Tr = GameObject.FindGameObjectWithTag("Player_2").transform;
+                break;
+        }
+     
         //s_add_bullet = FindObjectOfType<Add_Bullet>();
-        s_Bullet = GetComponentInChildren<Add_Bullet>();
+        //s_Bullet = GetComponentInChildren<Add_Bullet>();
     }
 
     public void OnEnable()
@@ -130,19 +153,67 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        m_LMoveAxisName_X = "LSX"; // + m_PlayerNumber
-        m_LMoveAxisName_Y = "LSY";
+        switch (ID_Player)
+        {
+            case 1 : 
+            m_LMoveAxisName_X = "LSX"; // + m_PlayerNumber
+            m_LMoveAxisName_Y = "LSY";
 
-        m_RMoveAxisName_X = "RSX";
-        m_RMoveAxisName_Y = "RSY";
+            m_RMoveAxisName_X = "RSX";
+            m_RMoveAxisName_Y = "RSY";
 
-        m_LMoveInputValue_LT = "LB";
-        m_LMoveInputValue_RB = "RB";
-        m_LMoveInputValue_RT = "A";//Retweet lel
+            m_LMoveInputValue_LT = "LB";
+            m_LMoveInputValue_RB = "RT";
+            m_LMoveInputValue_RT = "A";//Retweet lel
 
-        m_KeyBoard_Axe_X = "Horizontal";
-        m_KeyBoard_Axe_Y = "Vertical";
+            m_KeyBoard_Axe_X = "Horizontal";
+            m_KeyBoard_Axe_Y = "Vertical";
 
+                Debug.Log(m_LMoveAxisName_X);
+                Debug.Log(m_LMoveAxisName_Y);
+
+                Debug.Log(m_RMoveAxisName_X);
+                Debug.Log(m_RMoveAxisName_Y);
+
+                Debug.Log(m_LMoveInputValue_LT);
+                Debug.Log(m_LMoveInputValue_RB);
+                Debug.Log(m_LMoveInputValue_RT);
+
+                Debug.Log(m_KeyBoard_Axe_Y);
+                Debug.Log(m_KeyBoard_Axe_X);
+
+                break;
+
+            case 2:
+                m_LMoveAxisName_X = "LSX_2"; // + m_PlayerNumber
+                m_LMoveAxisName_Y = "LSY_2";
+
+                m_RMoveAxisName_X = "RSX_2";
+                m_RMoveAxisName_Y = "RSY_2";
+
+                m_LMoveInputValue_LT = "LB_2";
+                m_LMoveInputValue_RB = "RT_2";
+                m_LMoveInputValue_RT = "A_2";//Retweet lel
+
+                m_KeyBoard_Axe_X = "Horizontal_2";
+                m_KeyBoard_Axe_Y = "Vertical_2";
+
+                Debug.Log(m_LMoveAxisName_X);
+                Debug.Log(m_LMoveAxisName_Y);
+
+                Debug.Log(m_RMoveAxisName_X);
+                Debug.Log(m_RMoveAxisName_Y);
+
+                Debug.Log(m_LMoveInputValue_LT);
+                Debug.Log(m_LMoveInputValue_RB);
+                Debug.Log(m_LMoveInputValue_RT);
+
+                Debug.Log(m_KeyBoard_Axe_Y);
+                Debug.Log(m_KeyBoard_Axe_X);
+
+                break;
+
+        }
        
     }
     //Deplacement en diagonale 
@@ -155,7 +226,7 @@ public class Player : MonoBehaviour
             Vector3 direction = Camera.main.transform.right;
           
             m_Tr.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed);
-
+            Last_Rotation_X = m_LMoveInputValue_X;
 
         }
 
@@ -170,9 +241,9 @@ public class Player : MonoBehaviour
 
 
 
-            m_Tr.position += (((direction * -(m_LMoveInputValue_Y) * Time.deltaTime * m_Speed)));
+            m_Tr.position += (((direction * -(Last_Rotation_Y) * Time.deltaTime * m_Speed)));
 
-
+            Last_Rotation_Y = m_LMoveInputValue_Y;
 
         }
 
@@ -238,20 +309,29 @@ public class Player : MonoBehaviour
 
     void Rotate()
     {
-        m_Tr.eulerAngles = new Vector3(0, -LAngle, 0);
+        m_Tr.eulerAngles = new Vector3(0, Last_Angle_Player, 0);
+       
     }
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Invicible);
+
         //Debug.Log(transform.rotation.y);
+       
         m_LMoveInputValue_X = Input.GetAxisRaw(m_LMoveAxisName_X);
+       // Last_Rotation_Y = m_LMoveInputValue_Y;
         m_LMoveInputValue_Y = Input.GetAxisRaw(m_LMoveAxisName_Y);
 
         m_RMoveInputValue_X = Input.GetAxisRaw(m_RMoveAxisName_X);
         m_RMoveInputValue_Y = Input.GetAxisRaw(m_RMoveAxisName_Y);
         RAngle = (Mathf.Atan2(m_RMoveInputValue_X, m_RMoveInputValue_Y) * Mathf.Rad2Deg);
-        //Debug.Log(RAngle);
+        if (RAngle > 3 || RAngle < -3)
+            Last_Angle_Bullet = -RAngle;
+            //Debug.Log(RAngle);
+            if (LAngle > 3 || LAngle < -3)
+             Last_Angle_Player = -LAngle;
+
+
         LAngle = (Mathf.Atan2(m_LMoveInputValue_X, m_LMoveInputValue_Y) * Mathf.Rad2Deg);
         //Debug.Log(LAngle);
 
@@ -260,7 +340,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetAxis(m_LMoveInputValue_RB) > 0.0f)
         {
-            Shoot(-RAngle);
+            Shoot(Last_Angle_Bullet);
             Is_Fired = true;
         }
         else
@@ -270,11 +350,11 @@ public class Player : MonoBehaviour
 
       
 
-        if (Input.GetButton("Fire1"))
-        {
-          
-            Shoot(90);
-        }
+        //if (Input.GetButton(m_LMoveInputValue_RB))
+        //{
+        //    Debug.Log(m_LMoveInputValue_RB);
+        //    Shoot(90);
+        //}
         
         if (Input.GetButton(m_LMoveInputValue_RT))
         {
@@ -385,5 +465,8 @@ Plus serieusement
     Etape 1 : definir dans quelle direction se situe le personnage
     Etape 2 : quand appuye sur un imput (R2, la grosse gachette)
     le personnage fait une transition droite devant lui sur une position donner
-    
+*/
+
+/*
+Conserver l'axis de la valeur précédente,
 */
