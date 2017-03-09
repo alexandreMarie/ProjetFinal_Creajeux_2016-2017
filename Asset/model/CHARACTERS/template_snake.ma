@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: template_snake.ma
-//Last modified: Thu, Mar 09, 2017 11:03:41 AM
+//Last modified: Thu, Mar 09, 2017 01:50:30 PM
 //Codeset: 1252
 requires maya "2016";
 requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOptions" -nodeType "mentalrayGlobals"
@@ -17,13 +17,13 @@ fileInfo "osv" "Microsoft Windows 8 Business Edition, 64-bit  (Build 9200)\n";
 createNode transform -s -n "persp";
 	rename -uid "781AFB04-40DF-932C-9CC7-17B3467212F6";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -25.102618049002185 5.7942940920770125 12.235592505634608 ;
-	setAttr ".r" -type "double3" 709.46164657516078 1005.4000000003577 2.994239702978607e-015 ;
+	setAttr ".t" -type "double3" -30.468003660969011 18.068597909931697 -2.6460012659747107 ;
+	setAttr ".r" -type "double3" 696.26164657507741 971.80000000016798 0 ;
 createNode camera -s -n "perspShape" -p "persp";
 	rename -uid "CE496C13-4F6F-5361-90EA-A7B44C38F96E";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999993;
-	setAttr ".coi" 24.965412166869328;
+	setAttr ".coi" 32.58532562494851;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
