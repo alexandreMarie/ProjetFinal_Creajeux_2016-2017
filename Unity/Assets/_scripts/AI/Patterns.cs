@@ -116,11 +116,27 @@ public class Patterns : MonoBehaviour
     private IEnumerator QuadLasers(LineRenderer laser)
     {
         throw new NotImplementedException();
-        
+
         Ray ray1 = new Ray(transform.position, transform.forward);
         Ray ray2 = new Ray(transform.position, transform.right);
         Ray ray3 = new Ray(transform.position, -transform.right);
         Ray ray4 = new Ray(transform.position, -transform.forward);
+
+        yield return null;
+    }
+
+    private IEnumerator StraightLine(Transform bullet, Transform player, float bulletQuantity)
+    {
+        Vector3 angle;
+
+        angle = player.position - transform.position;
+        angle.y = 2.0f;
+
+        for (int i = 0; i < bulletQuantity; i++)
+        {
+            Instantiate(bullet, transform.position, Quaternion.LookRotation(angle, Vector3.forward));
+            yield return new WaitForSeconds(0.1f);
+        }
 
         yield return null;
     }
@@ -150,6 +166,11 @@ public class Patterns : MonoBehaviour
     public void LaunchOpenBurst(Transform bullet, uint bulletQuantity, uint angle1 = 0, uint angle2 = 100)
     {
         StartCoroutine(OpenBurst(bullet, bulletQuantity, angle1, angle2));
+    }
+
+    public void LaunchStraightLine(Transform bullet, Transform player)
+    {
+        StartCoroutine(StraightLine(bullet, player, 5));
     }
     #endregion
 }

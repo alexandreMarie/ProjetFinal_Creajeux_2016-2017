@@ -32,6 +32,8 @@ public class LilithAI : BossManager
 
     private Patterns Lilith; // Uppercase L on purpose
 
+    public LightsController lilithLights;
+
     public delegate void LilithEventsHandler();
     private event LilithEventsHandler LilithEvents;
     #endregion
@@ -60,6 +62,7 @@ public class LilithAI : BossManager
 
     void Update()
     {
+        transform.LookAt(players[0]);
         destination.x = -players[0].transform.position.x;
         destination.z = -players[0].transform.position.z;
 
@@ -148,7 +151,11 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            Lilith.LaunchBurst(bullet, bulletQuantityBurst);
+            if (Vector3.Distance(transform.position, players[0].transform.position) < 400.0f)
+                Lilith.LaunchBurst(bullet, bulletQuantityBurst);
+            else
+                Lilith.LaunchStraightLine(bullet, players[0]);
+
             yield return new WaitForSeconds(time / 2);
         }
     }
@@ -192,10 +199,16 @@ public class LilithAI : BossManager
 
         while (true)
         {
+            lilithLights.TurnLight = false;
+
             angle = players[0].position - transform.position;
             angle.y = 2.0f;
 
             Instantiate(snake, transform.position, Quaternion.LookRotation(angle, Vector3.forward));
+
+            yield return new WaitForSeconds(4.0f);
+
+            lilithLights.TurnLight = true;
 
             yield return new WaitForSeconds(5.0f);
         }
