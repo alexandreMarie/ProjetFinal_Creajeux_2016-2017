@@ -15,23 +15,23 @@ public class Add_Bullet : MonoBehaviour {
     }
 
 
-    public void Shoot(float Rotation)
+    public void Shoot(float Rotation,Transform transform_player)
     {
         //Transform  Temps_Transform = m_Tr;
         //Debug.Log("Test");
         //Transform Temp_Transforme = Player_Transform;
         float spreadZ = Random.Range(-spreadAngle, spreadAngle);
 
-        Vector3 PosBalle = new Vector3(transform.position.x, transform.position.y + 20, transform.position.z);
+        Vector3 PosBalle = new Vector3(transform_player.position.x, transform_player.position.y + 20, transform_player.position.z);
         Quaternion Quater_Bullet = transform.rotation;
         Quater_Bullet.y = 0;
         GameObject bullet = Instantiate(Bullet, PosBalle, Quaternion.Euler(-90, Rotation, 0)) as GameObject;
         bullet.transform.Rotate(0, 0, spreadZ);
     }
 
-    public void Special_Attack(int NumberBullets)
+    public void Special_Attack(int NumberBullets, Transform transform_player)
     {
-        Vector3 PosBalle = new Vector3(transform.position.x, transform.position.y + 20, transform.position.z);
+        Vector3 PosBalle = new Vector3(transform_player.position.x, transform_player.position.y + 20, transform_player.position.z);
         int Degrees = 360 / NumberBullets;
         for(int i = 0;i < NumberBullets ; i++)
         {
