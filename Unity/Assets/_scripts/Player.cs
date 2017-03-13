@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject Bullet;
 
-    [SerializeField]
+    //[SerializeField]
     Add_Bullet s_Bullet;
 
     bool DashButton_Isrealeasd;
@@ -119,17 +119,8 @@ public class Player : MonoBehaviour
     {
         m_Rb = GetComponentInChildren<Rigidbody>();
         //m_Tr = GetComponent<Transform>();
-        switch(ID_Player)
-        {
-            case 1:
-                m_Tr = GameObject.FindGameObjectWithTag("Player").transform;
-                break;
-            case 2:
-                m_Tr = GameObject.FindGameObjectWithTag("Player_2").transform;
-                break;
-        }
-     
-        //s_add_bullet = FindObjectOfType<Add_Bullet>();
+
+        s_Bullet = FindObjectOfType<Add_Bullet>();
         //s_Bullet = GetComponentInChildren<Add_Bullet>();
     }
 
@@ -224,7 +215,7 @@ public class Player : MonoBehaviour
         if (m_LMoveInputValue_X > 0.1 || m_LMoveInputValue_X < -0.1)
         {
             Vector3 direction = Camera.main.transform.right;
-          
+
             m_Tr.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed);
             Last_Rotation_X = m_LMoveInputValue_X;
 
@@ -291,8 +282,7 @@ public class Player : MonoBehaviour
 
     void Shoot(float Rot)
     {
-
-        s_Bullet.Shoot(Rot);
+        s_Bullet.Shoot(Rot,m_Tr);
     }
 
     void SpecialShoot(int Numberbullets)
@@ -300,7 +290,7 @@ public class Player : MonoBehaviour
         Debug.Log("SpecialShoot");
         if(Regen_Stamina >= 500)
         {
-            s_Bullet.Special_Attack(Numberbullets);
+            s_Bullet.Special_Attack(Numberbullets,m_Tr);
             Regen_Stamina = 0;
             life_Bar.UpdateStaminaBar(500, 0);
         }
@@ -407,7 +397,7 @@ public class Player : MonoBehaviour
     }
     void Dash()
     {
-        transform.position += transform.forward  * 3;
+        m_Tr.position += m_Tr.forward  * 3;
     }
     public void HitByBullet()
     {
