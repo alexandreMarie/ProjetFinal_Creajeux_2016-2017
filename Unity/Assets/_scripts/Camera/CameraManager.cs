@@ -7,6 +7,9 @@ public class CameraManager : MonoBehaviour {
     private bool change = false;
     private GameObject [] posViewTarget;
 
+    private bool deadPlayer1 = false;
+    private bool deadPlayer2 = false;
+    
     public static CameraManager Instance
     {
         get
@@ -58,4 +61,29 @@ public class CameraManager : MonoBehaviour {
         }
     }
 
+    public bool DeadPlayer1
+    {
+        get
+        {
+            return deadPlayer1;
+        }
+
+        set
+        {
+            deadPlayer1 = value;
+        }
+    }
+
+    public bool DeadPlayer2
+    {
+        get
+        {
+            return deadPlayer2;
+        }
+
+        set
+        {
+            deadPlayer2 = value;
+        }
+    }
 }

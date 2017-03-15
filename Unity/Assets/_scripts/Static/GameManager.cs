@@ -8,6 +8,12 @@ public class GameManager : MonoBehaviour {
     public bool dead = false;
     private GameObject gameOver;
 
+    [SerializeField]
+    private int lifePlayer1 = 10;
+    [SerializeField]
+    private int lifePlayer2 = 10;
+    private int lifeBoss;
+
     public static GameManager Instance
     {
         get
@@ -22,21 +28,41 @@ public class GameManager : MonoBehaviour {
     }
     void Start()
     {
-        gameOver = GameObject.FindGameObjectWithTag("GameOver");
+        try {
+            gameOver = GameObject.FindGameObjectWithTag("GameOver");
+        }
+        catch
+        {
+            return;
+        }
     }
 
     void Update()
     {
-       
-        if(dead)
+        if (lifePlayer1 == 0)
         {
-            gameOver.SetActive(true);
-            Time.timeScale = 0;
+            CameraManager.Instance.DeadPlayer1 = true;
         }
-        else
+        else if (lifePlayer2 == 0)
         {
-            gameOver.SetActive(false);
-            Time.timeScale = 1;
+            CameraManager.Instance.DeadPlayer2 = true;
+        }
+        try
+        {
+            if (dead)
+            {
+                gameOver.SetActive(true);
+                Time.timeScale = 0;
+            }
+            else
+            {
+                gameOver.SetActive(false);
+                Time.timeScale = 1;
+            }
+        }
+        catch
+        {
+            return;
         }
     }
     public bool Dead
@@ -52,4 +78,16 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public int LifePlayer1
+    {
+        get
+        {
+            return lifePlayer1;
+        }
+
+        set
+        {
+            lifePlayer1 = value;
+        }
+    }
 }
