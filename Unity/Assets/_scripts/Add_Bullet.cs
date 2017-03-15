@@ -33,7 +33,7 @@ public class Add_Bullet : MonoBehaviour {
         //bullet.transform.Rotate(0, 0, 0);
         GameObject bullet;
 
-        for (int i = -10; i < 10; i += 10)
+        for (int i = -10; i < 10; i += 5)
         {
             bullet = Instantiate(Bullet, PosBalle, Quaternion.Euler(-90, Rotation, 0)) as GameObject;
             bullet.transform.Rotate(0, 0, i);

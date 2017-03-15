@@ -21,18 +21,18 @@ public class LilithAI : BossManager
     private Transform snake = null;
 
     [SerializeField]
-    private float divergence = 137.5f; //Angular divergence of the phyllotaxis
-    [SerializeField]
     private float time = 15.0f;
-
-    private Vector3 destination;
 
     [SerializeField]
     private uint bulletQuantityBurst = 200; //Quantity of bullets to fire for each burst
 
-    private Patterns Lilith; // Uppercase L on purpose
+    private Vector3 destination;
+
+    private float divergence = 137.5f; //Angular divergence of the phyllotaxis
 
     public LightsController lilithLights;
+
+    private Patterns Lilith; // Uppercase L on purpose
 
     public delegate void LilithEventsHandler();
     private event LilithEventsHandler LilithEvents;
@@ -62,7 +62,7 @@ public class LilithAI : BossManager
 
     void Update()
     {
-        transform.LookAt(players[0]);
+        transform.LookAt(new Vector3(players[0].transform.position.x, transform.position.y, players[0].transform.position.z));
         destination.x = -players[0].transform.position.x;
         destination.z = -players[0].transform.position.z;
 
@@ -84,7 +84,7 @@ public class LilithAI : BossManager
 
                 lifeState = LifeState.THREE;
 
-                StartCoroutine(AI1());
+                StartCoroutine(TestAI()); //////////////////////////TESTAI
                 StartCoroutine(Snake());
             }
         }
@@ -145,6 +145,13 @@ public class LilithAI : BossManager
         }
     }
 
+    private IEnumerator TestAI()
+    {
+        Lilith.LaunchMalthael(bullet);
+
+        yield return new WaitForSeconds(2.0f);
+    }
+
     private IEnumerator AI1()
     {
         Lilith.LaunchPhyllotaxis(bullet, divergence);
@@ -152,7 +159,7 @@ public class LilithAI : BossManager
         while (true)
         {
             if (Vector3.Distance(transform.position, players[0].transform.position) < 400.0f)
-                Lilith.LaunchBurst(bullet, bulletQuantityBurst);
+                Lilith.LaunchBurst(bullet, bulletQuantityBurst, true);
             else
                 Lilith.LaunchStraightLine(bullet, players[0]);
 
@@ -166,7 +173,7 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            Lilith.LaunchBurst(bullet, bulletQuantityBurst);
+            Lilith.LaunchBurst(bullet, bulletQuantityBurst, true);
             yield return new WaitForSeconds(time / 3);
         }
     }
@@ -177,7 +184,7 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            Lilith.LaunchBurst(bullet, bulletQuantityBurst);
+            Lilith.LaunchBurst(bullet, bulletQuantityBurst, true);
             yield return new WaitForSeconds(time / 4);
         }
     }
@@ -188,7 +195,7 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            Lilith.LaunchBurst(bullet, bulletQuantityBurst);
+            Lilith.LaunchBurst(bullet, bulletQuantityBurst, true);
             yield return new WaitForSeconds(time / 6);
         }
     }
