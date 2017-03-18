@@ -1,59 +1,15 @@
 fileFormatVersion: 2
-guid: 62a2236f8bb2eee4280f800be5608d1e
-timeCreated: 1488720259
+guid: 4be9aa5bf175a4b43ba8e4816b2d6456
+timeCreated: 1489855973
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Group_hair
-    100002: //RootNode
-    100004: polysurface_body2
-    100006: polysurface_Cape
-    100008: polysurface_capuche
-    100010: polysurface_capuche1
-    100012: polysurface_idk
-    100014: polysurface_skull
-    100016: polysurface_skull_belt
-    100018: pPlane1
-    100020: pPlane2
-    100022: pPlane3
-    100024: pPlane4
-    100026: transform10
-    100028: transform11
-    100030: transform12
-    100032: transform3
-    100034: transform4
-    100036: transform5
-    100038: transform6
-    100040: transform7
-    100042: transform8
-    100044: transform9
-    400000: Group_hair
-    400002: //RootNode
-    400004: polysurface_body2
-    400006: polysurface_Cape
-    400008: polysurface_capuche
-    400010: polysurface_capuche1
-    400012: polysurface_idk
-    400014: polysurface_skull
-    400016: polysurface_skull_belt
-    400018: pPlane1
-    400020: pPlane2
-    400022: pPlane3
-    400024: pPlane4
-    400026: transform10
-    400028: transform11
-    400030: transform12
-    400032: transform3
-    400034: transform4
-    400036: transform5
-    400038: transform6
-    400040: transform7
-    400042: transform8
-    400044: transform9
-    2300000: polysurface_capuche1
-    3300000: polysurface_capuche1
-    4300000: polysurface_capuche1
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: polySurface1
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -76,17 +32,17 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1600
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
-    importBlendShapes: 0
+    importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 0
+    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     secondaryUVAngleDistortion: 8
@@ -96,7 +52,7 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 1
+    normalImportMode: 0
     tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0
