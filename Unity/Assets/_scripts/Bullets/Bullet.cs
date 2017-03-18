@@ -4,12 +4,12 @@ public class Bullet : MonoBehaviour
 {
     #region Serialized fields
     [SerializeField]
-    [Range(1.0f, 500.0f)]
-    private float speed = 15.0f;
+    [Range(1.0f, 10)]
+    private float speed = 10.0f;
 
     [SerializeField]
-    [Range(1.0f, 20.0f)]
-    private float destroyTime = 1.0f;
+    [Range(1.0f, 10.0f)]
+    private float destroyTime = 5.0f;
     #endregion
 
     private static int count = 0;
@@ -44,7 +44,6 @@ public class Bullet : MonoBehaviour
     {
         float i = Random.value;
         transform.position += transform.forward * speed * Time.deltaTime;
-        transform.position.Set(0, Mathf.Cos(i), 0);
 
         if (rotateBullet)
         {

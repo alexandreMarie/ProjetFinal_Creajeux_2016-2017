@@ -84,7 +84,7 @@ public class LilithAI : BossManager
 
                 lifeState = LifeState.THREE;
 
-                StartCoroutine(AI2()); //////////////////////////TESTAI
+                StartCoroutine(AI4()); //////////////////////////TESTAI
                 StartCoroutine(Snake());
             }
         }
@@ -188,7 +188,7 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, true);
+            Lilith.LaunchWings(bullet);
             yield return new WaitForSeconds(time / 4);
         }
     }
@@ -199,7 +199,7 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, true);
+            Lilith.LaunchRotatingStraightLine(bullet, bulletQuantityBurst, true);
             yield return new WaitForSeconds(time / 6);
         }
     }
