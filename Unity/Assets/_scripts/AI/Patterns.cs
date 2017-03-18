@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 //DISABLING "Code cannot be reached" WARNINGS
@@ -20,6 +19,7 @@ using UnityEngine;
 /// - Add additional parameters to the methods so they can be modulated from the Update (parameters I need TBC)
 /// - Correct the angle bug when angle2 hits 361° (making angle2 % 360 smaller than angle1 % 360)
 /// - Pattern ideas : Malthaël
+/// - Add patterns
 /// </summary>
 
 public class Patterns : MonoBehaviour
@@ -39,48 +39,9 @@ public class Patterns : MonoBehaviour
             floret++;
             yield return new WaitForSeconds(0.05f);
         }
-
     }
 
-    private IEnumerator FocusedPhyllotaxis(Transform bullet, float divergence)
-    {
-        float phi = 0.0f;
-        uint floret = 0;
-
-        while (true)
-        {
-            phi = floret * divergence;
-            if ((phi % 360 > 200) && (phi % 360 < 250))
-                Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
-
-            yield return new WaitForSeconds(0.005f);
-        }
-    }
-
-    private IEnumerator OpenPhyllotaxis(Transform bullet, float divergence)
-    {
-        int i1 = 100;
-        int i2 = 170;
-
-        uint floret = 0;
-
-        while (true)
-        {
-            float phi = floret * divergence;
-            if ((phi % 360 < i1) || (phi % 360 > i2))
-            {
-                Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
-                i1 += 1;
-                i2 += 1;
-
-                //Debug.Log(i2 % 360 + " " + i2 % 360);
-            }
-
-            yield return new WaitForSeconds(0.005f);
-        }
-    }
-
-    private IEnumerator Burst(Transform bullet, uint bulletQuantity)
+    private IEnumerator Burst(Transform bullet, uint bulletQuantity, bool rotatePattern)
     {
         float additiveAngle = 360.0f / bulletQuantity;
         float phi = 0.0f;
@@ -88,41 +49,17 @@ public class Patterns : MonoBehaviour
         for (int i = 0; i < bulletQuantity; i++)
         {
             Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
-
-            phi += additiveAngle;
-        }
-
-        yield return new WaitForSeconds(2.0f);
-    }
-
-    private IEnumerator OpenBurst(Transform bullet, uint bulletQuantity, uint angle1, uint angle2)
-    {
-        float additiveAngle = 360.0f / bulletQuantity;
-        float phi = 0.0f;
-
-        for (int i = 0; i < bulletQuantity; i++)
-        {
-            if ((phi < angle1) || (phi > angle2))
+            
+            if (rotatePattern)
             {
-                Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
+                bullet.GetComponent<Bullet>().RotateBullet = true;
+                Debug.Log(bullet.GetComponent<Bullet>().RotateBullet);
             }
 
             phi += additiveAngle;
         }
 
-        yield return new WaitForSeconds(0.2f);
-    }
-
-    private IEnumerator QuadLasers(LineRenderer laser)
-    {
-        throw new NotImplementedException();
-
-        Ray ray1 = new Ray(transform.position, transform.forward);
-        Ray ray2 = new Ray(transform.position, transform.right);
-        Ray ray3 = new Ray(transform.position, -transform.right);
-        Ray ray4 = new Ray(transform.position, -transform.forward);
-
-        yield return null;
+        yield return new WaitForSeconds(2.0f);
     }
 
     private IEnumerator StraightLine(Transform bullet, Transform player, float bulletQuantity)
@@ -137,8 +74,23 @@ public class Patterns : MonoBehaviour
             Instantiate(bullet, transform.position, Quaternion.LookRotation(angle, Vector3.forward));
             yield return new WaitForSeconds(0.1f);
         }
+    }
 
-        yield return null;
+    private IEnumerator Malthael(Transform bullet, Transform player)
+    {
+        float phi = 20.0f;
+        while (true)
+        {
+            Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
+            Instantiate(bullet, transform.position, Quaternion.Euler(0, -phi, 0));
+
+            phi += 5.0f;
+
+            if (phi > 160)
+                phi = 20.0f;
+
+            yield return new WaitForSeconds(0.05f);
+        }
     }
     #endregion
 
@@ -148,29 +100,19 @@ public class Patterns : MonoBehaviour
         StartCoroutine(Phyllotaxis(bullet, divergence));
     }
 
-    public void LaunchFocusedPhyllotaxis(Transform bullet, float divergence)
+    public void LaunchBurst(Transform bullet, uint bulletQuantity, bool test)
     {
-        StartCoroutine(FocusedPhyllotaxis(bullet, divergence));
-    }
-
-    public void LaunchOpenPhyllotaxis(Transform bullet, float divergence)
-    {
-        StartCoroutine(OpenPhyllotaxis(bullet, divergence));
-    }
-
-    public void LaunchBurst(Transform bullet, uint bulletQuantity)
-    {
-        StartCoroutine(Burst(bullet, bulletQuantity));
-    }
-
-    public void LaunchOpenBurst(Transform bullet, uint bulletQuantity, uint angle1 = 0, uint angle2 = 100)
-    {
-        StartCoroutine(OpenBurst(bullet, bulletQuantity, angle1, angle2));
+        StartCoroutine(Burst(bullet, bulletQuantity, test));
     }
 
     public void LaunchStraightLine(Transform bullet, Transform player)
     {
         StartCoroutine(StraightLine(bullet, player, 5));
+    }
+
+    public void LaunchMalthael(Transform bullet)
+    {
+        StartCoroutine(Malthael(bullet, null));
     }
     #endregion
 }

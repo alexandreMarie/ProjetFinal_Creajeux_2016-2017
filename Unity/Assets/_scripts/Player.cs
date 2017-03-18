@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections;
-
+using XInputDotNetPure;
 public class Player : MonoBehaviour
 {
+
+    bool playerIndexSet = false;
+    PlayerIndex playerIndex;
+    GamePadState State;
+    GamePadState prevState;
     //A VIRER POUR FAIRE LE CLEANUP
+    //Mercredi 29 MILESTONE
 #pragma warning disable 0414
 
     [SerializeField]
@@ -27,21 +32,21 @@ public class Player : MonoBehaviour
     bool DashButton_Isrealeasd;
     bool Is_Fired;
 
-    [SerializeField]
+   
     float Last_Rotation_X;
-    [SerializeField]
+    
     float Last_Rotation_Y;
-    [SerializeField]
+    
     float Last_Angle_Player;
-    [SerializeField]
+  
     float Last_Angle_Bullet;
 
     [SerializeField]
     private float Slowed;//Stats apply on the the speed of the player, when he shoot
 
-    [SerializeField]
+    
     private float m_AngleX = 0;
-    [SerializeField]
+   
     private float m_AngleY = 0;
 
     private int m_PlayerNumber = 1;
@@ -62,20 +67,27 @@ public class Player : MonoBehaviour
     private int number_of_bullets_spe_attack;
 
     [SerializeField]
-    int ID_Player;
+    PlayerIndex ID_Player;
 
 
+   
     private string m_RMoveAxisName_X;  // Will have the correct axis name according to the player number
+    
     private string m_RMoveAxisName_Y;  // Will have the correct axis name according to the player number
 
 
+
     private string m_LMoveAxisName_X;  // Will have the correct axis name according to the player number
+ 
     private string m_LMoveAxisName_Y;  // Will have the correct axis name according to the player number
 
     private string m_KeyBoard_Axe_X;
+
     private string m_KeyBoard_Axe_Y;
 
+ 
     private float m_KeyBoard_X_Value;
+   
     private float m_KeyBoard_Y_Value;
 
     private string m_RotateAxisName;
@@ -89,9 +101,10 @@ public class Player : MonoBehaviour
 
     private string m_LMoveInputValue_LT;
 
+   
     private string m_LMoveInputValue_RB;
 
-    private string m_LMoveInputValue_RT;
+    private string m_LMoveInputValue_A;
 
     private float m_RMoveInputValue_X;
 
@@ -120,7 +133,7 @@ public class Player : MonoBehaviour
         m_Rb = GetComponentInChildren<Rigidbody>();
         //m_Tr = GetComponent<Transform>();
 
-        s_Bullet = FindObjectOfType<Add_Bullet>();
+        s_Bullet = GetComponent<Add_Bullet>();
         //s_Bullet = GetComponentInChildren<Add_Bullet>();
     }
 
@@ -134,6 +147,10 @@ public class Player : MonoBehaviour
         m_LMoveInputValue_Y = 0;
 
         m_RotateInputValue = 0f;
+
+        m_KeyBoard_X_Value = 0f;
+        m_KeyBoard_Y_Value = 0f;
+
     }
 
     public void OnDisable()
@@ -144,73 +161,11 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        switch (ID_Player)
-        {
-            case 1 : 
-            m_LMoveAxisName_X = "LSX"; // + m_PlayerNumber
-            m_LMoveAxisName_Y = "LSY";
-
-            m_RMoveAxisName_X = "RSX";
-            m_RMoveAxisName_Y = "RSY";
-
-            m_LMoveInputValue_LT = "LB";
-            m_LMoveInputValue_RB = "RT";
-            m_LMoveInputValue_RT = "A";//Retweet lel
-
-            m_KeyBoard_Axe_X = "Horizontal";
-            m_KeyBoard_Axe_Y = "Vertical";
-
-                Debug.Log(m_LMoveAxisName_X);
-                Debug.Log(m_LMoveAxisName_Y);
-
-                Debug.Log(m_RMoveAxisName_X);
-                Debug.Log(m_RMoveAxisName_Y);
-
-                Debug.Log(m_LMoveInputValue_LT);
-                Debug.Log(m_LMoveInputValue_RB);
-                Debug.Log(m_LMoveInputValue_RT);
-
-                Debug.Log(m_KeyBoard_Axe_Y);
-                Debug.Log(m_KeyBoard_Axe_X);
-
-                break;
-
-            case 2:
-                m_LMoveAxisName_X = "LSX_2"; // + m_PlayerNumber
-                m_LMoveAxisName_Y = "LSY_2";
-
-                m_RMoveAxisName_X = "RSX_2";
-                m_RMoveAxisName_Y = "RSY_2";
-
-                m_LMoveInputValue_LT = "LB_2";
-                m_LMoveInputValue_RB = "RT_2";
-                m_LMoveInputValue_RT = "A_2";//Retweet lel
-
-                m_KeyBoard_Axe_X = "Horizontal_2";
-                m_KeyBoard_Axe_Y = "Vertical_2";
-
-                Debug.Log(m_LMoveAxisName_X);
-                Debug.Log(m_LMoveAxisName_Y);
-
-                Debug.Log(m_RMoveAxisName_X);
-                Debug.Log(m_RMoveAxisName_Y);
-
-                Debug.Log(m_LMoveInputValue_LT);
-                Debug.Log(m_LMoveInputValue_RB);
-                Debug.Log(m_LMoveInputValue_RT);
-
-                Debug.Log(m_KeyBoard_Axe_Y);
-                Debug.Log(m_KeyBoard_Axe_X);
-
-                break;
-
-        }
        
     }
     //Deplacement en diagonale 
     void MovePlayer()
     {
-
 
         if (m_LMoveInputValue_X > 0.1 || m_LMoveInputValue_X < -0.1)
         {
@@ -232,7 +187,7 @@ public class Player : MonoBehaviour
 
 
 
-            m_Tr.position += (((direction * -(Last_Rotation_Y) * Time.deltaTime * m_Speed)));
+            m_Tr.position += (((direction * (Last_Rotation_Y) * Time.deltaTime * m_Speed)));
 
             Last_Rotation_Y = m_LMoveInputValue_Y;
 
@@ -242,40 +197,40 @@ public class Player : MonoBehaviour
         //////////!\ CLAVIER /!\\\\\\\\\\\
         ////////////////\\\\\\\\\\\\\\\\\\
 
-        if (m_KeyBoard_X_Value > 0.1 || m_KeyBoard_X_Value < -0.1)
-        {
-            Vector3 direction = Camera.main.transform.right;
+        //if (m_KeyBoard_X_Value > 0.1 || m_KeyBoard_X_Value < -0.1)
+        //{
+        //    Vector3 direction = Camera.main.transform.right;
 
-            if (Is_Fired == false)
-            {
-                m_Tr.position += (((direction * (m_KeyBoard_X_Value) * Time.deltaTime * m_Speed)));
-            }
-            else
-            {
-                m_Tr.position += ((((direction * (m_KeyBoard_X_Value) * Time.deltaTime * m_Speed))) / Slowed);
-            }
+        //    if (Is_Fired == false)
+        //    {
+        //        m_Tr.position += (((direction * (m_KeyBoard_X_Value) * Time.deltaTime * m_Speed)));
+        //    }
+        //    else
+        //    {
+        //        m_Tr.position += ((((direction * (m_KeyBoard_X_Value) * Time.deltaTime * m_Speed))) / Slowed);
+        //    }
 
-        }
+        //}
 
-        if (m_KeyBoard_Y_Value > 0.1 || m_KeyBoard_Y_Value < -0.1)
-        {
-            Vector3 direction = Camera.main.transform.forward;
+        //if (m_KeyBoard_Y_Value > 0.1 || m_KeyBoard_Y_Value < -0.1)
+        //{
+        //    Vector3 direction = Camera.main.transform.forward;
 
-            direction.y = 0;
-            direction.Normalize();
+        //    direction.y = 0;
+        //    direction.Normalize();
 
 
 
-            if (Is_Fired == false)
-            {
-                m_Tr.position += (((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed)));
-            }
-            else
-            {
-                m_Tr.position += ((((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed))) / Slowed);
-            }
+        //    if (Is_Fired == false)
+        //    {
+        //        m_Tr.position += (((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed)));
+        //    }
+        //    else
+        //    {
+        //        m_Tr.position += ((((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed))) / Slowed);
+        //    }
           
-        }
+        //}
 
 
     }
@@ -299,99 +254,124 @@ public class Player : MonoBehaviour
 
     void Rotate()
     {
-        m_Tr.eulerAngles = new Vector3(0, Last_Angle_Player, 0);
+        m_Tr.eulerAngles = new Vector3(0, -Last_Angle_Player, 0);
        
     }
     // Update is called once per frame
     void Update()
     {
+        if (!playerIndexSet || !prevState.IsConnected)
+        {
+          
+                PlayerIndex testPlayerIndex = ID_Player;
+                GamePadState testState = GamePad.GetState(testPlayerIndex);
+                if (testState.IsConnected)
+                {
+                    Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
+                    playerIndex = testPlayerIndex;
+                    playerIndexSet = true;
+                }
+            
+        }
 
-        //Debug.Log(transform.rotation.y);
-       
-        m_LMoveInputValue_X = Input.GetAxisRaw(m_LMoveAxisName_X);
-       // Last_Rotation_Y = m_LMoveInputValue_Y;
-        m_LMoveInputValue_Y = Input.GetAxisRaw(m_LMoveAxisName_Y);
+        prevState = State;
+        State = GamePad.GetState(playerIndex);
 
-        m_RMoveInputValue_X = Input.GetAxisRaw(m_RMoveAxisName_X);
-        m_RMoveInputValue_Y = Input.GetAxisRaw(m_RMoveAxisName_Y);
-        RAngle = (Mathf.Atan2(m_RMoveInputValue_X, m_RMoveInputValue_Y) * Mathf.Rad2Deg);
-        if (RAngle > 3 || RAngle < -3)
-            Last_Angle_Bullet = -RAngle;
+        if (playerIndex == ID_Player)
+        {
+
+
+            //Debug.Log(transform.rotation.y);
+
+
+            m_LMoveInputValue_X = State.ThumbSticks.Left.X;
+            // Last_Rotation_Y = m_LMoveInputValue_Y;
+            m_LMoveInputValue_Y = State.ThumbSticks.Left.Y;
+            m_RMoveInputValue_X = State.ThumbSticks.Right.X;
+            m_RMoveInputValue_Y = State.ThumbSticks.Right.Y;
+
+
+            RAngle = (Mathf.Atan2(-m_RMoveInputValue_X, -m_RMoveInputValue_Y) * Mathf.Rad2Deg);
+
+            if (/*RAngle > 1.0f || RAngle < -1.0f*/ RAngle != -180)
+                Last_Angle_Bullet = RAngle;
             //Debug.Log(RAngle);
-            if (LAngle > 3 || LAngle < -3)
-             Last_Angle_Player = -LAngle;
 
+            LAngle = (Mathf.Atan2(m_LMoveInputValue_X, -m_LMoveInputValue_Y) * Mathf.Rad2Deg);
+            if (/*LAngle > 1.0f || LAngle < -1.0f*/ LAngle != 180)
+                Last_Angle_Player = LAngle;
+            //Debug.Log(LAngle);
+ 
 
-        LAngle = (Mathf.Atan2(m_LMoveInputValue_X, m_LMoveInputValue_Y) * Mathf.Rad2Deg);
-        //Debug.Log(LAngle);
+            //m_KeyBoard_X_Value = Input.GetAxisRaw(m_KeyBoard_Axe_X);
+            //m_KeyBoard_Y_Value = Input.GetAxisRaw(m_KeyBoard_Axe_Y);
 
-        m_KeyBoard_X_Value = Input.GetAxisRaw(m_KeyBoard_Axe_X);
-        m_KeyBoard_Y_Value = Input.GetAxisRaw(m_KeyBoard_Axe_Y);
-
-        if (Input.GetAxis(m_LMoveInputValue_RB) > 0.0f)
-        {
-            Shoot(Last_Angle_Bullet);
-            Is_Fired = true;
-        }
-        else
-        {
-            Is_Fired = false;
-        }
-
-      
-
-        //if (Input.GetButton(m_LMoveInputValue_RB))
-        //{
-        //    Debug.Log(m_LMoveInputValue_RB);
-        //    Shoot(90);
-        //}
-        
-        if (Input.GetButton(m_LMoveInputValue_RT))
-        {
-            SpecialShoot(number_of_bullets_spe_attack);
-        }
-
-        if (Distance_Maked <= Distance_Max)
-        {
-            //Debug.Log("Dash Test");
-            Dash();//Dash Function
-            if (Distance_Maked > 1  && Distance_Maked < Distance_Max)
+            //Debug.Log(m_LMoveInputValue_RB + " - " + Input.GetAxis(m_LMoveInputValue_RB));
+            if (State.Triggers.Right > 0.2f)
             {
-                Set_Invicible(true);
+                Shoot(Last_Angle_Bullet);
+                Is_Fired = true;
             }
             else
             {
-                Set_Invicible(false);
+                Is_Fired = false;
             }
-            Distance_Maked +=  1;
-  
-        }
-        if (Input.GetButton(m_LMoveInputValue_LT))
-        {
-            /*
-            When dash button is pressed 
-            the bool "DashButton_Isrealeasd" set to false
 
-            and he was only set at true whene the dash button is releasd 
-            */
-            if (DashButton_Isrealeasd == true && CoolDown_Dash <= 0)
-            {
-                Distance_Maked = 0;
-                CoolDown_Dash = 1;
-                DashButton_Isrealeasd = false;
-            }
-            if (Input.GetButtonDown(m_LMoveInputValue_LT))
-            {
-                DashButton_Isrealeasd = true;
-            }
-        }
-        if(CoolDown_Dash > 0)
-        {
-            CoolDown_Dash -= Time.deltaTime;
-        }
 
-        MovePlayer();
-        Rotate();
+
+            //if (Input.GetButton(m_LMoveInputValue_RB))
+            //{
+            //    Debug.Log(m_LMoveInputValue_RB);
+            //    Shoot(90);
+            //}
+
+            if (State.Buttons.A == ButtonState.Pressed)
+            {
+                SpecialShoot(number_of_bullets_spe_attack);
+            }
+
+            if (Distance_Maked <= Distance_Max)
+            {
+                //Debug.Log("Dash Test");
+                Dash();//Dash Function
+                if (Distance_Maked > 1 && Distance_Maked < Distance_Max)
+                {
+                    Set_Invicible(true);
+                }
+                else
+                {
+                    Set_Invicible(false);
+                }
+                Distance_Maked += 1;
+
+            }
+            if (State.Buttons.LeftShoulder == ButtonState.Pressed)
+            {
+                /*
+                When dash button is pressed 
+                the bool "DashButton_Isrealeasd" set to false
+
+                and he was only set at true whene the dash button is releasd 
+                */
+                if (DashButton_Isrealeasd == true && CoolDown_Dash <= 0)
+                {
+                    Distance_Maked = 0;
+                    CoolDown_Dash = 1;
+                    DashButton_Isrealeasd = false;
+                }
+                if (State.Buttons.LeftShoulder == ButtonState.Pressed)
+                {
+                    DashButton_Isrealeasd = true;
+                }
+            }
+            if (CoolDown_Dash > 0)
+            {
+                CoolDown_Dash -= Time.deltaTime;
+            }
+
+            MovePlayer();
+            Rotate();
+        }
         // Debug.Log("Left Stick X Player " + m_PlayerNumber + " = " + m_MoveInputValue_X);
         // Debug.Log("Left Stick Y Player " + m_PlayerNumber + " = " + m_MoveInputValue_Y);
     }

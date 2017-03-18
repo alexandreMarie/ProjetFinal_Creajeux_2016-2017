@@ -25,8 +25,7 @@ public class CameraFollow : MonoBehaviour
 
     [SerializeField]
     private Vector3 gravity;
-
-
+    
 
     void Start()
     {
@@ -38,7 +37,8 @@ public class CameraFollow : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!CameraManager.Instance.Change)
+        
+        if (!CameraManager.Instance.Change && !CameraManager.Instance.DeadPlayer1 && !CameraManager.Instance.DeadPlayer2)
         {
             Gravity();
             DistanceMax();
@@ -50,6 +50,19 @@ public class CameraFollow : MonoBehaviour
             transform.position = Vector3.SmoothDamp(transform.position, destinationPos, ref velocity, dampTime);
             transform.rotation = Quaternion.Slerp(transform.rotation, destinationRot, 0.03f);
             Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, setFieldOfView, 0.03f);
+        }
+        else
+        {
+            if(CameraManager.Instance.DeadPlayer1)
+            {
+                transform.position = Vector3.SmoothDamp(transform.position, targets[0].position + new Vector3(.0f, 215.0f,60.0f), ref velocity, dampTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.015f);
+            }
+            else
+            {
+                transform.position = Vector3.SmoothDamp(transform.position, targets[1].position + new Vector3(.0f, 215.0f, 60.0f), ref velocity, dampTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.015f);
+            }
         }
         /* else
          {

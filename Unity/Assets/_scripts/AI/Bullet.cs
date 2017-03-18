@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
@@ -14,6 +13,23 @@ public class Bullet : MonoBehaviour
     #endregion
 
     private static int count = 0;
+
+    private bool rotateBullet = false;
+    private float lerpFactor = 0.0f;
+
+    public bool RotateBullet
+    {
+        get
+        {
+            return rotateBullet;
+        }
+
+        set
+        {
+            rotateBullet = value;
+        }
+    }
+
     void Start()
     {
         count++;
@@ -24,6 +40,16 @@ public class Bullet : MonoBehaviour
         float i = Random.value;
         transform.position += transform.forward * speed * Time.deltaTime;
         transform.position.Set(0, Mathf.Cos(i), 0);
+
+        if (rotateBullet)
+        {
+            lerpFactor += 2 * Time.deltaTime;
+
+            transform.Rotate(0, Mathf.Lerp(0, 360, lerpFactor), 0);
+
+            if (lerpFactor > 1.0f)
+                lerpFactor = 0.0f;
+        }
     }
 
     void OnTriggerEnter(Collider col)
@@ -42,7 +68,6 @@ public class Bullet : MonoBehaviour
 
                 Destroy(gameObject);
             }
-           
         }
     }
 
