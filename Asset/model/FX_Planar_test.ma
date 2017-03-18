@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: FX_Planar_test.ma
-//Last modified: Sat, Mar 18, 2017 11:03:21 PM
+//Last modified: Sun, Mar 19, 2017 12:40:28 AM
 //Codeset: 1252
 requires maya "2016";
 currentUnit -l centimeter -a degree -t film;
@@ -12,13 +12,13 @@ fileInfo "osv" "Microsoft Windows 8 Business Edition, 64-bit  (Build 9200)\n";
 createNode transform -s -n "persp";
 	rename -uid "95B0F9E9-4FEB-A4C4-5710-E2BB9A95960B";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -6.0254080542311499 29.36228975402328 -2.5557225648115303 ;
-	setAttr ".r" -type "double3" -75.938352729676907 -140.99999999999835 0 ;
+	setAttr ".t" -type "double3" -5.3809539436886809 22.430090067523686 0.48419824868260181 ;
+	setAttr ".r" -type "double3" -81.938352729664118 -96.599999999986053 -5.0888874903416268e-014 ;
 createNode camera -s -n "perspShape" -p "persp";
 	rename -uid "6D34E6CC-499E-A45A-73C8-1F938EBBFC84";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999993;
-	setAttr ".coi" 30.825798349179202;
+	setAttr ".coi" 23.539715754809077;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
