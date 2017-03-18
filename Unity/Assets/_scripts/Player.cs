@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 
     bool playerIndexSet = false;
     PlayerIndex playerIndex;
-    GamePadState State;
+    GamePadState state;
     GamePadState prevState;
     //A VIRER POUR FAIRE LE CLEANUP
     //Mercredi 29 MILESTONE
@@ -96,9 +96,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float CoolDown_Dash;
 
-    [SerializeField]
-    private Transform m_Tr;
-
     private string m_LMoveInputValue_LT;
 
    
@@ -171,7 +168,7 @@ public class Player : MonoBehaviour
         {
             Vector3 direction = Camera.main.transform.right;
 
-            m_Tr.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed);
+            transform.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed);
             Last_Rotation_X = m_LMoveInputValue_X;
 
         }
@@ -187,7 +184,7 @@ public class Player : MonoBehaviour
 
 
 
-            m_Tr.position += (((direction * (Last_Rotation_Y) * Time.deltaTime * m_Speed)));
+            transform.position += (((direction * (Last_Rotation_Y) * Time.deltaTime * m_Speed)));
 
             Last_Rotation_Y = m_LMoveInputValue_Y;
 
@@ -237,7 +234,7 @@ public class Player : MonoBehaviour
 
     void Shoot(float Rot)
     {
-        s_Bullet.Shoot(Rot,m_Tr);
+        s_Bullet.Shoot(Rot,transform);
     }
 
     void SpecialShoot(int Numberbullets)
@@ -245,7 +242,7 @@ public class Player : MonoBehaviour
         Debug.Log("SpecialShoot");
         if(Regen_Stamina >= 500)
         {
-            s_Bullet.Special_Attack(Numberbullets,m_Tr);
+            s_Bullet.Special_Attack(Numberbullets,transform);
             Regen_Stamina = 0;
             life_Bar.UpdateStaminaBar(500, 0);
         }
@@ -254,7 +251,7 @@ public class Player : MonoBehaviour
 
     void Rotate()
     {
-        m_Tr.eulerAngles = new Vector3(0, -Last_Angle_Player, 0);
+        transform.eulerAngles = new Vector3(0, -Last_Angle_Player, 0);
        
     }
     // Update is called once per frame
@@ -274,8 +271,9 @@ public class Player : MonoBehaviour
             
         }
 
-        prevState = State;
-        State = GamePad.GetState(playerIndex);
+        // Update de l'etat des input de la manette durant cette frame
+        prevState = state;
+        state = GamePad.GetState(playerIndex);
 
         if (playerIndex == ID_Player)
         {
@@ -284,11 +282,11 @@ public class Player : MonoBehaviour
             //Debug.Log(transform.rotation.y);
 
 
-            m_LMoveInputValue_X = State.ThumbSticks.Left.X;
+            m_LMoveInputValue_X = state.ThumbSticks.Left.X;
             // Last_Rotation_Y = m_LMoveInputValue_Y;
-            m_LMoveInputValue_Y = State.ThumbSticks.Left.Y;
-            m_RMoveInputValue_X = State.ThumbSticks.Right.X;
-            m_RMoveInputValue_Y = State.ThumbSticks.Right.Y;
+            m_LMoveInputValue_Y = state.ThumbSticks.Left.Y;
+            m_RMoveInputValue_X = state.ThumbSticks.Right.X;
+            m_RMoveInputValue_Y = state.ThumbSticks.Right.Y;
 
 
             RAngle = (Mathf.Atan2(-m_RMoveInputValue_X, -m_RMoveInputValue_Y) * Mathf.Rad2Deg);
@@ -307,7 +305,7 @@ public class Player : MonoBehaviour
             //m_KeyBoard_Y_Value = Input.GetAxisRaw(m_KeyBoard_Axe_Y);
 
             //Debug.Log(m_LMoveInputValue_RB + " - " + Input.GetAxis(m_LMoveInputValue_RB));
-            if (State.Triggers.Right > 0.2f)
+            if (state.Triggers.Right > 0.2f)
             {
                 Shoot(Last_Angle_Bullet);
                 Is_Fired = true;
@@ -325,27 +323,34 @@ public class Player : MonoBehaviour
             //    Shoot(90);
             //}
 
-            if (State.Buttons.A == ButtonState.Pressed)
+            if (state.Buttons.A == ButtonState.Pressed)
             {
                 SpecialShoot(number_of_bullets_spe_attack);
             }
 
-            if (Distance_Maked <= Distance_Max)
-            {
-                //Debug.Log("Dash Test");
-                Dash();//Dash Function
-                if (Distance_Maked > 1 && Distance_Maked < Distance_Max)
-                {
-                    Set_Invicible(true);
-                }
-                else
-                {
-                    Set_Invicible(false);
-                }
-                Distance_Maked += 1;
+            //if (Distance_Maked <= Distance_Max)
+            //{
+            //    //Debug.Log("Dash Test");
+            //    Dash();//Dash Function
+            //    if (Distance_Maked > 1 && Distance_Maked < Distance_Max)
+            //    {
+            //        Set_Invicible(true);
+            //    }
+            //    else
+            //    {
+            //        Set_Invicible(false);
+            //    }
+            //    Distance_Maked += 1;
 
+            //}
+
+            if (prevState.Buttons.LeftShoulder == ButtonState.Released && state.Buttons.LeftShoulder == ButtonState.Pressed)
+            {
+                // premier appui sur le left bumper
+                Dash();
             }
-            if (State.Buttons.LeftShoulder == ButtonState.Pressed)
+
+            if (state.Buttons.LeftShoulder == ButtonState.Pressed)
             {
                 /*
                 When dash button is pressed 
@@ -359,7 +364,7 @@ public class Player : MonoBehaviour
                     CoolDown_Dash = 1;
                     DashButton_Isrealeasd = false;
                 }
-                if (State.Buttons.LeftShoulder == ButtonState.Pressed)
+                if (state.Buttons.LeftShoulder == ButtonState.Pressed)
                 {
                     DashButton_Isrealeasd = true;
                 }
@@ -375,10 +380,27 @@ public class Player : MonoBehaviour
         // Debug.Log("Left Stick X Player " + m_PlayerNumber + " = " + m_MoveInputValue_X);
         // Debug.Log("Left Stick Y Player " + m_PlayerNumber + " = " + m_MoveInputValue_Y);
     }
+
     void Dash()
     {
-        m_Tr.position += m_Tr.forward  * 3;
+
+        if (state.Buttons.LeftShoulder == ButtonState.Pressed)
+        {
+            /*
+            When dash button is pressed 
+            the bool "DashButton_Isrealeasd" set to false
+
+            and he was only set at true whene the dash button is releasd 
+            */
+            if (state.Buttons.LeftShoulder == ButtonState.Released && CoolDown_Dash <= 0)
+            {
+                Distance_Maked = 0;
+                CoolDown_Dash = 1;
+            }
+        }
+        transform.position += transform.forward  * 3;
     }
+
     public void HitByBullet()
     {
         Life -= 1;

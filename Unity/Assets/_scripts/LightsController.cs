@@ -44,6 +44,6 @@ public class LightsController : MonoBehaviour
     void Update()
     {
         timer = Mathf.Clamp(timer + (turnLight == true ? 1 : -1) * Time.unscaledDeltaTime / duration, 0f, 1f);
-        lights[1].intensity = Mathf.Lerp(0f, 8f, lightBehaviour.Evaluate(timer));
+        lights[1].intensity = Mathf.Lerp(0f, 1f, lightBehaviour.Evaluate(timer));
     }
 }

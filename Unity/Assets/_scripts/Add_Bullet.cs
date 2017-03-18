@@ -4,7 +4,6 @@ using System.Collections;
 public class Add_Bullet : MonoBehaviour {
 
     public GameObject Bullet;
-    Transform Player_Transform;
 
     float spreadAngle = 10.0f;
 
@@ -23,7 +22,7 @@ public class Add_Bullet : MonoBehaviour {
         //Transform Temp_Transforme = Player_Transform;
         float spreadZ = Random.Range(-spreadAngle, spreadAngle);
 
-        Vector3 PosBalle = new Vector3(transform_player.position.x, transform_player.position.y + 20, transform_player.position.z);
+        Vector3 PosBalle = new Vector3(transform_player.position.x, transform_player.position.y, transform_player.position.z);
 
       //  Vector3 PosBalle = new Vector3(transform.position.x, transform.position.y + 20, transform.position.z);
 
@@ -42,7 +41,7 @@ public class Add_Bullet : MonoBehaviour {
 
     public void Special_Attack(int NumberBullets, Transform transform_player)
     {
-        Vector3 PosBalle = new Vector3(transform_player.position.x, transform_player.position.y + 20, transform_player.position.z);
+        Vector3 PosBalle = new Vector3(transform_player.position.x, transform_player.position.y, transform_player.position.z);
         int Degrees = 360 / NumberBullets;
         for(int i = 0;i < NumberBullets ; i++)
         {
