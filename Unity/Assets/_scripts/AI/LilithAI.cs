@@ -84,7 +84,7 @@ public class LilithAI : BossManager
 
                 lifeState = LifeState.THREE;
 
-                StartCoroutine(TestAI()); //////////////////////////TESTAI
+                StartCoroutine(AI2()); //////////////////////////TESTAI
                 StartCoroutine(Snake());
             }
         }
@@ -147,9 +147,13 @@ public class LilithAI : BossManager
 
     private IEnumerator TestAI()
     {
-        Lilith.LaunchMalthael(bullet);
+        Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, false);
 
         yield return new WaitForSeconds(2.0f);
+
+        //Lilith.LaunchMalthael(bullet);
+
+        //yield return new WaitForSeconds(5.0f);
     }
 
     private IEnumerator AI1()
@@ -159,7 +163,7 @@ public class LilithAI : BossManager
         while (true)
         {
             if (Vector3.Distance(transform.position, players[0].transform.position) < 400.0f)
-                Lilith.LaunchBurst(bullet, bulletQuantityBurst, true);
+                Lilith.LaunchBurst(bullet, bulletQuantityBurst, 10, true);
             else
                 Lilith.LaunchStraightLine(bullet, players[0]);
 
@@ -173,7 +177,7 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            Lilith.LaunchBurst(bullet, bulletQuantityBurst, true);
+            Lilith.LaunchBurst(bullet, 25, 5, false);
             yield return new WaitForSeconds(time / 3);
         }
     }
@@ -184,7 +188,7 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            Lilith.LaunchBurst(bullet, bulletQuantityBurst, true);
+            Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, true);
             yield return new WaitForSeconds(time / 4);
         }
     }
@@ -195,7 +199,7 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            Lilith.LaunchBurst(bullet, bulletQuantityBurst, true);
+            Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, true);
             yield return new WaitForSeconds(time / 6);
         }
     }

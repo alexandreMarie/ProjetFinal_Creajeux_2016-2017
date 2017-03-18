@@ -1,25 +1,22 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-//DISABLING "Code cannot be reached" WARNINGS
-//DISABLING "XX is never used" WARNINGS
-//Please be a responsible developer and do NOT use those.
-//Do what I say, not what I do.
-#pragma warning disable 0162
-#pragma warning disable 0168
-#pragma warning disable 0169
-
 /// <summary>
 /// PATTERNS FILE
 /// Contains all the pattern algorithms.
+/// Contains the following patterns :
+/// - Phyllotaxis
+/// - Burst
+/// - RotatingStraightLine
+/// - StraightLine
+/// - Malthael
+/// - Wings
 /// </summary>
 
 /// <summary>
 /// TO DO
-/// - Add additional parameters to the methods so they can be modulated from the Update (parameters I need TBC)
-/// - Correct the angle bug when angle2 hits 361° (making angle2 % 360 smaller than angle1 % 360)
-/// - Pattern ideas : Malthaël
 /// - Add patterns
+/// - Add the rotating burst again?
 /// </summary>
 
 public class Patterns : MonoBehaviour
@@ -41,24 +38,24 @@ public class Patterns : MonoBehaviour
         }
     }
 
-    private IEnumerator Burst(Transform bullet, uint bulletQuantity, bool rotatePattern)
+    private IEnumerator Burst(Transform bullet, uint bulletQuantity, uint bulletLineCount, bool rotatePattern)
     {
         float additiveAngle = 360.0f / bulletQuantity;
         float phi = 0.0f;
 
-        for (int i = 0; i < bulletQuantity; i++)
+        for (int i = 0; i < bulletLineCount; i++)
         {
-            Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
-            
-            if (rotatePattern)
+            for (int j = 0; j < bulletQuantity; j++)
             {
-                bullet.GetComponent<Bullet>().RotateBullet = true;
-                Debug.Log(bullet.GetComponent<Bullet>().RotateBullet);
+                Transform spawnedBullet = Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0)) as Transform;
+
+                if (rotatePattern)
+                    spawnedBullet.GetComponent<Bullet>().RotateBullet = true;
+
+                phi += additiveAngle;
             }
-
-            phi += additiveAngle;
+            yield return new WaitForSeconds(0.05f);
         }
-
         yield return new WaitForSeconds(2.0f);
     }
 
@@ -75,22 +72,48 @@ public class Patterns : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
     }
+                 
+    private IEnumerator RotatingStraightLine(Transform bullet, uint bulletQuantity, bool rotatePattern)
+    {
+        float additiveAngle = 360.0f / bulletQuantity;
+        float phi = 0.0f;
+
+        for (int i = 0; i < bulletQuantity; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            if (rotatePattern)
+                bullet.GetComponent<Bullet>().RotateBullet = true;
+
+            phi += additiveAngle;
+        }
+
+        yield return new WaitForSeconds(2.0f);
+    }
 
     private IEnumerator Malthael(Transform bullet, Transform player)
     {
-        float phi = 20.0f;
-        while (true)
+        for (int phi = 20; phi < 160; phi += 5)
         {
             Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
             Instantiate(bullet, transform.position, Quaternion.Euler(0, -phi, 0));
-
-            phi += 5.0f;
-
-            if (phi > 160)
-                phi = 20.0f;
-
             yield return new WaitForSeconds(0.05f);
         }
+    }
+
+    private IEnumerator Wings(Transform bullet, Transform player)
+    {
+        for (int phi = 20; phi < 160; phi += 5)
+        {
+            Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0));
+            Instantiate(bullet, transform.position, Quaternion.Euler(0, -phi, 0));
+        }
+
+        yield return new WaitForSeconds(0.05f);
     }
     #endregion
 
@@ -100,14 +123,19 @@ public class Patterns : MonoBehaviour
         StartCoroutine(Phyllotaxis(bullet, divergence));
     }
 
-    public void LaunchBurst(Transform bullet, uint bulletQuantity, bool test)
+    public void LaunchBurst(Transform bullet, uint bulletQuantity, uint bulletLineCount, bool test)
     {
-        StartCoroutine(Burst(bullet, bulletQuantity, test));
+        StartCoroutine(Burst(bullet, bulletQuantity, bulletLineCount, test));
     }
 
     public void LaunchStraightLine(Transform bullet, Transform player)
     {
         StartCoroutine(StraightLine(bullet, player, 5));
+    }
+
+    public void LaunchRotatingStraightLine(Transform bullet, uint bulletQuantity, bool rotatePattern)
+    {
+        StartCoroutine(RotatingStraightLine(bullet, bulletQuantity, rotatePattern));
     }
 
     public void LaunchMalthael(Transform bullet)

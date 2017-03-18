@@ -17,6 +17,9 @@ public class Bullet : MonoBehaviour
     private bool rotateBullet = false;
     private float lerpFactor = 0.0f;
 
+    private Vector3 rotation = new Vector3(0.0f, 0.0f, 0.0f);
+    private Vector3 originalForward = new Vector3(0.0f, 0.0f, 0.0f);
+
     public bool RotateBullet
     {
         get
@@ -33,8 +36,10 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         count++;
+        originalForward = transform.forward;
         Destroy(gameObject, destroyTime);
     }
+
     void Update()
     {
         float i = Random.value;
@@ -43,12 +48,11 @@ public class Bullet : MonoBehaviour
 
         if (rotateBullet)
         {
-            lerpFactor += 2 * Time.deltaTime;
+            lerpFactor += Time.deltaTime / 500;
 
-            transform.Rotate(0, Mathf.Lerp(0, 360, lerpFactor), 0);
+            rotation = new Vector3(0, Mathf.Lerp(0, 180, lerpFactor), 0);
 
-            if (lerpFactor > 1.0f)
-                lerpFactor = 0.0f;
+            transform.Rotate(rotation);
         }
     }
 
