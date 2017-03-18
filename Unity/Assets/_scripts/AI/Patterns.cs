@@ -105,7 +105,7 @@ public class Patterns : MonoBehaviour
         }
     }
 
-    private IEnumerator Wings(Transform bullet, Transform player)
+    private IEnumerator Wings(Transform bullet)
     {
         for (int phi = 20; phi < 160; phi += 5)
         {
@@ -141,6 +141,11 @@ public class Patterns : MonoBehaviour
     public void LaunchMalthael(Transform bullet)
     {
         StartCoroutine(Malthael(bullet, null));
+    }
+
+    public void LaunchWings(Transform bullet)
+    {
+        StartCoroutine(Wings(bullet));
     }
     #endregion
 }
