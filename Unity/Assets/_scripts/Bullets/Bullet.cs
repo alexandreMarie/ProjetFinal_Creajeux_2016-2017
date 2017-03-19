@@ -18,7 +18,6 @@ public class Bullet : MonoBehaviour
     private float lerpFactor = 0.0f;
 
     private Vector3 rotation = new Vector3(0.0f, 0.0f, 0.0f);
-    private Vector3 originalForward = new Vector3(0.0f, 0.0f, 0.0f);
 
     public bool RotateBullet
     {
@@ -36,13 +35,11 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         count++;
-        originalForward = transform.forward;
         Destroy(gameObject, destroyTime);
     }
 
     void Update()
     {
-        float i = Random.value;
         transform.position += transform.forward * speed * Time.deltaTime;
 
         if (rotateBullet)

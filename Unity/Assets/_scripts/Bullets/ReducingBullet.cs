@@ -19,7 +19,6 @@ public class ReducingBullet : MonoBehaviour
     private float originalScale = 100;
 
     private Vector3 rotation = new Vector3(0.0f, 0.0f, 0.0f);
-    private Vector3 originalForward = new Vector3(0.0f, 0.0f, 0.0f);
 
     public bool RotateBullet
     {
@@ -37,7 +36,6 @@ public class ReducingBullet : MonoBehaviour
     void Start()
     {
         count++;
-        originalForward = transform.forward;
         Destroy(gameObject, destroyTime);
         transform.localScale = new Vector3(50, 50, 50);
     }

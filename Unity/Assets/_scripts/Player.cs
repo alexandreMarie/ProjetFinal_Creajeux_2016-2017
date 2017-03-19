@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 
     bool playerIndexSet = false;
     PlayerIndex playerIndex;
-    GamePadState state;
+    GamePadState State;
     GamePadState prevState;
     //A VIRER POUR FAIRE LE CLEANUP
     //Mercredi 29 MILESTONE
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
 
 
     [SerializeField]
-    private GameObject Bullet;
+    private GameObject bullet;
 
     //[SerializeField]
     Add_Bullet s_Bullet;
@@ -32,21 +32,21 @@ public class Player : MonoBehaviour
     bool DashButton_Isrealeasd;
     bool Is_Fired;
 
-   
+
     float Last_Rotation_X;
-    
+
     float Last_Rotation_Y;
-    
+
     float Last_Angle_Player;
-  
+
     float Last_Angle_Bullet;
 
     [SerializeField]
     private float Slowed;//Stats apply on the the speed of the player, when he shoot
 
-    
+
     private float m_AngleX = 0;
-   
+
     private float m_AngleY = 0;
 
     private int m_PlayerNumber = 1;
@@ -70,24 +70,24 @@ public class Player : MonoBehaviour
     PlayerIndex ID_Player;
 
 
-   
+
     private string m_RMoveAxisName_X;  // Will have the correct axis name according to the player number
-    
+
     private string m_RMoveAxisName_Y;  // Will have the correct axis name according to the player number
 
 
 
     private string m_LMoveAxisName_X;  // Will have the correct axis name according to the player number
- 
+
     private string m_LMoveAxisName_Y;  // Will have the correct axis name according to the player number
 
     private string m_KeyBoard_Axe_X;
 
     private string m_KeyBoard_Axe_Y;
 
- 
+
     private float m_KeyBoard_X_Value;
-   
+
     private float m_KeyBoard_Y_Value;
 
     private string m_RotateAxisName;
@@ -96,9 +96,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float CoolDown_Dash;
 
+    [SerializeField]
+    private Transform m_Tr;
+
     private string m_LMoveInputValue_LT;
 
-   
+
     private string m_LMoveInputValue_RB;
 
     private string m_LMoveInputValue_A;
@@ -158,7 +161,7 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-       
+
     }
     //Deplacement en diagonale 
     void MovePlayer()
@@ -168,7 +171,7 @@ public class Player : MonoBehaviour
         {
             Vector3 direction = Camera.main.transform.right;
 
-            transform.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed);
+            m_Tr.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed);
             Last_Rotation_X = m_LMoveInputValue_X;
 
         }
@@ -184,7 +187,7 @@ public class Player : MonoBehaviour
 
 
 
-            transform.position += (((direction * (Last_Rotation_Y) * Time.deltaTime * m_Speed)));
+            m_Tr.position += (((direction * (Last_Rotation_Y) * Time.deltaTime * m_Speed)));
 
             Last_Rotation_Y = m_LMoveInputValue_Y;
 
@@ -226,7 +229,7 @@ public class Player : MonoBehaviour
         //    {
         //        m_Tr.position += ((((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed))) / Slowed);
         //    }
-          
+
         //}
 
 
@@ -234,46 +237,47 @@ public class Player : MonoBehaviour
 
     void Shoot(float Rot)
     {
-        s_Bullet.Shoot(Rot,transform);
+        //s_Bullet.Shoot(Rot,m_Tr);
+        if (!Is_Fired)
+            StartCoroutine(PlayerFire(transform, Rot));
     }
 
     void SpecialShoot(int Numberbullets)
     {
         Debug.Log("SpecialShoot");
-        if(Regen_Stamina >= 500)
+        if (Regen_Stamina >= 500)
         {
-            s_Bullet.Special_Attack(Numberbullets,transform);
+            s_Bullet.Special_Attack(Numberbullets, m_Tr);
             Regen_Stamina = 0;
             life_Bar.UpdateStaminaBar(500, 0);
         }
-      
+
     }
 
     void Rotate()
     {
-        transform.eulerAngles = new Vector3(0, -Last_Angle_Player, 0);
-       
+        m_Tr.eulerAngles = new Vector3(0, -Last_Angle_Player, 0);
+
     }
     // Update is called once per frame
     void Update()
     {
         if (!playerIndexSet || !prevState.IsConnected)
         {
-          
-                PlayerIndex testPlayerIndex = ID_Player;
-                GamePadState testState = GamePad.GetState(testPlayerIndex);
-                if (testState.IsConnected)
-                {
-                    Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
-                    playerIndex = testPlayerIndex;
-                    playerIndexSet = true;
-                }
-            
+
+            PlayerIndex testPlayerIndex = ID_Player;
+            GamePadState testState = GamePad.GetState(testPlayerIndex);
+            if (testState.IsConnected)
+            {
+                Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
+                playerIndex = testPlayerIndex;
+                playerIndexSet = true;
+            }
+
         }
 
-        // Update de l'etat des input de la manette durant cette frame
-        prevState = state;
-        state = GamePad.GetState(playerIndex);
+        prevState = State;
+        State = GamePad.GetState(playerIndex);
 
         if (playerIndex == ID_Player)
         {
@@ -282,11 +286,11 @@ public class Player : MonoBehaviour
             //Debug.Log(transform.rotation.y);
 
 
-            m_LMoveInputValue_X = state.ThumbSticks.Left.X;
+            m_LMoveInputValue_X = State.ThumbSticks.Left.X;
             // Last_Rotation_Y = m_LMoveInputValue_Y;
-            m_LMoveInputValue_Y = state.ThumbSticks.Left.Y;
-            m_RMoveInputValue_X = state.ThumbSticks.Right.X;
-            m_RMoveInputValue_Y = state.ThumbSticks.Right.Y;
+            m_LMoveInputValue_Y = State.ThumbSticks.Left.Y;
+            m_RMoveInputValue_X = State.ThumbSticks.Right.X;
+            m_RMoveInputValue_Y = State.ThumbSticks.Right.Y;
 
 
             RAngle = (Mathf.Atan2(-m_RMoveInputValue_X, -m_RMoveInputValue_Y) * Mathf.Rad2Deg);
@@ -299,19 +303,20 @@ public class Player : MonoBehaviour
             if (/*LAngle > 1.0f || LAngle < -1.0f*/ LAngle != 180)
                 Last_Angle_Player = LAngle;
             //Debug.Log(LAngle);
- 
+
 
             //m_KeyBoard_X_Value = Input.GetAxisRaw(m_KeyBoard_Axe_X);
             //m_KeyBoard_Y_Value = Input.GetAxisRaw(m_KeyBoard_Axe_Y);
 
             //Debug.Log(m_LMoveInputValue_RB + " - " + Input.GetAxis(m_LMoveInputValue_RB));
-            if (state.Triggers.Right > 0.2f)
+            if (State.Triggers.Right > 0.2f)
             {
                 Shoot(Last_Angle_Bullet);
                 Is_Fired = true;
             }
             else
             {
+                StopAllCoroutines();
                 Is_Fired = false;
             }
 
@@ -323,34 +328,27 @@ public class Player : MonoBehaviour
             //    Shoot(90);
             //}
 
-            if (state.Buttons.A == ButtonState.Pressed)
+            if (State.Buttons.A == ButtonState.Pressed)
             {
                 SpecialShoot(number_of_bullets_spe_attack);
             }
 
-            //if (Distance_Maked <= Distance_Max)
-            //{
-            //    //Debug.Log("Dash Test");
-            //    Dash();//Dash Function
-            //    if (Distance_Maked > 1 && Distance_Maked < Distance_Max)
-            //    {
-            //        Set_Invicible(true);
-            //    }
-            //    else
-            //    {
-            //        Set_Invicible(false);
-            //    }
-            //    Distance_Maked += 1;
-
-            //}
-
-            if (prevState.Buttons.LeftShoulder == ButtonState.Released && state.Buttons.LeftShoulder == ButtonState.Pressed)
+            if (Distance_Maked <= Distance_Max)
             {
-                // premier appui sur le left bumper
-                Dash();
-            }
+                //Debug.Log("Dash Test");
+                Dash();//Dash Function
+                if (Distance_Maked > 1 && Distance_Maked < Distance_Max)
+                {
+                    Set_Invicible(true);
+                }
+                else
+                {
+                    Set_Invicible(false);
+                }
+                Distance_Maked += 1;
 
-            if (state.Buttons.LeftShoulder == ButtonState.Pressed)
+            }
+            if (State.Buttons.LeftShoulder == ButtonState.Pressed)
             {
                 /*
                 When dash button is pressed 
@@ -364,7 +362,7 @@ public class Player : MonoBehaviour
                     CoolDown_Dash = 1;
                     DashButton_Isrealeasd = false;
                 }
-                if (state.Buttons.LeftShoulder == ButtonState.Pressed)
+                if (State.Buttons.LeftShoulder == ButtonState.Pressed)
                 {
                     DashButton_Isrealeasd = true;
                 }
@@ -380,27 +378,10 @@ public class Player : MonoBehaviour
         // Debug.Log("Left Stick X Player " + m_PlayerNumber + " = " + m_MoveInputValue_X);
         // Debug.Log("Left Stick Y Player " + m_PlayerNumber + " = " + m_MoveInputValue_Y);
     }
-
     void Dash()
     {
-
-        if (state.Buttons.LeftShoulder == ButtonState.Pressed)
-        {
-            /*
-            When dash button is pressed 
-            the bool "DashButton_Isrealeasd" set to false
-
-            and he was only set at true whene the dash button is releasd 
-            */
-            if (state.Buttons.LeftShoulder == ButtonState.Released && CoolDown_Dash <= 0)
-            {
-                Distance_Maked = 0;
-                CoolDown_Dash = 1;
-            }
-        }
-        transform.position += transform.forward  * 3;
+        m_Tr.position += m_Tr.forward * 3;
     }
-
     public void HitByBullet()
     {
         Life -= 1;
@@ -440,6 +421,38 @@ public class Player : MonoBehaviour
     public void FreezePlayer()
     {
         StartCoroutine(Freeze());
+    }
+
+    private IEnumerator PlayerFire(Transform transform_player, float Rotation)
+    {
+        while (true)
+        {
+            Vector3 PosBalle = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+            //  Vector3 PosBalle = new Vector3(transform.position.x, transform.position.y + 20, transform.position.z);
+
+            Quaternion Quater_Bullet = transform.rotation;
+            Quater_Bullet.y = 0;
+            GameObject instantiatedBullet;
+
+            for (int j = 0; j < 5; j++)
+            {
+                instantiatedBullet = Instantiate(bullet, PosBalle, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
+                instantiatedBullet.transform.Rotate(0, 0, -10);
+
+                instantiatedBullet = Instantiate(bullet, PosBalle, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
+                instantiatedBullet.transform.Rotate(0, 0, -2);
+                instantiatedBullet = Instantiate(bullet, PosBalle, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
+                instantiatedBullet.transform.Rotate(0, 0, 0);
+                instantiatedBullet = Instantiate(bullet, PosBalle, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
+                instantiatedBullet.transform.Rotate(0, 0, 2);
+
+                instantiatedBullet = Instantiate(bullet, PosBalle, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
+                instantiatedBullet.transform.Rotate(0, 0, 10);
+                yield return new WaitForSeconds(0.05f);
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }
 

@@ -84,7 +84,7 @@ public class LilithAI : BossManager
 
                 lifeState = LifeState.THREE;
 
-                StartCoroutine(AI4()); //////////////////////////TESTAI
+                StartCoroutine(AI1());
                 StartCoroutine(Snake());
             }
         }
