@@ -16,7 +16,6 @@ public class LightsController : MonoBehaviour
     Light[] lights;
 
     bool turnLight = true;
-
     /// <summary>
     /// Allume ou éteint des lumieres
     /// </summary>
@@ -34,6 +33,9 @@ public class LightsController : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    float maxIntensity = 1f;
+
     // Use this for initialization
     void Start()
     {
@@ -44,6 +46,6 @@ public class LightsController : MonoBehaviour
     void Update()
     {
         timer = Mathf.Clamp(timer + (turnLight == true ? 1 : -1) * Time.unscaledDeltaTime / duration, 0f, 1f);
-        lights[1].intensity = Mathf.Lerp(0f, 1f, lightBehaviour.Evaluate(timer));
+        lights[1].intensity = Mathf.Lerp(0f, lightBehaviour.Evaluate(timer), lightBehaviour.Evaluate(timer));
     }
 }

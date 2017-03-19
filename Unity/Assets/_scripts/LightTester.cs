@@ -5,6 +5,10 @@ public class LightTester : MonoBehaviour {
 
     public LightsController lc;
 
+    public EmissiveController ec;
+
+    public BloomController bc;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -18,10 +22,14 @@ public class LightTester : MonoBehaviour {
             {
                 // les lumieres sont allumées
                 lc.TurnLight = false;
+                ec.TurnEmissive = true;
+                bc.TurnBloom = true;
             }
             else
             {
                 lc.TurnLight = true;
+                ec.TurnEmissive = false;
+                bc.TurnBloom = false;
             }
         }	
 	}

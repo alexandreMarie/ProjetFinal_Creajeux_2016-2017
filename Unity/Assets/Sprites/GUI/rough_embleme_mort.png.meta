@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: 125dc17013a23b04aae84552e79f29bd
-timeCreated: 1487771542
+guid: 2560134869eb6b54882e94748eb7520a
+timeCreated: 1489865235
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: LifeBar_Boss_0
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -39,7 +38,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -52,20 +51,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: LifeBar_Boss_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 200
-        height: 50
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 12, y: 11, z: 12, w: 12}
-      outline: []
-      tessellationDetail: 0
+    sprites: []
     outline: []
   spritePackingTag: 
   userData: 

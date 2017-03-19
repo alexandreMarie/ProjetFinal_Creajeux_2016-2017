@@ -51,7 +51,7 @@ public class BloomController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        timer = Mathf.Clamp(timer + (turnBloom == true ? 1 : -1) * Time.unscaledDeltaTime / duration, 0f, 1f);
+        timer = Mathf.Clamp(timer + (turnBloom == false ? 1 : -1) * Time.unscaledDeltaTime / duration, 0f, 1f);
         sfx.contrast = (int)contrastBehaviour.Evaluate(timer);
         sfx.distance = (int)distanceBehaviour.Evaluate(timer);
     }

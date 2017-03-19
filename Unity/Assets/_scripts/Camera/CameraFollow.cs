@@ -16,7 +16,12 @@ public class CameraFollow : MonoBehaviour
     private float MidZ;
     private float CamOffset;
     private float bounds;
+    [SerializeField]
     private float distanceMax;
+
+    [SerializeField]
+    private float distanceMaxCam = 10f;
+
     private List<float> distanceAll = new List<float>();
     private float rotateCam;
     private Quaternion camRotation = new Quaternion(0, 180, 0, 0);
@@ -29,9 +34,10 @@ public class CameraFollow : MonoBehaviour
 
     void Start()
     {
-        camDistance = 120.0f;
+        camDistance = 10.0f;
         bounds = 12.0f;
         setFieldOfView = 60;
+        rotateCam = 35;
 
     }
 
@@ -119,22 +125,22 @@ public class CameraFollow : MonoBehaviour
 
         CamOffset = distanceMax * 0.9f;
 
-        if (distanceMax < 140)
+        if (distanceMax < distanceMaxCam)
         {
             //rotateCam = 65.0f;
             if (distance)
-                camDistance = 120;
+                camDistance = distanceMaxCam;
         }
-        else if (distanceMax > 280)
+        else if (distanceMax > (distanceMaxCam * 2))
         {
             rotateCam = 35.0f;
-           
+
         }
         else
         {
             rotateCam = 50.0f;
         }
-        if (distanceMax < 150)
+        if (distanceMax < distanceMaxCam)
             setFieldOfView = 60;
         for (int i = 0; i < targets.Length; i++)
         {
@@ -144,7 +150,7 @@ public class CameraFollow : MonoBehaviour
         }
         if (!distance)
         {
-            camDistance = 150;
+            //camDistance = 150;
             dampTime = 0.05f;
             distance = true;
         }
