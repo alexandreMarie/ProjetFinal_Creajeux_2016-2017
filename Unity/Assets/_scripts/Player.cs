@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 
     bool playerIndexSet = false;
     PlayerIndex playerIndex;
-    GamePadState State;
+    GamePadState state;
     GamePadState prevState;
     //A VIRER POUR FAIRE LE CLEANUP
     //Mercredi 29 MILESTONE
@@ -44,7 +44,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float Slowed;//Stats apply on the the speed of the player, when he shoot
 
-
     private float m_AngleX = 0;
 
     private float m_AngleY = 0;
@@ -69,13 +68,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     PlayerIndex ID_Player;
 
-
-
     private string m_RMoveAxisName_X;  // Will have the correct axis name according to the player number
 
     private string m_RMoveAxisName_Y;  // Will have the correct axis name according to the player number
-
-
 
     private string m_LMoveAxisName_X;  // Will have the correct axis name according to the player number
 
@@ -94,13 +89,15 @@ public class Player : MonoBehaviour
     private Rigidbody m_Rb;
 
     [SerializeField]
-    private float CoolDown_Dash;
+    [Range(0.1f, 1f)]
+    private float dashDuration = 1f;
+
+    float timer = 0f;
 
     [SerializeField]
-    private Transform m_Tr;
+    private AnimationCurve dashBehaviour;
 
     private string m_LMoveInputValue_LT;
-
 
     private string m_LMoveInputValue_RB;
 
@@ -113,7 +110,6 @@ public class Player : MonoBehaviour
     private float m_LMoveInputValue_X;
 
     private float m_LMoveInputValue_Y;
-
 
     [SerializeField]
     float LAngle;
@@ -171,11 +167,11 @@ public class Player : MonoBehaviour
         {
             Vector3 direction = Camera.main.transform.right;
 
-            m_Tr.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * m_Speed);
+            //timer = Mathf.Clamp(timer + (turnBloom == false ? 1 : -1) * Time.unscaledDeltaTime / duration, 0f, 1f);
+            transform.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * (m_Speed * dashBehaviour.Evaluate(timer / dashDuration)));
             Last_Rotation_X = m_LMoveInputValue_X;
 
         }
-
 
         if (m_LMoveInputValue_Y > 0.1 || m_LMoveInputValue_Y < -0.1)
         {
@@ -184,15 +180,13 @@ public class Player : MonoBehaviour
             direction.y = 0;
             direction.Normalize();
 
-
-
-
-            m_Tr.position += (((direction * (Last_Rotation_Y) * Time.deltaTime * m_Speed)));
+            transform.position += (direction * Last_Rotation_Y * Time.deltaTime * (m_Speed * dashBehaviour.Evaluate(timer / dashDuration)));
 
             Last_Rotation_Y = m_LMoveInputValue_Y;
 
         }
 
+        #region CommentairesClavier
         ////////////////\\\\\\\\\\\\\\\\\
         //////////!\ CLAVIER /!\\\\\\\\\\\
         ////////////////\\\\\\\\\\\\\\\\\\
@@ -203,13 +197,12 @@ public class Player : MonoBehaviour
 
         //    if (Is_Fired == false)
         //    {
-        //        m_Tr.position += (((direction * (m_KeyBoard_X_Value) * Time.deltaTime * m_Speed)));
+        //        position += (((direction * (m_KeyBoard_X_Value) * Time.deltaTime * m_Speed)));
         //    }
         //    else
         //    {
-        //        m_Tr.position += ((((direction * (m_KeyBoard_X_Value) * Time.deltaTime * m_Speed))) / Slowed);
+        //        position += ((((direction * (m_KeyBoard_X_Value) * Time.deltaTime * m_Speed))) / Slowed);
         //    }
-
         //}
 
         //if (m_KeyBoard_Y_Value > 0.1 || m_KeyBoard_Y_Value < -0.1)
@@ -219,20 +212,17 @@ public class Player : MonoBehaviour
         //    direction.y = 0;
         //    direction.Normalize();
 
-
-
         //    if (Is_Fired == false)
         //    {
-        //        m_Tr.position += (((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed)));
+        //        position += (((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed)));
         //    }
         //    else
         //    {
-        //        m_Tr.position += ((((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed))) / Slowed);
+        //        position += ((((direction * (m_KeyBoard_Y_Value) * Time.deltaTime * m_Speed))) / Slowed);
         //    }
 
-        //}
-
-
+        //} 
+        #endregion
     }
 
     void Shoot(float Rot)
@@ -247,7 +237,7 @@ public class Player : MonoBehaviour
         Debug.Log("SpecialShoot");
         if (Regen_Stamina >= 500)
         {
-            s_Bullet.Special_Attack(Numberbullets, m_Tr);
+            s_Bullet.Special_Attack(Numberbullets, transform);
             Regen_Stamina = 0;
             life_Bar.UpdateStaminaBar(500, 0);
         }
@@ -256,12 +246,15 @@ public class Player : MonoBehaviour
 
     void Rotate()
     {
-        m_Tr.eulerAngles = new Vector3(0, -Last_Angle_Player, 0);
+        transform.eulerAngles = new Vector3(0, -Last_Angle_Player, 0);
 
     }
     // Update is called once per frame
     void Update()
     {
+
+        timer += Time.unscaledDeltaTime;
+
         if (!playerIndexSet || !prevState.IsConnected)
         {
 
@@ -276,8 +269,8 @@ public class Player : MonoBehaviour
 
         }
 
-        prevState = State;
-        State = GamePad.GetState(playerIndex);
+        prevState = state;
+        state = GamePad.GetState(playerIndex);
 
         if (playerIndex == ID_Player)
         {
@@ -286,11 +279,11 @@ public class Player : MonoBehaviour
             //Debug.Log(transform.rotation.y);
 
 
-            m_LMoveInputValue_X = State.ThumbSticks.Left.X;
+            m_LMoveInputValue_X = state.ThumbSticks.Left.X;
             // Last_Rotation_Y = m_LMoveInputValue_Y;
-            m_LMoveInputValue_Y = State.ThumbSticks.Left.Y;
-            m_RMoveInputValue_X = State.ThumbSticks.Right.X;
-            m_RMoveInputValue_Y = State.ThumbSticks.Right.Y;
+            m_LMoveInputValue_Y = state.ThumbSticks.Left.Y;
+            m_RMoveInputValue_X = state.ThumbSticks.Right.X;
+            m_RMoveInputValue_Y = state.ThumbSticks.Right.Y;
 
 
             RAngle = (Mathf.Atan2(-m_RMoveInputValue_X, -m_RMoveInputValue_Y) * Mathf.Rad2Deg);
@@ -309,7 +302,7 @@ public class Player : MonoBehaviour
             //m_KeyBoard_Y_Value = Input.GetAxisRaw(m_KeyBoard_Axe_Y);
 
             //Debug.Log(m_LMoveInputValue_RB + " - " + Input.GetAxis(m_LMoveInputValue_RB));
-            if (State.Triggers.Right > 0.2f)
+            if (state.Triggers.Right > 0.2f)
             {
                 Shoot(Last_Angle_Bullet);
                 Is_Fired = true;
@@ -328,10 +321,17 @@ public class Player : MonoBehaviour
             //    Shoot(90);
             //}
 
-            if (State.Buttons.A == ButtonState.Pressed)
+            if (state.Buttons.A == ButtonState.Pressed)
             {
                 SpecialShoot(number_of_bullets_spe_attack);
             }
+
+            if (prevState.Buttons.LeftShoulder == ButtonState.Released && state.Buttons.LeftShoulder == ButtonState.Pressed)
+            {
+                // equivalent du keydown
+                Dash();
+            }
+
 
             if (Distance_Maked <= Distance_Max)
             {
@@ -348,29 +348,29 @@ public class Player : MonoBehaviour
                 Distance_Maked += 1;
 
             }
-            if (State.Buttons.LeftShoulder == ButtonState.Pressed)
-            {
-                /*
-                When dash button is pressed 
-                the bool "DashButton_Isrealeasd" set to false
+            //if (state.Buttons.LeftShoulder == ButtonState.Pressed)
+            //{
+            //    /*
+            //    When dash button is pressed 
+            //    the bool "DashButton_Isrealeasd" set to false
 
-                and he was only set at true whene the dash button is releasd 
-                */
-                if (DashButton_Isrealeasd == true && CoolDown_Dash <= 0)
-                {
-                    Distance_Maked = 0;
-                    CoolDown_Dash = 1;
-                    DashButton_Isrealeasd = false;
-                }
-                if (State.Buttons.LeftShoulder == ButtonState.Pressed)
-                {
-                    DashButton_Isrealeasd = true;
-                }
-            }
-            if (CoolDown_Dash > 0)
-            {
-                CoolDown_Dash -= Time.deltaTime;
-            }
+            //    and he was only set at true whene the dash button is releasd 
+            //    */
+            //    if (DashButton_Isrealeasd == true && CoolDown_Dash <= 0)
+            //    {
+            //        Distance_Maked = 0;
+            //        CoolDown_Dash = 1;
+            //        DashButton_Isrealeasd = false;
+            //    }
+            //    if (state.Buttons.LeftShoulder == ButtonState.Pressed)
+            //    {
+            //        DashButton_Isrealeasd = true;
+            //    }
+            //}
+            //if (CoolDown_Dash > 0)
+            //{
+            //    CoolDown_Dash -= Time.deltaTime;
+            //}
 
             MovePlayer();
             Rotate();
@@ -378,9 +378,11 @@ public class Player : MonoBehaviour
         // Debug.Log("Left Stick X Player " + m_PlayerNumber + " = " + m_MoveInputValue_X);
         // Debug.Log("Left Stick Y Player " + m_PlayerNumber + " = " + m_MoveInputValue_Y);
     }
+
     void Dash()
     {
-        m_Tr.position += m_Tr.forward * 3;
+        timer = 0f;
+        //transform.position += transform.forward * 3;
     }
     public void HitByBullet()
     {
@@ -455,8 +457,6 @@ public class Player : MonoBehaviour
         }
     }
 }
-
-
 
 ///Gestion du dash
 //Donc, un dash, c'est un mouvement direct, dans une direction donner
