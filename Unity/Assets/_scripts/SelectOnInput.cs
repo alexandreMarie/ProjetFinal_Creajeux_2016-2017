@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
-
+using XInputDotNetPure;
 public class SelectOnInput : MonoBehaviour {
 
     [SerializeField]

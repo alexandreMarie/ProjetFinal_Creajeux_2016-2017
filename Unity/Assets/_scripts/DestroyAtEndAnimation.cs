@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class DestroyAtEndAnimation : MonoBehaviour
 {
@@ -15,7 +16,8 @@ public class DestroyAtEndAnimation : MonoBehaviour
         gameObject.SetActive(false);
         if (stateToGo != MenuManager.StateMenu.None)
         {
-            MenuManager.Instance.SetState(stateToGo);
+            SceneManager.LoadScene((int)stateToGo);
+            //MenuManager.Instance.SetState(stateToGo);
         }
         goToActivate.SetActive(true);
     }
