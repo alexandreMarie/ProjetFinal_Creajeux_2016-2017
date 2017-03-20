@@ -18,9 +18,9 @@ public class CameraFollow : MonoBehaviour
     private float bounds;
     [SerializeField]
     private float distanceMax;
+    
 
-    [SerializeField]
-    private float distanceMaxCam = 10f;
+    public float distanceMaxCam;
 
     private List<float> distanceAll = new List<float>();
     private float rotateCam;
@@ -31,9 +31,10 @@ public class CameraFollow : MonoBehaviour
     [SerializeField]
     private Vector3 gravity;
     
-
+    private GameManager manager;
     void Start()
     {
+        manager = GameManager.Instance;
         camDistance = 10.0f;
         bounds = 12.0f;
         setFieldOfView = 60;
@@ -64,7 +65,7 @@ public class CameraFollow : MonoBehaviour
                 transform.position = Vector3.SmoothDamp(transform.position, targets[0].position + new Vector3(.0f, 215.0f,60.0f), ref velocity, dampTime);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.015f);
             }
-            else
+            else if(CameraManager.Instance.DeadPlayer2)
             {
                 transform.position = Vector3.SmoothDamp(transform.position, targets[1].position + new Vector3(.0f, 215.0f, 60.0f), ref velocity, dampTime);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.015f);
@@ -106,8 +107,8 @@ public class CameraFollow : MonoBehaviour
         for (int i = 0; i < targets.Length; i++)
         {
         
-            if (!IsVisibleFrom(targets[i].GetComponentInChildren<Renderer>()))
-                distance = false;
+            /*if (!IsVisibleFrom(targets[i].GetComponentInChildren<Renderer>()))
+                distance = false;*/
             if (targets[i] != targets[targets.Length - 1]) // Condition pour que la dernière target du tableau ne passe pas dans la boucle
             {
                 for (int y = i + 1; y < targets.Length; y++)
@@ -127,39 +128,39 @@ public class CameraFollow : MonoBehaviour
 
         if (distanceMax < distanceMaxCam)
         {
-            //rotateCam = 65.0f;
-            if (distance)
-                camDistance = distanceMaxCam;
+            //if (distance)
+                camDistance = distanceMaxCam -2;
         }
-        else if (distanceMax > (distanceMaxCam * 2))
+        else if (distanceMax > distanceMaxCam*2)
         {
             rotateCam = 35.0f;
-
         }
         else
         {
             rotateCam = 50.0f;
         }
-        if (distanceMax < distanceMaxCam)
+
+        if (distanceMax < distanceMaxCam+2.0f)
             setFieldOfView = 60;
+
         for (int i = 0; i < targets.Length; i++)
         {
             float distanceZTargetToCam = transform.position.z - targets[i].position.z;
-            if (distanceZTargetToCam < 40)
+            if (distanceZTargetToCam > 10)
                 setFieldOfView = 65;
         }
-        if (!distance)
+       /* if (!distance)
         {
-            //camDistance = 150;
+           // camDistance = 15;
             dampTime = 0.05f;
             distance = true;
-        }
-        else
-        {
+        }*/
+        //else
+       // {
             dampTime = 0.15f;
-        }
+        //}
         distanceAll.Clear();
-
+        //Debug.Log("distanceMax : " +distanceMax);
     }
 
 
