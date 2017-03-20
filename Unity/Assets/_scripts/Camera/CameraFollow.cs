@@ -19,7 +19,6 @@ public class CameraFollow : MonoBehaviour
     [SerializeField]
     private float distanceMax;
     
-
     public float distanceMaxCam;
 
     private List<float> distanceAll = new List<float>();
@@ -27,10 +26,10 @@ public class CameraFollow : MonoBehaviour
     private Quaternion camRotation = new Quaternion(0, 180, 0, 0);
     private int setFieldOfView;
     private bool distance = true;
-
-    [SerializeField]
     private Vector3 gravity;
-    
+
+    public Vector3 distanceDead;
+
     private GameManager manager;
     void Start()
     {
@@ -62,13 +61,15 @@ public class CameraFollow : MonoBehaviour
         {
             if(CameraManager.Instance.DeadPlayer1)
             {
-                transform.position = Vector3.SmoothDamp(transform.position, targets[0].position + new Vector3(.0f, 215.0f,60.0f), ref velocity, dampTime);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.015f);
+                transform.position = Vector3.SmoothDamp(transform.position, targets[0].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
+                if (transform.localEulerAngles.x > 59.0f)
+                    manager.Dead = true;
             }
             else if(CameraManager.Instance.DeadPlayer2)
             {
-                transform.position = Vector3.SmoothDamp(transform.position, targets[1].position + new Vector3(.0f, 215.0f, 60.0f), ref velocity, dampTime);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.015f);
+                transform.position = Vector3.SmoothDamp(transform.position, targets[1].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
             }
         }
         /* else

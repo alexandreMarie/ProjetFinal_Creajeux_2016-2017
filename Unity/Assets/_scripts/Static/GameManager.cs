@@ -52,12 +52,10 @@ public class GameManager : MonoBehaviour {
             if (dead)
             {
                 gameOver.SetActive(true);
-                Time.timeScale = 0;
             }
             else
             {
                 gameOver.SetActive(false);
-                Time.timeScale = 1;
             }
         }
         catch
