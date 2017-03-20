@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
-//Name: chibi_Death_UV.ma
-//Last modified: Mon, Mar 20, 2017 03:03:20 PM
+//Name: chibi_War.ma
+//Last modified: Mon, Mar 20, 2017 03:03:51 PM
 //Codeset: 1252
 requires maya "2016";
 requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOptions" -nodeType "mentalrayGlobals"
@@ -8034,4 +8034,4 @@ connectAttr "groupId22.msg" ":initialShadingGroup.gn" -na;
 connectAttr "groupId23.msg" ":initialShadingGroup.gn" -na;
 connectAttr "groupId24.msg" ":initialShadingGroup.gn" -na;
 connectAttr "groupId25.msg" ":initialShadingGroup.gn" -na;
-// End of chibi_Death_UV.ma
+// End of chibi_War.ma
