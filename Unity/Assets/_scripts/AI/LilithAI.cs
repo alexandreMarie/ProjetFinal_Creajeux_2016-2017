@@ -68,12 +68,6 @@ public class LilithAI : BossManager
 
         transform.position = destination;
 
-        if (Input.GetButton("Jump"))
-        {
-            Lilith.StopAllCoroutines();
-            Debug.Log("Stop");
-        }
-
         if (Life / MaxLife >= 0.751f)
         {
             if (lifeState == LifeState.FOUR)
@@ -84,7 +78,7 @@ public class LilithAI : BossManager
 
                 lifeState = LifeState.THREE;
 
-                StartCoroutine(AI1());
+                StartCoroutine(AI1());//////////////////////////////////////////////TESTAI
                 StartCoroutine(Snake());
             }
         }
@@ -147,10 +141,13 @@ public class LilithAI : BossManager
 
     private IEnumerator TestAI()
     {
-        Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, false);
+        //Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, false);
 
-        yield return new WaitForSeconds(2.0f);
-
+        while (true)
+        {
+            Lilith.LaunchMalthael(bullet, false);
+            yield return new WaitForSeconds(2.0f);
+        }
         //Lilith.LaunchMalthael(bullet);
 
         //yield return new WaitForSeconds(5.0f);
@@ -158,14 +155,14 @@ public class LilithAI : BossManager
 
     private IEnumerator AI1()
     {
-        Lilith.LaunchPhyllotaxis(bullet, divergence);
+        Lilith.LaunchPhyllotaxis(bullet, divergence, false);
 
         while (true)
         {
-            if (Vector3.Distance(transform.position, players[0].transform.position) < 400.0f)
-                Lilith.LaunchBurst(bullet, bulletQuantityBurst, 10, true);
+            if (Vector3.Distance(transform.position, players[0].transform.position) < 10.0f)
+                Lilith.LaunchBurst(bullet, bulletQuantityBurst, 10, false);
             else
-                Lilith.LaunchStraightLine(bullet, players[0]);
+                Lilith.LaunchStraightLine(bullet, players[0], false);
 
             yield return new WaitForSeconds(time / 2);
         }
@@ -173,7 +170,7 @@ public class LilithAI : BossManager
 
     private IEnumerator AI2()
     {
-        Lilith.LaunchPhyllotaxis(bullet, divergence);
+        Lilith.LaunchPhyllotaxis(bullet, divergence, false);
 
         while (true)
         {
@@ -184,18 +181,18 @@ public class LilithAI : BossManager
 
     private IEnumerator AI3()
     {
-        Lilith.LaunchPhyllotaxis(bullet, divergence);
+        Lilith.LaunchPhyllotaxis(bullet, divergence, false);
 
         while (true)
         {
-            Lilith.LaunchWings(bullet);
+            Lilith.LaunchWings(bullet, false);
             yield return new WaitForSeconds(time / 4);
         }
     }
 
     private IEnumerator AI4()
     {
-        Lilith.LaunchPhyllotaxis(bullet, divergence);
+        Lilith.LaunchPhyllotaxis(bullet, divergence, false);
 
         while (true)
         {
@@ -211,15 +208,19 @@ public class LilithAI : BossManager
         while (true)
         {
             lilithLights.TurnLight = false;
+            //SoundsManager.Instance.VolumeAmbientMusic = 0.75f;
 
             angle = players[0].position - transform.position;
             angle.y = 2.0f;
+
+            yield return new WaitForSeconds(2.0f);
 
             Instantiate(snake, transform.position, Quaternion.LookRotation(angle, Vector3.forward));
 
             yield return new WaitForSeconds(4.0f);
 
             lilithLights.TurnLight = true;
+            //SoundsManager.Instance.VolumeAmbientMusic = 1.0f;
 
             yield return new WaitForSeconds(5.0f);
         }

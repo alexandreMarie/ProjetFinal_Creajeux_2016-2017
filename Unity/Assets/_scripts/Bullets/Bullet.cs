@@ -4,7 +4,7 @@ public class Bullet : MonoBehaviour
 {
     #region Serialized fields
     [SerializeField]
-    [Range(1.0f, 10)]
+    [Range(1.0f, 20.0f)]
     private float speed = 10.0f;
 
     [SerializeField]
@@ -64,7 +64,9 @@ public class Bullet : MonoBehaviour
                 if (tag != "Snake")
                     col.GetComponent<Player>().HitByBullet();
                 else
+                {
                     col.GetComponent<Player>().FreezePlayer();
+                }
 
                 Destroy(gameObject);
             }
