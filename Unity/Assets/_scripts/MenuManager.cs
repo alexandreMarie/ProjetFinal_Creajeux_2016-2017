@@ -25,12 +25,14 @@ public class MenuManager : MonoBehaviour {
         Logo,
         Title,
         MainMenu,
+        Prototype = 3,
         Options,
         CharacterSelect,
         ArenaSelect,
         DemonSelect,
         Exit,
-        None
+        None,
+       
     }
 
     [SerializeField]
