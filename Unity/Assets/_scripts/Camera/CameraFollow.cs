@@ -34,6 +34,10 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
         manager = GameManager.Instance;
+        manager.LifePlayer1 = 20;
+        manager.Dead = false;
+        manager.GameOver = GameObject.FindGameObjectWithTag("GameOver");
+        CameraManager.Instance.DeadPlayer1 = false;
         camDistance = 10.0f;
         bounds = 12.0f;
         setFieldOfView = 60;
