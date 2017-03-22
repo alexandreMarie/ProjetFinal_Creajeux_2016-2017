@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class SoundsManager : MonoBehaviour {
 
@@ -20,12 +21,14 @@ public class SoundsManager : MonoBehaviour {
     [SerializeField]
     private float volumeMenuMusic = 1.0f;
 
-    [SerializeField]
-    private float volumeAmbientMusic = 1.0f;
+    [Range(0,1)]
+    public float volumeAmbientMusic = 0;
 
     [SerializeField]
     private float volumeSFX = 1.0f;
 
+
+    private string scene;
     public static SoundsManager Instance
     {
         get
@@ -99,6 +102,19 @@ public class SoundsManager : MonoBehaviour {
         }
     }
 
+    public AudioSource SourceMusic
+    {
+        get
+        {
+            return sourceMusic;
+        }
+
+        set
+        {
+            sourceMusic = value;
+        }
+    }
+
 
 
 
@@ -107,16 +123,25 @@ public class SoundsManager : MonoBehaviour {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this);
-
-            sourceMusic.clip = sfxMusic[0];
-           // sourceMusic.Play();
+            DontDestroyOnLoad(this);  
         }
+        scene = SceneManager.GetActiveScene().name;
+        switch (scene)
+        {
+            case "Titles":
+                break;
 
+            case "Prototype1":
+                sourceMusic.clip = ambientMusic[0];
+                sourceMusic.Play();
+                break;
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
-	    
-	}
+
+       
+        sourceMusic.volume = volumeAmbientMusic;
+    }
 }

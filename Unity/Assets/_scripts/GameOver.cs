@@ -5,8 +5,11 @@ using UnityEngine.SceneManagement;
 public class GameOver : MonoBehaviour {
 
     public GameObject go;
-	
-
+    
+    void Start()
+    {
+       
+    }
     void ActiveButton()
     {
         go.SetActive(true);
@@ -15,6 +18,7 @@ public class GameOver : MonoBehaviour {
     public void RestartCurrentScene()
     {
         int scene = SceneManager.GetActiveScene().buildIndex;
+        SoundsManager.Instance.SourceMusic.Stop();
         SceneManager.LoadScene(scene, LoadSceneMode.Single);
     }
 
@@ -22,4 +26,6 @@ public class GameOver : MonoBehaviour {
     {
         SceneManager.LoadScene("Titles");
     }
+
+    
 }
