@@ -59,7 +59,7 @@ public class BossManager : MonoBehaviour
             //stamina ++;
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
             //lifeManager.UpdateStaminaBar(20, (int)stamina);
-            players[0].GetComponent<Player>().Add_Stamina(1);
+            players[0].GetComponent<Player>().Add_Stamina(5);
             Destroy(col.gameObject);
         }
     }
