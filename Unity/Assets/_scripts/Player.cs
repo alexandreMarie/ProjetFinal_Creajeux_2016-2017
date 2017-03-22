@@ -157,7 +157,7 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        Life = 20;
     }
     //Deplacement en diagonale 
     void MovePlayer()
@@ -430,11 +430,6 @@ public class Player : MonoBehaviour
         while (true)
         {
             Vector3 PosBalle = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-
-            //  Vector3 PosBalle = new Vector3(transform.position.x, transform.position.y + 20, transform.position.z);
-
-            Quaternion Quater_Bullet = transform.rotation;
-            Quater_Bullet.y = 0;
             GameObject instantiatedBullet;
 
             for (int j = 0; j < 5; j++)
@@ -453,7 +448,7 @@ public class Player : MonoBehaviour
                 instantiatedBullet.transform.Rotate(0, 0, 10);
                 yield return new WaitForSeconds(0.05f);
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.08f);
         }
     }
 }
