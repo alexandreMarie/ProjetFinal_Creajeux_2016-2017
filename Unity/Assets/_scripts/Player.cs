@@ -3,6 +3,7 @@ using System.Collections;
 using XInputDotNetPure;
 public class Player : MonoBehaviour
 {
+    #region Variables
 
     bool playerIndexSet = false;
     PlayerIndex playerIndex;
@@ -124,6 +125,12 @@ public class Player : MonoBehaviour
     public int Distance_Max = 0;
     //    public Slider Frame_Of_Invicibility;
 
+    private int special = 0;
+
+    MeshRenderer mr;
+
+    #endregion
+
     public void Awake()
     {
         m_Rb = GetComponentInChildren<Rigidbody>();
@@ -131,6 +138,10 @@ public class Player : MonoBehaviour
 
         s_Bullet = GetComponent<Add_Bullet>();
         //s_Bullet = GetComponentInChildren<Add_Bullet>();
+
+        mr = GetComponentInChildren<MeshRenderer>();
+
+        life_Bar.UpdateStaminaBar(100, special);
     }
 
     public void OnEnable()
@@ -234,12 +245,11 @@ public class Player : MonoBehaviour
 
     void SpecialShoot(int Numberbullets)
     {
-        Debug.Log("SpecialShoot");
-        if (Regen_Stamina >= 500)
+        if (special >= 100)
         {
             s_Bullet.Special_Attack(Numberbullets, transform);
-            Regen_Stamina = 0;
-            life_Bar.UpdateStaminaBar(500, 0);
+            special = 0;
+            life_Bar.UpdateStaminaBar(100, 0);
         }
 
     }
@@ -254,6 +264,10 @@ public class Player : MonoBehaviour
     {
 
         timer += Time.unscaledDeltaTime;
+        if (timer / dashDuration >= 1f)
+        {
+            Invicible = false;
+        }
 
         if (!playerIndexSet || !prevState.IsConnected)
         {
@@ -274,34 +288,20 @@ public class Player : MonoBehaviour
 
         if (playerIndex == ID_Player)
         {
-
-
-            //Debug.Log(transform.rotation.y);
-
-
             m_LMoveInputValue_X = state.ThumbSticks.Left.X;
-            // Last_Rotation_Y = m_LMoveInputValue_Y;
             m_LMoveInputValue_Y = state.ThumbSticks.Left.Y;
             m_RMoveInputValue_X = state.ThumbSticks.Right.X;
             m_RMoveInputValue_Y = state.ThumbSticks.Right.Y;
 
-
             RAngle = (Mathf.Atan2(-m_RMoveInputValue_X, -m_RMoveInputValue_Y) * Mathf.Rad2Deg);
 
-            if (/*RAngle > 1.0f || RAngle < -1.0f*/ RAngle != -180)
+            if (RAngle != -180)
                 Last_Angle_Bullet = RAngle;
-            //Debug.Log(RAngle);
 
             LAngle = (Mathf.Atan2(m_LMoveInputValue_X, -m_LMoveInputValue_Y) * Mathf.Rad2Deg);
-            if (/*LAngle > 1.0f || LAngle < -1.0f*/ LAngle != 180)
+            if (LAngle != 180)
                 Last_Angle_Player = LAngle;
-            //Debug.Log(LAngle);
 
-
-            //m_KeyBoard_X_Value = Input.GetAxisRaw(m_KeyBoard_Axe_X);
-            //m_KeyBoard_Y_Value = Input.GetAxisRaw(m_KeyBoard_Axe_Y);
-
-            //Debug.Log(m_LMoveInputValue_RB + " - " + Input.GetAxis(m_LMoveInputValue_RB));
             if (state.Triggers.Right > 0.2f)
             {
                 Shoot(Last_Angle_Bullet);
@@ -309,17 +309,9 @@ public class Player : MonoBehaviour
             }
             else
             {
-                StopAllCoroutines();
+                StopCoroutine(PlayerFire(null,0));
                 Is_Fired = false;
             }
-
-
-
-            //if (Input.GetButton(m_LMoveInputValue_RB))
-            //{
-            //    Debug.Log(m_LMoveInputValue_RB);
-            //    Shoot(90);
-            //}
 
             if (state.Buttons.A == ButtonState.Pressed)
             {
@@ -330,53 +322,12 @@ public class Player : MonoBehaviour
             {
                 // equivalent du keydown
                 Dash();
+                Invicible = true;
             }
-
-
-            if (Distance_Maked <= Distance_Max)
-            {
-                //Debug.Log("Dash Test");
-                Dash();//Dash Function
-                if (Distance_Maked > 1 && Distance_Maked < Distance_Max)
-                {
-                    Set_Invicible(true);
-                }
-                else
-                {
-                    Set_Invicible(false);
-                }
-                Distance_Maked += 1;
-
-            }
-            //if (state.Buttons.LeftShoulder == ButtonState.Pressed)
-            //{
-            //    /*
-            //    When dash button is pressed 
-            //    the bool "DashButton_Isrealeasd" set to false
-
-            //    and he was only set at true whene the dash button is releasd 
-            //    */
-            //    if (DashButton_Isrealeasd == true && CoolDown_Dash <= 0)
-            //    {
-            //        Distance_Maked = 0;
-            //        CoolDown_Dash = 1;
-            //        DashButton_Isrealeasd = false;
-            //    }
-            //    if (state.Buttons.LeftShoulder == ButtonState.Pressed)
-            //    {
-            //        DashButton_Isrealeasd = true;
-            //    }
-            //}
-            //if (CoolDown_Dash > 0)
-            //{
-            //    CoolDown_Dash -= Time.deltaTime;
-            //}
 
             MovePlayer();
             Rotate();
         }
-        // Debug.Log("Left Stick X Player " + m_PlayerNumber + " = " + m_MoveInputValue_X);
-        // Debug.Log("Left Stick Y Player " + m_PlayerNumber + " = " + m_MoveInputValue_Y);
     }
 
     void Dash()
@@ -384,10 +335,15 @@ public class Player : MonoBehaviour
         timer = 0f;
         //transform.position += transform.forward * 3;
     }
+
     public void HitByBullet()
     {
         Life -= 1;
         life_Bar.UpdateLifeBar(Life_Max, Life);
+
+        special += 5;
+        StartCoroutine(PlayerBlink());
+
         //Debug.Log("Hit ! \n Life : " + Life);
     }
 
@@ -403,8 +359,8 @@ public class Player : MonoBehaviour
 
     public void Add_Stamina(int Stamina_Added)
     {
-        Regen_Stamina += Stamina_Added;
-        life_Bar.UpdateStaminaBar(500, Regen_Stamina);
+        special += Stamina_Added;
+        life_Bar.UpdateStaminaBar(100, special);
     }
 
     private IEnumerator Freeze()
@@ -425,27 +381,46 @@ public class Player : MonoBehaviour
         StartCoroutine(Freeze());
     }
 
+    private IEnumerator PlayerBlink()
+    {
+        float timerBlink = 0f;
+        bool isActive = true;
+        Invicible = true;
+        while (timerBlink <= 0.4f)
+        {
+            timerBlink += Time.unscaledDeltaTime;
+            isActive = !isActive;
+            mr.enabled = isActive;
+            yield return new WaitForSeconds(0.05f);
+            mr.enabled = true;
+
+        }
+
+        mr.enabled = true;
+        Invicible = false;
+    }
+
     private IEnumerator PlayerFire(Transform transform_player, float Rotation)
     {
         while (true)
         {
-            Vector3 PosBalle = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             GameObject instantiatedBullet;
 
             for (int j = 0; j < 5; j++)
             {
-                instantiatedBullet = Instantiate(bullet, PosBalle, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
+                instantiatedBullet = Instantiate(bullet, transform.position, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
                 instantiatedBullet.transform.Rotate(0, 0, -10);
 
-                instantiatedBullet = Instantiate(bullet, PosBalle, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
+                instantiatedBullet = Instantiate(bullet, transform.position, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
                 instantiatedBullet.transform.Rotate(0, 0, -2);
-                instantiatedBullet = Instantiate(bullet, PosBalle, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
+                instantiatedBullet = Instantiate(bullet, transform.position, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
                 instantiatedBullet.transform.Rotate(0, 0, 0);
-                instantiatedBullet = Instantiate(bullet, PosBalle, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
+                instantiatedBullet = Instantiate(bullet, transform.position, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
                 instantiatedBullet.transform.Rotate(0, 0, 2);
 
-                instantiatedBullet = Instantiate(bullet, PosBalle, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
+                instantiatedBullet = Instantiate(bullet, transform.position, Quaternion.Euler(-90, Last_Angle_Bullet, 0)) as GameObject;
                 instantiatedBullet.transform.Rotate(0, 0, 10);
+
                 yield return new WaitForSeconds(0.05f);
             }
             yield return new WaitForSeconds(0.08f);
