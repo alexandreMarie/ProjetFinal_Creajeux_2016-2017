@@ -129,6 +129,8 @@ public class Player : MonoBehaviour
 
     MeshRenderer mr;
 
+    Coroutine fireCo;
+
     #endregion
 
     public void Awake()
@@ -179,7 +181,7 @@ public class Player : MonoBehaviour
             Vector3 direction = Camera.main.transform.right;
 
             //timer = Mathf.Clamp(timer + (turnBloom == false ? 1 : -1) * Time.unscaledDeltaTime / duration, 0f, 1f);
-            transform.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * (m_Speed * dashBehaviour.Evaluate(timer / dashDuration)));
+            transform.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * (m_Speed));
             Last_Rotation_X = m_LMoveInputValue_X;
 
         }
@@ -191,7 +193,7 @@ public class Player : MonoBehaviour
             direction.y = 0;
             direction.Normalize();
 
-            transform.position += (direction * Last_Rotation_Y * Time.deltaTime * (m_Speed * dashBehaviour.Evaluate(timer / dashDuration)));
+            transform.position += (direction * Last_Rotation_Y * Time.deltaTime * (m_Speed));
 
             Last_Rotation_Y = m_LMoveInputValue_Y;
 
@@ -236,13 +238,6 @@ public class Player : MonoBehaviour
         #endregion
     }
 
-    void Shoot(float Rot)
-    {
-        //s_Bullet.Shoot(Rot,m_Tr);
-        if (!Is_Fired)
-            StartCoroutine(PlayerFire(transform, Rot));
-    }
-
     void SpecialShoot(int Numberbullets)
     {
         if (special >= 100)
@@ -256,7 +251,7 @@ public class Player : MonoBehaviour
 
     void Rotate()
     {
-        transform.eulerAngles = new Vector3(0, -Last_Angle_Player, 0);
+        transform.eulerAngles = new Vector3(0, Last_Angle_Bullet, 0);
 
     }
     // Update is called once per frame
@@ -302,14 +297,22 @@ public class Player : MonoBehaviour
             if (LAngle != 180)
                 Last_Angle_Player = LAngle;
 
-            if (state.Triggers.Right > 0.2f)
+            if (state.Triggers.Right > 0.8f)
             {
-                Shoot(Last_Angle_Bullet);
+                if (fireCo == null)
+                {
+                    fireCo = StartCoroutine(PlayerFire(transform, Last_Angle_Bullet));
+                }
                 Is_Fired = true;
             }
             else
             {
-                StopCoroutine(PlayerFire(null,0));
+                if (fireCo != null)
+                {
+                    StopCoroutine(fireCo);
+                    fireCo = null;
+                }
+                //StopAllCoroutines();
                 Is_Fired = false;
             }
 
@@ -321,19 +324,13 @@ public class Player : MonoBehaviour
             if (prevState.Buttons.LeftShoulder == ButtonState.Released && state.Buttons.LeftShoulder == ButtonState.Pressed)
             {
                 // equivalent du keydown
-                Dash();
+                StartCoroutine(Dash());
                 Invicible = true;
             }
 
             MovePlayer();
             Rotate();
         }
-    }
-
-    void Dash()
-    {
-        timer = 0f;
-        //transform.position += transform.forward * 3;
     }
 
     public void HitByBullet()
@@ -381,6 +378,20 @@ public class Player : MonoBehaviour
         StartCoroutine(Freeze());
     }
 
+    private IEnumerator Dash()
+    {
+        float timerDash = 0f;
+        float startSpeed = m_Speed;
+        while ((timerDash / dashDuration) <= 1f)
+        {
+            timerDash += Time.unscaledDeltaTime;
+            m_Speed = startSpeed * dashBehaviour.Evaluate(timerDash / dashDuration);
+            yield return new WaitForEndOfFrame();
+        }
+
+        m_Speed = startSpeed;
+    }
+
     private IEnumerator PlayerBlink()
     {
         float timerBlink = 0f;
@@ -425,6 +436,8 @@ public class Player : MonoBehaviour
             }
             yield return new WaitForSeconds(0.08f);
         }
+
+        yield return null;
     }
 }
 
