@@ -135,7 +135,11 @@ public class SoundsManager : MonoBehaviour {
                 sourceMusic.clip = ambientMusic[0];
                 sourceMusic.Play();
                 break;
+
+            
         }
+        sourceMusic.clip = ambientMusic[0];
+        sourceMusic.Play();
     }
 	
 	// Update is called once per frame
