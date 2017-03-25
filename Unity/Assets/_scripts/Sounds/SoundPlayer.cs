@@ -40,7 +40,7 @@ public class SoundPlayer : MonoBehaviour {
            
             soundsShoot.Play();
         }
-        if(rb.velocity.magnitude >0.5f /*Input.GetKey(KeyCode.Y)*/)
+        if(rb.velocity.magnitude >0.01f /*Input.GetKey(KeyCode.Y)*/)
         {
 
             if(!isWalk)
@@ -54,11 +54,10 @@ public class SoundPlayer : MonoBehaviour {
             soundsRun.Stop();
             isWalk = false;
         }
-        /*if(Input.GetKeyDown(KeyCode.T))
+        if(Input.GetKeyDown(KeyCode.T))
         {
-
-            sourceMusic.clip = sfxMusic[0];
-            sourceMusic.Play();
-        }*/
+            
+            soundsShoot.Play();
+        }
     }
 }

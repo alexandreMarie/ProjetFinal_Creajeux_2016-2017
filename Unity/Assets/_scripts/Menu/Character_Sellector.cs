@@ -72,10 +72,19 @@ public class Character_Sellector : MonoBehaviour {
     {
         for (int i = 0; i < 2; i++)
         {
+
+
+
+
+
+
+
+
+
             if (prevState[i].Buttons.LeftShoulder == ButtonState.Pressed)
             {
 
-                if ((int)Choosen_Character[i] < 4)
+                if (Choosen_Character[i] < (List_of_character)3)
                 {
                     Choosen_Character[i]++;
                     Debug.Log("Player 1 :" + Choosen_Character[0]);
@@ -86,7 +95,7 @@ public class Character_Sellector : MonoBehaviour {
                     Choosen_Character[i] = 0;
                 }
 
-                if ((int)Choosen_Character[i] > 0)
+                if (Choosen_Character[i] > (List_of_character)0)
                 {
                     Choosen_Character[i]--;
                     Debug.Log("Player 1 :" + Choosen_Character[0]);
@@ -98,6 +107,15 @@ public class Character_Sellector : MonoBehaviour {
                 }
 
             }
+
+
+
+
+
+
+
+
+
 
             if (prevState[i].Buttons.RightShoulder == ButtonState.Pressed)
             {
@@ -124,6 +142,15 @@ public class Character_Sellector : MonoBehaviour {
                 {
                     Choosen_Character[i] = (List_of_character)3;
                 }
+
+
+
+
+
+
+
+
+
 
             }
         }
