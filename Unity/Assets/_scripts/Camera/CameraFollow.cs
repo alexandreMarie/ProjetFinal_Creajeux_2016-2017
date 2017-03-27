@@ -4,7 +4,6 @@ using System.Collections;
 
 public class CameraFollow : MonoBehaviour
 {
-
     public float dampTime = 0.15f;
     private Vector3 velocity = Vector3.zero;
     public Transform[] targets;
@@ -15,7 +14,6 @@ public class CameraFollow : MonoBehaviour
     private float MidY;
     private float MidZ;
     private float CamOffset;
-    private float bounds;
     [SerializeField]
     private float distanceMax;
     
@@ -25,7 +23,6 @@ public class CameraFollow : MonoBehaviour
     private float rotateCam;
     private Quaternion camRotation = new Quaternion(0, 180, 0, 0);
     private int setFieldOfView;
-    private bool distance = true;
     private Vector3 gravity;
 
     public Vector3 distanceDead;
@@ -33,6 +30,7 @@ public class CameraFollow : MonoBehaviour
     private GameManager manager;
     void Start() 
     {
+        /* Reset GameManager */
         manager = GameManager.Instance;
         manager.LifePlayer2 = 20;
         manager.LifePlayer1 = 20;
@@ -43,8 +41,9 @@ public class CameraFollow : MonoBehaviour
         CameraManager.Instance.DeadPlayer1 = false;
         CameraManager.Instance.DeadPlayer2 = false;
         CameraManager.Instance.DeadBoss = false;
-        camDistance = 10.0f;
-        bounds = 12.0f;
+
+
+        camDistance = 3.0f;
         setFieldOfView = 60;
         rotateCam = 35;
 
@@ -52,7 +51,7 @@ public class CameraFollow : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+
         if (!CameraManager.Instance.Change && !CameraManager.Instance.DeadPlayer1 && !CameraManager.Instance.DeadPlayer2 && !CameraManager.Instance.DeadBoss)
         {
             Gravity();
@@ -93,7 +92,6 @@ public class CameraFollow : MonoBehaviour
              transform.rotation = Quaternion.Slerp(transform.rotation, CameraManager.Instance.CameraDoor[0].transform.rotation, 0.1f);
          }*/
     }
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(KeyCode.A))
@@ -104,11 +102,8 @@ public class CameraFollow : MonoBehaviour
         {
             CameraManager.Instance.Change = false;
         }
-
-        
-        //Debug.Log(dampTime);
     }
-
+    
     bool IsVisibleFrom(Renderer renderer)
     {
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
@@ -123,8 +118,6 @@ public class CameraFollow : MonoBehaviour
         for (int i = 0; i < targets.Length; i++)
         {
         
-            /*if (!IsVisibleFrom(targets[i].GetComponentInChildren<Renderer>()))
-                distance = false;*/
             if (targets[i] != targets[targets.Length - 1]) // Condition pour que la dernière target du tableau ne passe pas dans la boucle
             {
                 for (int y = i + 1; y < targets.Length; y++)
@@ -142,41 +135,23 @@ public class CameraFollow : MonoBehaviour
 
         CamOffset = distanceMax * 0.9f;
 
-        if (distanceMax < distanceMaxCam)
-        {
-            //if (distance)
-                camDistance = distanceMaxCam -5;
-        }
+       
         if (distanceMax < distanceMaxCam/2)
         {
-            rotateCam = 35.0f;
+            rotateCam = 55.0f;
         }
         else
         {
-            rotateCam = 50.0f;
+            rotateCam = 35.0f;
         }
 
-        if (distanceMax < distanceMaxCam+2.0f)
+        if (distanceMax < distanceMaxCam + 2.0f)
+            setFieldOfView = 55;
+        else
             setFieldOfView = 60;
 
-        for (int i = 0; i < targets.Length; i++)
-        {
-            float distanceZTargetToCam = transform.position.z - targets[i].position.z;
-            if (distanceZTargetToCam > 10)
-                setFieldOfView = 65;
-        }
-       /* if (!distance)
-        {
-           // camDistance = 15;
-            dampTime = 0.05f;
-            distance = true;
-        }*/
-        //else
-       // {
-            dampTime = 0.15f;
-        //}
+        dampTime = 0.15f;
         distanceAll.Clear();
-        //Debug.Log("distanceMax : " +distanceMax);
     }
 
 
