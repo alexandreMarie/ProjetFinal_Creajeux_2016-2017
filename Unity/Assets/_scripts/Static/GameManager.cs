@@ -14,11 +14,10 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private int lifePlayer2 = 20;
     [SerializeField]
-    private float lifeBoss = 20;
+    private float lifeBoss;
 
     private GameObject boss;
-    private GameObject player1;
-    private GameObject player2;
+    private GameObject[] players;
     public static GameManager Instance
     {
         get
@@ -37,7 +36,7 @@ public class GameManager : MonoBehaviour {
         try {
             gameOver = GameObject.FindGameObjectWithTag("GameOver");
             boss = GameObject.FindGameObjectWithTag("Boss");
-            player1 = GameObject.FindGameObjectWithTag("Player");
+            players = GameObject.FindGameObjectsWithTag("Player");
         }
         catch
         {
@@ -47,7 +46,8 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        //lifeBoss = BossManager.Life;
+        Debug.Log(lifePlayer1);
+        lifeBoss = BossManager.Life;
         if (lifePlayer1 <= 0)
         {
             CameraManager.Instance.DeadPlayer1 = true;
@@ -65,8 +65,10 @@ public class GameManager : MonoBehaviour {
             {
             boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
             boss.GetComponent<LilithAI>().StopAllCoroutines();
-            player1.GetComponent<Player>().enabled = false;
-            player1.GetComponent<Add_Bullet>().enabled = false;
+            players[0].GetComponent<Player>().enabled = false;
+            players[0].GetComponent<Add_Bullet>().enabled = false;
+            players[1].GetComponent<Player>().enabled = false;
+            players[1].GetComponent<Add_Bullet>().enabled = false;
             gameOver.SetActive(true);
             }
             else
@@ -139,19 +141,7 @@ public class GameManager : MonoBehaviour {
             boss = value;
         }
     }
-
-    public GameObject Player1
-    {
-        get
-        {
-            return player1;
-        }
-
-        set
-        {
-            player1 = value;
-        }
-    }
+    
 
     public float LifeBoss
     {
@@ -163,6 +153,19 @@ public class GameManager : MonoBehaviour {
         set
         {
             lifeBoss = value;
+        }
+    }
+
+    public GameObject[] Players
+    {
+        get
+        {
+            return players;
+        }
+
+        set
+        {
+            players = value;
         }
     }
 }
