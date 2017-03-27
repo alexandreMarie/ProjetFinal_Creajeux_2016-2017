@@ -22,7 +22,7 @@ public class GameOver : MonoBehaviour {
 
     public void MainMenu()
     {
-        SceneManager.LoadScene("Titles");
+        SceneManager.LoadScene((int)MenuManager.StateMenu.MainMenu);
     }
 
     
