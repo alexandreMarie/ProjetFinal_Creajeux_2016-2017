@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: chibi_template_famine.ma
-//Last modified: Mon, Mar 27, 2017 11:19:15 AM
+//Last modified: Mon, Mar 27, 2017 11:54:47 AM
 //Codeset: 1252
 requires maya "2016";
 requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOptions" -nodeType "mentalrayGlobals"
@@ -9480,13 +9480,13 @@ createNode mesh -n "polySurfaceShape16" -p "pPlane5";
 	setAttr ".dr" 1;
 createNode transform -n "persp1";
 	rename -uid "C6E8FAD6-42E6-5233-ABBC-31B1C098AA05";
-	setAttr ".t" -type "double3" 0.35271661826053347 1.7337676902560757 19.601601825381827 ;
-	setAttr ".r" -type "double3" 370.46164715659495 -17276.999999998283 -4.9764367233699962e-017 ;
+	setAttr ".t" -type "double3" -16.594922417057177 6.4705951242424957 5.4969020554518231 ;
+	setAttr ".r" -type "double3" 351.2616471541894 -19148.99999999502 0 ;
 createNode camera -n "persp1Shape" -p "persp1";
 	rename -uid "96F4CC50-4479-0109-8F53-DEB92F7CCF1A";
 	setAttr -k off ".v";
 	setAttr ".fl" 34.999999999999993;
-	setAttr ".coi" 20.530382799581101;
+	setAttr ".coi" 17.329571045687473;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
