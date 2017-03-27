@@ -261,7 +261,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         timer += Time.unscaledDeltaTime;
        
         if (timer / dashDuration >= 1f)

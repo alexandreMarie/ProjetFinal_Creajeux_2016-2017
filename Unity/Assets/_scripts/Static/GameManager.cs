@@ -87,6 +87,19 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public int LifePlayer2
+    {
+        get
+        {
+            return lifePlayer2;
+        }
+
+        set
+        {
+            lifePlayer2 = value;
+        }
+    }
+
     public GameObject GameOver
     {
         get
