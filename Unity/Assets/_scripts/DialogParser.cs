@@ -1,12 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEditor;
-using UnityEditor.SceneManagement;
-using System.Text;
+using UnityEngine.SceneManagement;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using System;
 
 public class DialogParser : MonoBehaviour
 {
@@ -37,9 +33,9 @@ public class DialogParser : MonoBehaviour
         //string file = "Assets/Data/Dialog";
         string file = Application.dataPath + "/Dialogs/" + "Dialog";
         //string sceneNum = EditorApplication.currentScene; 
-        string sceneNum = EditorSceneManager.GetActiveScene().name;
-        sceneNum = Regex.Replace(sceneNum, "[^0-9]", "");
-        file += sceneNum;
+        //string sceneNum = UnityEngine.SceneManager.GetActiveScene().name;
+        //sceneNum = Regex.Replace(sceneNum, "[^0-9]", "");
+        //file += sceneNum;
         file += ".txt";
 
         lines = new List<DialogLine>();

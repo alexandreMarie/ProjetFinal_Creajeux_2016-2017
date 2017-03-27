@@ -12,8 +12,6 @@ public class Bullet : MonoBehaviour
     private float destroyTime = 5.0f;
     #endregion
 
-    private static int count = 0;
-
     private bool rotateBullet = false;
     private float lerpFactor = 0.0f;
 
@@ -21,20 +19,13 @@ public class Bullet : MonoBehaviour
 
     public bool RotateBullet
     {
-        get
-        {
-            return rotateBullet;
-        }
+        get { return rotateBullet; }
 
-        set
-        {
-            rotateBullet = value;
-        }
+        set { rotateBullet = value; }
     }
 
     void Start()
     {
-        count++;
         Destroy(gameObject, destroyTime);
     }
 
@@ -65,16 +56,12 @@ public class Bullet : MonoBehaviour
                     col.GetComponent<Player>().HitByBullet();
                 else
                 {
+                    col.GetComponent<Player>().StopAllCoroutines();
                     col.GetComponent<Player>().FreezePlayer();
                 }
 
                 Destroy(gameObject);
             }
         }
-    }
-
-    public void OnDestroy()
-    {
-        count--;
     }
 }

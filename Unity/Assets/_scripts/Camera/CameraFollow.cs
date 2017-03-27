@@ -34,7 +34,6 @@ public class CameraFollow : MonoBehaviour
     void Start() 
     {
         manager = GameManager.Instance;
-        manager.LifePlayer2 = 20;
         manager.LifePlayer1 = 20;
         manager.Dead = false;
         manager.GameOver = GameObject.FindGameObjectWithTag("GameOver");

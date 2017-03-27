@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class BloomController : MonoBehaviour {
+public class BloomController : MonoBehaviour
+{
 
     [SerializeField]
     SimpleFX sfx;
@@ -31,26 +31,22 @@ public class BloomController : MonoBehaviour {
     public bool TurnBloom
     {
         get
-        {
-            return turnBloom;
-        }
+        { return turnBloom; }
 
         set
-        {
-            turnBloom = value;
-        }
+        { turnBloom = value; }
     }
 
-    // Use this for initialization
-    void Start () {
+    void Start()
+    {
         sfx = GetComponent<SimpleFX>();
         sfx.contrast = 0;
         sfx.distance = 0;
         sfx.offset = 0;
     }
 
-    // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         timer = Mathf.Clamp(timer + (turnBloom == false ? 1 : -1) * Time.unscaledDeltaTime / duration, 0f, 1f);
         sfx.contrast = (int)contrastBehaviour.Evaluate(timer);
         sfx.distance = (int)distanceBehaviour.Evaluate(timer);

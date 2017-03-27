@@ -25,14 +25,13 @@ public class LilithAI : BossManager
     [SerializeField]
     private float time = 15.0f;
 
-    [SerializeField]
-    private uint bulletQuantityBurst = 200; //Quantity of bullets to fire for each burst
+    private uint bulletQuantityBurst = 200; // Quantity of bullets to fire for each burst
 
     private Vector3 destination;
 
-    private float divergence = 137.5f; //Angular divergence of the phyllotaxis
+    private float divergence = 137.5f; // Angular divergence of the phyllotaxis
 
-    public LightsController lilithLights;
+    public LightsController arenaLights;
 
     private Patterns Lilith; // Uppercase L on purpose
 
@@ -50,18 +49,13 @@ public class LilithAI : BossManager
         {
             return Lilith;
         }
-
-        set
-        {
-            Lilith = value;
-        }
     }
 
     void Start()
     {
-        Life = 3000.0f;
+        Life = 3000;
 
-        LilithAccessor = GetComponentInParent<Patterns>();
+        Lilith = GetComponentInParent<Patterns>();
 
         for (int i = 0; i < System.Enum.GetNames(typeof(LifeState)).Length; i++)
             LilithEvents += BulletCancel;
@@ -95,7 +89,8 @@ public class LilithAI : BossManager
 
                 lifeState = LifeState.THREE;
 
-                StartCoroutine(TestAI());//////////////////////////////////////////////TESTAI
+                //////////////////////////////////////////////TESTAI
+                StartCoroutine(AI1());
                 StartCoroutine(Snake());
             }
         }
@@ -158,9 +153,9 @@ public class LilithAI : BossManager
     private IEnumerator TestAI()
     {
         //Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, false);
-        StartCoroutine(Snake());
+        //StartCoroutine(Snake());
         //Lilith.LaunchPhyllotaxis(bullet, 178.5f, false);
-        yield return null;
+        //yield return null;
 
         //while (true)
         //{
@@ -170,6 +165,8 @@ public class LilithAI : BossManager
         //Lilith.LaunchMalthael(bullet);
 
         //yield return new WaitForSeconds(5.0f);
+
+        yield return null;
     }
 
     private IEnumerator AI1()
@@ -229,9 +226,10 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            lilithLights.TurnLight = true;
+            arenaLights.TurnLight = true;
 
             arena.GetComponent<EmissiveController>().TurnEmissive = true;
+            Camera.main.GetComponent<BloomController>().TurnBloom = true;
             //SoundsManager.Instance.VolumeAmbientMusic = 0.75f;
 
             angle = players[0].position - transform.position;
@@ -243,8 +241,9 @@ public class LilithAI : BossManager
 
             yield return new WaitForSeconds(4.0f);
 
-            lilithLights.TurnLight = false;
+            arenaLights.TurnLight = false;
             arena.GetComponent<EmissiveController>().TurnEmissive = false;
+            Camera.main.GetComponent<BloomController>().TurnBloom = false;
             //SoundsManager.Instance.VolumeAmbientMusic = 1.0f;
             yield return new WaitForSeconds(5.0f);
         }

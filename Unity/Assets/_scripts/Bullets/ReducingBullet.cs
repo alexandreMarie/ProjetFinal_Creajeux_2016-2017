@@ -12,8 +12,6 @@ public class ReducingBullet : MonoBehaviour
     private float destroyTime = 1.0f;
     #endregion
 
-    private static int count = 0;
-
     private bool rotateBullet = false;
     private float lerpFactor = 0.0f;
     private float originalScale = 100;
@@ -35,7 +33,6 @@ public class ReducingBullet : MonoBehaviour
 
     void Start()
     {
-        count++;
         Destroy(gameObject, destroyTime);
         transform.localScale = new Vector3(50, 50, 50);
     }
@@ -75,15 +72,13 @@ public class ReducingBullet : MonoBehaviour
                 if (tag != "Snake")
                     col.GetComponent<Player>().HitByBullet();
                 else
+                {
                     col.GetComponent<Player>().FreezePlayer();
+                    col.GetComponent<Player>().FreezePlayer();
+                }
 
                 Destroy(gameObject);
             }
         }
-    }
-
-    public void OnDestroy()
-    {
-        count--;
     }
 }

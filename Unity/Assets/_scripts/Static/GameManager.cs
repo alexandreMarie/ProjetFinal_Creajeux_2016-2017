@@ -11,8 +11,7 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField]
     private int lifePlayer1 = 20;
-    [SerializeField]
-    private int lifePlayer2 = 20;
+   // private int lifePlayer2 = 20;
     [SerializeField]
     private float lifeBoss;
 
@@ -51,10 +50,10 @@ public class GameManager : MonoBehaviour {
         {
             CameraManager.Instance.DeadPlayer1 = true;
         }
-        else if (lifePlayer2 <= 0)
+        /*else if (lifePlayer2 <= 0)
         {
             CameraManager.Instance.DeadPlayer2 = true;
-        }
+        }*/
         else if(lifeBoss <=0)
         {
             CameraManager.Instance.DeadBoss = true;
@@ -62,12 +61,10 @@ public class GameManager : MonoBehaviour {
 
         if (dead)
             {
-            boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
-            boss.GetComponent<LilithAI>().StopAllCoroutines();
+            //boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
+           // boss.GetComponent<LilithAI>().StopAllCoroutines();
             players[0].GetComponent<Player>().enabled = false;
             players[0].GetComponent<Add_Bullet>().enabled = false;
-            players[1].GetComponent<Player>().enabled = false;
-            players[1].GetComponent<Add_Bullet>().enabled = false;
             gameOver.SetActive(true);
             }
             else
@@ -102,18 +99,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public int LifePlayer2
-    {
-        get
-        {
-            return lifePlayer2;
-        }
-
-        set
-        {
-            lifePlayer2 = value;
-        }
-    }
+   
 
     public GameObject GameOver
     {
