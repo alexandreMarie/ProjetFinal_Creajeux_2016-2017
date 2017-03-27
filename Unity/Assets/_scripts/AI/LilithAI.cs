@@ -42,11 +42,24 @@ public class LilithAI : BossManager
 
     LifeState lifeState = LifeState.FOUR;
 
+    public Patterns LilithAccessor
+    {
+        get
+        {
+            return Lilith;
+        }
+
+        set
+        {
+            Lilith = value;
+        }
+    }
+
     void Start()
     {
         Life = 10000.0f;
 
-        Lilith = GetComponentInParent<Patterns>();
+        LilithAccessor = GetComponentInParent<Patterns>();
 
         for (int i = 0; i < System.Enum.GetNames(typeof(LifeState)).Length; i++)
             LilithEvents += BulletCancel;
@@ -89,7 +102,7 @@ public class LilithAI : BossManager
             {
                 divergence = 178.5f;
 
-                Lilith.StopAllCoroutines();
+                LilithAccessor.StopAllCoroutines();
                 StopAllCoroutines();
 
                 LilithEvents.Invoke();
@@ -107,7 +120,7 @@ public class LilithAI : BossManager
             {
                 divergence = 75.0f;
 
-                Lilith.StopAllCoroutines();
+                LilithAccessor.StopAllCoroutines();
                 StopAllCoroutines();
 
                 LilithEvents.Invoke();
@@ -126,7 +139,7 @@ public class LilithAI : BossManager
             {
                 divergence = 137.5f;
 
-                Lilith.StopAllCoroutines();
+                LilithAccessor.StopAllCoroutines();
                 StopAllCoroutines();
 
                 LilithEvents.Invoke();
@@ -145,7 +158,7 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            Lilith.LaunchMalthael(bullet, false);
+            LilithAccessor.LaunchMalthael(bullet, false);
             yield return new WaitForSeconds(2.0f);
         }
         //Lilith.LaunchMalthael(bullet);
@@ -155,14 +168,14 @@ public class LilithAI : BossManager
 
     private IEnumerator AI1()
     {
-        Lilith.LaunchPhyllotaxis(bullet, divergence, false);
+        LilithAccessor.LaunchPhyllotaxis(bullet, divergence, false);
 
         while (true)
         {
             if (Vector3.Distance(transform.position, players[0].transform.position) < 10.0f)
-                Lilith.LaunchBurst(bullet, bulletQuantityBurst, 10, false);
+                LilithAccessor.LaunchBurst(bullet, bulletQuantityBurst, 10, false);
             else
-                Lilith.LaunchStraightLine(bullet, players[0], false);
+                LilithAccessor.LaunchStraightLine(bullet, players[0], false);
 
             yield return new WaitForSeconds(time / 2);
         }
@@ -170,33 +183,33 @@ public class LilithAI : BossManager
 
     private IEnumerator AI2()
     {
-        Lilith.LaunchPhyllotaxis(bullet, divergence, false);
+        LilithAccessor.LaunchPhyllotaxis(bullet, divergence, false);
 
         while (true)
         {
-            Lilith.LaunchBurst(bullet, 25, 5, false);
+            LilithAccessor.LaunchBurst(bullet, 25, 5, false);
             yield return new WaitForSeconds(time / 3);
         }
     }
 
     private IEnumerator AI3()
     {
-        Lilith.LaunchPhyllotaxis(bullet, divergence, false);
+        LilithAccessor.LaunchPhyllotaxis(bullet, divergence, false);
 
         while (true)
         {
-            Lilith.LaunchWings(bullet, false);
+            LilithAccessor.LaunchWings(bullet, false);
             yield return new WaitForSeconds(time / 4);
         }
     }
 
     private IEnumerator AI4()
     {
-        Lilith.LaunchPhyllotaxis(bullet, divergence, false);
+        LilithAccessor.LaunchPhyllotaxis(bullet, divergence, false);
 
         while (true)
         {
-            Lilith.LaunchRotatingStraightLine(bullet, bulletQuantityBurst, true);
+            LilithAccessor.LaunchRotatingStraightLine(bullet, bulletQuantityBurst, true);
             yield return new WaitForSeconds(time / 6);
         }
     }
