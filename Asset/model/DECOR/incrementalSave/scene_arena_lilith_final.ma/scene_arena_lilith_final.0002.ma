@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: scene_arena_lilith_final.ma
-//Last modified: Mon, Mar 27, 2017 11:14:33 AM
+//Last modified: Mon, Mar 27, 2017 11:11:30 AM
 //Codeset: 1252
 requires maya "2016";
 requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOptions" -nodeType "mentalrayGlobals"
@@ -16,8 +16,8 @@ fileInfo "osv" "Microsoft Windows 8 Business Edition, 64-bit  (Build 9200)\n";
 createNode transform -s -n "persp";
 	rename -uid "771EC131-4AB0-2F04-8A23-37A3EACA2849";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -28.866765194463557 164.5132444589332 1315.0149483252922 ;
-	setAttr ".r" -type "double3" 174.10933641184158 3061.8460817112559 -179.99999999988466 ;
+	setAttr ".t" -type "double3" -0.29257517549609474 13.049768495089921 428.48110736881739 ;
+	setAttr ".r" -type "double3" 180.70933641184192 3061.8460817113291 -179.99999999989095 ;
 	setAttr ".rp" -type "double3" 0 0 -9.0949470177292826e-015 ;
 	setAttr ".rpt" -type "double3" -2.9419367657805582e-015 1.8138972288178946e-013 
 		8.6134339296626713e-015 ;
@@ -27,7 +27,7 @@ createNode camera -s -n "perspShape" -p "persp";
 	setAttr ".fl" 34.999999999999979;
 	setAttr ".fcp" 1000000;
 	setAttr ".fd" 0.05;
-	setAttr ".coi" 1413.2315163890701;
+	setAttr ".coi" 518.81456891626271;
 	setAttr ".ow" 0.1;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
@@ -14335,7 +14335,7 @@ createNode polyNormal -n "polyNormal4";
 	setAttr ".ics" -type "componentList" 1 "f[*]";
 	setAttr ".unm" no;
 createNode nodeGraphEditorInfo -n "hyperShadePrimaryNodeEditorSavedTabsInfo";
-	rename -uid "1E29877F-45F0-8861-E9AF-A0BFCCAFA5A2";
+	rename -uid "6DB973DF-4BA4-F75D-817A-F3ACA0308880";
 	setAttr ".tgi[0].tn" -type "string" "Untitled_1";
 	setAttr ".tgi[0].vl" -type "double2" -2772.6189374450705 -2314.8148537978145 ;
 	setAttr ".tgi[0].vh" -type "double2" -1294.0475676267893 -683.99455084972976 ;
@@ -14398,8 +14398,6 @@ select -ne :defaultResolution;
 select -ne :hardwareRenderGlobals;
 	setAttr ".ctrs" 256;
 	setAttr ".btrs" 512;
-select -ne :ikSystem;
-	setAttr -s 4 ".sol";
 connectAttr "groupParts1.og" "polySurfaceShape1.i";
 connectAttr "groupId65.id" "polySurfaceShape1.iog.og[0].gid";
 connectAttr "lambert2SG.mwc" "polySurfaceShape1.iog.og[0].gco";
