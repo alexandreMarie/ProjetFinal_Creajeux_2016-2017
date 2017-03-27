@@ -11,7 +11,7 @@ public class Character_Selection : MonoBehaviour {
 
 
     Transform[] Perso;
-
+    Vector3[] Position;
     [SerializeField]
     int ID_Player;
 
@@ -21,6 +21,11 @@ public class Character_Selection : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Perso = GetComponentsInChildren<Transform>();
+        Position = new Vector3[5];
+        for(int i = 1; i < Perso.Length;i++)
+        {
+            Position[i] = Perso[i].position;
+        }
         Debug.Log(Perso.Length);
 	}
 	
@@ -51,14 +56,17 @@ public class Character_Selection : MonoBehaviour {
         {
             Button_is_releasd = true;
         }
+
+
+
         if (Button_is_releasd == true)
         {
-            Perso_Selector();
+            ID_Perso_Selector();
         }
-
+        Perso_Selector();
     }
 
-    void Perso_Selector()
+    void ID_Perso_Selector()
     {
         if (prevState.DPad.Right == ButtonState.Pressed)
         {
@@ -83,4 +91,19 @@ public class Character_Selection : MonoBehaviour {
         }
     }
 
+
+    void Perso_Selector()
+    {
+        for (int i = 1; i < Perso.Length; i++)
+        {
+            if (i == ID_Perso)
+            {
+                Perso[i].position = new Vector3(Perso[i].position.x, Perso[i].position.y,-6.5f);
+            }
+            else
+            {
+                Perso[i].position = Position[i];
+            }
+        }
+    }
 }
