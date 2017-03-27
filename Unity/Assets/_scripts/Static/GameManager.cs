@@ -41,7 +41,8 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        
+        Debug.Log("Lel1 : " + lifePlayer1);
+        Debug.Log("Lel12 : " + lifePlayer2);
         if (lifePlayer1 == 0)
         {
             CameraManager.Instance.DeadPlayer1 = true;
@@ -83,6 +84,7 @@ public class GameManager : MonoBehaviour {
 
         set
         {
+          
             lifePlayer1 = value;
         }
     }
