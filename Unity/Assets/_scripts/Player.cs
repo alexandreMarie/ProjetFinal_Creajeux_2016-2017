@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
     float RAngle;
 
     [Range(10, 20)]
-    public int Distance_Max = 0;
+    public int maxDistance = 0;
 
     private int specialGauge = 0;
 
@@ -123,7 +123,6 @@ public class Player : MonoBehaviour
             transform.position += (direction * lastRotationY * Time.deltaTime * (speed));
 
             lastRotationY = m_LMoveInputValue_Y;
-
         }
     }
 
@@ -135,7 +134,6 @@ public class Player : MonoBehaviour
             specialGauge = 0;
             lifeBar.UpdateStaminaBar(100, 0);
         }
-
     }
 
     void Rotate()
@@ -148,16 +146,11 @@ public class Player : MonoBehaviour
         timer += Time.unscaledDeltaTime;
        
         if (timer / dashDuration >= 1f)
-        {
             if (isBlinking != true)
-            {
                 isInvincible = false;
-            }
-        }
 
         if (!playerIndexSet || !prevState.IsConnected)
         {
-
             PlayerIndex testPlayerIndex = playerID;
             GamePadState testState = GamePad.GetState(testPlayerIndex);
             if (testState.IsConnected)
@@ -166,7 +159,6 @@ public class Player : MonoBehaviour
                 playerIndex = testPlayerIndex;
                 playerIndexSet = true;
             }
-
         }
 
         prevState = state;
@@ -185,12 +177,8 @@ public class Player : MonoBehaviour
                 lastBulletAngle = RAngle;
 
             if (state.Triggers.Right > 0.8f)
-            {
                 if (fireCoroutine == null)
-                {
                     fireCoroutine = StartCoroutine(PlayerFire(transform, lastBulletAngle));
-                }
-            }
             else
             {
                 if (fireCoroutine != null)
@@ -201,9 +189,7 @@ public class Player : MonoBehaviour
             }
 
             if (state.Buttons.A == ButtonState.Pressed)
-            {
                 SpecialShoot(bulletQtySpecialAttack);
-            }
 
             if (prevState.Buttons.LeftShoulder == ButtonState.Released && state.Buttons.LeftShoulder == ButtonState.Pressed)
             {
@@ -215,17 +201,14 @@ public class Player : MonoBehaviour
             switch (playerID)
             {
                 case PlayerIndex.One:
-                   // Debug.Log("Lel1 : " + Life);
-                    //Debug.Log(Life);
                     GameManager.Instance.LifePlayer1 = life;
                     break;
 
                 case PlayerIndex.Two:
-
-                    //Debug.Log("Lel2 : " + Life);
                     //GameManager.Instance.LifePlayer2 = Life;
                     break;
             }
+
             MovePlayer();
             Rotate();
         }
