@@ -31,10 +31,11 @@ public class CameraFollow : MonoBehaviour
     public Vector3 distanceDead;
 
     private GameManager manager;
-    void Start()
+    void Start() 
     {
         manager = GameManager.Instance;
-       manager.LifePlayer2 = 20;
+        manager.LifePlayer2 = 20;
+        manager.LifePlayer1 = 20;
         manager.Dead = false;
         manager.GameOver = GameObject.FindGameObjectWithTag("GameOver");
         manager.Boss = GameObject.FindGameObjectWithTag("Boss");
@@ -144,9 +145,9 @@ public class CameraFollow : MonoBehaviour
         if (distanceMax < distanceMaxCam)
         {
             //if (distance)
-                camDistance = distanceMaxCam -2;
+                camDistance = distanceMaxCam -5;
         }
-        else if (distanceMax > distanceMaxCam*2)
+        if (distanceMax < distanceMaxCam/2)
         {
             rotateCam = 35.0f;
         }

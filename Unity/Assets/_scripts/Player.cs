@@ -265,7 +265,6 @@ public class Player : MonoBehaviour
        
         if (timer / dashDuration >= 1f)
         {
-            Debug.Log(dashDuration);
             if (IsBlinking != true)
             {
                 Invicible = false;
@@ -345,10 +344,14 @@ public class Player : MonoBehaviour
             switch (ID_Player)
             {
                 case PlayerIndex.One:
-                        GameManager.Instance.LifePlayer1 = Life;
+                   // Debug.Log("Lel1 : " + Life);
+                    //Debug.Log(Life);
+                    GameManager.Instance.LifePlayer1 = Life;
                     break;
 
                 case PlayerIndex.Two:
+
+                    //Debug.Log("Lel2 : " + Life);
                     GameManager.Instance.LifePlayer2 = Life;
                     break;
             }

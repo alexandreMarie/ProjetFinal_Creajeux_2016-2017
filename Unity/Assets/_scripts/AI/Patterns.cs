@@ -71,7 +71,7 @@ public class Patterns : MonoBehaviour
         Transform spawnedBullet = null;
 
         angle = player.position - transform.position;
-        angle.y = 2.0f;
+        angle.y = 1.0f;
 
         for (int i = 0; i < bulletQuantity; i++)
         {

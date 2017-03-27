@@ -20,6 +20,8 @@ public class LilithAI : BossManager
     [SerializeField]
     private Transform snake = null;
 
+    private GameObject arena = null;
+
     [SerializeField]
     private float time = 15.0f;
 
@@ -65,6 +67,8 @@ public class LilithAI : BossManager
             LilithEvents += BulletCancel;
 
         destination.y = transform.position.y;
+
+        arena = GameObject.FindGameObjectWithTag("Arena") as GameObject;
     }
 
     private void BulletCancel()
@@ -134,7 +138,6 @@ public class LilithAI : BossManager
 
         if (Life / MaxLife <= 0.250f)
         {
-
             if (lifeState == LifeState.ONE)
             {
                 divergence = 137.5f;
@@ -227,10 +230,12 @@ public class LilithAI : BossManager
         while (true)
         {
             lilithLights.TurnLight = true;
+
+            arena.GetComponent<EmissiveController>().TurnEmissive = true;
             //SoundsManager.Instance.VolumeAmbientMusic = 0.75f;
 
             angle = players[0].position - transform.position;
-            angle.y = 2.0f;
+            angle.y = 1.0f;
 
             yield return new WaitForSeconds(2.0f);
 
@@ -239,6 +244,7 @@ public class LilithAI : BossManager
             yield return new WaitForSeconds(4.0f);
 
             lilithLights.TurnLight = false;
+            arena.GetComponent<EmissiveController>().TurnEmissive = false;
             //SoundsManager.Instance.VolumeAmbientMusic = 1.0f;
             yield return new WaitForSeconds(5.0f);
         }
