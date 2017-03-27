@@ -265,7 +265,6 @@ public class Player : MonoBehaviour
        
         if (timer / dashDuration >= 1f)
         {
-            Debug.Log(dashDuration);
             if (IsBlinking != true)
             {
                 Invicible = false;

@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        Debug.Log(lifePlayer1);
         lifeBoss = BossManager.Life;
         if (lifePlayer1 <= 0)
         {

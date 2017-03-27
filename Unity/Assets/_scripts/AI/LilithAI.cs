@@ -76,8 +76,8 @@ public class LilithAI : BossManager
     void Update()
     {
         transform.LookAt(new Vector3(players[0].transform.position.x, transform.position.y, players[0].transform.position.z));
-        destination.x = -players[0].transform.position.x;
-        destination.z = -players[0].transform.position.z;
+        destination.x = -players[0].transform.position.x - players[1].transform.position.x;
+        destination.z = -players[0].transform.position.z - players[1].transform.position.z;
 
         transform.position = destination;
 
@@ -91,7 +91,7 @@ public class LilithAI : BossManager
 
                 lifeState = LifeState.THREE;
 
-                StartCoroutine(TestAI());//////////////////////////////////////////////TESTAI
+                StartCoroutine(AI1());//////////////////////////////////////////////TESTAI
                 StartCoroutine(Snake());
             }
         }
@@ -134,7 +134,6 @@ public class LilithAI : BossManager
 
         if (Life / MaxLife <= 0.250f)
         {
-
             if (lifeState == LifeState.ONE)
             {
                 divergence = 137.5f;
@@ -175,10 +174,10 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            if (Vector3.Distance(transform.position, players[0].transform.position) < 10.0f)
+            if (Vector3.Distance(transform.position, players[Random.Range(0, 2)].transform.position) < 10.0f)
                 LilithAccessor.LaunchBurst(bullet, bulletQuantityBurst, 10, false);
             else
-                LilithAccessor.LaunchStraightLine(bullet, players[0], false);
+                LilithAccessor.LaunchStraightLine(bullet, players[Random.Range(0, 2)], false);
 
             yield return new WaitForSeconds(time / 2);
         }
@@ -229,7 +228,7 @@ public class LilithAI : BossManager
             lilithLights.TurnLight = true;
             //SoundsManager.Instance.VolumeAmbientMusic = 0.75f;
 
-            angle = players[0].position - transform.position;
+            angle = players[Random.Range(0, 1)].position - transform.position;
             angle.y = 2.0f;
 
             yield return new WaitForSeconds(2.0f);
