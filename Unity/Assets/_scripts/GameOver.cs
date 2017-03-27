@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameOver : MonoBehaviour {
 
     public GameObject go;
+    public Text txt;
     
-    void Start()
-    {
-       
-    }
     void ActiveButton()
     {
         go.SetActive(true);
@@ -24,7 +22,7 @@ public class GameOver : MonoBehaviour {
 
     public void MainMenu()
     {
-        SceneManager.LoadScene("Titles");
+        SceneManager.LoadScene((int)MenuManager.StateMenu.MainMenu);
     }
 
     

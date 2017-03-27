@@ -34,10 +34,14 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
         manager = GameManager.Instance;
-        manager.LifePlayer1 = 20;
+       manager.LifePlayer2 = 20;
         manager.Dead = false;
         manager.GameOver = GameObject.FindGameObjectWithTag("GameOver");
+        manager.Boss = GameObject.FindGameObjectWithTag("Boss");
+        manager.Players = GameObject.FindGameObjectsWithTag("Player");
         CameraManager.Instance.DeadPlayer1 = false;
+        CameraManager.Instance.DeadPlayer2 = false;
+        CameraManager.Instance.DeadBoss = false;
         camDistance = 10.0f;
         bounds = 12.0f;
         setFieldOfView = 60;
@@ -48,7 +52,7 @@ public class CameraFollow : MonoBehaviour
     void FixedUpdate()
     {
         
-        if (!CameraManager.Instance.Change && !CameraManager.Instance.DeadPlayer1 && !CameraManager.Instance.DeadPlayer2)
+        if (!CameraManager.Instance.Change && !CameraManager.Instance.DeadPlayer1 && !CameraManager.Instance.DeadPlayer2 && !CameraManager.Instance.DeadBoss)
         {
             Gravity();
             DistanceMax();
@@ -67,14 +71,20 @@ public class CameraFollow : MonoBehaviour
             {
                 transform.position = Vector3.SmoothDamp(transform.position, targets[0].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
-                if (transform.localEulerAngles.x > 59.0f)
-                    manager.Dead = true;
+                
             }
             else if(CameraManager.Instance.DeadPlayer2)
             {
                 transform.position = Vector3.SmoothDamp(transform.position, targets[1].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
             }
+            else if(CameraManager.Instance.DeadBoss)
+            {
+                transform.position = Vector3.SmoothDamp(transform.position, targets[1].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
+            }
+            if (transform.localEulerAngles.x > 59.0f)
+                manager.Dead = true;
         }
         /* else
          {
