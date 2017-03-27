@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: chibi_template_famine.ma
-//Last modified: Mon, Mar 27, 2017 09:36:47 AM
+//Last modified: Mon, Mar 27, 2017 11:19:15 AM
 //Codeset: 1252
 requires maya "2016";
 requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOptions" -nodeType "mentalrayGlobals"
@@ -5604,13 +5604,29 @@ createNode mesh -n "pCylinderShape3" -p "pCylinder24";
 	setAttr -s 2 ".iog[0].og";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
-	setAttr ".pv" -type "double2" 0.5025838315486908 0.49919633567333221 ;
+	setAttr ".pv" -type "double2" 0.1616356372833252 0.52938389778137207 ;
 	setAttr ".uvst[0].uvsn" -type "string" "map1";
 	setAttr ".cuvs" -type "string" "map1";
 	setAttr ".dcc" -type "string" "Ambient+Diffuse";
 	setAttr ".covm[0]"  0 1 1;
 	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 2 ".pt";
+	setAttr -s 18 ".pt";
+	setAttr ".pt[0]" -type "float3" 0 0.64050329 -0.0024821418 ;
+	setAttr ".pt[1]" -type "float3" 0 0.64050329 -0.0024821418 ;
+	setAttr ".pt[2]" -type "float3" 0 0.64050329 -0.0024821418 ;
+	setAttr ".pt[3]" -type "float3" 0 0.64050329 -0.0024821418 ;
+	setAttr ".pt[4]" -type "float3" 0 0.64050329 -0.0024821418 ;
+	setAttr ".pt[5]" -type "float3" 0 0.64050329 -0.0024821418 ;
+	setAttr ".pt[6]" -type "float3" 0 0.64050329 -0.0024821418 ;
+	setAttr ".pt[7]" -type "float3" 0 0.64050329 -0.0024821418 ;
+	setAttr ".pt[8]" -type "float3" 0 0 2.3283064e-010 ;
+	setAttr ".pt[9]" -type "float3" 0 0 2.3283064e-010 ;
+	setAttr ".pt[10]" -type "float3" 0 0 2.3283064e-010 ;
+	setAttr ".pt[11]" -type "float3" 0 0 2.3283064e-010 ;
+	setAttr ".pt[12]" -type "float3" 0 0 2.3283064e-010 ;
+	setAttr ".pt[13]" -type "float3" 0 0 2.3283064e-010 ;
+	setAttr ".pt[14]" -type "float3" 0 0 2.3283064e-010 ;
+	setAttr ".pt[15]" -type "float3" 0 0 2.3283064e-010 ;
 	setAttr ".pt[22]" -type "float3" 9.5367432e-007 0 0 ;
 	setAttr ".pt[30]" -type "float3" 0 0 -4.7683716e-007 ;
 	setAttr ".bw" 3;
@@ -9464,13 +9480,13 @@ createNode mesh -n "polySurfaceShape16" -p "pPlane5";
 	setAttr ".dr" 1;
 createNode transform -n "persp1";
 	rename -uid "C6E8FAD6-42E6-5233-ABBC-31B1C098AA05";
-	setAttr ".t" -type "double3" -0.77142234977148405 6.5722369586474976 23.950233741551138 ;
-	setAttr ".r" -type "double3" 354.2616470366836 -13680.599999997226 -1.8637084469857335e-017 ;
+	setAttr ".t" -type "double3" 0.35271661826053347 1.7337676902560757 19.601601825381827 ;
+	setAttr ".r" -type "double3" 370.46164715659495 -17276.999999998283 -4.9764367233699962e-017 ;
 createNode camera -n "persp1Shape" -p "persp1";
 	rename -uid "96F4CC50-4479-0109-8F53-DEB92F7CCF1A";
 	setAttr -k off ".v";
 	setAttr ".fl" 34.999999999999993;
-	setAttr ".coi" 24.322391869145694;
+	setAttr ".coi" 20.530382799581101;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
