@@ -10,9 +10,9 @@ public class GameManager : MonoBehaviour {
     private GameObject gameOver;
 
     [SerializeField]
-    private int lifePlayer1 = 20;
+    private int lifePlayer1;
     [SerializeField]
-    private int lifePlayer2 = 20;
+    private int lifePlayer2;
     [SerializeField]
     private float lifeBoss;
 
@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        Debug.Log(lifePlayer1);
         lifeBoss = BossManager.Life;
         if (lifePlayer1 <= 0)
         {
