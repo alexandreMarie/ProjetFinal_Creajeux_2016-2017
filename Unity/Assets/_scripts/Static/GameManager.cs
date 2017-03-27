@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour {
     }
    
     void Start()
-    {
+    { 
         try {
             gameOver = GameObject.FindGameObjectWithTag("GameOver");
         }

@@ -31,7 +31,7 @@ public class CameraFollow : MonoBehaviour
     public Vector3 distanceDead;
 
     private GameManager manager;
-    void Start()
+    void Start() 
     {
         manager = GameManager.Instance;
         manager.LifePlayer2 = 20;
