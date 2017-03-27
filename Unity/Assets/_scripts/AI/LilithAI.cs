@@ -57,7 +57,7 @@ public class LilithAI : BossManager
 
     void Start()
     {
-        Life = 10000.0f;
+        Life = 3000.0f;
 
         LilithAccessor = GetComponentInParent<Patterns>();
 
@@ -91,7 +91,7 @@ public class LilithAI : BossManager
 
                 lifeState = LifeState.THREE;
 
-                StartCoroutine(AI1());//////////////////////////////////////////////TESTAI
+                StartCoroutine(TestAI());//////////////////////////////////////////////TESTAI
                 StartCoroutine(Snake());
             }
         }
@@ -155,12 +155,15 @@ public class LilithAI : BossManager
     private IEnumerator TestAI()
     {
         //Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, false);
+        StartCoroutine(Snake());
+        //Lilith.LaunchPhyllotaxis(bullet, 178.5f, false);
+        yield return null;
 
-        while (true)
-        {
-            LilithAccessor.LaunchMalthael(bullet, false);
-            yield return new WaitForSeconds(2.0f);
-        }
+        //while (true)
+        //{
+        //    LilithAccessor.LaunchMalthael(bullet, false);
+        //    yield return new WaitForSeconds(2.0f);
+        //}
         //Lilith.LaunchMalthael(bullet);
 
         //yield return new WaitForSeconds(5.0f);
@@ -207,8 +210,11 @@ public class LilithAI : BossManager
     {
         LilithAccessor.LaunchPhyllotaxis(bullet, divergence, false);
 
-        while (true)
+        int i = 0;
+
+        while (i < 21)
         {
+            i++;
             LilithAccessor.LaunchRotatingStraightLine(bullet, bulletQuantityBurst, true);
             yield return new WaitForSeconds(time / 6);
         }
@@ -220,7 +226,7 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            lilithLights.TurnLight = false;
+            lilithLights.TurnLight = true;
             //SoundsManager.Instance.VolumeAmbientMusic = 0.75f;
 
             angle = players[0].position - transform.position;
@@ -232,9 +238,8 @@ public class LilithAI : BossManager
 
             yield return new WaitForSeconds(4.0f);
 
-            lilithLights.TurnLight = true;
+            lilithLights.TurnLight = false;
             //SoundsManager.Instance.VolumeAmbientMusic = 1.0f;
-
             yield return new WaitForSeconds(5.0f);
         }
     }
