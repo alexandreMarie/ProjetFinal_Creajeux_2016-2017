@@ -13,6 +13,10 @@ public class Player : MonoBehaviour
     //Mercredi 29 MILESTONE
 #pragma warning disable 0414
 
+
+    [SerializeField]
+    bool IsBlinking;
+
     [SerializeField]
     bool Invicible;
 
@@ -259,10 +263,21 @@ public class Player : MonoBehaviour
     {
 
         timer += Time.unscaledDeltaTime;
+       
         if (timer / dashDuration >= 1f)
         {
-            Invicible = false;
+            Debug.Log(dashDuration);
+            if (IsBlinking != true)
+            {
+                Invicible = false;
+            }
         }
+
+        //if(IsBlinking == true && Blinker_time > 0.0f)
+        //{
+        //    Blinker_time -= Time.deltaTime;
+        //    Invicible = true;
+        //}
 
         if (!playerIndexSet || !prevState.IsConnected)
         {
@@ -340,7 +355,7 @@ public class Player : MonoBehaviour
 
         special += 5;
         StartCoroutine(PlayerBlink());
-
+        IsBlinking = true;
         //Debug.Log("Hit ! \n Life : " + Life);
     }
 
@@ -397,6 +412,7 @@ public class Player : MonoBehaviour
         float timerBlink = 0f;
         bool isActive = true;
         Invicible = true;
+        IsBlinking = true;
         while (timerBlink <= 0.4f)
         {
             timerBlink += Time.unscaledDeltaTime;
@@ -406,7 +422,7 @@ public class Player : MonoBehaviour
             mr.enabled = true;
 
         }
-
+        IsBlinking = false;
         mr.enabled = true;
         Invicible = false;
     }
