@@ -342,6 +342,16 @@ public class Player : MonoBehaviour
                 Invicible = true;
             }
 
+            switch (ID_Player)
+            {
+                case PlayerIndex.One:
+                        GameManager.Instance.LifePlayer1 = Life;
+                    break;
+
+                case PlayerIndex.Two:
+                    GameManager.Instance.LifePlayer2 = Life;
+                    break;
+            }
             MovePlayer();
             Rotate();
         }
