@@ -20,6 +20,8 @@ public class LilithAI : BossManager
     [SerializeField]
     private Transform snake = null;
 
+    private GameObject arena = null;
+
     [SerializeField]
     private float time = 15.0f;
 
@@ -65,6 +67,8 @@ public class LilithAI : BossManager
             LilithEvents += BulletCancel;
 
         destination.y = transform.position.y;
+
+        arena = GameObject.FindGameObjectWithTag("Arena") as GameObject;
     }
 
     private void BulletCancel()
@@ -76,8 +80,8 @@ public class LilithAI : BossManager
     void Update()
     {
         transform.LookAt(new Vector3(players[0].transform.position.x, transform.position.y, players[0].transform.position.z));
-        destination.x = -players[0].transform.position.x - players[1].transform.position.x;
-        destination.z = -players[0].transform.position.z - players[1].transform.position.z;
+        destination.x = -players[0].transform.position.x;
+        destination.z = -players[0].transform.position.z;
 
         transform.position = destination;
 
@@ -91,7 +95,7 @@ public class LilithAI : BossManager
 
                 lifeState = LifeState.THREE;
 
-                StartCoroutine(AI1());//////////////////////////////////////////////TESTAI
+                StartCoroutine(TestAI());//////////////////////////////////////////////TESTAI
                 StartCoroutine(Snake());
             }
         }
@@ -174,10 +178,10 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            if (Vector3.Distance(transform.position, players[Random.Range(0, 2)].transform.position) < 10.0f)
+            if (Vector3.Distance(transform.position, players[0].transform.position) < 10.0f)
                 LilithAccessor.LaunchBurst(bullet, bulletQuantityBurst, 10, false);
             else
-                LilithAccessor.LaunchStraightLine(bullet, players[Random.Range(0, 2)], false);
+                LilithAccessor.LaunchStraightLine(bullet, players[0], false);
 
             yield return new WaitForSeconds(time / 2);
         }
@@ -226,10 +230,12 @@ public class LilithAI : BossManager
         while (true)
         {
             lilithLights.TurnLight = true;
+
+            arena.GetComponent<EmissiveController>().TurnEmissive = true;
             //SoundsManager.Instance.VolumeAmbientMusic = 0.75f;
 
-            angle = players[Random.Range(0, 1)].position - transform.position;
-            angle.y = 2.0f;
+            angle = players[0].position - transform.position;
+            angle.y = 1.0f;
 
             yield return new WaitForSeconds(2.0f);
 
@@ -238,6 +244,7 @@ public class LilithAI : BossManager
             yield return new WaitForSeconds(4.0f);
 
             lilithLights.TurnLight = false;
+            arena.GetComponent<EmissiveController>().TurnEmissive = false;
             //SoundsManager.Instance.VolumeAmbientMusic = 1.0f;
             yield return new WaitForSeconds(5.0f);
         }
