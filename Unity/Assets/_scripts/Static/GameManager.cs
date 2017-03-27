@@ -13,8 +13,12 @@ public class GameManager : MonoBehaviour {
     private int lifePlayer1 = 20;
     [SerializeField]
     private int lifePlayer2 = 20;
-    private int lifeBoss;
+    [SerializeField]
+    private float lifeBoss = 20;
 
+    private GameObject boss;
+    private GameObject player1;
+    private GameObject player2;
     public static GameManager Instance
     {
         get
@@ -32,6 +36,8 @@ public class GameManager : MonoBehaviour {
     {
         try {
             gameOver = GameObject.FindGameObjectWithTag("GameOver");
+            boss = GameObject.FindGameObjectWithTag("Boss");
+            player1 = GameObject.FindGameObjectWithTag("Player");
         }
         catch
         {
@@ -41,19 +47,27 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        
-        if (lifePlayer1 == 0)
+        //lifeBoss = BossManager.Life;
+        if (lifePlayer1 <= 0)
         {
             CameraManager.Instance.DeadPlayer1 = true;
         }
-        else if (lifePlayer2 == 0)
+        else if (lifePlayer2 <= 0)
         {
             CameraManager.Instance.DeadPlayer2 = true;
         }
-        
-            if (dead)
+        else if(lifeBoss <=0)
+        {
+            CameraManager.Instance.DeadBoss = true;
+        }
+
+        if (dead)
             {
-                gameOver.SetActive(true);
+            boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
+            boss.GetComponent<LilithAI>().StopAllCoroutines();
+            player1.GetComponent<Player>().enabled = false;
+            player1.GetComponent<Add_Bullet>().enabled = false;
+            gameOver.SetActive(true);
             }
             else
             {
@@ -110,6 +124,45 @@ public class GameManager : MonoBehaviour {
         set
         {
             gameOver = value;
+        }
+    }
+
+    public GameObject Boss
+    {
+        get
+        {
+            return boss;
+        }
+
+        set
+        {
+            boss = value;
+        }
+    }
+
+    public GameObject Player1
+    {
+        get
+        {
+            return player1;
+        }
+
+        set
+        {
+            player1 = value;
+        }
+    }
+
+    public float LifeBoss
+    {
+        get
+        {
+            return lifeBoss;
+        }
+
+        set
+        {
+            lifeBoss = value;
         }
     }
 }

@@ -9,6 +9,7 @@ public class CameraManager : MonoBehaviour {
 
     private bool deadPlayer1 = false;
     private bool deadPlayer2 = false;
+    private bool deadBoss = false;
     
     public static CameraManager Instance
     {
@@ -84,6 +85,19 @@ public class CameraManager : MonoBehaviour {
         set
         {
             deadPlayer2 = value;
+        }
+    }
+
+    public bool DeadBoss
+    {
+        get
+        {
+            return deadBoss;
+        }
+
+        set
+        {
+            deadBoss = value;
         }
     }
 }

@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameOver : MonoBehaviour {
 
     public GameObject go;
+    public Text txt;
     
-    void Start()
+    void Update()
     {
-       
+       if(GameManager.Instance.LifeBoss <=0)
+        {
+            txt.text = "WIN !!!!";
+        }
     }
     void ActiveButton()
     {

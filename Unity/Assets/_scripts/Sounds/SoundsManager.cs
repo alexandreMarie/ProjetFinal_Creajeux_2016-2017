@@ -26,8 +26,7 @@ public class SoundsManager : MonoBehaviour {
 
     [SerializeField]
     private float volumeSFX = 1.0f;
-
-
+    
     private string scene;
     public static SoundsManager Instance
     {
@@ -116,8 +115,6 @@ public class SoundsManager : MonoBehaviour {
     }
 
 
-
-
     // Use this for initialization
     void Start () {
         if (instance == null)
@@ -135,17 +132,17 @@ public class SoundsManager : MonoBehaviour {
                 sourceMusic.clip = ambientMusic[0];
                 sourceMusic.Play();
                 break;
-
-            
         }
-        sourceMusic.clip = ambientMusic[0];
-        sourceMusic.Play();
+       
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-       
+        if(GameManager.Instance.Dead)
+        {
+            sourceMusic.Stop();
+        }
         sourceMusic.volume = volumeAmbientMusic;
     }
 }
