@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: chibi_War.ma
-//Last modified: Tue, Mar 28, 2017 04:57:07 PM
+//Last modified: Tue, Mar 28, 2017 05:45:31 PM
 //Codeset: 1252
 requires maya "2016";
 requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOptions" -nodeType "mentalrayGlobals"
@@ -15,8 +15,8 @@ fileInfo "osv" "Microsoft Windows 8 Business Edition, 64-bit  (Build 9200)\n";
 createNode transform -s -n "persp";
 	rename -uid "D8BEB9CE-44D8-A514-D4FA-48B085EC31B0";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -245.3626023371713 75.486534722683729 209.46680675740464 ;
-	setAttr ".r" -type "double3" 0.26164765354074604 670.99999999974739 1.8937383947976476e-017 ;
+	setAttr ".t" -type "double3" 3.3134380386857609 71.281327891937124 322.56890976388229 ;
+	setAttr ".r" -type "double3" -0.93835234643183252 360.99999999959545 4.0384286326925606e-017 ;
 	setAttr ".rp" -type "double3" -5.6843418860808015e-014 -2.8421709430404007e-014 
 		0 ;
 	setAttr ".rpt" -type "double3" -6.1275325909175946e-014 3.6422893419147682e-013 
@@ -25,7 +25,7 @@ createNode camera -s -n "perspShape" -p "persp";
 	rename -uid "277217EE-4568-ECEA-04CE-198387AB8431";
 	setAttr -k off ".v";
 	setAttr ".fl" 34.999999999999979;
-	setAttr ".coi" 319.46076531016331;
+	setAttr ".coi" 319.46076531037539;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
