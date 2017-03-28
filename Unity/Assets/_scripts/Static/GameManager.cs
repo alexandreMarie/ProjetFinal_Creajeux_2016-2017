@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
-    Character_Selection CS;//Source
+    All_player_selected Scri_APS;//Source
 
 
     private static GameManager instance = null;
@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour {
    
     void Start()
     {
+        
         try {
             gameOver = GameObject.FindGameObjectWithTag("GameOver");
             boss = GameObject.FindGameObjectWithTag("Boss");
