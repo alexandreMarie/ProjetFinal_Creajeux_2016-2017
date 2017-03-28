@@ -1,17 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using XInputDotNetPure;
 public class Character_Selection : MonoBehaviour {
 
+
+   public struct Info_Perso
+    {
+      public  float Speed;
+      public int attack;
+       public int ID_mesh;//1 - War, 2 - Death,3 - Fury,4 - Strife  
+    }
+    /*RAJOUTE UN STICK ABRUTIT DE PROG STEAMPUNK*/
     bool Button_is_releasd;
     bool playerIndexSet = false;
     PlayerIndex playerIndex;
     GamePadState state;
     GamePadState prevState;
-
+    Info_Perso [] sinfo_perso;
 
     Transform[] Perso;
     Vector3[] Position;
+
+    Canvas Canevas_State;
+
+    
+
+
     [SerializeField]
     int ID_Player;
 
@@ -21,10 +36,14 @@ public class Character_Selection : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Perso = GetComponentsInChildren<Transform>();
+        Canevas_State = GetComponentInChildren<Canvas>();
+        sinfo_perso = new Info_Perso[4];
         Position = new Vector3[5];
         for(int i = 1; i < Perso.Length;i++)
         {
             Position[i] = Perso[i].position;
+            sinfo_perso[i - 1].attack = 10 * i;
+            sinfo_perso[i - 1].Speed = 10 * i;
         }
         Debug.Log(Perso.Length);
 	}
@@ -32,7 +51,7 @@ public class Character_Selection : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
+        
 
         if (!playerIndexSet || !prevState.IsConnected)
         {
@@ -99,6 +118,11 @@ public class Character_Selection : MonoBehaviour {
             if (i == ID_Perso)
             {
                 Perso[i].position = new Vector3(Perso[i].position.x, Perso[i].position.y,-6.5f);
+                Canevas_State.GetComponentInChildren<Text>().text = "Vie : " + 20  + " Speed : " + sinfo_perso[i-1].Speed  + " Attaque : " + sinfo_perso[i - 1].attack;
+                if (prevState.Buttons.X == ButtonState.Pressed)
+                {
+
+                }
             }
             else
             {

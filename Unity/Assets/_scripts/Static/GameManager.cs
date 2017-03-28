@@ -3,6 +3,9 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
+    Character_Selection CS;//Source
+
+
     private static GameManager instance = null;
     
     private bool dead;
@@ -18,6 +21,8 @@ public class GameManager : MonoBehaviour {
 
     private GameObject boss;
     private GameObject[] players;
+
+    private Player Temps_Player;
     public static GameManager Instance
     {
         get
@@ -76,6 +81,8 @@ public class GameManager : MonoBehaviour {
             }
         
     }
+
+
     public bool Dead
     {
         get
@@ -163,7 +170,7 @@ public class GameManager : MonoBehaviour {
         }
 
         set
-        {
+        { 
             players = value;
         }
     }
