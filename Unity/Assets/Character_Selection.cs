@@ -3,7 +3,10 @@ using System.Collections;
 using UnityEngine.UI;
 using XInputDotNetPure;
 public class Character_Selection : MonoBehaviour {
-
+    //24 25 26 avril Alpha
+    //9 10 mai Beta
+    //23 24 34 mais Milestone final
+    //29 30 31 Final Milestone
 
    public struct Info_Perso
     {
@@ -12,19 +15,30 @@ public class Character_Selection : MonoBehaviour {
        public int ID_mesh;//1 - War, 2 - Death,3 - Fury,4 - Strife  
     }
     /*RAJOUTE UN STICK ABRUTIT DE PROG STEAMPUNK*/
+
+    /* Changer le personnage dans le menu de selection
+
+    Quand le joueur appuye sur la fleche de droite, ou la fleche de gauche
+    le modéle du personnage change
+
+    */
+
+
+    Info_Perso struct_Info_Perso;
+   
     bool Button_is_releasd;
     bool playerIndexSet = false;
+    [SerializeField]
+    PlayerIndex test;
+
     PlayerIndex playerIndex;
     GamePadState state;
     GamePadState prevState;
-    Info_Perso [] sinfo_perso;
-
-    Transform[] Perso;
-    Vector3[] Position;
 
     Canvas Canevas_State;
 
-    
+    [SerializeField]
+    GameObject[] Player;
 
 
     [SerializeField]
@@ -35,40 +49,31 @@ public class Character_Selection : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Perso = GetComponentsInChildren<Transform>();
+
         Canevas_State = GetComponentInChildren<Canvas>();
-        sinfo_perso = new Info_Perso[4];
-        Position = new Vector3[5];
-        for(int i = 1; i < Perso.Length;i++)
-        {
-            Position[i] = Perso[i].position;
-            sinfo_perso[i - 1].attack = 10 * i;
-            sinfo_perso[i - 1].Speed = 10 * i;
-        }
-        Debug.Log(Perso.Length);
+ 
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        
 
-        if (!playerIndexSet || !prevState.IsConnected)
-        {
-
-            PlayerIndex testPlayerIndex = (PlayerIndex)ID_Player;
-            GamePadState testState = GamePad.GetState(testPlayerIndex);
-            if (testState.IsConnected)
+       
+            if (!playerIndexSet || !prevState.IsConnected)
             {
-                Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
-                playerIndex = testPlayerIndex;
-                playerIndexSet = true;
+
+                PlayerIndex testPlayerIndex = (PlayerIndex)test;
+                GamePadState testState = GamePad.GetState(testPlayerIndex);
+                if (testState.IsConnected)
+                {
+                    Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
+                    playerIndex = testPlayerIndex;
+                    playerIndexSet = true;
+                }
+
             }
-
-        }
-
         prevState = state;
-        state = GamePad.GetState(playerIndex);
+        state = GamePad.GetState(test);
 
 
         if(prevState.DPad.Right == ButtonState.Released && prevState.DPad.Left == ButtonState.Released)
@@ -89,45 +94,49 @@ public class Character_Selection : MonoBehaviour {
     {
         if (prevState.DPad.Right == ButtonState.Pressed)
         {
-            ID_Perso++;
-            if (ID_Perso > 4)
-            {
-                ID_Perso = 1;
-            }
-            Button_is_releasd = false;
-            Debug.Log(ID_Perso);
+           
+                ID_Perso++;
+                if (ID_Perso > 4)
+                {
+                    ID_Perso = 1;
+                }
+                Button_is_releasd = false;
+                Debug.Log(ID_Perso);
+            
         }
 
         if (prevState.DPad.Left == ButtonState.Pressed)
         {
-            ID_Perso--;
-            if (ID_Perso < 1)
-            {
-                ID_Perso = 4;
-            }
-            Button_is_releasd = false;
-            Debug.Log(ID_Perso);
+          
+                ID_Perso--;
+                if (ID_Perso < 1)
+                {
+                    ID_Perso = 4;
+                }
+                Button_is_releasd = false;
+                Debug.Log(ID_Perso);
+            
         }
     }
 
-
+   public int Return_Id_Player()
+    {
+        return ID_Perso;
+    }
     void Perso_Selector()
     {
-        for (int i = 1; i < Perso.Length; i++)
-        {
-            if (i == ID_Perso)
-            {
-                Perso[i].position = new Vector3(Perso[i].position.x, Perso[i].position.y,-6.5f);
-                Canevas_State.GetComponentInChildren<Text>().text = "Vie : " + 20  + " Speed : " + sinfo_perso[i-1].Speed  + " Attaque : " + sinfo_perso[i - 1].attack;
-                if (prevState.Buttons.X == ButtonState.Pressed)
-                {
+        //Debug.Log(playerIndex);
 
-                }
-            }
-            else
+            for (int i = 0; i< Player.Length; i++)
             {
-                Perso[i].position = Position[i];
+                if (i == ID_Perso - 1)
+                { 
+                    Player[i].transform.position = new Vector3(Player[i].transform.position.x, 0.0f, Player[i].transform.position.z);
+                }
+                else
+                    Player[i].transform.position = new Vector3(Player[i].transform.position.x, 10.0f, Player[i].transform.position.z);
             }
-        }
+        
+
     }
 }
