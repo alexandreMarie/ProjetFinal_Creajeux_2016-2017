@@ -25,7 +25,7 @@ public class LilithAI : BossManager
     [SerializeField]
     private float time = 15.0f;
 
-    private uint bulletQuantityBurst = 200; // Quantity of bullets to fire for each burst
+    private uint bulletQuantityBurst = 20; // Quantity of bullets to fire for each burst
 
     private Vector3 destination;
 
@@ -46,9 +46,7 @@ public class LilithAI : BossManager
     public Patterns LilithAccessor
     {
         get
-        {
-            return Lilith;
-        }
+        { return Lilith; }
     }
 
     void Start()

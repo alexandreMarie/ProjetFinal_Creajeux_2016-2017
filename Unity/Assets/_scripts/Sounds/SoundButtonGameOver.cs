@@ -6,12 +6,12 @@ public class SoundButtonGameOver : MonoBehaviour
 
     bool isSound = false;
 
-    Animator anim;
+    //Animator anim;
 
     void Start()
     {
         soundButton.clip = SoundsManager.Instance.MenuMusic[0];
-        anim = transform.GetComponent<Animator>();
+        //anim = transform.GetComponent<Animator>();
     }
 
     public void SoundButton()

@@ -73,10 +73,9 @@ public class DialogParser : MonoBehaviour
                     }
                 }
             } while (line != null);
-        }
 
-        if (r != null)
             r.Dispose();
+        }
     }
 
     public string GetPosition(int lineNumber)

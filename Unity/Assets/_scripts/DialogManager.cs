@@ -7,7 +7,7 @@ public class DialogManager : MonoBehaviour
     public string dialog, characterName;
     public int lineNum;
     public bool playerTalking;
-    List<Button> buttons = new List<Button>();
+    //List<Button> buttons = new List<Button>();
 
     public Text dialogBox;
     public Text nameBox;

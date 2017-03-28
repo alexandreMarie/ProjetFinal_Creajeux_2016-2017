@@ -37,7 +37,6 @@ public class CameraFollow : MonoBehaviour
         CameraManager.Instance.DeadPlayer2 = false;
         CameraManager.Instance.DeadBoss = false;
         camDistance = 10.0f;
-        bounds = 12.0f;
         setFieldOfView = 60;
         rotateCam = 35;
 

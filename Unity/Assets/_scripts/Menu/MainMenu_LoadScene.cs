@@ -1,22 +1,13 @@
 ﻿using UnityEngine;
 using XInputDotNetPure;
 
-public class MainMenu_LoadScene : MonoBehaviour
+public class MainMenuLoadScene : MonoBehaviour
 {
     bool playerIndexSet = false;
     PlayerIndex playerIndex;
     GamePadState state;
     GamePadState prevState;
 
-    [SerializeField]
-    GameObject[] AllButton;
-
-    void Start ()
-    {
-        AllButton = GetComponentsInChildren<GameObject>();
-	}
-	
-	// Update is called once per frame
 	void Update () {
         if (!playerIndexSet || !prevState.IsConnected)
         {
