@@ -21,14 +21,10 @@ public class ReducingBullet : MonoBehaviour
     public bool RotateBullet
     {
         get
-        {
-            return rotateBullet;
-        }
+        { return rotateBullet;}
 
         set
-        {
-            rotateBullet = value;
-        }
+        {rotateBullet = value;}
     }
 
     void Start()

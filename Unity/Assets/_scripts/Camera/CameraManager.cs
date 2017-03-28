@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class CameraManager : MonoBehaviour
 {
-
     private static CameraManager instance = null;
     private bool change = false;
     private GameObject[] posViewTarget;

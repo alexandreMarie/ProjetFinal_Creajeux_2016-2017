@@ -20,10 +20,10 @@ public class LilithAI : BossManager
     [SerializeField]
     private Transform snake = null;
 
-    private GameObject arena = null;
-
     [SerializeField]
     private float time = 15.0f;
+
+    private GameObject arena = null;
 
     private uint bulletQuantityBurst = 20; // Quantity of bullets to fire for each burst
 
@@ -77,20 +77,15 @@ public class LilithAI : BossManager
 
         transform.position = destination;
 
-        if (Life / MaxLife >= 0.751f)
+        if (lifeState == LifeState.FOUR)
         {
-            if (lifeState == LifeState.FOUR)
-            {
-                divergence = 111.5f;
+            divergence = 111.5f;
 
-                LilithEvents.Invoke();
+            lifeState = LifeState.THREE;
 
-                lifeState = LifeState.THREE;
-
-                //////////////////////////////////////////////TESTAI
-                StartCoroutine(AI1());
-                StartCoroutine(Snake());
-            }
+            /////////////////////////TESTAI
+            StartCoroutine(AI1());
+            StartCoroutine(Snake());
         }
 
         if (Life / MaxLife >= 0.501f && Life / MaxLife <= 0.750f)
@@ -100,7 +95,7 @@ public class LilithAI : BossManager
                 divergence = 178.5f;
 
                 LilithAccessor.StopAllCoroutines();
-                StopAllCoroutines();
+                StopCoroutine(AI1());
 
                 LilithEvents.Invoke();
 
@@ -118,7 +113,7 @@ public class LilithAI : BossManager
                 divergence = 75.0f;
 
                 LilithAccessor.StopAllCoroutines();
-                StopAllCoroutines();
+                StopCoroutine(AI2());
 
                 LilithEvents.Invoke();
 
@@ -136,7 +131,7 @@ public class LilithAI : BossManager
                 divergence = 137.5f;
 
                 LilithAccessor.StopAllCoroutines();
-                StopAllCoroutines();
+                StopCoroutine(AI3());
 
                 LilithEvents.Invoke();
 

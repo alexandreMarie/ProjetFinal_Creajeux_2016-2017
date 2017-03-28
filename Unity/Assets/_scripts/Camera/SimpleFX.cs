@@ -3,7 +3,6 @@
 [ExecuteInEditMode]
 public class SimpleFX : MonoBehaviour
 {
-
     public Shader HorizontalBlurEffect;
     public Shader VerticalBlurEffect;
     public Shader AddContrastEffect;
