@@ -3,7 +3,10 @@
 public class LightsController : MonoBehaviour
 {
     [SerializeField]
-    AnimationCurve lightBehaviour = null;
+    AnimationCurve lightToDark = null;
+
+    [SerializeField]
+    AnimationCurve darkToLight = null;
 
     [SerializeField]
     float timer;
@@ -35,6 +38,10 @@ public class LightsController : MonoBehaviour
     void Update()
     {
         timer = Mathf.Clamp(timer + (turnLight == true ? 1 : -1) * Time.unscaledDeltaTime / duration, 0f, 1f);
-        lights[1].intensity = Mathf.Lerp(0f, lightBehaviour.Evaluate(timer), lightBehaviour.Evaluate(timer));
+
+        if (timer > 0.99)
+            lights[1].intensity = lightToDark.Evaluate(timer);
+        else
+            lights[1].intensity = darkToLight.Evaluate(timer);
     }
 }
