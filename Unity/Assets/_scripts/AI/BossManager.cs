@@ -13,7 +13,7 @@
 public class BossManager : MonoBehaviour
 {
     [SerializeField]
-    private LifeManager lifeManager;
+    private LifeManager lifeManager = null;
 
     [SerializeField]
     static protected Transform[] players = new Transform[2];

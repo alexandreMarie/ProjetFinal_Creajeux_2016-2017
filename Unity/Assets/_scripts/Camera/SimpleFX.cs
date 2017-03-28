@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 [ExecuteInEditMode]
 public class SimpleFX : MonoBehaviour
@@ -89,7 +88,6 @@ public class SimpleFX : MonoBehaviour
 
         RenderTexture.ReleaseTemporary(rt);
         RenderTexture.ReleaseTemporary(rtTmp);
-
     }
 
     public void SetOffset(int value)
@@ -107,4 +105,3 @@ public class SimpleFX : MonoBehaviour
         distance = value;
     }
 }
-

@@ -12,23 +12,12 @@ public class PlayerBullet : MonoBehaviour
     private float destroyTime = 10.0f;
     #endregion
 
-    private static int count = 0;
     void Start()
     {
-        count++;
-        //Debug.Log(count);
         Destroy(gameObject, destroyTime);
-      //  Mater = GetComponent<Material>();
-        //Color couleur = new Color(Random.Range(0,255), Random.Range(0, 255), Random.Range(0, 255));
-        //Mater.color = couleurvoid
     }
     void Update()
     {
         transform.position -= transform.up * Time.deltaTime * speed;
-    }
-
-    public void OnDestroy()
-    {
-        count--;
     }
 }

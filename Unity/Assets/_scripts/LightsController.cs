@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class LightsController : MonoBehaviour
 {
-
     [SerializeField]
-    AnimationCurve lightBehaviour;
+    AnimationCurve lightBehaviour = null;
 
     [SerializeField]
     float timer;
@@ -16,33 +14,24 @@ public class LightsController : MonoBehaviour
     Light[] lights;
 
     bool turnLight = true;
+
     /// <summary>
     /// Allume ou éteint des lumieres
     /// </summary>
     public bool TurnLight
     {
         get
-        {
-            return turnLight;
-        }
+        { return turnLight; }
 
         set
-        {
-            turnLight = value;
-            //timer = 0f;
-        }
+        { turnLight = value; }
     }
 
-    [SerializeField]
-    float maxIntensity = 1f;
-
-    // Use this for initialization
     void Start()
     {
         lights = GetComponentsInChildren<Light>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         timer = Mathf.Clamp(timer + (turnLight == true ? 1 : -1) * Time.unscaledDeltaTime / duration, 0f, 1f);

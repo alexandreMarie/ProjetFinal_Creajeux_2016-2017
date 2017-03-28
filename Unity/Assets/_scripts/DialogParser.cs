@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 public class DialogParser : MonoBehaviour
 {
-
     struct DialogLine
     {
         public string name;
@@ -41,12 +38,12 @@ public class DialogParser : MonoBehaviour
         lines = new List<DialogLine>();
 
         LoadDialog(file);
-
     }
 
     private void LoadDialog(string filename)
     {
         string line = "";
+
         StreamReader r = new StreamReader(filename);
 
         using (r)
@@ -54,72 +51,71 @@ public class DialogParser : MonoBehaviour
             do
             {
                 line = r.ReadLine();
+
                 if (line != null)
                 {
                     string[] lineData = line.Split(';');
+
                     if (lineData[0] == "Player")
                     {
                         DialogLine lineEntry = new DialogLine(lineData[0], "", 0, "");
                         lineEntry.options = new string[lineData.Length - 1];
+
                         for (int i = 1; i < lineData.Length; i++)
-                        {
                             lineEntry.options[i - 1] = lineData[i];
-                        }
+
                         lines.Add(lineEntry);
                     }
                     else
                     {
-                        DialogLine lineEntry = new DialogLine(lineData[0], lineData[1],int.Parse(lineData[2]), lineData[3]);
+                        DialogLine lineEntry = new DialogLine(lineData[0], lineData[1], int.Parse(lineData[2]), lineData[3]);
                         lines.Add(lineEntry);
                     }
                 }
             } while (line != null);
-            r.Close();
         }
+
+        if (r != null)
+            r.Dispose();
     }
 
     public string GetPosition(int lineNumber)
     {
         if (lineNumber < lines.Count)
-        {
             return lines[lineNumber].position;
-        }
+
         return "";
     }
 
     public string GetName(int lineNumber)
     {
         if (lineNumber < lines.Count)
-        {
             return lines[lineNumber].name;
-        }
+
         return "";
     }
 
     public string GetContent(int lineNumber)
     {
         if (lineNumber < lines.Count)
-        {
             return lines[lineNumber].content;
-        }
+
         return "";
     }
 
     public int GetPose(int lineNumber)
     {
         if (lineNumber < lines.Count)
-        {
             return lines[lineNumber].pose;
-        }
+
         return 0;
     }
 
     public string[] GetOptions(int lineNumber)
     {
         if (lineNumber < lines.Count)
-        {
             return lines[lineNumber].options;
-        }
+
         return new string[0];
     }
 }

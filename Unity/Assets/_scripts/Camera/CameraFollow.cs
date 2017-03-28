@@ -1,21 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Collections;
 
 public class CameraFollow : MonoBehaviour
 {
-
     public float dampTime = 0.15f;
     private Vector3 velocity = Vector3.zero;
     public Transform[] targets;
 
     public float camDistance;
 
-    private float MidX;
-    private float MidY;
-    private float MidZ;
     private float CamOffset;
-    private float bounds;
+
     [SerializeField]
     private float distanceMax;
     
@@ -25,7 +20,6 @@ public class CameraFollow : MonoBehaviour
     private float rotateCam;
     private Quaternion camRotation = new Quaternion(0, 180, 0, 0);
     private int setFieldOfView;
-    private bool distance = true;
     private Vector3 gravity;
 
     public Vector3 distanceDead;

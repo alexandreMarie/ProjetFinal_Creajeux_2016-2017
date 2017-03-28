@@ -38,9 +38,7 @@ public class Player : MonoBehaviour
     private int bulletQtySpecialAttack = 0;
 
     [SerializeField]
-    PlayerIndex playerID;
-
-    private Rigidbody m_Rb;
+    PlayerIndex playerID = PlayerIndex.One;
 
     [SerializeField]
     [Range(0.1f, 1f)]
@@ -56,8 +54,6 @@ public class Player : MonoBehaviour
 
     private float m_LMoveInputValue_X;
     private float m_LMoveInputValue_Y;
-
-    [SerializeField]
     float RAngle;
 
     [Range(10, 20)]
@@ -73,7 +69,7 @@ public class Player : MonoBehaviour
 
     public void Awake()
     {
-        m_Rb = GetComponentInChildren<Rigidbody>();
+        maxLife = life;
 
         s_Bullet = GetComponent<Add_Bullet>();
 
@@ -84,17 +80,11 @@ public class Player : MonoBehaviour
 
     public void OnEnable()
     {
-        m_Rb.isKinematic = false;
         m_RMoveInputValue_X = 0f;
         m_RMoveInputValue_Y = 0f;
 
         m_LMoveInputValue_X = 0;
         m_LMoveInputValue_Y = 0;
-    }
-
-    public void OnDisable()
-    {
-        m_Rb.isKinematic = true;
     }
 
     void Start()
@@ -105,17 +95,17 @@ public class Player : MonoBehaviour
     //Deplacement en diagonale 
     void MovePlayer()
     {
+        Vector3 direction;
 
         if (m_LMoveInputValue_X > 0.1 || m_LMoveInputValue_X < -0.1)
         {
-            Vector3 direction = Camera.main.transform.right;
-
+            direction = Camera.main.transform.right;
             transform.position += ((direction * m_LMoveInputValue_X) * Time.deltaTime * (speed));
         }
 
         if (m_LMoveInputValue_Y > 0.1 || m_LMoveInputValue_Y < -0.1)
         {
-            Vector3 direction = Camera.main.transform.forward;
+            direction = Camera.main.transform.forward;
 
             direction.y = 0;
             direction.Normalize();
@@ -151,12 +141,11 @@ public class Player : MonoBehaviour
 
         if (!playerIndexSet || !prevState.IsConnected)
         {
-            PlayerIndex testPlayerIndex = playerID;
-            GamePadState testState = GamePad.GetState(testPlayerIndex);
+            GamePadState testState = GamePad.GetState(playerID);
             if (testState.IsConnected)
             {
-                Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
-                playerIndex = testPlayerIndex;
+                //Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
+                playerIndex = playerID;
                 playerIndexSet = true;
             }
         }

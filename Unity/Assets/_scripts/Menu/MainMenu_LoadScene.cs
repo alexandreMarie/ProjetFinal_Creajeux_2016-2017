@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using XInputDotNetPure;
+
 public class MainMenu_LoadScene : MonoBehaviour
 {
     bool playerIndexSet = false;
@@ -10,8 +10,9 @@ public class MainMenu_LoadScene : MonoBehaviour
 
     [SerializeField]
     GameObject[] AllButton;
-    // Use this for initialization
-    void Start () {
+
+    void Start ()
+    {
         AllButton = GetComponentsInChildren<GameObject>();
 	}
 	

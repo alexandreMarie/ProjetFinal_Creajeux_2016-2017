@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-public class SoundsManager : MonoBehaviour {
+public class SoundsManager : MonoBehaviour
+{
 
 
     private static SoundsManager instance = null;
@@ -12,49 +13,41 @@ public class SoundsManager : MonoBehaviour {
     private AudioSource sourceMusic;
 
     [SerializeField]
-    private List<AudioClip> menuMusic;
+    private List<AudioClip> menuMusic = null;
     [SerializeField]
-    private List<AudioClip> ambientMusic;
+    private List<AudioClip> ambientMusic = null;
     [SerializeField]
-    private List<AudioClip> sfxMusic;
+    private List<AudioClip> sfxMusic = null;
 
     [SerializeField]
     private float volumeMenuMusic = 1.0f;
 
-    [Range(0,1)]
+    [Range(0, 1)]
     public float volumeAmbientMusic = 0;
 
     [SerializeField]
     private float volumeSFX = 1.0f;
-    
+
     private string scene;
     public static SoundsManager Instance
     {
         get
-        {
-            return instance;
-        }
+        { return instance; }
     }
 
     public float VolumeMenuMusic
     {
         get
-        {
-            return volumeMenuMusic;
-        }
+        { return volumeMenuMusic; }
 
         set
-        {
-            volumeMenuMusic = value;
-        }
+        { volumeMenuMusic = value; }
     }
 
     public float VolumeAmbientMusic
     {
         get
-        {
-            return volumeAmbientMusic;
-        }
+        { return volumeAmbientMusic; }
 
         set
         {
@@ -66,63 +59,49 @@ public class SoundsManager : MonoBehaviour {
     public float VolumeSFX
     {
         get
-        {
-            return volumeSFX;
-        }
+        { return volumeSFX; }
 
         set
-        {
-            volumeSFX = value;
-        }
+        { volumeSFX = value; }
     }
 
     public List<AudioClip> SfxMusic
     {
         get
-        {
-            return sfxMusic;
-        }
-        
+        { return sfxMusic; }
     }
 
     public List<AudioClip> AmbientMusic
     {
         get
-        {
-            return ambientMusic;
-        }
+        { return ambientMusic; }
     }
 
     public List<AudioClip> MenuMusic
     {
         get
-        {
-            return menuMusic;
-        }
+        { return menuMusic; }
     }
 
     public AudioSource SourceMusic
     {
         get
-        {
-            return sourceMusic;
-        }
+        { return sourceMusic; }
 
         set
-        {
-            sourceMusic = value;
-        }
+        { sourceMusic = value; }
     }
 
-
-    // Use this for initialization
-    void Start () {
+    void Start()
+    {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this);  
+            DontDestroyOnLoad(this);
         }
+
         scene = SceneManager.GetActiveScene().name;
+
         switch (scene)
         {
             case "Titles":
@@ -133,16 +112,13 @@ public class SoundsManager : MonoBehaviour {
                 sourceMusic.Play();
                 break;
         }
-       
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-        if(GameManager.Instance.Dead)
-        {
+    void Update()
+    {
+        if (GameManager.Instance.Dead)
             sourceMusic.Stop();
-        }
+
         sourceMusic.volume = volumeAmbientMusic;
     }
 }

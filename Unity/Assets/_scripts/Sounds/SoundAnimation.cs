@@ -1,12 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
-public class SoundAnimation : MonoBehaviour {
-
-    
+public class SoundAnimation : MonoBehaviour
+{
     public AudioSource sourceMusic;
-    
     
     void Attack()
     {

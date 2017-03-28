@@ -2,23 +2,14 @@
 
 public class BloomController : MonoBehaviour
 {
-
     [SerializeField]
     SimpleFX sfx;
 
     [SerializeField]
-    AnimationCurve distanceBehaviour;
+    AnimationCurve distanceBehaviour = null;
 
     [SerializeField]
-    [Range(0f, 50f)]
-    float maxDistance = 1f;
-
-    [SerializeField]
-    AnimationCurve contrastBehaviour;
-
-    [SerializeField]
-    [Range(0f, 50f)]
-    float maxContrast = 1f;
+    AnimationCurve contrastBehaviour = null;
 
     [SerializeField]
     float duration = 1.5f;
