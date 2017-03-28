@@ -18,22 +18,21 @@ public class BossManager : MonoBehaviour
     [SerializeField]
     static protected Transform[] players = new Transform[2];
 
-    static int maxLife;
-    public static int MaxLife
+    static float maxLife;
+    public static float MaxLife
     {
         get { return maxLife; }
     }
 
-    [SerializeField]
-    static int life = 0;
-    public static int Life
+    static float life = 0;
+
+    public static float Life
     {
         get { return life; }
 
         set
         {
             life = value;
-            maxLife = value;
         }
     }
 
@@ -46,6 +45,8 @@ public class BossManager : MonoBehaviour
             players[idPlayer] = go.transform;
             idPlayer++;
         }
+
+        maxLife = life;
     }
 
     void OnTriggerEnter(Collider col)
@@ -53,7 +54,7 @@ public class BossManager : MonoBehaviour
         if (col.tag == "Bullet")
         {
             life--;
-            lifeManager.UpdateLifeBar(MaxLife, life);
+            lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
             players[0].GetComponent<Player>().Add_Stamina(5);
             Destroy(col.gameObject);
         }

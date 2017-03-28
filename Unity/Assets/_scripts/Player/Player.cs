@@ -144,7 +144,7 @@ public class Player : MonoBehaviour
             GamePadState testState = GamePad.GetState(playerID);
             if (testState.IsConnected)
             {
-                //Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
+                Debug.Log(string.Format("GamePad found {0}", playerID));
                 playerIndex = playerID;
                 playerIndexSet = true;
             }
@@ -153,8 +153,8 @@ public class Player : MonoBehaviour
         prevState = state;
         state = GamePad.GetState(playerIndex);
 
-        if (playerIndex == playerID)
-        {
+        //if (playerIndex == playerID)
+        //{
             m_LMoveInputValue_X = state.ThumbSticks.Left.X;
             m_LMoveInputValue_Y = state.ThumbSticks.Left.Y;
             m_RMoveInputValue_X = state.ThumbSticks.Right.X;
@@ -166,8 +166,10 @@ public class Player : MonoBehaviour
                 lastBulletAngle = RAngle;
 
             if (state.Triggers.Right > 0.8f)
+            {
                 if (fireCoroutine == null)
                     fireCoroutine = StartCoroutine(PlayerFire(transform, lastBulletAngle));
+            }
             else
             {
                 if (fireCoroutine != null)
@@ -200,7 +202,7 @@ public class Player : MonoBehaviour
 
             MovePlayer();
             Rotate();
-        }
+        //}
     }
 
     public void HitByBullet()

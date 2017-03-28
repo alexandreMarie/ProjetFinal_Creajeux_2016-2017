@@ -58,8 +58,6 @@ public class LilithAI : BossManager
         for (int i = 0; i < System.Enum.GetNames(typeof(LifeState)).Length; i++)
             LilithEvents += BulletCancel;
 
-        destination.y = transform.position.y;
-
         arena = GameObject.FindGameObjectWithTag("Arena") as GameObject;
     }
 
