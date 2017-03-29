@@ -6,6 +6,8 @@ public class GameOver : MonoBehaviour
 {
     public GameObject go;
     public Text txt;
+    
+   /* void ActiveButton()
 
     void ActiveButton()
     {
@@ -22,5 +24,12 @@ public class GameOver : MonoBehaviour
     public void MainMenu()
     {
         SceneManager.LoadScene((int)MenuManager.StateMenu.MainMenu);
+    }*/
+
+    public void LoadScore()
+    {
+        SceneManager.LoadScene("Score");
+    }
+}
     }
 }
