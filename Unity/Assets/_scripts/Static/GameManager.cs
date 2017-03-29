@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
-
-    Character_Selection CS;//Source
-
 
     private static GameManager instance = null;
     
@@ -22,7 +19,7 @@ public class GameManager : MonoBehaviour {
     private GameObject boss;
     private GameObject[] players;
 
-    private Player Temps_Player;
+    private List<int> score;
     public static GameManager Instance
     {
         get
@@ -67,13 +64,13 @@ public class GameManager : MonoBehaviour {
 
         if (dead)
             {
-            boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
-            boss.GetComponent<LilithAI>().StopAllCoroutines();
+           // boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
+            //boss.GetComponent<LilithAI>().StopAllCoroutines();
             players[0].GetComponent<Player>().enabled = false;
             players[0].GetComponent<Add_Bullet>().enabled = false;
-            players[1].GetComponent<Player>().enabled = false;
-            players[1].GetComponent<Add_Bullet>().enabled = false;
-            gameOver.SetActive(true);
+            //players[1].GetComponent<Player>().enabled = false;
+            //players[1].GetComponent<Add_Bullet>().enabled = false;
+            //gameOver.SetActive(true);
             }
             else
             {
@@ -81,8 +78,25 @@ public class GameManager : MonoBehaviour {
             }
         
     }
+    public void SaveData()
+    {
+        PlayerPrefs.SetInt("Scores_Count", score.Count);
+        for (int i = 0; i < score.Count; i++)
+            PlayerPrefs.SetInt("Scores" + i, score[i]);
 
+    }
 
+    public void DeleteData()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
+    public void GetData()
+    {
+        int countScores = PlayerPrefs.GetInt("Scores_Count");
+        for (int i = 0; i < countScores; i++)
+            score.Add(PlayerPrefs.GetInt("Scores" + i));
+    }
     public bool Dead
     {
         get
@@ -170,8 +184,21 @@ public class GameManager : MonoBehaviour {
         }
 
         set
-        { 
+        {
             players = value;
+        }
+    }
+
+    public List<int> Score
+    {
+        get
+        {
+            return score;
+        }
+
+        set
+        {
+            score = value;
         }
     }
 }

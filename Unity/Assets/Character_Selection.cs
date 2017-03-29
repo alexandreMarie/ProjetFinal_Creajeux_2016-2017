@@ -8,11 +8,11 @@ public class Character_Selection : MonoBehaviour {
     //23 24 34 mais Milestone final
     //29 30 31 Final Milestone
 
-   public struct Info_Perso
+    public struct Stats_Character
     {
-      public  float Speed;
-      public int attack;
-       public int ID_mesh;//1 - War, 2 - Death,3 - Fury,4 - Strife  
+        public float speed;
+        public int attack;
+        public float PDV;
     }
     /*RAJOUTE UN STICK ABRUTIT DE PROG STEAMPUNK*/
 
@@ -24,9 +24,10 @@ public class Character_Selection : MonoBehaviour {
     */
 
 
-    Info_Perso struct_Info_Perso;
-   
+    Stats_Character [] Characters;
+    bool Selection_Validate = false;
     bool Button_is_releasd;
+    bool Button_is_releasd_A = false;
     bool playerIndexSet = false;
     [SerializeField]
     PlayerIndex test;
@@ -51,8 +52,14 @@ public class Character_Selection : MonoBehaviour {
 	void Start () {
 
         Canevas_State = GetComponentInChildren<Canvas>();
- 
-	}
+        Characters = new Stats_Character[4];
+        for (int i = 0; i < Characters.Length; i++)
+        {
+            Characters[i].attack = (int)Random.RandomRange(1.0f, 50.0f);
+            Characters[i].speed = Random.RandomRange(1.0f, 50.0f);
+            Characters[i].PDV = Random.RandomRange(1.0f, 50.0f);
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -62,7 +69,7 @@ public class Character_Selection : MonoBehaviour {
             if (!playerIndexSet || !prevState.IsConnected)
             {
 
-                PlayerIndex testPlayerIndex = (PlayerIndex)test;
+                PlayerIndex testPlayerIndex = test;
                 GamePadState testState = GamePad.GetState(testPlayerIndex);
                 if (testState.IsConnected)
                 {
@@ -78,10 +85,21 @@ public class Character_Selection : MonoBehaviour {
 
         if(prevState.DPad.Right == ButtonState.Released && prevState.DPad.Left == ButtonState.Released)
         {
+            Debug.Log("Test");
             Button_is_releasd = true;
         }
 
+        if (prevState.Buttons.A == ButtonState.Released && prevState.Buttons.A == ButtonState.Released)
+        {
+            Button_is_releasd_A = true;
+        }
 
+        if (prevState.Buttons.A == ButtonState.Pressed && Button_is_releasd_A == true)
+        {
+            Debug.Log("Test");
+            Button_is_releasd_A = false;
+            Selection_Validate = true;
+        }
 
         if (Button_is_releasd == true)
         {
@@ -119,6 +137,16 @@ public class Character_Selection : MonoBehaviour {
         }
     }
 
+    public bool Return_Boolen()
+    {
+       
+     return Selection_Validate;
+     
+    }
+    public Stats_Character Return_Stats(int ID_Player)
+    {
+        return Characters[ID_Player];
+    }
    public int Return_Id_Player()
     {
         return ID_Perso;
