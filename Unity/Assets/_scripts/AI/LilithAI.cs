@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor.Animations;
 
 /// <summary>
 /// LILITH'S AI FILE
@@ -19,7 +20,10 @@ public class LilithAI : BossManager
     private Transform bullet = null;
     [SerializeField]
     private Transform snake = null;
-
+    [SerializeField]
+    private Transform scavengingSnake = null;
+    [SerializeField]
+    private AnimatorController stateMachine = null;
     [SerializeField]
     private float time = 15.0f;
 
@@ -82,8 +86,8 @@ public class LilithAI : BossManager
             lifeState = LifeState.THREE;
 
             /////////////////////////TESTAI
-            StartCoroutine(AI1());
-            StartCoroutine(Snake());
+            StartCoroutine(TestAI());
+            //StartCoroutine(Snake());
         }
 
         if (Life / MaxLife >= 0.501f && Life / MaxLife <= 0.750f)
@@ -143,6 +147,7 @@ public class LilithAI : BossManager
 
     private IEnumerator TestAI()
     {
+        StartCoroutine(ScavengingSnake());
         //Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, false);
         //StartCoroutine(Snake());
         //Lilith.LaunchPhyllotaxis(bullet, 178.5f, false);
@@ -236,7 +241,21 @@ public class LilithAI : BossManager
             arena.GetComponent<EmissiveController>().TurnEmissive = false;
             Camera.main.GetComponent<BloomController>().TurnBloom = false;
             //SoundsManager.Instance.VolumeAmbientMusic = 1.0f;
+
             yield return new WaitForSeconds(5.0f);
+        }
+    }
+
+    private IEnumerator ScavengingSnake()
+    {
+        while (true)
+        {
+            Vector3 scavengePosition = new Vector3(-30, 1.0f, players[0].position.z);
+
+            Transform _scavengingSnake = Instantiate(scavengingSnake, scavengePosition, Quaternion.identity) as Transform;
+            _scavengingSnake.Rotate(new Vector3(0, 90.0f, 0));
+
+            yield return new WaitForSeconds(20.0f);
         }
     }
 }

@@ -37,7 +37,7 @@ public class SimpleFX : MonoBehaviour
 
     void CreateMaterials()
     {
-        if (HorizontalBlurMat == null)
+        if (HorizontalBlurMat == null || VerticalBlurMat == null || AddContrastMat == null || HorizontalGaussianBlurMat == null || VerticalGaussianBlurMat == null)
         {
             HorizontalBlurMat = new Material(HorizontalBlurEffect);
             HorizontalBlurMat.hideFlags = HideFlags.HideAndDontSave;

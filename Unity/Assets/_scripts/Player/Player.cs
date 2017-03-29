@@ -18,8 +18,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject bullet = null;
 
-    private Add_Bullet s_Bullet;
-
     private float lastRotationY;
 
     private float lastBulletAngle;
@@ -71,8 +69,6 @@ public class Player : MonoBehaviour
     {
         maxLife = life;
 
-        s_Bullet = GetComponent<Add_Bullet>();
-
         meshRenderer = GetComponentInChildren<MeshRenderer>();
 
         lifeBar.UpdateStaminaBar(100, specialGauge);
@@ -120,7 +116,6 @@ public class Player : MonoBehaviour
     {
         if (specialGauge >= 100)
         {
-            s_Bullet.Special_Attack(Numberbullets, transform);
             specialGauge = 0;
             lifeBar.UpdateStaminaBar(100, 0);
         }
