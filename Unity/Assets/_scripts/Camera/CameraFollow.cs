@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-
 using System.Collections;
 using System.IO;
 using UnityEngine.UI;
@@ -110,7 +109,6 @@ public class CameraFollow : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E))
             CameraManager.Instance.Change = false;
-        }
     }
     
     
