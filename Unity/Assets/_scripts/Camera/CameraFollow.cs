@@ -115,6 +115,7 @@ public class CameraFollow : MonoBehaviour
         if (Input.GetKey(KeyCode.E))
         {
             CameraManager.Instance.Change = false;
+        }
     }
     
     
