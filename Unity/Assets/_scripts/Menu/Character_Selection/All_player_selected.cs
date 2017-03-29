@@ -13,10 +13,17 @@ public class All_player_selected : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if(Players[1].Return_Boolen() == true && Players[0].Return_Boolen() == true)
+        for (int i = 0; i < Players.Length; i++)
         {
-            Loading_Ok = true;
+            if (Players[i].Return_Boolen() == true)
+            {
+                Loading_Ok = true;
+            }
+            else
+            {
+                Loading_Ok = false;
+                i = Players.Length;
+            }
         }
 	if(Loading_Ok == true)
         {
