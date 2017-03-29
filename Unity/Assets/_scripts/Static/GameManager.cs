@@ -63,6 +63,18 @@ public class GameManager : MonoBehaviour {
         }
 
         if (dead)
+        {
+            // boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
+            //boss.GetComponent<LilithAI>().StopAllCoroutines();
+            players[0].GetComponent<Horsemen>().enabled = false;
+            //players[1].GetComponent<Horsemen>().enabled = false;
+            //gameOver.SetActive(true);
+        }
+        else
+        {
+            gameOver.SetActive(false);
+        }
+       
             {
            // boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
             //boss.GetComponent<LilithAI>().StopAllCoroutines();
@@ -75,7 +87,6 @@ public class GameManager : MonoBehaviour {
             {
                 gameOver.SetActive(false);
             }
-        
     }
     public void SaveData()
     {
