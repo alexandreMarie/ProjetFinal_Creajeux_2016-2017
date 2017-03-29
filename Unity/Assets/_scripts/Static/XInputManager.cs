@@ -49,6 +49,7 @@ public class XInputManager : MonoBehaviour {
             if (instance == null)
             {
                 instance = new GameObject("XInputManager").AddComponent<XInputManager>();
+                instance.CheckControllers();
                 DontDestroyOnLoad(instance);
             }
             return instance;
@@ -64,8 +65,10 @@ public class XInputManager : MonoBehaviour {
     bool[] ControllersConnected = new bool[ControllersMax] { false, false, false, false };
 
     private int numControllers = 0;
-    // Indicate the number of controllers connected
-    public int NumControllers
+    /// <summary>
+    /// Indicate the number of controllers connected
+    /// </summary>
+    public int NumControllers  // 
     {
         get
         {
