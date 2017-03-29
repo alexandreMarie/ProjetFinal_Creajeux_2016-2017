@@ -67,7 +67,6 @@ public class GameManager : MonoBehaviour {
            // boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
             //boss.GetComponent<LilithAI>().StopAllCoroutines();
             players[0].GetComponent<Horsemen>().enabled = false;
-            players[0].GetComponent<Add_Bullet>().enabled = false;
             //players[1].GetComponent<Player>().enabled = false;
             //players[1].GetComponent<Add_Bullet>().enabled = false;
             //gameOver.SetActive(true);
