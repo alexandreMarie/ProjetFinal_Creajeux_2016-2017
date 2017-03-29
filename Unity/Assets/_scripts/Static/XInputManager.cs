@@ -49,6 +49,7 @@ public class XInputManager : MonoBehaviour {
             if (instance == null)
             {
                 instance = new GameObject("XInputManager").AddComponent<XInputManager>();
+                instance.CheckControllers();
                 DontDestroyOnLoad(instance);
             }
             return instance;
