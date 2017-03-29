@@ -25,7 +25,14 @@ public class Check_Number_Players : MonoBehaviour {
                     playerIndexSet = true;
                     Instantiate(Player[i]);
                     Player[i].transform.SetParent(Character_Selector);
-                    Player[i].transform.position = new Vector3(3 * i,0.0f, -8.0f);
+                    if (i == 0)
+                    {
+                        Player[i].transform.position = new Vector3(-2 , 0.0f, -8.0f);
+                    }
+                    if (i == 1)
+                    {
+                        Player[i].transform.position = new Vector3(6, 0.0f, -8.0f);
+                    }
                 }
             }
         }
