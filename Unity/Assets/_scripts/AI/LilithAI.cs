@@ -22,8 +22,7 @@ public class LilithAI : BossManager
     private Transform snake = null;
     [SerializeField]
     private Transform scavengingSnake = null;
-    [SerializeField]
-    private AnimatorController stateMachine = null;
+
     [SerializeField]
     private float time = 15.0f;
 
