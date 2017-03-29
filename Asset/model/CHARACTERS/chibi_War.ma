@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: chibi_War.ma
-//Last modified: Wed, Mar 29, 2017 01:54:30 PM
+//Last modified: Wed, Mar 29, 2017 05:34:49 PM
 //Codeset: 1252
 requires maya "2016";
 requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOptions" -nodeType "mentalrayGlobals"
@@ -15,8 +15,8 @@ fileInfo "osv" "Microsoft Windows 8 Business Edition, 64-bit  (Build 9200)\n";
 createNode transform -s -n "persp";
 	rename -uid "D8BEB9CE-44D8-A514-D4FA-48B085EC31B0";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 294.68104544333011 153.22416027689425 373.58306327583972 ;
-	setAttr ".r" -type "double3" -7.5383523452767056 -321.39999999991164 0 ;
+	setAttr ".t" -type "double3" 103.84786610738227 137.03432230363762 422.18623805942752 ;
+	setAttr ".r" -type "double3" -7.5383523427518684 -4664.9999999996935 2.057970313884798e-016 ;
 	setAttr ".rp" -type "double3" -5.6843418860808015e-014 -2.8421709430404007e-014 
 		0 ;
 	setAttr ".rpt" -type "double3" -6.1275325909175946e-014 3.6422893419147682e-013 
@@ -25,7 +25,7 @@ createNode camera -s -n "perspShape" -p "persp";
 	rename -uid "277217EE-4568-ECEA-04CE-198387AB8431";
 	setAttr -k off ".v";
 	setAttr ".fl" 34.999999999999979;
-	setAttr ".coi" 477.14717945090473;
+	setAttr ".coi" 442.46785176857531;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -86,14 +86,28 @@ createNode mesh -n "polySurface_warShape" -p "polySurface_war";
 	setAttr -k off ".v";
 	setAttr ".vir" yes;
 	setAttr ".vif" yes;
-	setAttr ".pv" -type "double2" 0.47990605235099792 0.16565275937318802 ;
+	setAttr ".pv" -type "double2" 0.62382456660270691 0.72944703698158264 ;
 	setAttr ".uvst[0].uvsn" -type "string" "map1";
 	setAttr ".cuvs" -type "string" "map1";
 	setAttr ".dcc" -type "string" "Ambient+Diffuse";
 	setAttr ".covm[0]"  0 1 1;
 	setAttr ".cdvm[0]"  0 1 1;
-	setAttr -s 3 ".pt";
+	setAttr -s 23 ".pt";
 	setAttr ".pt[374]" -type "float3" 3.8146973e-006 -3.8146973e-006 0 ;
+	setAttr ".pt[1254]" -type "float3" 4.7683716e-007 0 0 ;
+	setAttr ".pt[1255]" -type "float3" -2.3841858e-007 0 0 ;
+	setAttr ".pt[1256]" -type "float3" 2.3841858e-007 0 0 ;
+	setAttr ".pt[1257]" -type "float3" -2.3841858e-007 0 0 ;
+	setAttr ".pt[1258]" -type "float3" -2.3841858e-007 0 0 ;
+	setAttr ".pt[1261]" -type "float3" -2.3841858e-007 0 0 ;
+	setAttr ".pt[1262]" -type "float3" 4.7683716e-007 0 0 ;
+	setAttr ".pt[1454]" -type "float3" -4.7683716e-007 0 0 ;
+	setAttr ".pt[1456]" -type "float3" 2.3841858e-007 0 0 ;
+	setAttr ".pt[1459]" -type "float3" 2.3841858e-007 0 0 ;
+	setAttr ".pt[1462]" -type "float3" -4.7683716e-007 0 0 ;
+	setAttr ".pt[1488]" -type "float3" -2.3841858e-007 0 0 ;
+	setAttr ".pt[1490]" -type "float3" 2.3841858e-007 0 0 ;
+	setAttr ".pt[1492]" -type "float3" 2.3841858e-007 0 0 ;
 	setAttr ".pt[1863]" -type "float3" -0.22128364 0 0 ;
 	setAttr ".pt[1868]" -type "float3" -0.22128364 0 0 ;
 	setAttr ".bw" 3;
@@ -6344,17 +6358,18 @@ createNode mentalrayOptions -s -n "miDefaultOptions";
 createNode mentalrayFramebuffer -s -n "miDefaultFramebuffer";
 	rename -uid "414409E1-417F-A01B-8F6D-A58188DE0A3F";
 createNode lightLinker -s -n "lightLinker1";
-	rename -uid "5E4D0568-4B25-7A6E-1C54-C79EC6FC1DCF";
+	rename -uid "E70FF9B9-4652-037B-DA70-64A16402D390";
 	setAttr -s 8 ".lnk";
 	setAttr -s 8 ".slnk";
 createNode displayLayerManager -n "layerManager";
-	rename -uid "D21E3E35-4344-A19E-34D7-1EBD88EF4D7C";
+	rename -uid "EB4CB4DC-412F-0996-87FB-3DBC5A9937A9";
+	setAttr ".cdl" 2;
 	setAttr -s 4 ".dli[1:3]"  1 2 3;
 	setAttr -s 4 ".dli";
 createNode displayLayer -n "defaultLayer";
 	rename -uid "4A1DDEA8-484C-06E0-3A8B-1ABCC89C6D0D";
 createNode renderLayerManager -n "renderLayerManager";
-	rename -uid "F18AB42C-45C3-64B1-A39B-47B5E60AA411";
+	rename -uid "833153F3-4E6F-ABE4-2832-0FBD34DE7929";
 createNode renderLayer -n "defaultRenderLayer";
 	rename -uid "A7D71220-4D78-706F-28C4-098E34D77CE4";
 	setAttr ".g" yes;
