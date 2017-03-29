@@ -22,6 +22,10 @@ public class All_player_selected : MonoBehaviour {
         {
             Debug.Log("Ca marche! putain pour une fois t'es compétant fete ca enculé !");
             //On apelle la fonction du gamemanager.
+            for(int i = 0; i < Players.Length;i++)
+            {
+                GameManager.Instance.Set_State(i, Players[i].Return_Stats(i));
+            }
         }
 	}
 }

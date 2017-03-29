@@ -4,7 +4,7 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 
     All_player_selected Scri_APS;//Source
-
+    Character_Selection.Stats_Character [] str_State_Char;
 
     private static GameManager instance = null;
     
@@ -38,8 +38,8 @@ public class GameManager : MonoBehaviour {
    
     void Start()
     {
-        
         try {
+            str_State_Char = new Character_Selection.Stats_Character[2];
             gameOver = GameObject.FindGameObjectWithTag("GameOver");
             boss = GameObject.FindGameObjectWithTag("Boss");
             players = GameObject.FindGameObjectsWithTag("Player");
@@ -174,5 +174,10 @@ public class GameManager : MonoBehaviour {
         { 
             players = value;
         }
+    }
+
+    public void Set_State(int ID,Character_Selection.Stats_Character State_Char)
+    {
+        str_State_Char[ID] = State_Char;
     }
 }
