@@ -7,7 +7,9 @@ public class GameManager : MonoBehaviour {
     Character_Selection.Stats_Character [] str_State_Char;
 
     private static GameManager instance = null;
-    
+
+    int ID_arena;
+
     private bool dead;
     [SerializeField]
     private GameObject gameOver;
@@ -179,5 +181,11 @@ public class GameManager : MonoBehaviour {
     public void Set_State(int ID,Character_Selection.Stats_Character State_Char)
     {
         str_State_Char[ID] = State_Char;
+    }
+
+    public void Set_ID_Arena(int i)
+    {
+        ID_arena = i;
+        Debug.Log(ID_arena);
     }
 }
