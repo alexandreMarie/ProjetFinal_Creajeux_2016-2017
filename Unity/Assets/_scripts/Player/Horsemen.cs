@@ -106,10 +106,7 @@ public abstract class Horsemen : MonoBehaviour
 
     private float rotateSpeed = 0f;
 
-    public virtual void SpecialShoot()
-    {
-
-    }
+    public abstract void SpecialShoot();
 
     void Move()
     {
@@ -263,6 +260,11 @@ public abstract class Horsemen : MonoBehaviour
             {
                 StartCoroutine(PlayerBlink());
                 XIMinstance.SetVibration(playerID, blinkDuration / 2f, 0.5f);
+            }
+            else if (other.tag == "ScavengingSnake")
+            {
+                StartCoroutine(Freeze());
+                XIMinstance.SetVibration(playerID, freezeDuration, 1f);
             }
         }
     }
