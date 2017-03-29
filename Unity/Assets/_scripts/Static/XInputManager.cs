@@ -70,11 +70,8 @@ public class XInputManager : MonoBehaviour {
     {
         get
         {
+            CheckControllers();
             return numControllers;
-        }
-        set
-        {
-            numControllers = value;
         }
     }
 
