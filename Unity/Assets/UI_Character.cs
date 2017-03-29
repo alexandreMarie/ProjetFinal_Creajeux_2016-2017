@@ -10,13 +10,15 @@ public class UI_Character : MonoBehaviour {
        public float PDV;
     }
     [SerializeField]
+    GameObject Character_Selection;
     GameObject[] Players;
     Text[] TextsUI;
     Stats_Character[] Characters;
 	// Use this for initialization
 	void Start () {
         TextsUI = GetComponentsInChildren<Text>();
-     }
+        Players = Character_Selection.GetComponentsInChildren<GameObject>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
