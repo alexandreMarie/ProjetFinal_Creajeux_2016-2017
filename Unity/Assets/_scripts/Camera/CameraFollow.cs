@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.IO;
 using UnityEngine.UI;
@@ -18,7 +19,7 @@ public class CameraFollow : MonoBehaviour
     private float CamOffset;
     [SerializeField]
     private float distanceMax;
-    
+
     public float distanceMaxCam;
 
     private List<float> distanceAll = new List<float>();
@@ -28,9 +29,15 @@ public class CameraFollow : MonoBehaviour
     private Vector3 gravity;
 
     public Vector3 distanceDead;
+
     public Texture2D tex2D = null;
+    public Transform posScreen;
+    public GameObject planeScreen;
+    private bool takeScreen = true;
+
+    private float time = 0;
     private GameManager manager;
-    void Start() 
+    void Start()
     {
         /* Reset GameManager */
         manager = GameManager.Instance;
@@ -51,6 +58,20 @@ public class CameraFollow : MonoBehaviour
 
     }
 
+    void OnPostRender()
+    {
+        if (CameraManager.Instance.DeadPlayer1 && takeScreen)
+        {
+            if (tex2D == null)
+            {
+                tex2D = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+            }
+            tex2D.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+            tex2D.Apply();
+            planeScreen.GetComponent<Renderer>().material.mainTexture = tex2D;
+            takeScreen = false;
+        }
+    }
     void FixedUpdate()
     {
 
@@ -67,18 +88,12 @@ public class CameraFollow : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, destinationRot, 0.03f);
             Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, setFieldOfView, 0.03f);
         }
-        else
+        else if (!takeScreen)
         {
-            GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
-            quad.transform.position = transform.position;
-            if(tex2D ==null)
-            {
-                tex2D = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-            }
-            tex2D.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-            tex2D.Apply();
-            quad.GetComponent<Renderer>().material.mainTexture = tex2D;
-            Time.timeScale = 0;
+            transform.position = posScreen.position;
+            transform.rotation = posScreen.rotation;
+            manager.TexScreen = tex2D;
+            SceneManager.LoadScene("Score");
             /*
             if(CameraManager.Instance.DeadPlayer1)
             {
@@ -105,9 +120,12 @@ public class CameraFollow : MonoBehaviour
              transform.rotation = Quaternion.Slerp(transform.rotation, CameraManager.Instance.CameraDoor[0].transform.rotation, 0.1f);
          }*/
     }
-    
+
     void Update()
     {
+        if (takeScreen)
+            time += Time.deltaTime;
+        manager.Compteur = time;
         if (Input.GetKey(KeyCode.A))
         {
             CameraManager.Instance.Change = true;
@@ -117,8 +135,8 @@ public class CameraFollow : MonoBehaviour
             CameraManager.Instance.Change = false;
         }
     }
-    
-    
+
+
     bool IsVisibleFrom(Renderer renderer)
     {
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
@@ -132,7 +150,7 @@ public class CameraFollow : MonoBehaviour
 
         for (int i = 0; i < targets.Length; i++)
         {
-        
+
             if (targets[i] != targets[targets.Length - 1]) // Condition pour que la dernière target du tableau ne passe pas dans la boucle
             {
                 for (int y = i + 1; y < targets.Length; y++)
@@ -146,7 +164,7 @@ public class CameraFollow : MonoBehaviour
             distanceMax = Mathf.Max(distanceMax, distanceAll[i]);
 
         CamOffset = distanceMax * 0.9f;
-        if (distanceMax < distanceMaxCam/2)
+        if (distanceMax < distanceMaxCam / 2)
         {
             rotateCam = 55.0f;
         }

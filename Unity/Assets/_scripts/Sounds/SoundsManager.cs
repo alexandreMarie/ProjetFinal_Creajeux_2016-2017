@@ -104,7 +104,7 @@ public class SoundsManager : MonoBehaviour
             case "Titles":
                 break;
 
-            case "Prototype1":
+            case "LilithFight":
                 sourceMusic.clip = ambientMusic[0];
                 sourceMusic.Play();
                 break;
