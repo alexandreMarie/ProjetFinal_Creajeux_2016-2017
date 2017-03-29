@@ -1,26 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class GameManager : MonoBehaviour
-{
-    private static GameManager instance = null;
+public class GameManager : MonoBehaviour {
 
+    private static GameManager instance = null;
+    
     private bool dead;
     [SerializeField]
     private GameObject gameOver;
 
     [SerializeField]
     private int lifePlayer1 = 20;
-    // private int lifePlayer2 = 20;
+    [SerializeField]
+    private int lifePlayer2 = 20;
     [SerializeField]
     private float lifeBoss;
 
     private GameObject boss;
     private GameObject[] players;
 
-
     private List<int> score;
-
     public static GameManager Instance
     {
         get
@@ -30,15 +29,13 @@ public class GameManager : MonoBehaviour
                 instance = new GameObject("GameManager").AddComponent<GameManager>();
                 DontDestroyOnLoad(instance);
             }
-
             return instance;
         }
     }
-
+   
     void Start()
     {
-        try
-        {
+        try {
             gameOver = GameObject.FindGameObjectWithTag("GameOver");
             boss = GameObject.FindGameObjectWithTag("Boss");
             players = GameObject.FindGameObjectsWithTag("Player");
@@ -56,11 +53,11 @@ public class GameManager : MonoBehaviour
         {
             CameraManager.Instance.DeadPlayer1 = true;
         }
-        /*else if (lifePlayer2 <= 0)
+        else if (lifePlayer2 <= 0)
         {
             CameraManager.Instance.DeadPlayer2 = true;
-        }*/
-        else if (lifeBoss <= 0)
+        }
+        else if(lifeBoss <=0)
         {
             CameraManager.Instance.DeadBoss = true;
         }
@@ -78,6 +75,18 @@ public class GameManager : MonoBehaviour
             gameOver.SetActive(false);
         }
        
+            {
+           // boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
+            //boss.GetComponent<LilithAI>().StopAllCoroutines();
+            players[0].GetComponent<Horsemen>().enabled = false;
+            //players[1].GetComponent<Player>().enabled = false;
+            //players[1].GetComponent<Add_Bullet>().enabled = false;
+            //gameOver.SetActive(true);
+            }
+            else
+            {
+                gameOver.SetActive(false);
+            }
     }
     public void SaveData()
     {
@@ -101,55 +110,93 @@ public class GameManager : MonoBehaviour
     public bool Dead
     {
         get
-        { return dead; }
+        {
+            return dead;
+        }
 
         set
-        { dead = value; }
+        {
+            dead = value;
+        }
     }
 
     public int LifePlayer1
     {
         get
-        { return lifePlayer1; }
+        {
+            return lifePlayer1;
+        }
 
         set
-        { lifePlayer1 = value; }
+        {
+            lifePlayer1 = value;
+        }
+    }
+
+    public int LifePlayer2
+    {
+        get
+        {
+            return lifePlayer2;
+        }
+
+        set
+        {
+            lifePlayer2 = value;
+        }
     }
 
     public GameObject GameOver
     {
         get
-        { return gameOver; }
+        {
+            return gameOver;
+        }
 
         set
-        { gameOver = value; }
+        {
+            gameOver = value;
+        }
     }
 
     public GameObject Boss
     {
         get
-        { return boss; }
+        {
+            return boss;
+        }
 
         set
-        { boss = value; }
+        {
+            boss = value;
+        }
     }
+    
 
     public float LifeBoss
     {
         get
-        { return lifeBoss; }
+        {
+            return lifeBoss;
+        }
 
         set
-        { lifeBoss = value; }
+        {
+            lifeBoss = value;
+        }
     }
 
     public GameObject[] Players
     {
         get
-        { return players; }
+        {
+            return players;
+        }
 
         set
-        { players = value; }
+        {
+            players = value;
+        }
     }
 
     public List<int> Score
