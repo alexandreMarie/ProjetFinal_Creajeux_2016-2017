@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 [ExecuteInEditMode]
 public class SimpleFX : MonoBehaviour
 {
-
     public Shader HorizontalBlurEffect;
     public Shader VerticalBlurEffect;
     public Shader AddContrastEffect;
@@ -39,7 +37,7 @@ public class SimpleFX : MonoBehaviour
 
     void CreateMaterials()
     {
-        if (HorizontalBlurMat == null)
+        if (HorizontalBlurMat == null || VerticalBlurMat == null || AddContrastMat == null || HorizontalGaussianBlurMat == null || VerticalGaussianBlurMat == null)
         {
             HorizontalBlurMat = new Material(HorizontalBlurEffect);
             HorizontalBlurMat.hideFlags = HideFlags.HideAndDontSave;
@@ -89,7 +87,6 @@ public class SimpleFX : MonoBehaviour
 
         RenderTexture.ReleaseTemporary(rt);
         RenderTexture.ReleaseTemporary(rtTmp);
-
     }
 
     public void SetOffset(int value)
@@ -107,4 +104,3 @@ public class SimpleFX : MonoBehaviour
         distance = value;
     }
 }
-

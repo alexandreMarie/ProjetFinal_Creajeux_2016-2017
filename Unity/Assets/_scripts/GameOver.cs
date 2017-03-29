@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameOver : MonoBehaviour {
-
+public class GameOver : MonoBehaviour
+{
     public GameObject go;
     public Text txt;
     
    /* void ActiveButton()
+
+    void ActiveButton()
     {
         go.SetActive(true);
     }
@@ -28,5 +29,7 @@ public class GameOver : MonoBehaviour {
     public void LoadScore()
     {
         SceneManager.LoadScene("Score");
+    }
+}
     }
 }
