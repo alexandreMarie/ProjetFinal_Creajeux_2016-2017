@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class LifeManager : MonoBehaviour
 {
-    
     Image imgFilledBar;
-    Image ImgFille_Endurance_Bar;
+    Image imgFilledEnduranceBar;
 
     private void FindImages()
     {
@@ -14,13 +12,10 @@ public class LifeManager : MonoBehaviour
         foreach (Image image in imgsFilledBar)
         {
             if (image.transform.tag == "LifeBar")
-            {
                 imgFilledBar = image;
-            }
+
             if (image.transform.tag == "StaminaBar")
-            {
-                ImgFille_Endurance_Bar = image;
-            }
+                imgFilledEnduranceBar = image;
         }
     }
 
@@ -28,27 +23,21 @@ public class LifeManager : MonoBehaviour
     {
         // Récup de l'image configurée en filled
         Image[] imgsFilledBar = GetComponentsInChildren<Image>();
+
         foreach (Image image in imgsFilledBar)
         {
             if (image.transform.tag == "LifeBar")
-            {
                 imgFilledBar = image;
-            }
+
             if (image.transform.tag == "StaminaBar")
-            {
-                ImgFille_Endurance_Bar = image;
-            }
+                imgFilledEnduranceBar = image;
         }
 
         if (imgFilledBar == null)
-        {
             Debug.Log("Aucune image trouvée");
-        }
 
-        if (ImgFille_Endurance_Bar == null)
-        {
+        if (imgFilledEnduranceBar == null)
             Debug.Log("Aucune image trouvée");
-        }
     }
 
     /// <summary>
@@ -60,24 +49,17 @@ public class LifeManager : MonoBehaviour
     {
         // MAJ de l'UI seulement quand appelée
         if (imgFilledBar != null)
-        {
-            //Debug.Log("Max_Value : " + _value / (float)_maxValue);
             imgFilledBar.fillAmount = _value / (float)_maxValue;
-        }
-
-      
     }
+
     public void UpdateStaminaBar(int _maxValue, int _value)
     {
-        if (ImgFille_Endurance_Bar != null)
-        {
-            ImgFille_Endurance_Bar.fillAmount = _value / (float)_maxValue;
-        }
+        if (imgFilledEnduranceBar != null)
+            imgFilledEnduranceBar.fillAmount = _value / (float)_maxValue;
         else
         {
             FindImages();
-            ImgFille_Endurance_Bar.fillAmount = _value / (float)_maxValue;
-
+            imgFilledEnduranceBar.fillAmount = _value / (float)_maxValue;
         }
     }
- }
+}

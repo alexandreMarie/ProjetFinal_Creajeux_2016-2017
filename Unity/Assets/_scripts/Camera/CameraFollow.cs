@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System.IO;
+using UnityEngine.UI;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -26,7 +28,7 @@ public class CameraFollow : MonoBehaviour
     private Vector3 gravity;
 
     public Vector3 distanceDead;
-
+    public Texture2D tex2D = null;
     private GameManager manager;
     void Start() 
     {
@@ -67,6 +69,17 @@ public class CameraFollow : MonoBehaviour
         }
         else
         {
+            GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            quad.transform.position = transform.position;
+            if(tex2D ==null)
+            {
+                tex2D = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+            }
+            tex2D.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+            tex2D.Apply();
+            quad.GetComponent<Renderer>().material.mainTexture = tex2D;
+            Time.timeScale = 0;
+            /*
             if(CameraManager.Instance.DeadPlayer1)
             {
                 transform.position = Vector3.SmoothDamp(transform.position, targets[0].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
@@ -84,7 +97,7 @@ public class CameraFollow : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
             }
             if (transform.localEulerAngles.x > 59.0f)
-                manager.Dead = true;
+                manager.Dead = true;*/
         }
         /* else
          {
@@ -92,6 +105,7 @@ public class CameraFollow : MonoBehaviour
              transform.rotation = Quaternion.Slerp(transform.rotation, CameraManager.Instance.CameraDoor[0].transform.rotation, 0.1f);
          }*/
     }
+    
     void Update()
     {
         if (Input.GetKey(KeyCode.A))
@@ -103,6 +117,7 @@ public class CameraFollow : MonoBehaviour
             CameraManager.Instance.Change = false;
         }
     }
+    
     
     bool IsVisibleFrom(Renderer renderer)
     {
@@ -126,16 +141,11 @@ public class CameraFollow : MonoBehaviour
                     cpt++;
                 }
             }
-
         }
-
-
         for (int i = 0; i < distanceAll.Count; i++)
             distanceMax = Mathf.Max(distanceMax, distanceAll[i]);
 
         CamOffset = distanceMax * 0.9f;
-
-       
         if (distanceMax < distanceMaxCam/2)
         {
             rotateCam = 55.0f;

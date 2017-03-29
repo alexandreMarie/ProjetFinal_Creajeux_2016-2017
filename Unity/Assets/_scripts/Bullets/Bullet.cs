@@ -12,8 +12,6 @@ public class Bullet : MonoBehaviour
     private float destroyTime = 5.0f;
     #endregion
 
-    private static int count = 0;
-
     private bool rotateBullet = false;
     private float lerpFactor = 0.0f;
 
@@ -21,20 +19,13 @@ public class Bullet : MonoBehaviour
 
     public bool RotateBullet
     {
-        get
-        {
-            return rotateBullet;
-        }
+        get { return rotateBullet; }
 
-        set
-        {
-            rotateBullet = value;
-        }
+        set { rotateBullet = value; }
     }
 
     void Start()
     {
-        count++;
         Destroy(gameObject, destroyTime);
     }
 
@@ -50,31 +41,5 @@ public class Bullet : MonoBehaviour
 
             transform.Rotate(rotation);
         }
-    }
-
-    void OnTriggerEnter(Collider col)
-    {
-        if (col.tag == "Wall")
-            Destroy(gameObject, 0.1f);
-
-        if (col.tag == "Player")
-        {
-            if (col.GetComponent<Player>().Get_Invicible() == false)
-            {
-                if (tag != "Snake")
-                    col.GetComponent<Player>().HitByBullet();
-                else
-                {
-                    col.GetComponent<Player>().FreezePlayer();
-                }
-
-                Destroy(gameObject);
-            }
-        }
-    }
-
-    public void OnDestroy()
-    {
-        count--;
     }
 }
