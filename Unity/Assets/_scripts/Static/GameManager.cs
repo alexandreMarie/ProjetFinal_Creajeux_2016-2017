@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     private static GameManager instance = null;
-    
+
     private bool dead;
     [SerializeField]
     private GameObject gameOver;
@@ -20,6 +22,10 @@ public class GameManager : MonoBehaviour {
     private GameObject[] players;
 
     private List<int> score;
+
+    private Texture2D texScreen;
+
+    private float compteur;
     public static GameManager Instance
     {
         get
@@ -32,10 +38,11 @@ public class GameManager : MonoBehaviour {
             return instance;
         }
     }
-   
+
     void Start()
     {
-        try {
+        try
+        {
             gameOver = GameObject.FindGameObjectWithTag("GameOver");
             boss = GameObject.FindGameObjectWithTag("Boss");
             players = GameObject.FindGameObjectsWithTag("Player");
@@ -57,7 +64,7 @@ public class GameManager : MonoBehaviour {
         {
             CameraManager.Instance.DeadPlayer2 = true;
         }
-        else if(lifeBoss <=0)
+        else if (lifeBoss <= 0)
         {
             CameraManager.Instance.DeadBoss = true;
         }
@@ -67,26 +74,14 @@ public class GameManager : MonoBehaviour {
             // boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
             //boss.GetComponent<LilithAI>().StopAllCoroutines();
             players[0].GetComponent<Horsemen>().enabled = false;
-            //players[1].GetComponent<Horsemen>().enabled = false;
+            //players[1].GetComponent<Player>().enabled = false;
+            //players[1].GetComponent<Add_Bullet>().enabled = false;
             //gameOver.SetActive(true);
         }
         else
         {
-            gameOver.SetActive(false);
+            // gameOver.SetActive(false);
         }
-       
-            {
-           // boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
-            //boss.GetComponent<LilithAI>().StopAllCoroutines();
-            players[0].GetComponent<Horsemen>().enabled = false;
-            //players[1].GetComponent<Player>().enabled = false;
-            //players[1].GetComponent<Add_Bullet>().enabled = false;
-            //gameOver.SetActive(true);
-            }
-            else
-            {
-                gameOver.SetActive(false);
-            }
     }
     public void SaveData()
     {
@@ -171,7 +166,7 @@ public class GameManager : MonoBehaviour {
             boss = value;
         }
     }
-    
+
 
     public float LifeBoss
     {
@@ -209,6 +204,32 @@ public class GameManager : MonoBehaviour {
         set
         {
             score = value;
+        }
+    }
+
+    public Texture2D TexScreen
+    {
+        get
+        {
+            return texScreen;
+        }
+
+        set
+        {
+            texScreen = value;
+        }
+    }
+
+    public float Compteur
+    {
+        get
+        {
+            return compteur;
+        }
+
+        set
+        {
+            compteur = value;
         }
     }
 }
