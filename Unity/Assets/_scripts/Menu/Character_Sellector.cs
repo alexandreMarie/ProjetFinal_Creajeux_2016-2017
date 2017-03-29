@@ -4,7 +4,7 @@ using XInputDotNetPure;
 
 public class Character_Sellector : MonoBehaviour {
    
-    bool playerIndexSet = false;
+    //bool playerIndexSet = false;
     PlayerIndex playerIndex;
     GamePadState [] state;
     GamePadState [] prevState;

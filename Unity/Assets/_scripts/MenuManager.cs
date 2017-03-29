@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class MenuManager : MonoBehaviour {
+public class MenuManager : MonoBehaviour
+{
 
     // Partie singleton + DontDestroyOnLoad
     private static MenuManager instance = null;
@@ -16,8 +16,6 @@ public class MenuManager : MonoBehaviour {
             }
             return instance;
         }
-
-        private set {}
     }
 
     public enum StateMenu
@@ -25,35 +23,35 @@ public class MenuManager : MonoBehaviour {
         Logo,
         Title,
         MainMenu,
-        Prototype = 3,
+        Prototype,
         Options,
         CharacterSelect,
         ArenaSelect,
         DemonSelect,
         Exit,
-        None,
-       
+        None
     }
 
     [SerializeField]
     private StateMenu stateMenu = StateMenu.Logo;
 
-    [SerializeField]
-    private Animator currentAnim = null;
+    //[SerializeField]
+    //private Animator currentAnim = null;
 
     public void SetState(StateMenu _stateMenu)
     {
         stateMenu = _stateMenu;
     }
 
-    // Use this for initialization
-    void Start () {
-        //currentAnim = FindObjectsOfType<Animator>() as Animator[];
-        //currentAnim = GameObject.Find("Fade_StudioLogo").GetComponent<Animator>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    //void Start () 
+    //{
+    //currentAnim = FindObjectsOfType<Animator>() as Animator[];
+    //currentAnim = GameObject.Find("Fade_StudioLogo").GetComponent<Animator>();
+    //}
+
+    // Update is called once per frame
+    void Update()
+    {
         switch (stateMenu)
         {
             case StateMenu.Logo:

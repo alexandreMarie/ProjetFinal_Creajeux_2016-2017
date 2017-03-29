@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class CameraManager : MonoBehaviour {
-
+public class CameraManager : MonoBehaviour
+{
     private static CameraManager instance = null;
     private bool change = false;
-    private GameObject [] posViewTarget;
+    private GameObject[] posViewTarget;
 
     private bool deadPlayer1 = false;
     private bool deadPlayer2 = false;
     private bool deadBoss = false;
-    
+
     public static CameraManager Instance
     {
         get
@@ -22,12 +21,12 @@ public class CameraManager : MonoBehaviour {
             }
             return instance;
         }
-
     }
 
     void Start()
     {
-        try {
+        try
+        {
             posViewTarget = GameObject.FindGameObjectsWithTag("PosViewTarget");
         }
         catch
@@ -39,65 +38,45 @@ public class CameraManager : MonoBehaviour {
     public bool Change
     {
         get
-        {
-            return change;
-        }
+        { return change; }
 
         set
-        {
-            change = value;
-        }
+        { change = value; }
     }
 
     public GameObject[] PosViewTarget
     {
         get
-        {
-            return posViewTarget;
-        }
+        { return posViewTarget; }
 
         set
-        {
-            posViewTarget = value;
-        }
+        { posViewTarget = value; }
     }
 
     public bool DeadPlayer1
     {
         get
-        {
-            return deadPlayer1;
-        }
+        { return deadPlayer1; }
 
         set
-        {
-            deadPlayer1 = value;
-        }
+        { deadPlayer1 = value; }
     }
 
     public bool DeadPlayer2
     {
         get
-        {
-            return deadPlayer2;
-        }
+        { return deadPlayer2; }
 
         set
-        {
-            deadPlayer2 = value;
-        }
+        { deadPlayer2 = value; }
     }
 
     public bool DeadBoss
     {
         get
-        {
-            return deadBoss;
-        }
+        { return deadBoss; }
 
         set
-        {
-            deadBoss = value;
-        }
+        { deadBoss = value; }
     }
 }

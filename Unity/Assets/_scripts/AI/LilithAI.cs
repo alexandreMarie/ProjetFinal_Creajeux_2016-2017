@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor.Animations;
 
 /// <summary>
 /// LILITH'S AI FILE
@@ -19,20 +20,21 @@ public class LilithAI : BossManager
     private Transform bullet = null;
     [SerializeField]
     private Transform snake = null;
-
-    private GameObject arena = null;
+    [SerializeField]
+    private Transform scavengingSnake = null;
 
     [SerializeField]
     private float time = 15.0f;
 
-    [SerializeField]
-    private uint bulletQuantityBurst = 200; //Quantity of bullets to fire for each burst
+    private GameObject arena = null;
+
+    private uint bulletQuantityBurst = 20; // Quantity of bullets to fire for each burst
 
     private Vector3 destination;
 
-    private float divergence = 137.5f; //Angular divergence of the phyllotaxis
+    private float divergence = 137.5f; // Angular divergence of the phyllotaxis
 
-    public LightsController lilithLights;
+    public LightsController arenaLights;
 
     private Patterns Lilith; // Uppercase L on purpose
 
@@ -47,26 +49,17 @@ public class LilithAI : BossManager
     public Patterns LilithAccessor
     {
         get
-        {
-            return Lilith;
-        }
-
-        set
-        {
-            Lilith = value;
-        }
+        { return Lilith; }
     }
 
     void Start()
     {
-        Life = 3000.0f;
+        Life = 3000;
 
-        LilithAccessor = GetComponentInParent<Patterns>();
+        Lilith = GetComponentInParent<Patterns>();
 
         for (int i = 0; i < System.Enum.GetNames(typeof(LifeState)).Length; i++)
             LilithEvents += BulletCancel;
-
-        destination.y = transform.position.y;
 
         arena = GameObject.FindGameObjectWithTag("Arena") as GameObject;
     }
@@ -85,19 +78,15 @@ public class LilithAI : BossManager
 
         transform.position = destination;
 
-        if (Life / MaxLife >= 0.751f)
+        if (lifeState == LifeState.FOUR)
         {
-            if (lifeState == LifeState.FOUR)
-            {
-                divergence = 111.5f;
+            divergence = 111.5f;
 
-                LilithEvents.Invoke();
+            lifeState = LifeState.THREE;
 
-                lifeState = LifeState.THREE;
-
-                StartCoroutine(TestAI());//////////////////////////////////////////////TESTAI
-                StartCoroutine(Snake());
-            }
+            /////////////////////////TESTAI
+            StartCoroutine(TestAI());
+            //StartCoroutine(Snake());
         }
 
         if (Life / MaxLife >= 0.501f && Life / MaxLife <= 0.750f)
@@ -107,7 +96,7 @@ public class LilithAI : BossManager
                 divergence = 178.5f;
 
                 LilithAccessor.StopAllCoroutines();
-                StopAllCoroutines();
+                StopCoroutine(AI1());
 
                 LilithEvents.Invoke();
 
@@ -125,7 +114,7 @@ public class LilithAI : BossManager
                 divergence = 75.0f;
 
                 LilithAccessor.StopAllCoroutines();
-                StopAllCoroutines();
+                StopCoroutine(AI2());
 
                 LilithEvents.Invoke();
 
@@ -143,7 +132,7 @@ public class LilithAI : BossManager
                 divergence = 137.5f;
 
                 LilithAccessor.StopAllCoroutines();
-                StopAllCoroutines();
+                StopCoroutine(AI3());
 
                 LilithEvents.Invoke();
 
@@ -157,10 +146,11 @@ public class LilithAI : BossManager
 
     private IEnumerator TestAI()
     {
+        StartCoroutine(ScavengingSnake());
         //Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, false);
-        StartCoroutine(Snake());
+        //StartCoroutine(Snake());
         //Lilith.LaunchPhyllotaxis(bullet, 178.5f, false);
-        yield return null;
+        //yield return null;
 
         //while (true)
         //{
@@ -170,6 +160,8 @@ public class LilithAI : BossManager
         //Lilith.LaunchMalthael(bullet);
 
         //yield return new WaitForSeconds(5.0f);
+
+        yield return null;
     }
 
     private IEnumerator AI1()
@@ -229,9 +221,10 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            lilithLights.TurnLight = true;
+            arenaLights.TurnLight = true;
 
             arena.GetComponent<EmissiveController>().TurnEmissive = true;
+            Camera.main.GetComponent<BloomController>().TurnBloom = true;
             //SoundsManager.Instance.VolumeAmbientMusic = 0.75f;
 
             angle = players[0].position - transform.position;
@@ -243,10 +236,25 @@ public class LilithAI : BossManager
 
             yield return new WaitForSeconds(4.0f);
 
-            lilithLights.TurnLight = false;
+            arenaLights.TurnLight = false;
             arena.GetComponent<EmissiveController>().TurnEmissive = false;
+            Camera.main.GetComponent<BloomController>().TurnBloom = false;
             //SoundsManager.Instance.VolumeAmbientMusic = 1.0f;
+
             yield return new WaitForSeconds(5.0f);
+        }
+    }
+
+    private IEnumerator ScavengingSnake()
+    {
+        while (true)
+        {
+            Vector3 scavengePosition = new Vector3(-30, 1.0f, players[0].position.z);
+
+            Transform _scavengingSnake = Instantiate(scavengingSnake, scavengePosition, Quaternion.identity) as Transform;
+            _scavengingSnake.Rotate(new Vector3(0, 90.0f, 0));
+
+            yield return new WaitForSeconds(20.0f);
         }
     }
 }
