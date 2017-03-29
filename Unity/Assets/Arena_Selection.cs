@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 using XInputDotNetPure;
 
 public class Arena_Selection : MonoBehaviour {
@@ -51,6 +52,7 @@ public class Arena_Selection : MonoBehaviour {
             if(prevState.Buttons.A == ButtonState.Pressed)
             {
                 GameManager.Instance.Set_ID_Arena(ID_arena);
+                SceneManager.LoadScene(3);
             }    
         }
 
@@ -127,7 +129,7 @@ public class Arena_Selection : MonoBehaviour {
               }
 
         Debug.Log((int)Actual_Angle + " : " + (int)Anguar_Set);
-                if((Actual_Angle <= Anguar_Set +1 && Actual_Angle >= Anguar_Set -1))
+                if(((int)Actual_Angle <= Anguar_Set +1 && (int)Actual_Angle >= Anguar_Set -1))
                 { 
                     Arena_is_locked = true;
                 }

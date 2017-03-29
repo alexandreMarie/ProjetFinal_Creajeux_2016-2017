@@ -34,6 +34,12 @@ public class MenuManager : MonoBehaviour {
         None,
        
     }
+    public enum  LoadType
+    {
+        New_Campaigne,
+        Continue,
+        Battle
+    }
 
     [SerializeField]
     private StateMenu stateMenu = StateMenu.Logo;
