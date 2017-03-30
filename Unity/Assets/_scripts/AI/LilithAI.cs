@@ -1,5 +1,5 @@
 using System.Collections;
-using UnityEditor.Animations;
+using UnityEngine;
 
 /// <summary>
 /// LILITH'S AI FILE
@@ -280,5 +280,4 @@ public class LilithAI : BossManager
             yield return new WaitForSeconds(20.0f);
         }
     }
-﻿using UnityEngine;
 }
