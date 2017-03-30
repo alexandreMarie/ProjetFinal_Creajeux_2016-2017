@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class PlayerBullet : MonoBehaviour
 {
-    #region Serialized fields
+    #region Serialized fields 
     [SerializeField]
     [Range(1.0f, 500.0f)]
     private float speed = 10.0f;
@@ -12,17 +13,19 @@ public class PlayerBullet : MonoBehaviour
     private float destroyTime = 10.0f;
     #endregion
 
-    void Start()
+    private void OnEnable()
     {
-        Destroy(gameObject, destroyTime);
+        StartCoroutine(DisableObject());
     }
+
     void Update()
     {
         transform.position -= transform.up * Time.deltaTime * speed;
     }
-    void OnTriggerEnter(Collider col)
+
+    IEnumerator DisableObject()
     {
-        if (col.tag == "ScavengingSnake")
-            Destroy(gameObject);
+        yield return new WaitForSeconds(destroyTime);
+        gameObject.SetActive(false);
     }
 }
