@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class PlayerBullet : MonoBehaviour
 {
@@ -13,19 +12,17 @@ public class PlayerBullet : MonoBehaviour
     private float destroyTime = 10.0f;
     #endregion
 
-    private void OnEnable()
+    void Start()
     {
-        StartCoroutine(DisableObject());
+        Destroy(gameObject, destroyTime);
     }
-
     void Update()
     {
         transform.position -= transform.up * Time.deltaTime * speed;
     }
-
-    IEnumerator DisableObject()
+    void OnTriggerEnter(Collider col)
     {
-        yield return new WaitForSeconds(destroyTime);
-        gameObject.SetActive(false);
+        if (col.tag == "ScavengingSnake")
+            Destroy(gameObject);
     }
 }

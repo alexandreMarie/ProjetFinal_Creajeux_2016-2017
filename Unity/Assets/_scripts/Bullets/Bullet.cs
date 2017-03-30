@@ -42,11 +42,4 @@ public class Bullet : MonoBehaviour
             transform.Rotate(rotation);
         }
     }
-    
-    void OnTriggerEnter(Collider col)
-    {
-        Debug.Log(col.tag);
-        if (col.tag == "Bullet")
-            Destroy(col.gameObject);
-    }
 }

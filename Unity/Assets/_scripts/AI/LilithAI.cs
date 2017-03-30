@@ -1,4 +1,3 @@
-﻿using UnityEngine;
 using System.Collections;
 using UnityEditor.Animations;
 
@@ -33,6 +32,8 @@ public class LilithAI : BossManager
     private Vector3 destination;
 
     private float divergence = 137.5f; // Angular divergence of the phyllotaxis
+
+    private bool specialState = false;
 
     public LightsController arenaLights;
 
@@ -84,10 +85,8 @@ public class LilithAI : BossManager
 
         NavMesh.CalculatePath(transform.position, destination, 0, path);
 
-        if (path.status != NavMeshPathStatus.PathPartial)
+        if (path.status != NavMeshPathStatus.PathPartial && !specialState)
             lilithMovement.SetDestination(destination);
-        else
-            lilithMovement.SetDestination(path.corners[path.corners.Length - 1]);
 
         if (lifeState == LifeState.FOUR)
         {
@@ -260,12 +259,26 @@ public class LilithAI : BossManager
     {
         while (true)
         {
+            specialState = true;
+
+            lilithMovement.SetDestination(default(Vector3));
+
+            arenaLights.TurnLight = true;
+
+            yield return new WaitForSeconds(2.0f);
+
             Vector3 scavengePosition = new Vector3(-30, 1.0f, players[0].position.z);
 
             Transform _scavengingSnake = Instantiate(scavengingSnake, scavengePosition, Quaternion.identity) as Transform;
             _scavengingSnake.Rotate(new Vector3(0, 90.0f, 0));
 
+            yield return new WaitForSeconds(2.0f);
+
+            specialState = false;
+            arenaLights.TurnLight = false;
+
             yield return new WaitForSeconds(20.0f);
         }
     }
+﻿using UnityEngine;
 }
