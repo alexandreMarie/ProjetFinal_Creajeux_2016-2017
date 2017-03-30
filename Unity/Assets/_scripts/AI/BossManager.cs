@@ -56,7 +56,7 @@ public class BossManager : MonoBehaviour
             life--;
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
             players[0].GetComponent<Horsemen>().Stamina += 5;
-            Destroy(col.gameObject);
+            col.gameObject.SetActive(false);
         }
     }
 }
