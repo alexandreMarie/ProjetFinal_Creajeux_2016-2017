@@ -11,13 +11,14 @@ public class UI_Character : MonoBehaviour {
     }
     [SerializeField]
     GameObject Character_Selection;
-    GameObject[] Players;
+    [SerializeField]
+    Character_Selection[] Players;
     Text[] TextsUI;
     Stats_Character[] Characters;
 	// Use this for initialization
 	void Start () {
         TextsUI = GetComponentsInChildren<Text>();
-        Players = Character_Selection.GetComponentsInChildren<GameObject>();
+        Players = FindObjectsOfType<Character_Selection>();
     }
 	
 	// Update is called once per frame

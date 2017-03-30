@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
 
     private static GameManager instance = null;
-
+    private Character_Selection.Stats_Character [] struc_stat_character;
     private bool dead;
     [SerializeField]
     private GameObject gameOver;
@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
             gameOver = GameObject.FindGameObjectWithTag("GameOver");
             boss = GameObject.FindGameObjectWithTag("Boss");
             players = GameObject.FindGameObjectsWithTag("Player");
+     
         }
         catch
         {
@@ -232,4 +233,10 @@ public class GameManager : MonoBehaviour
             compteur = value;
         }
     }
+
+    public void Set_Stat_Player(Character_Selection.Stats_Character State,int i,int Number_of_controller)
+      {
+        struc_stat_character = new Character_Selection.Stats_Character[Number_of_controller];
+        struc_stat_character[i] = State;
+      }
 }

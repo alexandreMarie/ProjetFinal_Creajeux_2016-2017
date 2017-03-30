@@ -25,6 +25,7 @@ public class Character_Selection : MonoBehaviour {
 
 
     Stats_Character [] Characters;
+
     bool Selection_Validate = false;
     bool Button_is_releasd;
     bool Button_is_releasd_A = false;
@@ -50,7 +51,7 @@ public class Character_Selection : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+    
         Canevas_State = GetComponentInChildren<Canvas>();
         Characters = new Stats_Character[4];
         for (int i = 0; i < Characters.Length; i++)
