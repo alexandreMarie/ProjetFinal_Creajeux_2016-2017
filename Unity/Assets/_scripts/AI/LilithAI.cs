@@ -265,7 +265,7 @@ public class LilithAI : BossManager
 
             arenaLights.TurnLight = true;
 
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(3.0f);
 
             Vector3 scavengePosition = new Vector3(-30, 1.0f, players[0].position.z);
 
@@ -277,7 +277,7 @@ public class LilithAI : BossManager
             specialState = false;
             arenaLights.TurnLight = false;
 
-            yield return new WaitForSeconds(20.0f);
+            yield return new WaitForSeconds(15.0f);
         }
     }
 }
