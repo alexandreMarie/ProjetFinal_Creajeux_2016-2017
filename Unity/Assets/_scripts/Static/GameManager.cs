@@ -5,9 +5,17 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
+ 
+
+
     private static GameManager instance = null;
     private Character_Selection.Stats_Character [] struc_stat_character;
     private bool dead;
+
+    int id_Arena;
+    int load_Mode;
+
+
     [SerializeField]
     private GameObject gameOver;
 
@@ -38,7 +46,6 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-
     void Start()
     {
         try
@@ -234,9 +241,40 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public int ID_arena
+    {
+        get
+        {
+            return id_Arena;
+        }
+
+        set
+        {
+            id_Arena = value;
+        }
+    }
+
+    public int Load_mode
+    {
+        get
+        {
+            return load_Mode;
+        }
+
+        set
+        {
+            load_Mode = value;
+        }
+    }
+
     public void Set_Stat_Player(Character_Selection.Stats_Character State,int i,int Number_of_controller)
       {
         struc_stat_character = new Character_Selection.Stats_Character[Number_of_controller];
         struc_stat_character[i] = State;
       }
+
+    public void Set_arena(int Arena)
+    {
+
+    }
 }
