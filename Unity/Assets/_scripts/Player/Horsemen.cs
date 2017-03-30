@@ -27,6 +27,9 @@ public abstract class Horsemen : MonoBehaviour
     MeshRenderer meshRenderer;
 
     Coroutine fireCoroutine, dashCoroutine;
+
+    protected Pool pool;
+
     #endregion
 
     #region Overridable Values
@@ -92,6 +95,24 @@ public abstract class Horsemen : MonoBehaviour
         }
     }
 
+    private GameObject bullet;
+    public GameObject Bullet
+    {
+        get
+        {
+            return bullet;
+        }
+
+        protected set
+        {
+            bullet = value;
+            // Init of pool
+            GameObject go = new GameObject("BulletPoolPlayer" + (playerID+1), typeof(Pool));
+            pool = go.GetComponent<Pool>();
+            pool.Init(bullet, nbBulletsPool);
+        }
+    }
+
     #endregion
 
     #region Constants
@@ -101,6 +122,7 @@ public abstract class Horsemen : MonoBehaviour
     const float rotateSmooth = 0.05f;
     const float stickDeadZone = 0.3f;
     const float triggerDeadZone = 0.1f;
+    protected const int nbBulletsPool = 30;
 
     #endregion
 
@@ -176,15 +198,6 @@ public abstract class Horsemen : MonoBehaviour
     {
         return null;
     }
-
-    //private void PrintDebug()
-    //{
-    //    string dbgOut = "moveValue.x = " + moveValue.x + " moveValue.y = " + moveValue.y + Environment.NewLine;
-    //    dbgOut += "aimValue.x = " + aimValue.x + " aimValue.y = " + aimValue.y + Environment.NewLine;
-    //    dbgOut += "LeftStick angle = " + Vector2.Angle(moveValue, Vector2.right) + "° RightStick angle = " + Vector2.Angle(aimValue, Vector2.right) + "°" + Environment.NewLine;
-    //    dbgOut += "AimAngle = " + aimAngle + " prevAimAngle = " + prevAimAngle + " prevAimAngle - aimAngle = " + (prevAimAngle - aimAngle) + Environment.NewLine;
-    //    TXT_Debug.text = dbgOut;
-    //}
 
     public void Awake()
     {

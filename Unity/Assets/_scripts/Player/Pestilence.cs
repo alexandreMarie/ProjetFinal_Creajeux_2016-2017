@@ -33,17 +33,29 @@ public class Pestilence : Horsemen {
 
             for (int j = 0; j < 5; j++)
             {
-                instantiatedBullet = Instantiate(prefabBullet, transform.position, Quaternion.Euler(-90, aimAngle, 0)) as GameObject;
+                instantiatedBullet = pool.Get();
+                instantiatedBullet.transform.position = transform.position;
+                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
                 instantiatedBullet.transform.Rotate(0, 0, -10);
 
-                instantiatedBullet = Instantiate(prefabBullet, transform.position, Quaternion.Euler(-90, aimAngle, 0)) as GameObject;
+                instantiatedBullet = pool.Get();
+                instantiatedBullet.transform.position = transform.position;
+                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
                 instantiatedBullet.transform.Rotate(0, 0, -2);
-                instantiatedBullet = Instantiate(prefabBullet, transform.position, Quaternion.Euler(-90, aimAngle, 0)) as GameObject;
+
+                instantiatedBullet = pool.Get();
+                instantiatedBullet.transform.position = transform.position;
+                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
                 instantiatedBullet.transform.Rotate(0, 0, 0);
-                instantiatedBullet = Instantiate(prefabBullet, transform.position, Quaternion.Euler(-90, aimAngle, 0)) as GameObject;
+
+                instantiatedBullet = pool.Get();
+                instantiatedBullet.transform.position = transform.position;
+                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
                 instantiatedBullet.transform.Rotate(0, 0, 2);
 
-                instantiatedBullet = Instantiate(prefabBullet, transform.position, Quaternion.Euler(-90, aimAngle, 0)) as GameObject;
+                instantiatedBullet = pool.Get();
+                instantiatedBullet.transform.position = transform.position;
+                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
                 instantiatedBullet.transform.Rotate(0, 0, 10);
 
                 yield return new WaitForSeconds(0.05f);
@@ -51,7 +63,6 @@ public class Pestilence : Horsemen {
             yield return new WaitForSeconds(0.08f);
         }
     }
-
     // Use this for initialization
     void Start()
     {
@@ -59,6 +70,7 @@ public class Pestilence : Horsemen {
         Speed = 20f;
         DashDuration = 0.2f;
         DashBehaviour = warDashBehaviour;
+        Bullet = prefabBullet;
     }
 
     // Update is called once per frame
