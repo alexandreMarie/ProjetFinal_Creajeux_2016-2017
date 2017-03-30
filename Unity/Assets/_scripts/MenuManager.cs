@@ -18,6 +18,13 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    public enum load_mode
+    {
+        New_Game = 1,
+        Continue,
+        Battle
+    }
+
     public enum StateMenu
     {
         Logo,
@@ -34,7 +41,8 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField]
     private StateMenu stateMenu = StateMenu.Logo;
-
+    [SerializeField]
+    private load_mode loadmode = load_mode.Battle;
     //[SerializeField]
     //private Animator currentAnim = null;
 
@@ -42,7 +50,15 @@ public class MenuManager : MonoBehaviour
     {
         stateMenu = _stateMenu;
     }
+    public void SetLoadState(load_mode _loadmode)
+    {
+        loadmode = _loadmode;
+    }
 
+    public load_mode GetLoadState()
+    {
+        return(loadmode);
+    }
     //void Start () 
     //{
     //currentAnim = FindObjectsOfType<Animator>() as Animator[];
