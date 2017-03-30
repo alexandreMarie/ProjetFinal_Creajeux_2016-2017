@@ -56,9 +56,9 @@ public class Character_Selection : MonoBehaviour {
         Characters = new Stats_Character[4];
         for (int i = 0; i < Characters.Length; i++)
         {
-            Characters[i].attack = (int)Random.RandomRange(1.0f, 50.0f);
-            Characters[i].speed = Random.RandomRange(1.0f, 50.0f);
-            Characters[i].PDV = Random.RandomRange(1.0f, 50.0f);
+            Characters[i].attack = (int)Random.Range(1.0f, 50.0f);
+            Characters[i].speed = Random.Range(1.0f, 50.0f);
+            Characters[i].PDV = Random.Range(1.0f, 50.0f);
         }
     }
 	
