@@ -118,6 +118,16 @@ public abstract class Horsemen : MonoBehaviour
         }
     }
 
+    void KeyboardMove()
+    {
+        if (moveValue.magnitude > stickDeadZone)
+        {
+            direction = ((Camera.main.transform.right * moveValue.x) + (Camera.main.transform.forward * moveValue.y)).normalized * Time.unscaledDeltaTime * speed;
+            direction.y = 0; // Cancel the Y translation;
+            rb.AddForce(direction * speed, ForceMode.VelocityChange);
+        }
+    }
+
     void Rotate()
     {
         if (aimValue.magnitude > stickDeadZone)
@@ -197,6 +207,8 @@ public abstract class Horsemen : MonoBehaviour
 
     protected void Update()
     {
+        Debug.Log(XIMinstance.NumControllers);
+
         timer += Time.unscaledDeltaTime;
 
         XIMinstance.GetStick(playerID, XInputManager.XSticks.LeftStick, ref moveValue);

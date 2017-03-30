@@ -3,10 +3,10 @@ using System.Collections;
 
 public class Famine : Horsemen {
     [SerializeField]
-    int nbrBullets;
+    int nbrBullets = 0;
 
     [SerializeField]
-    GameObject prefabBullet;
+    GameObject prefabBullet = null;
 
     [SerializeField]
     private AnimationCurve warDashBehaviour = null;

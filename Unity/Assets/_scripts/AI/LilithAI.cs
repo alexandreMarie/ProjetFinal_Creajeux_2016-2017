@@ -36,6 +36,9 @@ public class LilithAI : BossManager
 
     public LightsController arenaLights;
 
+    private NavMeshAgent lilithMovement = null;
+    NavMeshPath path = null;
+
     private Patterns Lilith; // Uppercase L on purpose
 
     public delegate void LilithEventsHandler();
@@ -57,6 +60,9 @@ public class LilithAI : BossManager
         Life = 3000;
 
         Lilith = GetComponentInParent<Patterns>();
+        lilithMovement = GetComponent<NavMeshAgent>();
+
+        path = new NavMeshPath();
 
         for (int i = 0; i < System.Enum.GetNames(typeof(LifeState)).Length; i++)
             LilithEvents += BulletCancel;
@@ -76,7 +82,12 @@ public class LilithAI : BossManager
         destination.x = -players[0].transform.position.x;
         destination.z = -players[0].transform.position.z;
 
-        transform.position = destination;
+        NavMesh.CalculatePath(transform.position, destination, 0, path);
+
+        if (path.status != NavMeshPathStatus.PathPartial)
+            lilithMovement.SetDestination(destination);
+        else
+            lilithMovement.SetDestination(path.corners[path.corners.Length - 1]);
 
         if (lifeState == LifeState.FOUR)
         {
