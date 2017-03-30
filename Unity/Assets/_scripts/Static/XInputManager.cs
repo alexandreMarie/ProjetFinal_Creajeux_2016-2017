@@ -96,7 +96,7 @@ public class XInputManager : MonoBehaviour {
     private bool CheckControllers()
     {
         bool result = false;
-
+        numControllers = 0;
         // Test of all connected controllers
         for (int i = 0; i < 4; i++)
         {
