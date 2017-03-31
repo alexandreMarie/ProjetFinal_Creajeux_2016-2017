@@ -4,13 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
- 
-
-
     private static GameManager instance = null;
     private Character_Selection.Stats_Character [] struc_stat_character;
     private bool dead;
+
+    /* 0 = solo/standard; 1 = duo/standard; 2 = duo/Hardcore; 3 = ...*/
+    private int typeMode = 0;
 
     int id_Arena;
     int load_Mode;
@@ -20,11 +19,13 @@ public class GameManager : MonoBehaviour
     private GameObject gameOver;
 
     [SerializeField]
-    private int lifePlayer1 = 20;
+    private int lifePlayer1;
     [SerializeField]
-    private int lifePlayer2 = 20;
+    private int lifePlayer2;
     [SerializeField]
-    private float lifeBoss;
+    private float lifeBoss = 3000;
+
+    private int hitByPlayers = 25;
 
     private GameObject boss;
     private GameObject[] players;
@@ -33,7 +34,8 @@ public class GameManager : MonoBehaviour
 
     private Texture2D texScreen;
 
-    private float compteur;
+    [SerializeField]
+    private float timer;
     public static GameManager Instance
     {
         get
@@ -46,51 +48,7 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-    void Start()
-    {
-        try
-        {
-            gameOver = GameObject.FindGameObjectWithTag("GameOver");
-            boss = GameObject.FindGameObjectWithTag("Boss");
-            players = GameObject.FindGameObjectsWithTag("Player");
-     
-        }
-        catch
-        {
-            return;
-        }
-    }
-
-    void Update()
-    {
-        lifeBoss = BossManager.Life;
-        if (lifePlayer1 <= 0)
-        {
-            CameraManager.Instance.DeadPlayer1 = true;
-        }
-        else if (lifePlayer2 <= 0)
-        {
-            CameraManager.Instance.DeadPlayer2 = true;
-        }
-        else if (lifeBoss <= 0)
-        {
-            CameraManager.Instance.DeadBoss = true;
-        }
-
-        if (dead)
-        {
-            // boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
-            //boss.GetComponent<LilithAI>().StopAllCoroutines();
-            players[0].GetComponent<Horsemen>().enabled = false;
-            //players[1].GetComponent<Player>().enabled = false;
-            //players[1].GetComponent<Add_Bullet>().enabled = false;
-            //gameOver.SetActive(true);
-        }
-        else
-        {
-            // gameOver.SetActive(false);
-        }
-    }
+    
     public void SaveData()
     {
         PlayerPrefs.SetInt("Scores_Count", score.Count);
@@ -228,16 +186,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public float Compteur
+    public float Timer
     {
         get
         {
-            return compteur;
+            return timer;
         }
 
         set
         {
-            compteur = value;
+            timer = value;
         }
     }
 
@@ -264,6 +222,32 @@ public class GameManager : MonoBehaviour
         set
         {
             load_Mode = value;
+        }
+    }
+
+    public int TypeMode
+    {
+        get
+        {
+            return typeMode;
+        }
+
+        set
+        {
+            typeMode = value;
+        }
+    }
+
+    public int HitByPlayers
+    {
+        get
+        {
+            return hitByPlayers;
+        }
+
+        set
+        {
+            hitByPlayers = value;
         }
     }
 

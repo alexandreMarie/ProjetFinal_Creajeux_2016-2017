@@ -25,6 +25,7 @@ public class Arena_Selection : MonoBehaviour {
 
     bool Button_is_releasd;
     bool Button_is_releasd_A;
+    bool Button_is_releasd_B;
     int Arena_ID;//Identifiant of the arnea
     [SerializeField]
     Animator[] Arenas;//Liste of the arena
@@ -60,12 +61,27 @@ public class Arena_Selection : MonoBehaviour {
             Button_is_releasd_A = true;
         }
 
+
         if (prevState.Buttons.A == ButtonState.Pressed && Button_is_releasd_A == true)
         {
             Debug.Log("Test");
             Button_is_releasd_A = false;
             GM.ID_arena = Arena_ID;
             SceneManager.LoadScene(3);
+        }
+
+
+        if (prevState.Buttons.B == ButtonState.Released && prevState.Buttons.B == ButtonState.Released)
+        {
+            Button_is_releasd_B = true;
+        }
+
+        if (prevState.Buttons.B == ButtonState.Pressed && Button_is_releasd_B == true)
+        {
+            Debug.Log("Test");
+            Button_is_releasd_B = false;
+            GM.ID_arena = Arena_ID;
+            SceneManager.LoadScene(5);
         }
 
         if (Button_is_releasd == true && Arena_is_locked == true)

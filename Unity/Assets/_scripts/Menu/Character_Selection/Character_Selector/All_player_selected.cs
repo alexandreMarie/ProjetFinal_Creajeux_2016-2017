@@ -56,4 +56,5 @@ public class All_player_selected : MonoBehaviour {
             }
         }
 	}
+
 }
