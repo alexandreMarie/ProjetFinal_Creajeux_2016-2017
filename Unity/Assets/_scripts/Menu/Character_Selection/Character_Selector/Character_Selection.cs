@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using XInputDotNetPure;
 public class Character_Selection : MonoBehaviour {
     //24 25 26 avril Alpha
@@ -42,15 +43,16 @@ public class Character_Selection : MonoBehaviour {
     [SerializeField]
     GameObject[] Player;
 
-
     [SerializeField]
     int ID_Player;
 
     [SerializeField]
     int ID_Perso;
 
-	// Use this for initialization
-	void Start () {
+
+    bool Button_is_releasd_B;
+    // Use this for initialization
+    void Start () {
     
         Canevas_State = GetComponentInChildren<Canvas>();
         Characters = new Stats_Character[4];
@@ -101,6 +103,20 @@ public class Character_Selection : MonoBehaviour {
             Button_is_releasd_A = false;
             Selection_Validate = true;
         }
+
+
+        if (prevState.Buttons.B == ButtonState.Released && prevState.Buttons.B == ButtonState.Released)
+        {
+            Button_is_releasd_B = true;
+        }
+
+        if (prevState.Buttons.B == ButtonState.Pressed && Button_is_releasd_B == true)
+        {
+            Debug.Log("Test");
+            Button_is_releasd_B = false;
+            SceneManager.LoadScene(2);
+        }
+
 
         if (Button_is_releasd == true)
         {

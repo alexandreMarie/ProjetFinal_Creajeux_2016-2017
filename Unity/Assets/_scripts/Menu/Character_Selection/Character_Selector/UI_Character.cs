@@ -12,7 +12,7 @@ public class UI_Character : MonoBehaviour {
     [SerializeField]
     GameObject Character_Selection;
     [SerializeField]
-    GameObject[] Players;
+    Character_Selection[] Players;
     Text[] TextsUI;
     Stats_Character[] Characters;
 	// Use this for initialization
@@ -24,7 +24,7 @@ public class UI_Character : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Players = GetComponentsInParent<GameObject>();
+        Players = Character_Selection.GetComponentsInChildren<Character_Selection>();
         Update_Texte();
     }
 
