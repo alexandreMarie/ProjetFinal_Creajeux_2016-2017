@@ -12,15 +12,25 @@ public class Arena_Selection : MonoBehaviour {
     PlayerIndex playerIndex;
     GamePadState state;
     GamePadState prevState;
+    [SerializeField]
+    Camera _cam;
+    float Target_cam;//Target the camera need to go
+
+    float Actual_pos_cam;//Actualle position of the camera
+    [SerializeField]
+    int Speed_of_cam;//Rotation of the camera
+    [SerializeField]
+    float value_of_target_cam;//Value of the camera target
+
 
     bool Button_is_releasd;
     bool Button_is_releasd_A;
-    int Arena_ID;
+    int Arena_ID;//Identifiant of the arnea
     [SerializeField]
-    Animator[] Arenas;
+    Animator[] Arenas;//Liste of the arena
     float Actual_Rotation = 0;
     float Rotation_Targeted = 0;
-    float Step_of_rotation;
+    float Step_of_rotation;// = 360 / Number of arena
     [SerializeField]
     bool Arena_is_locked;
 	// Use this for initialization
@@ -42,6 +52,7 @@ public class Arena_Selection : MonoBehaviour {
         {
             Debug.Log("Test");
             Button_is_releasd = true;
+         
         }
 
         if (prevState.Buttons.A == ButtonState.Released && prevState.Buttons.A == ButtonState.Released)
@@ -61,7 +72,38 @@ public class Arena_Selection : MonoBehaviour {
         {
             ID_Perso_Selector();
         }
+
+        if (Move_Camera())
+        {
             Rotate_Arena();
+        }
+    }
+
+    public int Get_ID()
+    {
+        return Arena_ID;
+    }
+
+
+    bool Move_Camera()
+    {
+        if(Actual_pos_cam < Target_cam)
+        {
+            _cam.transform.localPosition -= _cam.transform.forward * (Time.deltaTime * Speed_of_cam);
+            Actual_pos_cam++;
+        }
+
+        if (Actual_pos_cam > Target_cam)
+        {
+            _cam.transform.localPosition += _cam.transform.forward * (Time.deltaTime* Speed_of_cam);
+            Actual_pos_cam--;
+        }
+
+        if (Actual_pos_cam == Target_cam)
+        {
+            return true;
+        }
+        else return false;
     }
 
     void ID_Perso_Selector()
@@ -75,8 +117,9 @@ public class Arena_Selection : MonoBehaviour {
                 Arena_ID = 1;
             }
             Rotation_Targeted += Step_of_rotation;
+            Target_cam = value_of_target_cam;
             Button_is_releasd = false;
-       
+            Arena_is_locked = false;
             Debug.Log(Arena_ID);
 
         }
@@ -90,8 +133,9 @@ public class Arena_Selection : MonoBehaviour {
                 Arena_ID = 4;
             }
             Rotation_Targeted -= Step_of_rotation;
+            Target_cam = value_of_target_cam;
             Button_is_releasd = false;
-        
+            Arena_is_locked = false;
             Debug.Log(Arena_ID);
 
         }
@@ -101,19 +145,23 @@ public class Arena_Selection : MonoBehaviour {
         if(Actual_Rotation < Rotation_Targeted)
         {
             Arena_is_locked = false;
-            Actual_Rotation++;
+            Actual_Rotation += 2;
             transform.eulerAngles = new Vector3(0.0f, Actual_Rotation, 0.0f);
         }
         if (Actual_Rotation > Rotation_Targeted)
         {
             Arena_is_locked = false;
-            Actual_Rotation--;
+            Actual_Rotation-= 2;
             transform.eulerAngles = new Vector3(0.0f, Actual_Rotation, 0.0f);
         }
 
         if(Actual_Rotation >Rotation_Targeted - 1 && Actual_Rotation < Rotation_Targeted +1)
         {
             Arena_is_locked = true;
+        }
+        if(Arena_is_locked == true)
+        {
+            Target_cam = 0;
         }
     }
 }
