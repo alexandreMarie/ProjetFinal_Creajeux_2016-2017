@@ -53,6 +53,7 @@ public class BossManager : MonoBehaviour
     {
         if (col.tag == "Bullet")
         {
+            GameManager.Instance.HitByPlayers++;
             life--;
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
             players[0].GetComponent<Horsemen>().Stamina += 5;
