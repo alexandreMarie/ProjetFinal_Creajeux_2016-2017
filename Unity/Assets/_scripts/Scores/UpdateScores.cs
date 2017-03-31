@@ -155,10 +155,7 @@ public class UpdateScores : MonoBehaviour {
 
             case 3:
                     if (scoresFinal >= scoreRankSS)
-                    {
                         rank[0].SetActive(true);
-                        Debug.Log("yolo");
-                    }
                     else if (scoresFinal < scoreRankSS && scoresFinal >= scoreRankSS / 2)
                         rank[1].SetActive(true);
                     else if (scoresFinal < scoreRankSS / 2 && scoresFinal >= scoreRankSS / 3)
