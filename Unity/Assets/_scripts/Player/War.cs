@@ -36,28 +36,28 @@ public class War : Horsemen
             {
                 instantiatedBullet = pool.Get();
                 instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
-                instantiatedBullet.transform.Rotate(0, 0, -10);
+                instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle - 10, 0);
+                //instantiatedBullet.transform.Rotate(0, 0, -10);
 
                 instantiatedBullet = pool.Get();
                 instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
-                instantiatedBullet.transform.Rotate(0, 0, -2);
+                instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle - 2, 0);
+                //instantiatedBullet.transform.Rotate(0, 0, -2);
 
                 instantiatedBullet = pool.Get();
                 instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
-                instantiatedBullet.transform.Rotate(0, 0, 0);
+                instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle, 0);
+                //instantiatedBullet.transform.Rotate(0, 0, 0);
 
                 instantiatedBullet = pool.Get();
                 instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
-                instantiatedBullet.transform.Rotate(0, 0, 2);
+                instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle + 2, 0);
+                //instantiatedBullet.transform.Rotate(0, 0, 2);
 
                 instantiatedBullet = pool.Get();
                 instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
-                instantiatedBullet.transform.Rotate(0, 0, 10);
+                instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle + 10, 0);
+                //instantiatedBullet.transform.Rotate(0, 0, 10);
 
                 yield return new WaitForSeconds(0.05f);
             }

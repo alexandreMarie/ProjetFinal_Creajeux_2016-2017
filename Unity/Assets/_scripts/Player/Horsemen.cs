@@ -10,8 +10,19 @@ public abstract class Horsemen : MonoBehaviour
 
     XInputManager XIMinstance;
     private bool isInvincible;
-    private int life;
-    private int maxLife;
+    private int life = lifeMax;
+    public int Life
+    {
+        get
+        {
+            return life;
+        }
+        private set
+        {
+            life = value;
+            lifeUpdater.UpdateLifebar(life);
+        }
+    }
 
     private Rigidbody rb;
     float timer = 0f;
@@ -29,6 +40,8 @@ public abstract class Horsemen : MonoBehaviour
     Coroutine fireCoroutine, dashCoroutine;
 
     protected Pool pool;
+
+    private LifeUpdater lifeUpdater;
 
     #endregion
 
@@ -117,6 +130,7 @@ public abstract class Horsemen : MonoBehaviour
 
     #region Constants
 
+    const int lifeMax = 100;
     const float freezeDuration = 2f;
     const float blinkDuration = 0.4f;
     const float rotateSmooth = 0.05f;
@@ -206,6 +220,7 @@ public abstract class Horsemen : MonoBehaviour
         XIMinstance = XInputManager.Instance;
         moveValue = Vector2.zero;
         aimValue = Vector2.zero;
+        lifeUpdater = GetComponentInChildren<LifeUpdater>();
     }
 
     protected void Update()
@@ -268,16 +283,19 @@ public abstract class Horsemen : MonoBehaviour
             {
                 StartCoroutine(Freeze());
                 XIMinstance.SetVibration(playerID, freezeDuration, 1f);
+                Life -= 10;
             }
             else if (other.tag == "EnnemyBullet")
             {
                 StartCoroutine(PlayerBlink());
                 XIMinstance.SetVibration(playerID, blinkDuration / 2f, 0.5f);
+                Life--;
             }
             else if (other.tag == "ScavengingSnake")
             {
                 StartCoroutine(Freeze());
                 XIMinstance.SetVibration(playerID, freezeDuration, 1f);
+                Life -= 10;
             }
         }
     }
