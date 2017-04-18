@@ -60,6 +60,25 @@ public class SimpleFX : MonoBehaviour
     {
         CreateMaterials();
 
+        bool d3d = SystemInfo.graphicsDeviceVersion.IndexOf("Direct3D") > -1;
+        Matrix4x4 V = Camera.main.worldToCameraMatrix;
+        Matrix4x4 P = Camera.main.projectionMatrix;
+        if (d3d)
+        {
+            // Invert Y for rendering to a render texture
+            for (int i = 0; i < 4; i++)
+            {
+                P[1, i] = -P[1, i];
+            }
+            // Scale and bias from OpenGL -> D3D depth range
+            for (int i = 0; i < 4; i++)
+            {
+                P[2, i] = P[2, i] * 0.5f + P[3, i] * 0.5f;
+            }
+        }
+
+        Matrix4x4 VP = P * V;
+
         rt = RenderTexture.GetTemporary(Screen.width / 2, Screen.height / 2);
         rtTmp = RenderTexture.GetTemporary(Screen.width / 2, Screen.height / 2);
 

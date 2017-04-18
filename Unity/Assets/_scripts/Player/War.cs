@@ -3,7 +3,7 @@ using System.Collections;
 
 public class War : Horsemen
 {
-    [SerializeField]
+
     int nbrBullets;
 
     [SerializeField]
@@ -11,6 +11,10 @@ public class War : Horsemen
 
     [SerializeField]
     private AnimationCurve warDashBehaviour = null;
+
+    Ray ray;
+
+    int dbgBossHit = 0;
 
     public override void SpecialShoot()
     {
@@ -34,34 +38,83 @@ public class War : Horsemen
 
             for (int j = 0; j < 5; j++)
             {
-                instantiatedBullet = pool.Get();
-                instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle - 10, 0);
-                //instantiatedBullet.transform.Rotate(0, 0, -10);
+                if ((fireMask & (byte)StageFire.Five) > 0)
+                {
+                    // SCHPECJIAL 
+                    Debug.Log("SPECIAL");
+                }
+                if ((fireMask & (byte)StageFire.Four) > 0)
+                {
+                    // LAZER
+                    line.enabled = true;
 
-                instantiatedBullet = pool.Get();
-                instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle - 2, 0);
-                //instantiatedBullet.transform.Rotate(0, 0, -2);
+                    //line.material.mainTextureOffset = new Vector2(0, Time.time);
 
-                instantiatedBullet = pool.Get();
-                instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle, 0);
-                //instantiatedBullet.transform.Rotate(0, 0, 0);
+                    ray.origin = transform.position + playerTip;
+                    ray.direction = transform.forward;
 
-                instantiatedBullet = pool.Get();
-                instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle + 2, 0);
-                //instantiatedBullet.transform.Rotate(0, 0, 2);
+                    RaycastHit hit;
 
-                instantiatedBullet = pool.Get();
-                instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle + 10, 0);
-                //instantiatedBullet.transform.Rotate(0, 0, 10);
+                    line.SetPosition(0, ray.origin);
 
-                yield return new WaitForSeconds(0.05f);
+                    if (Physics.Raycast(ray, out hit, 100, fireLayer))
+                    {
+                        dbgBossHit++;
+                        Debug.Log("Boss hit " + dbgBossHit);
+                        line.SetPosition(1, hit.point);
+                        if (hit.rigidbody)
+                        {
+                            // we've hit something that have a rigidbody
+                            hit.rigidbody.AddForceAtPosition(transform.forward * 5, hit.point);
+                        }
+                    }
+                    else
+                    {
+                        line.SetPosition(1, ray.GetPoint(100));
+                    }
+
+                    yield return null;
+
+                }
+                if ((fireMask & (byte)StageFire.Three) > 0)
+                {
+                    instantiatedBullet = pool.Get();
+                    instantiatedBullet.transform.position = transform.position;
+                    instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle - 10, 0);
+                    //instantiatedBullet.transform.Rotate(0, 0, -10);
+
+                    instantiatedBullet = pool.Get();
+                    instantiatedBullet.transform.position = transform.position;
+                    instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle + 10, 0);
+                    //instantiatedBullet.transform.Rotate(0, 0, 10);
+                }
+                if ((fireMask & (byte)StageFire.Two) > 0)
+                {
+                    instantiatedBullet = pool.Get();
+                    instantiatedBullet.transform.position = transform.position;
+                    instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle - 2, 0);
+                    //instantiatedBullet.transform.Rotate(0, 0, -2);
+
+                    instantiatedBullet = pool.Get();
+                    instantiatedBullet.transform.position = transform.position;
+                    instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle + 2, 0);
+                    //instantiatedBullet.transform.Rotate(0, 0, 2);
+                }
+                if ((fireMask & (byte)StageFire.One) > 0)
+                {
+                    instantiatedBullet = pool.Get();
+                    instantiatedBullet.transform.position = transform.position;
+                    instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle, 0);
+                    //instantiatedBullet.transform.Rotate(0, 0, 0);
+                    yield return new WaitForSeconds(0.05f);
+                }
+
             }
-            yield return new WaitForSeconds(0.08f);
+            if ((fireMask & (byte)StageFire.One) > 0)
+            {
+                // Otherwise the laser beam blink
+                yield return new WaitForSeconds(0.08f);
+            }
         }
     }
     // Use this for initialization
@@ -72,6 +125,9 @@ public class War : Horsemen
         DashDuration = 0.2f;
         DashBehaviour = warDashBehaviour;
         Bullet = prefabBullet;
+        line = GetComponent<LineRenderer>();
+        line.enabled = false;
+        //fireLayer = LayerMask.NameToLayer("Boss");
     }
 
     // Update is called once per frame

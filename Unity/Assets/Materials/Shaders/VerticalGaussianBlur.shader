@@ -56,7 +56,7 @@ SubShader {
 				Color += tex2D(_MainTex, float2(i.uv.x, i.uv.y + 3.0f * distance)) * 0.09;
 				Color += tex2D(_MainTex, float2(i.uv.x, i.uv.y + 4.0f * distance)) * 0.05;
                 
-				return Color + tex2D(secTex, float2(i.uv.x, 1 - i.uv.y));
+				return Color + tex2D(secTex, float2(i.uv.x, i.uv.y));
             }
 ENDCG 
 	}
