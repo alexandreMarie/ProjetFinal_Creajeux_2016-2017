@@ -40,6 +40,8 @@ public class LilithAI : BossManager
     private NavMeshAgent lilithMovement = null;
     NavMeshPath path = null;
 
+    private CameraShake cameraShake;
+
     private Patterns Lilith; // Uppercase L on purpose
 
     public delegate void LilithEventsHandler();
@@ -69,6 +71,8 @@ public class LilithAI : BossManager
             LilithEvents += BulletCancel;
 
         arena = GameObject.FindGameObjectWithTag("Arena") as GameObject;
+        cameraShake = Camera.main.transform.parent.GetComponent<CameraShake>();
+        cameraShake.enabled = false;
     }
 
     private void BulletCancel()
@@ -156,7 +160,9 @@ public class LilithAI : BossManager
 
     private IEnumerator TestAI()
     {
-        StartCoroutine(ScavengingSnake());
+        cameraShake.enabled = true;
+        cameraShake.shakeDuration = 1.0f;
+        //StartCoroutine(ScavengingSnake());
         //Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, false);
         //StartCoroutine(Snake());
         //Lilith.LaunchPhyllotaxis(bullet, 178.5f, false);
@@ -279,5 +285,15 @@ public class LilithAI : BossManager
 
             yield return new WaitForSeconds(15.0f);
         }
+    }
+
+    private IEnumerator EarthPowder()
+    {
+        cameraShake.enabled = true;
+        cameraShake.shakeDuration = 1.0f;
+        cameraShake.enabled = false;
+
+
+        yield return null;
     }
 }
