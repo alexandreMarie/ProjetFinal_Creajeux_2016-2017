@@ -14,15 +14,24 @@ public class UpdateScores : MonoBehaviour {
 
     float currentScore;
     float scores;
-    float scoresFinal;
+    int scoresFinal;
 
-    float lifeTotal;
-    float currentLife;
+    int lifeTotalScore;
+    int lifeTotal;
+    int currentLife;
+    float lerpLife;
 
-    float hitTotal;
-    int displayHit;
-    float currentHit;
-    
+    float percentageHitShoot;
+    float percentageHitShootScore;
+    int displayHitByPlayers;
+    int displayShootByPlayers;
+
+    float lerpDamagePrecision;
+    int currentDamagePrecision;
+
+    int displayDamageByBoss;
+    int displayDamageByBossScore;
+
     int cpt = 0;
 
     float time;
@@ -37,9 +46,13 @@ public class UpdateScores : MonoBehaviour {
     private const int scoreMod1Time = 20000;
     private const int scoreMod2Time = 15000;
 
-    private const int scoreMod0Hit = 50;
-    private const int scoreMod1Hit = 50;
-    private const int scoreMod2Hit = 25;
+    private const int scoreMod0HitPlayers = 50;
+    private const int scoreMod1HitPlayers = 50;
+    private const int scoreMod2HitPlayers = 25;
+
+    private const int scoreMod0HitBoss = 40;
+    private const int scoreMod1HitBoss = 40;
+    private const int scoreMod2HitBoss = 20;
 
     private const int scoreMod0Life = 100;
     private const int scoreMod1Life = 100;
@@ -48,7 +61,8 @@ public class UpdateScores : MonoBehaviour {
     public Text timeText;
     public Text total;
     public Text life;
-    public Text hit;
+    public Text precision;
+    public Text damage;
 
     public int lifeMax = 20;
     public float vitesse;
@@ -61,30 +75,38 @@ public class UpdateScores : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        displayHit= GameManager.Instance.HitByPlayers;
+        displayHitByPlayers= GameManager.Instance.NbHit;
+        displayShootByPlayers = GameManager.Instance.NbShoot;
+        displayDamageByBoss = GameManager.Instance.DamageByBoss;
+        percentageHitShoot = (float)displayHitByPlayers  / displayShootByPlayers * 100;
         // Initialization of scoring conditions
         switch (GameManager.Instance.TypeMode)
         {
             case 0:
                 scoreRankSS = scoreMode0Win;
                 scoreBasedTime = scoreMod0Time;
-                lifeTotal = (lifeMax - GameManager.Instance.LifePlayer1) * scoreMod0Life;
-                hitTotal = displayHit * scoreMod0Hit;
+                lifeTotal = lifeMax - GameManager.Instance.LifePlayer1;
+                lifeTotalScore = lifeTotal * scoreMod0Life;
+                percentageHitShootScore = percentageHitShoot * scoreMod0HitPlayers;
+                displayDamageByBossScore = displayDamageByBoss * scoreMod0HitBoss;
                 break;
             case 1:
                 scoreRankSS = scoreMode1Win;
                 scoreBasedTime = scoreMod1Time;
-                lifeTotal = (lifeMax - GameManager.Instance.LifePlayer1 - GameManager.Instance.LifePlayer2) * scoreMod1Life;
-                hitTotal = displayHit * scoreMod1Hit;
+                lifeTotal = lifeMax-(GameManager.Instance.LifePlayer1 + GameManager.Instance.LifePlayer2);
+                lifeTotalScore = lifeTotal * scoreMod1Life;
+                percentageHitShootScore = percentageHitShoot * scoreMod1HitPlayers;
+                displayDamageByBossScore = displayDamageByBoss * scoreMod1HitBoss;
                 break;
             case 2:
                 scoreRankSS = scoreMode2Win;
                 scoreBasedTime = scoreMod2Time;
-                lifeTotal = (lifeMax - GameManager.Instance.LifePlayer1 - GameManager.Instance.LifePlayer2) * scoreMod2Life;
-                hitTotal = displayHit * scoreMod2Hit;
+                lifeTotal = lifeMax - (GameManager.Instance.LifePlayer1 + GameManager.Instance.LifePlayer2);
+                lifeTotalScore = lifeTotal * scoreMod2Life;
+                percentageHitShootScore = percentageHitShoot * scoreMod2HitPlayers;
+                displayDamageByBossScore = displayDamageByBoss * scoreMod2HitBoss;
                 break;
         }
-
         // Display score
         switch (cpt)
         {
@@ -104,8 +126,9 @@ public class UpdateScores : MonoBehaviour {
                     fraction = (GameManager.Instance.Timer * 100) % 100;
                     currentScore = scores;
                 }
+                scoresFinal = (int)currentScore;
                 timeText.text = string.Format("TIME : {0:00} : {1:00} : {2:00}", minutes, seconds, fraction);
-                total.text = "TOTAL : " + currentScore.ToString();
+                total.text = "TOTAL : " + scoresFinal.ToString();
                 if(currentScore == scores)
                 {
                     cpt = 1;
@@ -114,15 +137,16 @@ public class UpdateScores : MonoBehaviour {
                 break;
             case 1:
                 time += Time.deltaTime * vitesse;
-                scoresFinal = scores - lifeTotal;
+                scoresFinal = (int)scores - lifeTotalScore;
 
                 currentScore = Mathf.Lerp(scores, scoresFinal, time);
-                currentLife = Mathf.Lerp(0, lifeTotal, time);
+                lerpLife = Mathf.Lerp(0, lifeTotal, time);
                 if(time>1)
                 {
-                    currentLife = lifeTotal;
+                    lerpLife = lifeTotal;
                     currentScore = scoresFinal;
                 }
+                currentLife = (int)lerpLife;
                 total.text = "TOTAL : " + currentScore.ToString();
                 life.text = "LIFE : " + currentLife.ToString();
                 if(currentScore == scoresFinal)
@@ -135,25 +159,44 @@ public class UpdateScores : MonoBehaviour {
 
             case 2:
                 time += Time.deltaTime * vitesse;
-                scoresFinal = hitTotal + scores;
+                scoresFinal = (int)(percentageHitShootScore + scores);
 
                 currentScore = Mathf.Lerp(scores, scoresFinal, time);
-                currentHit = Mathf.Lerp(0, hitTotal, time);
+                lerpDamagePrecision = Mathf.Lerp(0, percentageHitShoot, time);
                 if(time>1)
                 {
                     currentScore = scoresFinal;
-                    currentHit = hitTotal;
+                    lerpDamagePrecision = percentageHitShoot;
                 }
+                currentDamagePrecision = (int)lerpDamagePrecision;
                 total.text = "TOTAL : " + currentScore.ToString();
-                hit.text = "HIT : " + displayHit.ToString();
+                precision.text = "PRECISION : " + currentDamagePrecision.ToString() + " %";
                 if(currentScore == scoresFinal)
                 {
                     cpt = 3;
                     time = 0;
+                    scores = scoresFinal;
                 }
                 break;
-
             case 3:
+                time += Time.deltaTime * vitesse;
+                scoresFinal = (int)(scores - displayDamageByBossScore);
+
+                currentScore = Mathf.Lerp(scores, scoresFinal, time);
+                lerpDamagePrecision = Mathf.Lerp(0, displayDamageByBoss, time);
+                if(time>1)
+                {
+                    currentScore = scoresFinal;
+                    lerpDamagePrecision = displayDamageByBoss;
+                }
+                currentDamagePrecision = (int)lerpDamagePrecision;
+                total.text = "TOTAL : " + currentScore.ToString();
+                damage.text = "DAMAGE : " + currentDamagePrecision.ToString();
+                if(currentScore == scoresFinal)
+                    cpt = 4;
+                
+                break;
+            case 4:
                     if (scoresFinal >= scoreRankSS)
                         rank[0].SetActive(true);
                     else if (scoresFinal < scoreRankSS && scoresFinal >= scoreRankSS / 2)
@@ -168,6 +211,7 @@ public class UpdateScores : MonoBehaviour {
 
     public void Next()
     {
-        SceneManager.LoadScene((int)MenuManager.StateMenu.MainMenu);
+        if(cpt == 4)
+            SceneManager.LoadScene((int)MenuManager.StateMenu.MainMenu);
     }
 }
