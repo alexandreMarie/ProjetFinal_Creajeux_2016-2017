@@ -9,6 +9,11 @@ public class CameraShake : MonoBehaviour
     public float shakeAmount = 0.1f;
     public float decreaseFactor = 1.0f;
 
+    void Start()
+    {
+        camTransform = transform;
+    }
+
     void Update()
     {
         if (shakeDuration > 0)

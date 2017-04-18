@@ -72,7 +72,6 @@ public class LilithAI : BossManager
 
         arena = GameObject.FindGameObjectWithTag("Arena") as GameObject;
         cameraShake = Camera.main.transform.parent.GetComponent<CameraShake>();
-        cameraShake.enabled = false;
     }
 
     private void BulletCancel()
@@ -160,8 +159,9 @@ public class LilithAI : BossManager
 
     private IEnumerator TestAI()
     {
-        cameraShake.enabled = true;
-        cameraShake.shakeDuration = 1.0f;
+        yield return new WaitForSeconds(5.0f);
+
+        StartCoroutine(EarthPowder());
         //StartCoroutine(ScavengingSnake());
         //Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, false);
         //StartCoroutine(Snake());
@@ -289,10 +289,17 @@ public class LilithAI : BossManager
 
     private IEnumerator EarthPowder()
     {
-        cameraShake.enabled = true;
-        cameraShake.shakeDuration = 1.0f;
-        cameraShake.enabled = false;
+        cameraShake.shakeDuration = 5.0f;
 
+        yield return new WaitForSeconds(4.0f);
+
+        Vector3 hitPosition = players[0].transform.position;
+
+        yield return new WaitForSeconds(0.5f);
+
+        GameObject cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+
+        cylinder.transform.position = hitPosition;
 
         yield return null;
     }
