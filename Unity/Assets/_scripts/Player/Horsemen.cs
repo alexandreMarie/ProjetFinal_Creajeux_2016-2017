@@ -165,13 +165,15 @@ public abstract class Horsemen : MonoBehaviour
 
     private IEnumerator Freeze()
     {
+        GetComponentInChildren<MeshRenderer>().material.color = Color.yellow;
         this.enabled = false;
-        GetComponentInChildren<Renderer>().material.color = Color.white;
+        //GetComponentInChildren<Renderer>().material.color = Color.white;
 
         yield return new WaitForSeconds(freezeDuration);
 
         this.enabled = true;
-        GetComponentInChildren<Renderer>().material.color = Color.grey;
+        StartCoroutine(PlayerBlink());
+        GetComponentInChildren<MeshRenderer>().material.color = Color.white;
     }
 
     private IEnumerator Dash()
