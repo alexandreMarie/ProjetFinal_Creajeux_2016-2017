@@ -58,6 +58,8 @@ public class UpdateScores : MonoBehaviour {
     private const int scoreMod1Life = 100;
     private const int scoreMod2Life = 150;
 
+    private bool pass = false;
+
     public Text timeText;
     public Text total;
     public Text life;
@@ -74,7 +76,10 @@ public class UpdateScores : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            pass = true;
+        }
         displayHitByPlayers= GameManager.Instance.NbHit;
         displayShootByPlayers = GameManager.Instance.NbShoot;
         displayDamageByBoss = GameManager.Instance.DamageByBoss;
@@ -111,6 +116,7 @@ public class UpdateScores : MonoBehaviour {
         switch (cpt)
         {
             case 0:
+               
                 scores =Mathf.Pow(0.99f, GameManager.Instance.Timer % 60 - 1) * scoreBasedTime;
                 time += Time.deltaTime * vitesse;
 
@@ -119,14 +125,16 @@ public class UpdateScores : MonoBehaviour {
                 minutes = currentTime / 60;
                 seconds = currentTime % 60;
                 fraction = (currentTime * 100) % 100;
-                if(time > 1)
+                if(time > 1 || pass)
                 {
                     minutes = GameManager.Instance.Timer / 60;
                     seconds = GameManager.Instance.Timer % 60;
                     fraction = (GameManager.Instance.Timer * 100) % 100;
                     currentScore = scores;
+                    pass = false;
                 }
                 scoresFinal = (int)currentScore;
+               
                 timeText.text = string.Format("TIME : {0:00} : {1:00} : {2:00}", minutes, seconds, fraction);
                 total.text = "TOTAL : " + scoresFinal.ToString();
                 if(currentScore == scores)
@@ -136,17 +144,20 @@ public class UpdateScores : MonoBehaviour {
                 }
                 break;
             case 1:
+               
                 time += Time.deltaTime * vitesse;
                 scoresFinal = (int)scores - lifeTotalScore;
 
                 currentScore = Mathf.Lerp(scores, scoresFinal, time);
                 lerpLife = Mathf.Lerp(0, lifeTotal, time);
-                if(time>1)
+                if(time>1 || pass)
                 {
                     lerpLife = lifeTotal;
                     currentScore = scoresFinal;
+                    pass = false;
                 }
                 currentLife = (int)lerpLife;
+                
                 total.text = "TOTAL : " + currentScore.ToString();
                 life.text = "LIFE : " + currentLife.ToString();
                 if(currentScore == scoresFinal)
@@ -158,17 +169,20 @@ public class UpdateScores : MonoBehaviour {
                 break;
 
             case 2:
+              
                 time += Time.deltaTime * vitesse;
                 scoresFinal = (int)(percentageHitShootScore + scores);
 
                 currentScore = Mathf.Lerp(scores, scoresFinal, time);
                 lerpDamagePrecision = Mathf.Lerp(0, percentageHitShoot, time);
-                if(time>1)
+                if(time>1 || pass)
                 {
                     currentScore = scoresFinal;
                     lerpDamagePrecision = percentageHitShoot;
+                    pass = false;
                 }
                 currentDamagePrecision = (int)lerpDamagePrecision;
+                
                 total.text = "TOTAL : " + currentScore.ToString();
                 precision.text = "PRECISION : " + currentDamagePrecision.ToString() + " %";
                 if(currentScore == scoresFinal)
@@ -176,18 +190,21 @@ public class UpdateScores : MonoBehaviour {
                     cpt = 3;
                     time = 0;
                     scores = scoresFinal;
+
                 }
                 break;
             case 3:
+               
                 time += Time.deltaTime * vitesse;
                 scoresFinal = (int)(scores - displayDamageByBossScore);
 
                 currentScore = Mathf.Lerp(scores, scoresFinal, time);
                 lerpDamagePrecision = Mathf.Lerp(0, displayDamageByBoss, time);
-                if(time>1)
+                if(time>1 || pass)
                 {
                     currentScore = scoresFinal;
                     lerpDamagePrecision = displayDamageByBoss;
+                    pass = false;
                 }
                 currentDamagePrecision = (int)lerpDamagePrecision;
                 total.text = "TOTAL : " + currentScore.ToString();
@@ -205,9 +222,12 @@ public class UpdateScores : MonoBehaviour {
                         rank[2].SetActive(true);
                     else
                         rank[3].SetActive(true);
+                    /* Save */
+                //GameManager.Instance.SaveData(scoresFinal);
+
                 break;
         }
-	}
+    }
 
     public void Next()
     {

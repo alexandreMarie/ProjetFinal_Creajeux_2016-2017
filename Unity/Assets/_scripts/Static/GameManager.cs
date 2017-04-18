@@ -26,13 +26,13 @@ public class GameManager : MonoBehaviour
     private float lifeBoss = 3000;
 
     private int nbHit = 25;
-    private int nbShoot = 50;
+    private int nbShoot = 10;
     private int damageByBoss = 40;
 
     private GameObject boss;
     private GameObject[] players;
 
-    private List<int> score;
+    private List<int> score = new List<int>();
 
     private Texture2D texScreen;
 
@@ -51,12 +51,15 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    public void SaveData()
+    public void SaveData(int scoreAdd)
     {
+        GetData();
+        DeleteData();
+        score.Add(scoreAdd);
         PlayerPrefs.SetInt("Scores_Count", score.Count);
         for (int i = 0; i < score.Count; i++)
             PlayerPrefs.SetInt("Scores" + i, score[i]);
-
+        score.Clear();
     }
 
     public void DeleteData()
@@ -67,8 +70,12 @@ public class GameManager : MonoBehaviour
     public void GetData()
     {
         int countScores = PlayerPrefs.GetInt("Scores_Count");
-        for (int i = 0; i < countScores; i++)
-            score.Add(PlayerPrefs.GetInt("Scores" + i));
+        if (countScores != 0)
+        {
+            //score = new List<int>();
+            for (int i = 0; i < countScores; i++)
+                score.Add(PlayerPrefs.GetInt("Scores" + i));
+        }
     }
     public bool Dead
     {
