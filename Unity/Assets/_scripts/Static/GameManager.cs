@@ -25,7 +25,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float lifeBoss = 3000;
 
-    private int hitByPlayers = 25;
+    private int nbHit = 25;
+    private int nbShoot = 50;
+    private int damageByBoss = 40;
 
     private GameObject boss;
     private GameObject[] players;
@@ -238,16 +240,42 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int HitByPlayers
+    public int NbHit
     {
         get
         {
-            return hitByPlayers;
+            return nbHit;
         }
 
         set
         {
-            hitByPlayers = value;
+            nbHit = value;
+        }
+    }
+
+    public int NbShoot
+    {
+        get
+        {
+            return nbShoot;
+        }
+
+        set
+        {
+            nbShoot = value;
+        }
+    }
+
+    public int DamageByBoss
+    {
+        get
+        {
+            return damageByBoss;
+        }
+
+        set
+        {
+            damageByBoss = value;
         }
     }
 
