@@ -98,8 +98,8 @@ public class LilithAI : BossManager
             lifeState = LifeState.THREE;
 
             /////////////////////////TESTAI
-            StartCoroutine(TestAI());
-            //StartCoroutine(Snake());
+            StartCoroutine(AI1());
+            StartCoroutine(Snake());
         }
 
         if (Life / MaxLife >= 0.501f && Life / MaxLife <= 0.750f)
@@ -289,18 +289,21 @@ public class LilithAI : BossManager
 
     private IEnumerator EarthPowder()
     {
-        cameraShake.shakeDuration = 5.0f;
+        while (true)
+        {
+            cameraShake.shakeDuration = 5.0f;
 
-        yield return new WaitForSeconds(4.0f);
+            yield return new WaitForSeconds(4.0f);
 
-        Vector3 hitPosition = players[0].transform.position;
+            Vector3 hitPosition = players[0].transform.position;
 
-        yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.5f);
 
-        GameObject cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            GameObject cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
 
-        cylinder.transform.position = hitPosition;
+            cylinder.transform.position = hitPosition;
 
-        yield return null;
+            yield return new WaitForSeconds(10.0f);
+        }
     }
 }

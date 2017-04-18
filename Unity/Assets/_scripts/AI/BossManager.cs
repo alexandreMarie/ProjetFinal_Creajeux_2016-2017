@@ -51,7 +51,7 @@ public class BossManager : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.tag == "Bullet")
+        if (col.tag == "PlayerBullet")
         {
             GameManager.Instance.NbHit++;
             life--;
