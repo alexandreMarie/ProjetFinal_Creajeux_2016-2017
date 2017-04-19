@@ -9,12 +9,15 @@ public class SoundsManager : MonoBehaviour
     [SerializeField]
     private AudioSource sourceMusic;
 
+
     [SerializeField]
     private List<AudioClip> menuMusic = null;
     [SerializeField]
     private List<AudioClip> ambientMusic = null;
     [SerializeField]
     private List<AudioClip> sfxMusic = null;
+    [SerializeField]
+    private List<AudioClip> sfxMenu = null;
 
     [SerializeField]
     private float volumeMenuMusic = 1.0f;
@@ -89,8 +92,22 @@ public class SoundsManager : MonoBehaviour
         { sourceMusic = value; }
     }
 
-    void Start()
+    public List<AudioClip> Sfx_Menu
     {
+        get
+        { return sfxMenu; }
+    }
+
+
+    public void Play_Selector(int ID_sound)
+    {
+        //sourceMusic.Pause();
+        //sourceMusic.Stop();     
+        sourceMusic.PlayOneShot(sfxMenu[ID_sound]);
+    }
+
+    void Start()
+    { 
         if (instance == null)
         {
             instance = this;
@@ -106,6 +123,10 @@ public class SoundsManager : MonoBehaviour
 
             case "LilithFightTest":
                 sourceMusic.clip = ambientMusic[0];
+                sourceMusic.Play();
+                break;
+            case "Arena_Selector":
+                sourceMusic.clip = menuMusic[1];
                 sourceMusic.Play();
                 break;
         }
