@@ -18,22 +18,22 @@ public class LilithAI : BossManager
     [SerializeField]
     private Transform bullet = null;
     [SerializeField]
+    private Transform eyeBullet = null;
+    [SerializeField]
     private Transform snake = null;
     [SerializeField]
     private Transform scavengingSnake = null;
 
-    [SerializeField]
-    private float time = 15.0f;
-
-    private GameObject arena = null;
-
     private uint bulletQuantityBurst = 20; // Quantity of bullets to fire for each burst
 
-    private Vector3 destination;
-
+    private float time = 15.0f;
     private float divergence = 137.5f; // Angular divergence of the phyllotaxis
 
     private bool specialState = false;
+
+    private GameObject arena = null;
+
+    private Vector3 destination;
 
     public LightsController arenaLights;
 
@@ -99,7 +99,7 @@ public class LilithAI : BossManager
 
             /////////////////////////TESTAI
             StartCoroutine(TestAI());
-            StartCoroutine(Snake());
+            //StartCoroutine(Snake());
         }
 
         if (Life / MaxLife >= 0.501f && Life / MaxLife <= 0.750f)
@@ -159,24 +159,8 @@ public class LilithAI : BossManager
 
     private IEnumerator TestAI()
     {
-        yield return new WaitForSeconds(5.0f);
-
-        StartCoroutine(EarthPowder());
-        //StartCoroutine(ScavengingSnake());
-        //Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, false);
-        //StartCoroutine(Snake());
-        //Lilith.LaunchPhyllotaxis(bullet, 178.5f, false);
-        //yield return null;
-
-        //while (true)
-        //{
-        //    LilithAccessor.LaunchMalthael(bullet, false);
-        //    yield return new WaitForSeconds(2.0f);
-        //}
-        //Lilith.LaunchMalthael(bullet);
-
-        //yield return new WaitForSeconds(5.0f);
-
+        //StartCoroutine(EarthPowder());
+        StartCoroutine(EyeAttack());
         yield return null;
     }
 
@@ -309,6 +293,18 @@ public class LilithAI : BossManager
 
     private IEnumerator EyeAttack()
     {
+        specialState = true;
+
+        lilithMovement.SetDestination(new Vector3(0, 0, -6.5f));
+
+        for (int i = 0; i < 50; i++)
+        {
+            Instantiate(eyeBullet);
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        specialState = false;
+
         yield return null;
     }
 }
