@@ -2,14 +2,16 @@
 using System.Collections;
 
 public class Famine : Horsemen {
-    [SerializeField]
+
     int nbrBullets;
 
     [SerializeField]
     GameObject prefabBullet;
 
     [SerializeField]
-    private AnimationCurve warDashBehaviour = null;
+    private AnimationCurve famineDashBehaviour = null;
+
+    Ray ray;
 
     public override void SpecialShoot()
     {
@@ -33,34 +35,81 @@ public class Famine : Horsemen {
 
             for (int j = 0; j < 5; j++)
             {
-                instantiatedBullet = pool.Get();
-                instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
-                instantiatedBullet.transform.Rotate(0, 0, -10);
+                if ((fireMask & (byte)StageFire.Five) > 0)
+                {
+                    // SCHPECJIAL 
+                    Debug.Log("SPECIAL");
+                }
+                if ((fireMask & (byte)StageFire.Four) > 0)
+                {
+                    // LAZER
+                    line.enabled = true;
 
-                instantiatedBullet = pool.Get();
-                instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
-                instantiatedBullet.transform.Rotate(0, 0, -2);
+                    //line.material.mainTextureOffset = new Vector2(0, Time.time);
 
-                instantiatedBullet = pool.Get();
-                instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
-                instantiatedBullet.transform.Rotate(0, 0, 0);
+                    ray.origin = transform.position + playerTip;
+                    ray.direction = transform.forward;
 
-                instantiatedBullet = pool.Get();
-                instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
-                instantiatedBullet.transform.Rotate(0, 0, 2);
+                    RaycastHit hit;
 
-                instantiatedBullet = pool.Get();
-                instantiatedBullet.transform.position = transform.position;
-                instantiatedBullet.transform.rotation = Quaternion.Euler(-90, aimAngle, 0);
-                instantiatedBullet.transform.Rotate(0, 0, 10);
+                    line.SetPosition(0, ray.origin);
 
-                yield return new WaitForSeconds(0.05f);
+                    if (Physics.Raycast(ray, out hit, Mathf.SmoothStep(0, 100, 0.1f), fireLayer))
+                    {
+                        line.SetPosition(1, hit.point);
+                        if (hit.rigidbody)
+                        {
+                            // we've hit something that have a rigidbody
+                            hit.rigidbody.AddForceAtPosition(transform.forward * 5, hit.point);
+                        }
+                    }
+                    else
+                    {
+                        line.SetPosition(1, ray.GetPoint(100));
+                    }
+
+                    yield return null;
+
+                }
+                if ((fireMask & (byte)StageFire.Three) > 0)
+                {
+                    instantiatedBullet = pool.Get();
+                    instantiatedBullet.transform.position = transform.position;
+                    instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle - 10, 0);
+                    //instantiatedBullet.transform.Rotate(0, 0, -10);
+
+                    instantiatedBullet = pool.Get();
+                    instantiatedBullet.transform.position = transform.position;
+                    instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle + 10, 0);
+                    //instantiatedBullet.transform.Rotate(0, 0, 10);
+                }
+                if ((fireMask & (byte)StageFire.Two) > 0)
+                {
+                    instantiatedBullet = pool.Get();
+                    instantiatedBullet.transform.position = transform.position;
+                    instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle - 2, 0);
+                    //instantiatedBullet.transform.Rotate(0, 0, -2);
+
+                    instantiatedBullet = pool.Get();
+                    instantiatedBullet.transform.position = transform.position;
+                    instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle + 2, 0);
+                    //instantiatedBullet.transform.Rotate(0, 0, 2);
+                }
+                if ((fireMask & (byte)StageFire.One) > 0)
+                {
+                    instantiatedBullet = pool.Get();
+                    instantiatedBullet.transform.position = transform.position;
+                    instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle, 0);
+                    //instantiatedBullet.transform.Rotate(0, 0, 0);
+                    yield return new WaitForSeconds(0.05f);
+                }
+
             }
-            yield return new WaitForSeconds(0.08f);
+            if ((fireMask & (byte)StageFire.One) > 0 || (fireMask & (byte)StageFire.Five) > 0)
+            {
+                // Otherwise the laser beam blink
+                yield return new WaitForSeconds(0.08f);
+            }
         }
     }
     // Use this for initialization
@@ -69,7 +118,7 @@ public class Famine : Horsemen {
         Stamina = 100;
         Speed = 20f;
         DashDuration = 0.2f;
-        DashBehaviour = warDashBehaviour;
+        DashBehaviour = famineDashBehaviour;
         Bullet = prefabBullet;
     }
 

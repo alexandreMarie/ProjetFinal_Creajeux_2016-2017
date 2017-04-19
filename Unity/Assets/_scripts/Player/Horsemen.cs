@@ -198,7 +198,7 @@ public abstract class Horsemen : MonoBehaviour
         GetComponentInChildren<MeshRenderer>().material.color = Color.white;
     }
 
-    private IEnumerator Dash()
+    protected virtual IEnumerator Dash()
     {
         float timerDash = 0f;
         float startSpeed = speed;
@@ -318,6 +318,7 @@ public abstract class Horsemen : MonoBehaviour
                     dbgStage = StageFire.Five;
                     fireMask = (byte)StageFire.Five;
                     Debug.Log((fireMask & (byte)StageFire.One));
+                    line.enabled = false;
                     break;
                 case StageFire.Five:
                     dbgStage = StageFire.One;
