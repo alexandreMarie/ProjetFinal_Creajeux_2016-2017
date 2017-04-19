@@ -37,7 +37,6 @@ public class EyeBullet : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(t);
         if (t > 2.0f)
             t += Time.deltaTime * 2;
         else
