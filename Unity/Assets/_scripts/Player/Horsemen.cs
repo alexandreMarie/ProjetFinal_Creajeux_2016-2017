@@ -92,7 +92,7 @@ public abstract class Horsemen : MonoBehaviour
         }
     }
 
-    private float speed = 20.0f;
+    private float speed = 10.0f;
     public virtual float Speed
     {
         get
