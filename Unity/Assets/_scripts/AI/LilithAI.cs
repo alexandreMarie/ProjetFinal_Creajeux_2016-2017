@@ -40,7 +40,7 @@ public class LilithAI : BossManager
     public LightsController arenaLights;
 
     private NavMeshAgent lilithMovement = null;
-    NavMeshPath path = null;
+    private NavMeshPath path = null;
 
     private CameraShake cameraShake;
 
@@ -50,7 +50,7 @@ public class LilithAI : BossManager
     private event LilithEventsHandler LilithEvents;
     #endregion
 
-    enum LifeState { LAST, ONE, TWO, THREE, FOUR };
+    private enum LifeState { LAST, ONE, TWO, THREE, FOUR };
 
     LifeState lifeState = LifeState.FOUR;
 
@@ -110,7 +110,7 @@ public class LilithAI : BossManager
             {
                 divergence = 178.5f;
 
-                LilithAccessor.StopAllCoroutines();
+                Lilith.StopAllCoroutines();
                 StopCoroutine(AI1());
 
                 LilithEvents.Invoke();
@@ -128,7 +128,7 @@ public class LilithAI : BossManager
             {
                 divergence = 75.0f;
 
-                LilithAccessor.StopAllCoroutines();
+                Lilith.StopAllCoroutines();
                 StopCoroutine(AI2());
 
                 LilithEvents.Invoke();
@@ -146,7 +146,7 @@ public class LilithAI : BossManager
             {
                 divergence = 137.5f;
 
-                LilithAccessor.StopAllCoroutines();
+                Lilith.StopAllCoroutines();
                 StopCoroutine(AI3());
 
                 LilithEvents.Invoke();
@@ -160,10 +160,9 @@ public class LilithAI : BossManager
 
         if (!attacking)
         {
-            Debug.Log(attacking);
             int attack = Random.Range(1, 4);
 
-            switch (attack)
+            switch (2)
             {
                 case 1:
                     StartCoroutine(EarthPowder());
@@ -224,16 +223,11 @@ public class LilithAI : BossManager
 
         int i = 0;
 
-        if (!straightLineDone)
+        while (i < 21)
         {
-            while (i < 21)
-            {
-                i++;
-                LilithAccessor.LaunchRotatingStraightLine(bullet, bulletQuantityBurst, true);
-                yield return new WaitForSeconds(time / 6);
-            }
-
-            straightLineDone = true;
+            i++;
+            LilithAccessor.LaunchRotatingStraightLine(bullet, bulletQuantityBurst, true);
+            yield return new WaitForSeconds(time / 6);
         }
     }
 
@@ -245,7 +239,7 @@ public class LilithAI : BossManager
         {
             arenaLights.TurnLight = true;
 
-            arena.GetComponent<EmissiveController>().TurnEmissive = true;
+            //arena.GetComponent<EmissiveController>().TurnEmissive = true;
             Camera.main.GetComponent<BloomController>().TurnBloom = true;
             //SoundsManager.Instance.VolumeAmbientMusic = 0.75f;
 
@@ -259,7 +253,7 @@ public class LilithAI : BossManager
             yield return new WaitForSeconds(4.0f);
 
             arenaLights.TurnLight = false;
-            arena.GetComponent<EmissiveController>().TurnEmissive = false;
+            //arena.GetComponent<EmissiveController>().TurnEmissive = false;
             Camera.main.GetComponent<BloomController>().TurnBloom = false;
             //SoundsManager.Instance.VolumeAmbientMusic = 1.0f;
 
