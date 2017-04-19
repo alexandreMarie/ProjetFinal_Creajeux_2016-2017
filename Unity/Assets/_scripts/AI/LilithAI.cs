@@ -60,7 +60,7 @@ public class LilithAI : BossManager
 
     void Start()
     {
-        Life = 3000;
+        Life = 1000;
 
         Lilith = GetComponentInParent<Patterns>();
         lilithMovement = GetComponent<NavMeshAgent>();
@@ -305,5 +305,10 @@ public class LilithAI : BossManager
 
             yield return new WaitForSeconds(10.0f);
         }
+    }
+
+    private IEnumerator EyeAttack()
+    {
+        yield return null;
     }
 }
