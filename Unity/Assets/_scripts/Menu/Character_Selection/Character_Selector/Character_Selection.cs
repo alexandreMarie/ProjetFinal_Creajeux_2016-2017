@@ -8,7 +8,7 @@ public class Character_Selection : MonoBehaviour {
     //9 10 mai Beta
     //23 24 34 mais Milestone final
     //29 30 31 Final Milestone
-
+    SoundsManager SM;
     public struct Stats_Character
     {
         public float speed;
@@ -53,7 +53,7 @@ public class Character_Selection : MonoBehaviour {
     bool Button_is_releasd_B;
     // Use this for initialization
     void Start () {
-    
+        SM = GetComponentInParent<SoundsManager>();
         Canevas_State = GetComponentInChildren<Canvas>();
         Characters = new Stats_Character[4];
         for (int i = 0; i < Characters.Length; i++)
@@ -102,6 +102,7 @@ public class Character_Selection : MonoBehaviour {
             Debug.Log("Test");
             Button_is_releasd_A = false;
             Selection_Validate = true;
+            SM.Play_Selector(1);
         }
 
 
@@ -137,7 +138,8 @@ public class Character_Selection : MonoBehaviour {
                 }
                 Button_is_releasd = false;
                 Debug.Log(ID_Perso);
-            
+            SM.Play_Selector(0);
+
         }
 
         if (prevState.DPad.Left == ButtonState.Pressed)
@@ -150,7 +152,8 @@ public class Character_Selection : MonoBehaviour {
                 }
                 Button_is_releasd = false;
                 Debug.Log(ID_Perso);
-            
+            SM.Play_Selector(0);
+
         }
     }
 
@@ -167,6 +170,11 @@ public class Character_Selection : MonoBehaviour {
    public int Return_Id_Player()
     {
         return ID_Perso;
+    }
+
+    public void Set_SM(SoundsManager _sm)
+    {
+        SM = _sm;
     }
     void Perso_Selector()
     {

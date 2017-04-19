@@ -1,8 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using XInputDotNetPure;
 
 public class SelectOnInput : MonoBehaviour
 {
+    bool Sitck_is_Realeasd;
+    [SerializeField]
+    PlayerIndex test;
+
+    PlayerIndex playerIndex;
+    GamePadState state;
+    GamePadState prevState;
+
+    [SerializeField]
+    SoundsManager SM;
     [SerializeField]
     EventSystem eventSystem = null;
 
@@ -18,10 +29,17 @@ public class SelectOnInput : MonoBehaviour
 
     void Update()
     {
+
+        prevState = state;
+        state = GamePad.GetState(test);
+
+        Debug.Log(buttonSelected);
+      
         if (Input.GetAxisRaw("Vertical") != 0 && buttonSelected == false)
         {
             eventSystem.SetSelectedGameObject(goSelected);
             buttonSelected = true;
+           
         }
     }
 

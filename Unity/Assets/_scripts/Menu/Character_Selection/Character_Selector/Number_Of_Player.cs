@@ -15,6 +15,7 @@ public class Number_Of_Player : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Controller_Player = XInputManager.Instance;
+      
 	}
 	
 	// Update is called once per frame
