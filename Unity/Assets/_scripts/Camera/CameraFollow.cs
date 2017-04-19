@@ -9,7 +9,8 @@ public class CameraFollow : MonoBehaviour
 {
     public float dampTime = 0.15f;
     private Vector3 velocity = Vector3.zero;
-    public Transform[] targets;
+    [SerializeField]
+    private Transform[] targets;
 
     public float camDistance;
 
@@ -37,17 +38,23 @@ public class CameraFollow : MonoBehaviour
 
     private float time = 0;
     private GameManager manager;
+    
     void Start()
     {
         CameraManager.Instance.DeadPlayer1 = false;
         CameraManager.Instance.DeadPlayer2 = false;
         CameraManager.Instance.DeadBoss = false;
         manager = GameManager.Instance;
-
+        targets = new Transform[manager.NbPlayers+1];
+        
+        for (int i = 0; i < manager.NbPlayers; i++)
+        {
+            targets[i] = manager.Players[i].transform;
+        }
+        targets[manager.NbPlayers] = manager.Boss.transform;
         camDistance = 3.0f;
         setFieldOfView = 60;
         rotateCam = 35;
-
     }
 
     void OnPostRender()
@@ -66,7 +73,6 @@ public class CameraFollow : MonoBehaviour
     }
     void FixedUpdate()
     {
-
         if (!CameraManager.Instance.Change && !CameraManager.Instance.DeadPlayer1 && !CameraManager.Instance.DeadPlayer2 && !CameraManager.Instance.DeadBoss)
         {
             Gravity();
