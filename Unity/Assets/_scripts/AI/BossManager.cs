@@ -51,8 +51,9 @@ public class BossManager : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.tag == "Bullet")
+        if (col.tag == "PlayerBullet")
         {
+            GameManager.Instance.NbHit++;
             life--;
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
             players[0].GetComponent<Horsemen>().Stamina += 5;

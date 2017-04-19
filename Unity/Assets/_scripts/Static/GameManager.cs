@@ -4,13 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
- 
-
-
     private static GameManager instance = null;
     private Character_Selection.Stats_Character [] struc_stat_character;
     private bool dead;
+
+    /* 0 = solo/standard; 1 = duo/standard; 2 = duo/Hardcore; 3 = ...*/
+    private int typeMode = 0;
 
     int id_Arena;
     int load_Mode;
@@ -20,20 +19,25 @@ public class GameManager : MonoBehaviour
     private GameObject gameOver;
 
     [SerializeField]
-    private int lifePlayer1 = 20;
+    private int lifePlayer1;
     [SerializeField]
-    private int lifePlayer2 = 20;
+    private int lifePlayer2;
     [SerializeField]
-    private float lifeBoss;
+    private float lifeBoss = 3000;
+
+    private int nbHit = 25;
+    private int nbShoot = 10;
+    private int damageByBoss = 40;
 
     private GameObject boss;
     private GameObject[] players;
 
-    private List<int> score;
+    private List<int> score = new List<int>();
 
     private Texture2D texScreen;
 
-    private float compteur;
+    [SerializeField]
+    private float timer;
     public static GameManager Instance
     {
         get
@@ -46,57 +50,16 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-    void Start()
+    
+    public void SaveData(int scoreAdd)
     {
-        try
-        {
-            gameOver = GameObject.FindGameObjectWithTag("GameOver");
-            boss = GameObject.FindGameObjectWithTag("Boss");
-            players = GameObject.FindGameObjectsWithTag("Player");
-     
-        }
-        catch
-        {
-            return;
-        }
-    }
-
-    void Update()
-    {
-        lifeBoss = BossManager.Life;
-        if (lifePlayer1 <= 0)
-        {
-            CameraManager.Instance.DeadPlayer1 = true;
-        }
-        else if (lifePlayer2 <= 0)
-        {
-            CameraManager.Instance.DeadPlayer2 = true;
-        }
-        else if (lifeBoss <= 0)
-        {
-            CameraManager.Instance.DeadBoss = true;
-        }
-
-        if (dead)
-        {
-            // boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
-            //boss.GetComponent<LilithAI>().StopAllCoroutines();
-            players[0].GetComponent<Horsemen>().enabled = false;
-            //players[1].GetComponent<Player>().enabled = false;
-            //players[1].GetComponent<Add_Bullet>().enabled = false;
-            //gameOver.SetActive(true);
-        }
-        else
-        {
-            // gameOver.SetActive(false);
-        }
-    }
-    public void SaveData()
-    {
+        GetData();
+        DeleteData();
+        score.Add(scoreAdd);
         PlayerPrefs.SetInt("Scores_Count", score.Count);
         for (int i = 0; i < score.Count; i++)
             PlayerPrefs.SetInt("Scores" + i, score[i]);
-
+        score.Clear();
     }
 
     public void DeleteData()
@@ -107,8 +70,12 @@ public class GameManager : MonoBehaviour
     public void GetData()
     {
         int countScores = PlayerPrefs.GetInt("Scores_Count");
-        for (int i = 0; i < countScores; i++)
-            score.Add(PlayerPrefs.GetInt("Scores" + i));
+        if (countScores != 0)
+        {
+            //score = new List<int>();
+            for (int i = 0; i < countScores; i++)
+                score.Add(PlayerPrefs.GetInt("Scores" + i));
+        }
     }
     public bool Dead
     {
@@ -228,16 +195,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public float Compteur
+    public float Timer
     {
         get
         {
-            return compteur;
+            return timer;
         }
 
         set
         {
-            compteur = value;
+            timer = value;
         }
     }
 
@@ -264,6 +231,58 @@ public class GameManager : MonoBehaviour
         set
         {
             load_Mode = value;
+        }
+    }
+
+    public int TypeMode
+    {
+        get
+        {
+            return typeMode;
+        }
+
+        set
+        {
+            typeMode = value;
+        }
+    }
+
+    public int NbHit
+    {
+        get
+        {
+            return nbHit;
+        }
+
+        set
+        {
+            nbHit = value;
+        }
+    }
+
+    public int NbShoot
+    {
+        get
+        {
+            return nbShoot;
+        }
+
+        set
+        {
+            nbShoot = value;
+        }
+    }
+
+    public int DamageByBoss
+    {
+        get
+        {
+            return damageByBoss;
+        }
+
+        set
+        {
+            damageByBoss = value;
         }
     }
 

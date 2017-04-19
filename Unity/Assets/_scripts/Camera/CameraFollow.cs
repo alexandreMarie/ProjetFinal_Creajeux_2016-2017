@@ -39,18 +39,10 @@ public class CameraFollow : MonoBehaviour
     private GameManager manager;
     void Start()
     {
-        /* Reset GameManager */
-        manager = GameManager.Instance;
-        manager.LifePlayer2 = 20;
-        manager.LifePlayer1 = 20;
-        manager.Dead = false;
-        manager.GameOver = GameObject.FindGameObjectWithTag("GameOver");
-        manager.Boss = GameObject.FindGameObjectWithTag("Boss");
-        manager.Players = GameObject.FindGameObjectsWithTag("Player");
         CameraManager.Instance.DeadPlayer1 = false;
         CameraManager.Instance.DeadPlayer2 = false;
         CameraManager.Instance.DeadBoss = false;
-
+        manager = GameManager.Instance;
 
         camDistance = 3.0f;
         setFieldOfView = 60;
@@ -60,7 +52,7 @@ public class CameraFollow : MonoBehaviour
 
     void OnPostRender()
     {
-        if (CameraManager.Instance.DeadPlayer1 && takeScreen)
+        if (CameraManager.Instance.DeadBoss && takeScreen)
         {
             if (tex2D == null)
             {
@@ -94,25 +86,21 @@ public class CameraFollow : MonoBehaviour
             transform.rotation = posScreen.rotation;
             manager.TexScreen = tex2D;
             SceneManager.LoadScene("Score");
-            /*
-            if(CameraManager.Instance.DeadPlayer1)
+        }
+        else if (CameraManager.Instance.DeadPlayer1 || CameraManager.Instance.DeadPlayer2)
+        {
+            if (CameraManager.Instance.DeadPlayer1)
             {
                 transform.position = Vector3.SmoothDamp(transform.position, targets[0].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
-                
             }
-            else if(CameraManager.Instance.DeadPlayer2)
-            {
-                transform.position = Vector3.SmoothDamp(transform.position, targets[1].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
-            }
-            else if(CameraManager.Instance.DeadBoss)
+            else if (CameraManager.Instance.DeadPlayer2)
             {
                 transform.position = Vector3.SmoothDamp(transform.position, targets[1].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
             }
             if (transform.localEulerAngles.x > 59.0f)
-                manager.Dead = true;*/
+                manager.Dead = true;
         }
         /* else
          {
@@ -125,7 +113,7 @@ public class CameraFollow : MonoBehaviour
     {
         if (takeScreen)
             time += Time.deltaTime;
-        manager.Compteur = time;
+        manager.Timer = time;
         if (Input.GetKey(KeyCode.A))
         {
             CameraManager.Instance.Change = true;

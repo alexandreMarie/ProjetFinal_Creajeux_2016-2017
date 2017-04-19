@@ -40,6 +40,8 @@ public class LilithAI : BossManager
     private NavMeshAgent lilithMovement = null;
     NavMeshPath path = null;
 
+    private CameraShake cameraShake;
+
     private Patterns Lilith; // Uppercase L on purpose
 
     public delegate void LilithEventsHandler();
@@ -69,6 +71,7 @@ public class LilithAI : BossManager
             LilithEvents += BulletCancel;
 
         arena = GameObject.FindGameObjectWithTag("Arena") as GameObject;
+        cameraShake = Camera.main.transform.parent.GetComponent<CameraShake>();
     }
 
     private void BulletCancel()
@@ -95,8 +98,8 @@ public class LilithAI : BossManager
             lifeState = LifeState.THREE;
 
             /////////////////////////TESTAI
-            StartCoroutine(TestAI());
-            //StartCoroutine(Snake());
+            StartCoroutine(AI1());
+            StartCoroutine(Snake());
         }
 
         if (Life / MaxLife >= 0.501f && Life / MaxLife <= 0.750f)
@@ -156,7 +159,10 @@ public class LilithAI : BossManager
 
     private IEnumerator TestAI()
     {
-        StartCoroutine(ScavengingSnake());
+        yield return new WaitForSeconds(5.0f);
+
+        StartCoroutine(EarthPowder());
+        //StartCoroutine(ScavengingSnake());
         //Lilith.LaunchBurst(bullet, bulletQuantityBurst, 5, false);
         //StartCoroutine(Snake());
         //Lilith.LaunchPhyllotaxis(bullet, 178.5f, false);
@@ -278,6 +284,26 @@ public class LilithAI : BossManager
             arenaLights.TurnLight = false;
 
             yield return new WaitForSeconds(15.0f);
+        }
+    }
+
+    private IEnumerator EarthPowder()
+    {
+        while (true)
+        {
+            cameraShake.shakeDuration = 5.0f;
+
+            yield return new WaitForSeconds(4.0f);
+
+            Vector3 hitPosition = players[0].transform.position;
+
+            yield return new WaitForSeconds(0.5f);
+
+            GameObject cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+
+            cylinder.transform.position = hitPosition;
+
+            yield return new WaitForSeconds(10.0f);
         }
     }
 }

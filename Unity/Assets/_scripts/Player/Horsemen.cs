@@ -3,6 +3,18 @@ using UnityEngine;
 using System;
 public abstract class Horsemen : MonoBehaviour
 {
+
+    public enum StageFire
+    {
+        One = 1,
+        Two = 2,
+        Three = 4,
+        Four = 8,
+        Five = 16
+    }
+
+    StageFire dbgStage = StageFire.One;
+
     #region Variables
 
     [SerializeField]
@@ -10,8 +22,19 @@ public abstract class Horsemen : MonoBehaviour
 
     XInputManager XIMinstance;
     private bool isInvincible;
-    private int life;
-    private int maxLife;
+    private int life = lifeMax;
+    public int Life
+    {
+        get
+        {
+            return life;
+        }
+        private set
+        {
+            life = value;
+            lifeUpdater.UpdateLifebar(life);
+        }
+    }
 
     private Rigidbody rb;
     float timer = 0f;
@@ -29,6 +52,13 @@ public abstract class Horsemen : MonoBehaviour
     Coroutine fireCoroutine, dashCoroutine;
 
     protected Pool pool;
+
+    private LifeUpdater lifeUpdater;
+
+    protected LineRenderer line;
+
+    [SerializeField]
+    protected byte fireMask = (byte)StageFire.One;
 
     #endregion
 
@@ -107,7 +137,7 @@ public abstract class Horsemen : MonoBehaviour
         {
             bullet = value;
             // Init of pool
-            GameObject go = new GameObject("BulletPoolPlayer" + (playerID+1), typeof(Pool));
+            GameObject go = new GameObject("BulletPoolPlayer" + (playerID + 1), typeof(Pool));
             pool = go.GetComponent<Pool>();
             pool.Init(bullet, nbBulletsPool);
         }
@@ -117,12 +147,18 @@ public abstract class Horsemen : MonoBehaviour
 
     #region Constants
 
+    const int lifeMax = 100;
     const float freezeDuration = 2f;
     const float blinkDuration = 0.4f;
     const float rotateSmooth = 0.05f;
     const float stickDeadZone = 0.3f;
     const float triggerDeadZone = 0.1f;
     protected const int nbBulletsPool = 30;
+
+    [SerializeField]
+    protected LayerMask fireLayer = 9;
+
+    protected Vector3 playerTip = new Vector3(0, 1, 0);
 
     #endregion
 
@@ -151,16 +187,18 @@ public abstract class Horsemen : MonoBehaviour
 
     private IEnumerator Freeze()
     {
+        GetComponentInChildren<MeshRenderer>().material.color = Color.yellow;
         this.enabled = false;
-        GetComponentInChildren<Renderer>().material.color = Color.white;
+        //GetComponentInChildren<Renderer>().material.color = Color.white;
 
         yield return new WaitForSeconds(freezeDuration);
 
         this.enabled = true;
-        GetComponentInChildren<Renderer>().material.color = Color.grey;
+        StartCoroutine(PlayerBlink());
+        GetComponentInChildren<MeshRenderer>().material.color = Color.white;
     }
 
-    private IEnumerator Dash()
+    protected virtual IEnumerator Dash()
     {
         float timerDash = 0f;
         float startSpeed = speed;
@@ -206,6 +244,9 @@ public abstract class Horsemen : MonoBehaviour
         XIMinstance = XInputManager.Instance;
         moveValue = Vector2.zero;
         aimValue = Vector2.zero;
+        lifeUpdater = GetComponentInChildren<LifeUpdater>();
+        fireLayer.value = 1 << LayerMask.NameToLayer("Boss");
+        //Debug.Log(LayerMask.NameToLayer("Boss"));
     }
 
     protected void Update()
@@ -234,6 +275,7 @@ public abstract class Horsemen : MonoBehaviour
             {
                 StopCoroutine(fireCoroutine);
                 fireCoroutine = null;
+                line.enabled = false;
             }
         }
 
@@ -248,6 +290,43 @@ public abstract class Horsemen : MonoBehaviour
             {
                 dashCoroutine = StartCoroutine(Dash());
                 isInvincible = true;
+            }
+        }
+
+        // DEBUG pour les shoots
+        if (XIMinstance.GetButtonDown(playerID, XInputManager.XButtons.RightBumper))
+        {
+            switch (dbgStage)
+            {
+                case StageFire.One:
+                    dbgStage = StageFire.Two;
+                    fireMask += (byte)StageFire.Two;
+                    Debug.Log((fireMask & (byte)StageFire.One));
+
+                    break;
+                case StageFire.Two:
+                    dbgStage = StageFire.Three;
+                    fireMask += (byte)StageFire.Three;
+                    Debug.Log((fireMask & (byte)StageFire.One));
+                    break;
+                case StageFire.Three:
+                    dbgStage = StageFire.Four;
+                    fireMask = (byte)StageFire.Four;
+                    Debug.Log((fireMask & (byte)StageFire.One));
+                    break;
+                case StageFire.Four:
+                    dbgStage = StageFire.Five;
+                    fireMask = (byte)StageFire.Five;
+                    Debug.Log((fireMask & (byte)StageFire.One));
+                    line.enabled = false;
+                    break;
+                case StageFire.Five:
+                    dbgStage = StageFire.One;
+                    fireMask = (byte)StageFire.One;
+                    Debug.Log((fireMask & (byte)StageFire.One));
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -268,16 +347,19 @@ public abstract class Horsemen : MonoBehaviour
             {
                 StartCoroutine(Freeze());
                 XIMinstance.SetVibration(playerID, freezeDuration, 1f);
+                Life -= 10;
             }
             else if (other.tag == "EnnemyBullet")
             {
                 StartCoroutine(PlayerBlink());
                 XIMinstance.SetVibration(playerID, blinkDuration / 2f, 0.5f);
+                Life--;
             }
             else if (other.tag == "ScavengingSnake")
             {
                 StartCoroutine(Freeze());
                 XIMinstance.SetVibration(playerID, freezeDuration, 1f);
+                Life -= 10;
             }
         }
     }
