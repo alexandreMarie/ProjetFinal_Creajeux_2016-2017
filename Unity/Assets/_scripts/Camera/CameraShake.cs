@@ -2,6 +2,8 @@
 
 public class CameraShake : MonoBehaviour
 {
+    XInputManager xIM;
+
     Vector3 originalPos = default(Vector3);
     Transform camTransform = default(Transform);
 
@@ -9,8 +11,12 @@ public class CameraShake : MonoBehaviour
     public float shakeAmount = 0.1f;
     public float decreaseFactor = 1.0f;
 
+    private int targetPlayer = 0;
+    private bool vibrationSet = false;
+
     void Start()
     {
+        xIM = XInputManager.Instance;
         camTransform = transform;
     }
 
@@ -18,6 +24,9 @@ public class CameraShake : MonoBehaviour
     {
         if (shakeDuration > 0)
         {
+            if (!vibrationSet)
+                xIM.SetVibration(targetPlayer, shakeDuration, 1.0f);
+
             camTransform = transform;
 
             originalPos = transform.position;
@@ -25,11 +34,14 @@ public class CameraShake : MonoBehaviour
             camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
 
             shakeDuration -= Time.deltaTime * decreaseFactor;
+
+            vibrationSet = true;
         }
         else
         {
             shakeDuration = 0f;
             camTransform.localPosition = originalPos;
+            vibrationSet = false;
         }
     }
 }

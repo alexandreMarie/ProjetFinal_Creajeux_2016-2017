@@ -98,7 +98,7 @@ public class LilithAI : BossManager
             lifeState = LifeState.THREE;
 
             /////////////////////////TESTAI
-            StartCoroutine(AI1());
+            StartCoroutine(TestAI());
             StartCoroutine(Snake());
         }
 
@@ -291,13 +291,13 @@ public class LilithAI : BossManager
     {
         while (true)
         {
-            cameraShake.shakeDuration = 5.0f;
+            cameraShake.shakeDuration = 3.0f;
 
-            yield return new WaitForSeconds(4.0f);
+            yield return new WaitForSeconds(3.0f);
 
             Vector3 hitPosition = players[0].transform.position;
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
 
             GameObject cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
 
