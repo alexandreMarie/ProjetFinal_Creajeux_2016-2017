@@ -13,7 +13,8 @@ public class Character_Selection : MonoBehaviour {
     {
         public float speed;
         public int attack;
-        public float PDV;
+        public int PDV;
+        public SelectCharact selectCharact;
     }
     /*RAJOUTE UN STICK ABRUTIT DE PROG STEAMPUNK*/
 
@@ -24,6 +25,8 @@ public class Character_Selection : MonoBehaviour {
 
     */
 
+    /* Enum characters */
+    public enum  SelectCharact {Null, Death, Pestilence, Famine, War };
 
     Stats_Character [] Characters;
 
@@ -60,7 +63,8 @@ public class Character_Selection : MonoBehaviour {
         {
             Characters[i].attack = (int)Random.Range(1.0f, 50.0f);
             Characters[i].speed = Random.Range(1.0f, 50.0f);
-            Characters[i].PDV = Random.Range(1.0f, 50.0f);
+            Characters[i].PDV = Random.Range(1, 50);
+            Characters[i].selectCharact = (SelectCharact)i+1;
         }
     }
 	
