@@ -162,7 +162,7 @@ public class LilithAI : BossManager
         {
             int attack = Random.Range(1, 4);
 
-            switch (2)
+            switch (attack)
             {
                 case 1:
                     StartCoroutine(EarthPowder());
@@ -176,6 +176,7 @@ public class LilithAI : BossManager
                 default:
                     break;
             }
+
             attacking = true;
         }
     }
@@ -322,7 +323,7 @@ public class LilithAI : BossManager
         for (int i = 0; i < 50; i++)
         {
             Instantiate(eyeBullet);
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.02f);
         }
 
         specialState = false;
