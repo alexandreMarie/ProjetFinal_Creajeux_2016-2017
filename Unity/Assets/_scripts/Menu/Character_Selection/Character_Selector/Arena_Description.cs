@@ -20,7 +20,7 @@ public class Arena_Description : MonoBehaviour {
         text_UI = GetComponentsInChildren<Text>();
         Arena_Descrpitif = new string[4];
         Name = new string[4];
-        Arena_Descrpitif[0] = "Modele 3D 1 \n L'aréne de lilith est a l'image de la reine des succubes \n ";
+        Arena_Descrpitif[0] = "L'aréne de lilith est a l'image de la reine des succubes \n provocante héxubhérante";
         Arena_Descrpitif[1] = "Modele 3D 2";
         Arena_Descrpitif[2] = "Modele 3D 3";
         Arena_Descrpitif[3] = "Modele 3D 4";
