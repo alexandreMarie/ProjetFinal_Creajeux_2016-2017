@@ -41,10 +41,10 @@ public class Number_Of_Player : MonoBehaviour {
             switch (i)
             {
                 case (0):
-                    Players[i].transform.position = new Vector3(-1.2f, 0.0f, -7.7f);
+                    Players[i].transform.position = new Vector3(-1.0f, 0.0f, -7.5f);
                     break;
                 case (1):
-                    Players[i].transform.position = new Vector3(1.2f, 0.0f, -7.7f);
+                    Players[i].transform.position = new Vector3(1.2f, 0.0f, -7.5f);
                     break;
             }
         }
