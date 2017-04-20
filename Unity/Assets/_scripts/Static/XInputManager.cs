@@ -3,7 +3,8 @@ using XInputDotNetPure;
 using System.Collections;
 using UnityEngine.Internal;
 
-public class XInputManager : MonoBehaviour {
+public class XInputManager : MonoBehaviour
+{
 
     const byte ControllersMax = 4;
 
@@ -24,7 +25,7 @@ public class XInputManager : MonoBehaviour {
         Right,
         Up,
         Down
-}
+    }
 
     public enum XSticks
     {
@@ -78,13 +79,13 @@ public class XInputManager : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
-        CheckControllers();   
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        CheckControllers();
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         UpdateControllersState();
     }
@@ -511,7 +512,9 @@ public class XInputManager : MonoBehaviour {
     /// <returns></returns>
     public bool SetVibration(int numPlayer, float duration, float strength)
     {
+#if !UNITY_EDITOR
         StartCoroutine(Vibrate((PlayerIndex)numPlayer, duration, strength));
+#endif
         return true;
     }
 
