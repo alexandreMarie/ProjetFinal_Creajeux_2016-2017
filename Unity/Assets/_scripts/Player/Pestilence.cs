@@ -121,6 +121,8 @@ public class Pestilence : Horsemen {
         DashDuration = 0.2f;
         DashBehaviour = pestilenceDashBehaviour;
         Bullet = prefabBullet;
+        line = GetComponent<LineRenderer>();
+        line.enabled = false;
     }
 
     // Update is called once per frame
