@@ -36,6 +36,7 @@ public abstract class Horsemen : MonoBehaviour
                 life = lifeMax;
             }
             lifeUpdater.UpdateLifebar(life);
+            lifeManager.UpdateLifeBar(lifeMax, life);
             GameManager.Instance.UpdateLife(playerID, life);
             GameManager.Instance.LifeMax = lifeMax;
         }
@@ -59,6 +60,8 @@ public abstract class Horsemen : MonoBehaviour
     protected Pool pool;
 
     private LifeUpdater lifeUpdater;
+
+    private LifeManager lifeManager;
 
     protected LineRenderer line;
 
@@ -124,11 +127,11 @@ public abstract class Horsemen : MonoBehaviour
         set
         {
             stamina = value;
-            if (stamina > 100)
+            if (stamina > staminaMax)
             {
-                stamina = 100;
+                stamina = staminaMax;
             }
-            // Update de l'UI
+            lifeManager.UpdateStaminaBar(staminaMax, stamina);
         }
     }
 
@@ -156,6 +159,7 @@ public abstract class Horsemen : MonoBehaviour
     #region Constants
 
     const int lifeMax = 100;
+    const int staminaMax = 100;
     const float freezeDuration = 2f;
     const float blinkDuration = 0.4f;
     const float rotateSmooth = 0.05f;
@@ -318,6 +322,13 @@ public abstract class Horsemen : MonoBehaviour
         aimValue = Vector2.zero;
         lifeUpdater = GetComponentInChildren<LifeUpdater>();
         fireLayer.value = 1 << LayerMask.NameToLayer("Boss");
+        foreach(LifeManager manager in GameObject.FindObjectsOfType<LifeManager>())
+        {
+            if ((int)manager.lifeCharacter == playerID)
+            {
+                lifeManager = manager;
+            }
+        }
         //Debug.Log(LayerMask.NameToLayer("Boss"));
     }
 

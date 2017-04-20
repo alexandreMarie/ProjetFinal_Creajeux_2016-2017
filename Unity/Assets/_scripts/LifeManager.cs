@@ -3,6 +3,15 @@ using UnityEngine.UI;
 
 public class LifeManager : MonoBehaviour
 {
+    public enum LifeCharacter
+    {
+        Player1,
+        Player2,
+        Boss
+    }
+
+    public LifeCharacter lifeCharacter;
+
     Image imgFilledBar;
     Image imgFilledEnduranceBar;
 
