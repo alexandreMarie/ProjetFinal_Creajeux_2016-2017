@@ -9,7 +9,7 @@ public class UpdateScores : MonoBehaviour {
 
     float seconds;
     float fraction;
-    float minutes;
+    int minutes;
     float currentTime;
 
     float currentScore;
@@ -68,7 +68,7 @@ public class UpdateScores : MonoBehaviour {
     public Text damage;
 
     public int lifeMax;
-    public float vitesse;
+    public float vitesse = 0.01f;
 
     public List<GameObject> rank = new List<GameObject>();
 	// Use this for initialization
@@ -133,17 +133,18 @@ public class UpdateScores : MonoBehaviour {
 
                 currentTime = Mathf.Lerp(0, GameManager.Instance.Timer, time);
                 currentScore = Mathf.Lerp(0, scores, time);
-                minutes = currentTime / 60;
+                minutes = (int)currentTime / 60;
                 seconds = currentTime % 60;
                 fraction = (currentTime * 100) % 100;
                 if(time > 1 || pass)
                 {
-                    minutes = GameManager.Instance.Timer / 60;
+                    minutes = (int)GameManager.Instance.Timer / 60;
                     seconds = GameManager.Instance.Timer % 60;
                     fraction = (GameManager.Instance.Timer * 100) % 100;
                     currentScore = scores;
                     pass = false;
                 }
+                Debug.Log(minutes);
                 scoresFinal = (int)currentScore;
                
                 timeText.text = string.Format("TIME : {0:00} : {1:00} : {2:00}", minutes, seconds, fraction);

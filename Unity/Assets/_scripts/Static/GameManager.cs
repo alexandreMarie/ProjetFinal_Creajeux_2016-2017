@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     int id_Arena;
     int load_Mode;
 
-    private int nbPlayers = 2;
+    private int nbPlayers;
     [SerializeField]
     private GameObject gameOver;
 
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float lifeBoss;
 
-    private int nbHit = 25;
+    private int nbHit;
     private int nbShoot = 10;
     private int damageByBoss = 40;
 

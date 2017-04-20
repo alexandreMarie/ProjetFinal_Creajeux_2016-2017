@@ -11,7 +11,7 @@ public class ResetScene : MonoBehaviour {
        
         manager = GameManager.Instance;
         Character_Selection.SelectCharact selecCharact;
-        manager.Struc_stat_character = new Character_Selection.Stats_Character[2];
+       /* manager.Struc_stat_character = new Character_Selection.Stats_Character[2];
         manager.Struc_stat_character[1].attack = 20;
         manager.Struc_stat_character[1].PDV = 100;
         manager.Struc_stat_character[1].speed = 20;
@@ -20,7 +20,7 @@ public class ResetScene : MonoBehaviour {
         manager.Struc_stat_character[0].attack = 20;
         manager.Struc_stat_character[0].PDV = 100;
         manager.Struc_stat_character[0].speed = 20;
-        manager.Struc_stat_character[0].selectCharact = (Character_Selection.SelectCharact)4;
+        manager.Struc_stat_character[0].selectCharact = (Character_Selection.SelectCharact)4;*/
         for (int i = 0; i<manager.NbPlayers; i++)
         {
             selecCharact = manager.Struc_stat_character[i].selectCharact;
@@ -114,8 +114,8 @@ public class ResetScene : MonoBehaviour {
 
         if (manager.Dead)
         {
-            //boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
-            //boss.GetComponent<LilithAI>().StopAllCoroutines();
+            manager.Boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
+            manager.Boss.GetComponent<LilithAI>().StopAllCoroutines();
             for (int i = 0; i<manager.NbPlayers; i++)
             {
                 manager.Players[i].GetComponent<Horsemen>().enabled = false;
