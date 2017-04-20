@@ -16,7 +16,7 @@ public abstract class Horsemen : MonoBehaviour
     StageFire shootStage = StageFire.One;
 
     #region Variables
-    
+
     public int playerID;
 
     XInputManager XIMinstance;
@@ -99,7 +99,7 @@ public abstract class Horsemen : MonoBehaviour
         }
     }
 
-    private float speed = 10.0f;
+    private float speed = 10f;
     public virtual float Speed
     {
         get
@@ -243,11 +243,7 @@ public abstract class Horsemen : MonoBehaviour
         {
             direction = ((Camera.main.transform.right * moveValue.x) + (Camera.main.transform.forward * moveValue.y)).normalized * Time.unscaledDeltaTime * speed;
             direction.y = 0; // Cancel the Y translation;
-            if (Vector3.Distance(direction + transform.position, arenaCenter.position) < 5)
-            {
-                rb.AddForce(direction * speed, ForceMode.VelocityChange);
-            }
-
+            rb.AddForce(direction * speed, ForceMode.VelocityChange);
         }
     }
 
@@ -321,12 +317,6 @@ public abstract class Horsemen : MonoBehaviour
         aimValue = Vector2.zero;
         lifeUpdater = GetComponentInChildren<LifeUpdater>();
         fireLayer.value = 1 << LayerMask.NameToLayer("Boss");
-        arenaCenter = GameObject.FindGameObjectWithTag("Center").transform;
-
-        if (arenaCenter == null)
-        {
-            throw new Exception("Centre de l'arene non trouvé");
-        }
         //Debug.Log(LayerMask.NameToLayer("Boss"));
     }
 
