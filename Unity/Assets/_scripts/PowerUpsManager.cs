@@ -57,8 +57,8 @@ public class PowerUpsManager : MonoBehaviour
         if (!powerUps[(int)selectedPowerUp].activeSelf)
         {
             position.x = Random.Range(-8, 8);
-            position.y = 3;
-            position.z = Random.Range(0, 13);
+            position.y = 0.5f;
+            position.z = Random.Range(0, 7f);
 
             powerUps[(int)selectedPowerUp].transform.position = position;
 

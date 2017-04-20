@@ -13,12 +13,12 @@ public class ResetScene : MonoBehaviour {
         Character_Selection.SelectCharact selecCharact;
         manager.Struc_stat_character = new Character_Selection.Stats_Character[2];
         manager.Struc_stat_character[1].attack = 20;
-        manager.Struc_stat_character[1].PDV = 20;
+        manager.Struc_stat_character[1].PDV = 100;
         manager.Struc_stat_character[1].speed = 20;
         manager.Struc_stat_character[1].selectCharact = (Character_Selection.SelectCharact)1;
 
         manager.Struc_stat_character[0].attack = 20;
-        manager.Struc_stat_character[0].PDV = 15;
+        manager.Struc_stat_character[0].PDV = 100;
         manager.Struc_stat_character[0].speed = 20;
         manager.Struc_stat_character[0].selectCharact = (Character_Selection.SelectCharact)4;
         for (int i = 0; i<manager.NbPlayers; i++)
@@ -39,7 +39,6 @@ public class ResetScene : MonoBehaviour {
                 case Character_Selection.SelectCharact.Death:
                     Instantiate(prefabs[0]);
                     prefabs[0].GetComponent<Horsemen>().playerID = i;
-                    Debug.Log(i);
                     if (i == 0 && manager.TypeMode == 1)
                         prefabs[0].transform.position = pos[0].transform.position;
                     else if(i == 1)
