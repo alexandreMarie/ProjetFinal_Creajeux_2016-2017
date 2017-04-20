@@ -43,7 +43,7 @@ public class All_player_selected : MonoBehaviour {
         }
 	if(Loading_Ok == true)
         {
-            Debug.Log("Ca marche! putain pour une fois t'es compétant fete ca enculé !");
+            //Debug.Log("Ca marche! putain pour une fois t'es compétant fete ca enculé !");
             //First : Create Structure
             GM.CreateStrucCharact(XIM.NumControllers);
             //Second : Add variable
