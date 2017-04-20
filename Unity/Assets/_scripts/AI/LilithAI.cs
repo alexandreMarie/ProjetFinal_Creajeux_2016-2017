@@ -16,7 +16,7 @@ public class LilithAI : BossManager
 {
     #region Variables
     [SerializeField]
-    private Transform bullet = null;
+    private GameObject bullet = null;
     [SerializeField]
     private Transform eyeBullet = null;
     [SerializeField]
@@ -65,6 +65,7 @@ public class LilithAI : BossManager
         Life = 1000;
 
         Lilith = GetComponentInParent<Patterns>();
+        Lilith.InitPool(bullet);
         lilithMovement = GetComponent<NavMeshAgent>();
 
         path = new NavMeshPath();
@@ -100,7 +101,7 @@ public class LilithAI : BossManager
             lifeState = LifeState.THREE;
 
             /////////////////////////TESTAI
-            StartCoroutine(AI1());
+            StartCoroutine(TestAI());
             //StartCoroutine(Snake());
         }
 
@@ -162,7 +163,7 @@ public class LilithAI : BossManager
         {
             int attack = Random.Range(1, 4);
 
-            switch (attack)
+            switch (0)
             {
                 case 1:
                     StartCoroutine(EarthPowder());
@@ -179,6 +180,12 @@ public class LilithAI : BossManager
 
             attacking = true;
         }
+    }
+
+    private IEnumerator TestAI()
+    {
+        LilithAccessor.LaunchPhyllotaxis(bullet, divergence, false);
+        yield return null;
     }
 
     private IEnumerator AI1()
