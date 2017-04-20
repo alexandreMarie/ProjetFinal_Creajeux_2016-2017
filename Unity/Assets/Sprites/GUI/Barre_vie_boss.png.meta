@@ -1,9 +1,10 @@
 fileFormatVersion: 2
-guid: 2560134869eb6b54882e94748eb7520a
-timeCreated: 1489865235
+guid: 0d33c2ce9471e6c41874a685401eca9b
+timeCreated: 1492689215
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Barre_vie_boss_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -37,7 +38,6 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
@@ -51,7 +51,20 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Barre_vie_boss_0
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 5
+        width: 839
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 
