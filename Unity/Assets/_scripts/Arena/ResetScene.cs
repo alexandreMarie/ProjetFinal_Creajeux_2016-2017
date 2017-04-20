@@ -11,7 +11,7 @@ public class ResetScene : MonoBehaviour {
        
         manager = GameManager.Instance;
         Character_Selection.SelectCharact selecCharact;
-       /* manager.Struc_stat_character = new Character_Selection.Stats_Character[2];
+        manager.Struc_stat_character = new Character_Selection.Stats_Character[2];
         manager.Struc_stat_character[1].attack = 20;
         manager.Struc_stat_character[1].PDV = 20;
         manager.Struc_stat_character[1].speed = 20;
@@ -20,7 +20,7 @@ public class ResetScene : MonoBehaviour {
         manager.Struc_stat_character[0].attack = 20;
         manager.Struc_stat_character[0].PDV = 15;
         manager.Struc_stat_character[0].speed = 20;
-        manager.Struc_stat_character[0].selectCharact = (Character_Selection.SelectCharact)4;*/
+        manager.Struc_stat_character[0].selectCharact = (Character_Selection.SelectCharact)4;
         for (int i = 0; i<manager.NbPlayers; i++)
         {
             selecCharact = manager.Struc_stat_character[i].selectCharact;
