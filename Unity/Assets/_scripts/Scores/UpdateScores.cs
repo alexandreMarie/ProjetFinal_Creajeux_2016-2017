@@ -66,12 +66,13 @@ public class UpdateScores : MonoBehaviour {
     public Text precision;
     public Text damage;
 
-    public int lifeMax = 20;
+    public int lifeMax;
     public float vitesse;
 
     public List<GameObject> rank = new List<GameObject>();
 	// Use this for initialization
 	void Start () {
+        lifeMax = GameManager.Instance.LifeMax;
     }
 	
 	// Update is called once per frame
@@ -98,7 +99,8 @@ public class UpdateScores : MonoBehaviour {
             case 1:
                 scoreRankSS = scoreMode1Win;
                 scoreBasedTime = scoreMod1Time;
-                lifeTotal = lifeMax-(GameManager.Instance.LifePlayer1 + GameManager.Instance.LifePlayer2);
+                lifeTotal = lifeMax*2-(GameManager.Instance.LifePlayer1 + GameManager.Instance.LifePlayer2);
+                Debug.Log(lifeMax);
                 lifeTotalScore = lifeTotal * scoreMod1Life;
                 percentageHitShootScore = percentageHitShoot * scoreMod1HitPlayers;
                 displayDamageByBossScore = displayDamageByBoss * scoreMod1HitBoss;
@@ -106,7 +108,7 @@ public class UpdateScores : MonoBehaviour {
             case 2:
                 scoreRankSS = scoreMode2Win;
                 scoreBasedTime = scoreMod2Time;
-                lifeTotal = lifeMax - (GameManager.Instance.LifePlayer1 + GameManager.Instance.LifePlayer2);
+                lifeTotal = lifeMax*2 - (GameManager.Instance.LifePlayer1 + GameManager.Instance.LifePlayer2);
                 lifeTotalScore = lifeTotal * scoreMod2Life;
                 percentageHitShootScore = percentageHitShoot * scoreMod2HitPlayers;
                 displayDamageByBossScore = displayDamageByBoss * scoreMod2HitBoss;

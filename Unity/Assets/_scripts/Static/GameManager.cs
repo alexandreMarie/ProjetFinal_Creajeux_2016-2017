@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject gameOver;
 
+    private int lifeMax;
     [SerializeField]
     private int lifePlayer1;
     [SerializeField]
@@ -323,7 +324,20 @@ public class GameManager : MonoBehaviour
             struc_stat_character = value;
         }
     }
-    
+
+    public int LifeMax
+    {
+        get
+        {
+            return lifeMax;
+        }
+
+        set
+        {
+            lifeMax = value;
+        }
+    }
+
     public void CreateStrucCharact(int Number_of_controller)
     {
         struc_stat_character = new Character_Selection.Stats_Character[Number_of_controller];
