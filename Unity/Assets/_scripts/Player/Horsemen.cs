@@ -17,8 +17,7 @@ public abstract class Horsemen : MonoBehaviour
 
     #region Variables
 
-    [SerializeField]
-    int playerID;
+    public int playerID;
 
     XInputManager XIMinstance;
     private bool isInvincible;
@@ -37,6 +36,8 @@ public abstract class Horsemen : MonoBehaviour
                 life = lifeMax;
             }
             lifeUpdater.UpdateLifebar(life);
+            GameManager.Instance.UpdateLife(playerID, life);
+            GameManager.Instance.LifeMax = lifeMax;
         }
     }
 
@@ -98,7 +99,7 @@ public abstract class Horsemen : MonoBehaviour
         }
     }
 
-    private float speed = 10.0f;
+    private float speed = 10f;
     public virtual float Speed
     {
         get
@@ -143,6 +144,7 @@ public abstract class Horsemen : MonoBehaviour
         {
             bullet = value;
             // Init of pool
+            Debug.Log("Bullet");
             GameObject go = new GameObject("BulletPoolPlayer" + (playerID + 1), typeof(Pool));
             pool = go.GetComponent<Pool>();
             pool.Init(bullet, nbBulletsPool);
@@ -242,11 +244,7 @@ public abstract class Horsemen : MonoBehaviour
         {
             direction = ((Camera.main.transform.right * moveValue.x) + (Camera.main.transform.forward * moveValue.y)).normalized * Time.unscaledDeltaTime * speed;
             direction.y = 0; // Cancel the Y translation;
-            if (Vector3.Distance(direction + transform.position, arenaCenter.position) < 5)
-            {
-                rb.AddForce(direction * speed, ForceMode.VelocityChange);
-            }
-
+            rb.AddForce(direction * speed, ForceMode.VelocityChange);
         }
     }
 
@@ -320,12 +318,6 @@ public abstract class Horsemen : MonoBehaviour
         aimValue = Vector2.zero;
         lifeUpdater = GetComponentInChildren<LifeUpdater>();
         fireLayer.value = 1 << LayerMask.NameToLayer("Boss");
-        arenaCenter = GameObject.FindGameObjectWithTag("Center").transform;
-
-        if (arenaCenter == null)
-        {
-            throw new Exception("Centre de l'arene non trouvé");
-        }
         //Debug.Log(LayerMask.NameToLayer("Boss"));
     }
 

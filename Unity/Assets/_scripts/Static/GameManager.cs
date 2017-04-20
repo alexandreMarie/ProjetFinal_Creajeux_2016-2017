@@ -18,18 +18,19 @@ public class GameManager : MonoBehaviour
     int id_Arena;
     int load_Mode;
 
-    private int nbPlayers = 2;
+    private int nbPlayers;
     [SerializeField]
     private GameObject gameOver;
 
+    private int lifeMax;
     [SerializeField]
     private int lifePlayer1;
     [SerializeField]
     private int lifePlayer2;
     [SerializeField]
-    private float lifeBoss = 3000;
+    private float lifeBoss;
 
-    private int nbHit = 25;
+    private int nbHit;
     private int nbShoot = 10;
     private int damageByBoss = 40;
 
@@ -56,6 +57,13 @@ public class GameManager : MonoBehaviour
         }
     }
     
+    public void UpdateLife( int playerId, int life)
+    {
+        if (playerId == 0)
+            lifePlayer1 = life;
+        else if (playerId == 1)
+            lifePlayer2 = life;
+    }
     public void SaveData(int scoreAdd)
     {
         GetData();
@@ -316,7 +324,20 @@ public class GameManager : MonoBehaviour
             struc_stat_character = value;
         }
     }
-    
+
+    public int LifeMax
+    {
+        get
+        {
+            return lifeMax;
+        }
+
+        set
+        {
+            lifeMax = value;
+        }
+    }
+
     public void CreateStrucCharact(int Number_of_controller)
     {
         struc_stat_character = new Character_Selection.Stats_Character[Number_of_controller];

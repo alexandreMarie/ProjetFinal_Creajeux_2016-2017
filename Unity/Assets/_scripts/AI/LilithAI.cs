@@ -31,7 +31,7 @@ public class LilithAI : BossManager
 
     private bool specialState = false;
     private bool attacking = false;
-    private bool straightLineDone = false;
+    //private bool straightLineDone = false;
 
     private GameObject arena = null;
 
@@ -90,8 +90,8 @@ public class LilithAI : BossManager
 
         NavMesh.CalculatePath(transform.position, destination, 0, path);
 
-        if (path.status != NavMeshPathStatus.PathPartial && !specialState)
-            lilithMovement.SetDestination(destination);
+        //if (path.status != NavMeshPathStatus.PathPartial && !specialState)
+        //    lilithMovement.SetDestination(destination);
 
         if (lifeState == LifeState.FOUR)
         {
@@ -162,7 +162,7 @@ public class LilithAI : BossManager
         {
             int attack = Random.Range(1, 4);
 
-            switch (2)
+            switch (attack)
             {
                 case 1:
                     StartCoroutine(EarthPowder());
@@ -176,6 +176,7 @@ public class LilithAI : BossManager
                 default:
                     break;
             }
+
             attacking = true;
         }
     }
@@ -298,9 +299,8 @@ public class LilithAI : BossManager
 
         yield return new WaitForSeconds(1.0f);
 
-        GameObject cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-
-        cylinder.transform.position = hitPosition;
+        if (players[0].transform.position == hitPosition)
+            players[0].GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 0.0f), ForceMode.Impulse);
 
         yield return new WaitForSeconds(5.0f);
 
@@ -313,7 +313,7 @@ public class LilithAI : BossManager
     {
         specialState = true;
 
-        lilithMovement.SetDestination(new Vector3(0, 0, -6.5f));
+        lilithMovement.SetDestination(new Vector3(0.0f, 0.0f, -6.5f));
 
         do
         { yield return new WaitForSeconds(2.0f); }
@@ -322,7 +322,7 @@ public class LilithAI : BossManager
         for (int i = 0; i < 50; i++)
         {
             Instantiate(eyeBullet);
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.02f);
         }
 
         specialState = false;

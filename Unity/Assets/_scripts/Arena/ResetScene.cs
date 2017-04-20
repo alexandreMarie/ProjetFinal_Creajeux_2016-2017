@@ -13,12 +13,12 @@ public class ResetScene : MonoBehaviour {
         Character_Selection.SelectCharact selecCharact;
        /* manager.Struc_stat_character = new Character_Selection.Stats_Character[2];
         manager.Struc_stat_character[1].attack = 20;
-        manager.Struc_stat_character[1].PDV = 20;
+        manager.Struc_stat_character[1].PDV = 100;
         manager.Struc_stat_character[1].speed = 20;
         manager.Struc_stat_character[1].selectCharact = (Character_Selection.SelectCharact)1;
 
         manager.Struc_stat_character[0].attack = 20;
-        manager.Struc_stat_character[0].PDV = 15;
+        manager.Struc_stat_character[0].PDV = 100;
         manager.Struc_stat_character[0].speed = 20;
         manager.Struc_stat_character[0].selectCharact = (Character_Selection.SelectCharact)4;*/
         for (int i = 0; i<manager.NbPlayers; i++)
@@ -28,36 +28,46 @@ public class ResetScene : MonoBehaviour {
             {
                 case Character_Selection.SelectCharact.Pestilence:
                     Instantiate(prefabs[1]);
-                    if (i == 0)
+                    prefabs[1].GetComponent<Horsemen>().playerID = i;
+                    if (i == 0 && manager.TypeMode == 1)
                         prefabs[1].transform.position = pos[0].transform.position;
-                    else
+                    else if(i ==1)
                         prefabs[1].transform.position = pos[1].transform.position;
-                    
+                    else
+                        prefabs[1].transform.position = pos[2].transform.position;
                     break;
                 case Character_Selection.SelectCharact.Death:
                     Instantiate(prefabs[0]);
-                    if (i == 0)
+                    prefabs[0].GetComponent<Horsemen>().playerID = i;
+                    if (i == 0 && manager.TypeMode == 1)
                         prefabs[0].transform.position = pos[0].transform.position;
-                    else
+                    else if(i == 1)
                         prefabs[0].transform.position = pos[1].transform.position;
+                    else
+                        prefabs[0].transform.position = pos[2].transform.position;
                     break;
                 case Character_Selection.SelectCharact.Famine:
                     Instantiate(prefabs[2]);
-                    if (i == 0)
+                    prefabs[2].GetComponent<Horsemen>().playerID = i;
+                    if (i == 0 && manager.TypeMode == 1)
                         prefabs[2].transform.position = pos[0].transform.position;
-                    else
+                    else if (i == 1)
                         prefabs[2].transform.position = pos[1].transform.position;
+                    else
+                        prefabs[2].transform.position = pos[2].transform.position;
                     break;
                 case Character_Selection.SelectCharact.War:
                     Instantiate(prefabs[3]);
-                    if (i == 0)
+                    prefabs[3].GetComponent<Horsemen>().playerID = i;
+                    if (i == 0 && manager.TypeMode == 1)
                         prefabs[3].transform.position = pos[0].transform.position;
-                    else
+                    else if (i == 1)
                         prefabs[3].transform.position = pos[1].transform.position;
+                    else
+                        prefabs[3].transform.position = pos[2].transform.position;
                     break;
             }
         }
-        manager.LifeBoss = 3000;
         manager.Dead = false;
         manager.GameOver = GameObject.FindGameObjectWithTag("GameOver");
         manager.Boss = GameObject.FindGameObjectWithTag("Boss");
@@ -77,7 +87,7 @@ public class ResetScene : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        manager.LifeBoss = BossManager.Life;
+      
         switch(manager.TypeMode)
         {
             case 0:
@@ -104,8 +114,8 @@ public class ResetScene : MonoBehaviour {
 
         if (manager.Dead)
         {
-            // boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
-            //boss.GetComponent<LilithAI>().StopAllCoroutines();
+            manager.Boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
+            manager.Boss.GetComponent<LilithAI>().StopAllCoroutines();
             for (int i = 0; i<manager.NbPlayers; i++)
             {
                 manager.Players[i].GetComponent<Horsemen>().enabled = false;

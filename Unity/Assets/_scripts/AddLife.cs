@@ -13,5 +13,7 @@ public class AddLife : MonoBehaviour
         }
 
         //Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
+
     }
 }
