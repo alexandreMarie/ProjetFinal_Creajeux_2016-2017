@@ -31,7 +31,7 @@ public class LilithAI : BossManager
 
     private bool specialState = false;
     private bool attacking = false;
-    private bool straightLineDone = false;
+    //private bool straightLineDone = false;
 
     private GameObject arena = null;
 
@@ -90,8 +90,8 @@ public class LilithAI : BossManager
 
         NavMesh.CalculatePath(transform.position, destination, 0, path);
 
-        if (path.status != NavMeshPathStatus.PathPartial && !specialState)
-            lilithMovement.SetDestination(destination);
+        //if (path.status != NavMeshPathStatus.PathPartial && !specialState)
+        //    lilithMovement.SetDestination(destination);
 
         if (lifeState == LifeState.FOUR)
         {
