@@ -23,11 +23,43 @@ public class Number_Of_Player : MonoBehaviour {
 
         Indice_Player = Controller_Player.NumControllers;
         Debug.Log("Indice_Players : " + Indice_Player + "| Last_Indice_Player : " + Last_Indice_Player);
+        //if (Indice_Player < Last_Indice_Player)
+        //{
+        //    Delete_Player();
+        //}
+
 	    if(Indice_Player != Last_Indice_Player)
         {
             New_player();
         }
-	}
+        Last_Indice_Player = Indice_Player;
+    }
+
+
+    void Delete_Player()
+    {
+        Destroy(Players[Indice_Player-1]);
+    }
+
+    void New_player_test()
+    {
+        Debug.Log(Controller_Player.NumControllers);
+        
+            Debug.Log("On est dedans ! :o");
+       
+            Instantiate(Players[Indice_Player - 1], Character_Selector);
+            Players[Indice_Player-1].SetActive(true);
+            //Players[i].transform.SetParent(Character_Selector);
+            switch (Indice_Player-1)
+            {
+                case (0):
+                    Players[Indice_Player].transform.position = new Vector3(-1.0f, 1.0f, -7.0f);
+                    break;
+                case (1):
+                    Players[Indice_Player].transform.position = new Vector3(1.2f, 1.0f, -7.0f);
+                    break;
+            }
+    }
 
     void New_player()
     {
@@ -41,13 +73,13 @@ public class Number_Of_Player : MonoBehaviour {
             switch (i)
             {
                 case (0):
-                    Players[i].transform.position = new Vector3(-1.07f, 0.0f, -7.25f);
+                    Players[i].transform.position = new Vector3(-1.0f, 1.0f, -7.0f);
                     break;
                 case (1):
-                    Players[i].transform.position = new Vector3(1.35f, 0.0f, -7.25f);
+                    Players[i].transform.position = new Vector3(1.2f, 1.0f, -7.0f);
                     break;
             }
         }
-        Last_Indice_Player = Indice_Player;
+
     }
 }

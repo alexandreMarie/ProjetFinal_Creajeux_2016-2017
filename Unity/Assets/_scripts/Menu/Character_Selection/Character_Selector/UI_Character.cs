@@ -3,7 +3,11 @@ using System.Collections;
 using UnityEngine.UI;
 public class UI_Character : MonoBehaviour {
     [SerializeField]
+    Sprite[] UI_fanion;
+    [SerializeField]
     Sprite [] Logo_Character;
+    [SerializeField]
+    Text[] text_Descriptif;
     struct Stats_Character
     {
        public float speed;
@@ -15,18 +19,41 @@ public class UI_Character : MonoBehaviour {
     [SerializeField]
     Character_Selection[] Players;
     Text[] TextsUI;
+    [SerializeField]
     Image[] Image_UI;
+
     Stats_Character[] Characters;
+
+
+    string[] Description_Personnage;
+
 	// Use this for initialization
 	void Start () {
+        Description_Personnage = new string[4];
+        Description_Personnage[0] = "Perso 1 : hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
+        Description_Personnage[1] = "Perso 2 :  hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
+        Description_Personnage[2] = "Perso 3 :  hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
+        Description_Personnage[3] = "Perso 4 :  hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
         TextsUI = GetComponentsInChildren<Text>();
+
+     
+
         //Players = Character_Selection.GetComponentsInChildren<GameObject>();
-        Image_UI = GetComponentsInChildren<Image>();
     }
 	
 	// Update is called once per frame
 	void Update () {
+        for (int i = 0; i < 2; i++)
+        {
+            TextsUI[i].gameObject.SetActive(false);
+            Image_UI[i].gameObject.SetActive(false);
+        }
         Players = Character_Selection.GetComponentsInChildren<Character_Selection>();
+        for(int i = 0; i < Players.Length;i++)
+        {
+            TextsUI[i].gameObject.SetActive(true);
+            Image_UI[i].gameObject.SetActive(true);
+        }
         Update_Texte();
     }
 
@@ -35,7 +62,9 @@ public class UI_Character : MonoBehaviour {
         for (int i = 0; i < Players.Length; i++)
         {  
          TextsUI[i].text = "Speed : " + Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player()-1).speed + "\n Life : " + Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player()-1).PDV+ "\n Attaque: " + Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player()-1).attack;
-         //Image_UI[i].sprite = Logo_Character[Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player() - 1).ID_perso];
+         Image_UI[i].sprite = Logo_Character[(int)Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player() - 1).selectCharact-1];
+         //Fanion_UI[i].sprite = UI_fanion[Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player() - 1).selectCharact];
+         text_Descriptif[i].text = Description_Personnage[(int)Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player() - 1).selectCharact-1];        
         }
     }
 }

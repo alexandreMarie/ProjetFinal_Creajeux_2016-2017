@@ -80,7 +80,7 @@ public class Character_Selection : MonoBehaviour {
                 GamePadState testState = GamePad.GetState(testPlayerIndex);
                 if (testState.IsConnected)
                 {
-                    Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
+                    //Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
                     playerIndex = testPlayerIndex;
                     playerIndexSet = true;
                 }
@@ -90,9 +90,9 @@ public class Character_Selection : MonoBehaviour {
         state = GamePad.GetState(test);
 
 
-        if(prevState.DPad.Right == ButtonState.Released && prevState.DPad.Left == ButtonState.Released)
+        if(prevState.ThumbSticks.Left.X == 0.0f)
         {
-            Debug.Log("Test");
+           // Debug.Log("Test");
             Button_is_releasd = true;
         }
 
@@ -128,11 +128,12 @@ public class Character_Selection : MonoBehaviour {
             ID_Perso_Selector();
         }
         Perso_Selector();
+        Perso_Rotator();
     }
 
     void ID_Perso_Selector()
     {
-        if (prevState.DPad.Right == ButtonState.Pressed)
+        if (prevState.ThumbSticks.Left.X > 0.5f)
         {
            
                 ID_Perso++;
@@ -146,7 +147,7 @@ public class Character_Selection : MonoBehaviour {
 
         }
 
-        if (prevState.DPad.Left == ButtonState.Pressed)
+        if (prevState.ThumbSticks.Left.X < -0.5f)
         {
           
                 ID_Perso--;
@@ -188,12 +189,21 @@ public class Character_Selection : MonoBehaviour {
             {
                 if (i == ID_Perso - 1)
                 { 
-                    Player[i].transform.position = new Vector3(Player[i].transform.position.x, 0.0f, Player[i].transform.position.z);
+                    Player[i].transform.position = new Vector3(Player[i].transform.position.x, 0.17f, Player[i].transform.position.z);
                 }
                 else
-                    Player[i].transform.position = new Vector3(Player[i].transform.position.x, 10.0f, Player[i].transform.position.z);
+                    Player[i].transform.position = new Vector3(Player[i].transform.position.x, 11.0f, Player[i].transform.position.z);
             }
         
 
     }
+
+    void Perso_Rotator()
+    {
+        for (int i = 0; i < Player.Length; i++)
+        {
+            Player[i].transform.eulerAngles += new Vector3(0.0f, -state.ThumbSticks.Right.X, 0.0f)*Time.deltaTime * 150; 
+        }
+    }
+
 }
