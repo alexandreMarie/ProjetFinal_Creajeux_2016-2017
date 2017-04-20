@@ -116,7 +116,7 @@ public class Pestilence : Horsemen {
     void Start()
     {
         Life = 100;
-        Stamina = 100;
+        Stamina = 0;
         Speed = 20f;
         DashDuration = 0.2f;
         DashBehaviour = pestilenceDashBehaviour;

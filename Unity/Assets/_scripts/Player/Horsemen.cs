@@ -376,11 +376,6 @@ public abstract class Horsemen : MonoBehaviour
             }
         }
 
-        //if (XIMinstance.GetButtonDown(playerID, XInputManager.XButtons.RightBumper))
-        //{
-        //    XIMinstance.SetVibration(playerID, 0.5f, 1f);
-        //}
-
         Move();
         Rotate();
     }
@@ -407,6 +402,8 @@ public abstract class Horsemen : MonoBehaviour
                 XIMinstance.SetVibration(playerID, freezeDuration, 1f);
                 Life -= 10;
             }
+
+            UpdateLevelShoot(false);
         }
     }
 }
