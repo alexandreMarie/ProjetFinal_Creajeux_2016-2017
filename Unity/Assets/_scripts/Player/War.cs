@@ -135,7 +135,7 @@ public class War : Horsemen
     void Start()
     {
         Stamina = 100;
-        Speed = 16f;
+        Speed = 20f;
         DashDuration = 0.2f;
         DashBehaviour = warDashBehaviour;
         Bullet = prefabBullet;
