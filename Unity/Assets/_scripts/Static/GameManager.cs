@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     private bool dead;
 
     /* 0 = solo/standard; 1 = duo/standard; 2 = duo/Hardcore; 3 = ...*/
-    private int typeMode = 1;
+    private int typeMode = 0;
 
     int id_Arena;
     int load_Mode;
