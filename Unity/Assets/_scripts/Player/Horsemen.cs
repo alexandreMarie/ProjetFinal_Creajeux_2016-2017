@@ -13,7 +13,7 @@ public abstract class Horsemen : MonoBehaviour
         Five = 16
     }
 
-    StageFire dbgStage = StageFire.One;
+    StageFire shootStage = StageFire.One;
 
     #region Variables
 
@@ -29,9 +29,13 @@ public abstract class Horsemen : MonoBehaviour
         {
             return life;
         }
-        private set
+        set
         {
             life = value;
+            if (life > lifeMax)
+            {
+                life = lifeMax;
+            }
             lifeUpdater.UpdateLifebar(life);
         }
     }
@@ -59,6 +63,8 @@ public abstract class Horsemen : MonoBehaviour
 
     [SerializeField]
     protected byte fireMask = (byte)StageFire.One;
+
+    Transform arenaCenter = null;
 
     #endregion
 
@@ -166,13 +172,81 @@ public abstract class Horsemen : MonoBehaviour
 
     public abstract void SpecialShoot();
 
+    /// <summary>
+    /// Update the stage shoot
+    /// </summary>
+    /// <param name="levelUp">True is level up, False is level down</param>
+    public void UpdateLevelShoot(bool levelUp)
+    {
+        if (levelUp)
+        {
+            // PowerUp !
+            switch (shootStage)
+            {
+                case StageFire.One:
+                    shootStage = StageFire.Two;
+                    fireMask += (byte)StageFire.Two;
+                    break;
+                case StageFire.Two:
+                    shootStage = StageFire.Three;
+                    fireMask += (byte)StageFire.Three;
+                    break;
+                case StageFire.Three:
+                    shootStage = StageFire.Four;
+                    fireMask = (byte)StageFire.Four;
+                    break;
+                case StageFire.Four:
+                    shootStage = StageFire.Five;
+                    fireMask = (byte)StageFire.Five;
+                    line.enabled = false;
+                    break;
+                case StageFire.Five:
+                    shootStage = StageFire.One;
+                    fireMask = (byte)StageFire.One;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            // PowerDown
+            switch (shootStage)
+            {
+                case StageFire.Two:
+                    shootStage = StageFire.One;
+                    fireMask = (byte)StageFire.One;
+                    break;
+                case StageFire.Three:
+                    shootStage = StageFire.Two;
+                    fireMask -= (byte)StageFire.Three;
+                    break;
+                case StageFire.Four:
+                    shootStage = StageFire.Three;
+                    fireMask = (byte)StageFire.Three & (byte)StageFire.Two & (byte)StageFire.One;
+                    line.enabled = false;
+                    break;
+                case StageFire.Five:
+                    shootStage = StageFire.One;
+                    fireMask = (byte)StageFire.One;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     void Move()
     {
         if (moveValue.magnitude > stickDeadZone)
         {
             direction = ((Camera.main.transform.right * moveValue.x) + (Camera.main.transform.forward * moveValue.y)).normalized * Time.unscaledDeltaTime * speed;
             direction.y = 0; // Cancel the Y translation;
-            rb.AddForce(direction * speed, ForceMode.VelocityChange);
+            if (Vector3.Distance(direction + transform.position, arenaCenter.position) < 5)
+            {
+                rb.AddForce(direction * speed, ForceMode.VelocityChange);
+            }
+
         }
     }
 
@@ -246,6 +320,12 @@ public abstract class Horsemen : MonoBehaviour
         aimValue = Vector2.zero;
         lifeUpdater = GetComponentInChildren<LifeUpdater>();
         fireLayer.value = 1 << LayerMask.NameToLayer("Boss");
+        arenaCenter = GameObject.FindGameObjectWithTag("Center").transform;
+
+        if (arenaCenter == null)
+        {
+            throw new Exception("Centre de l'arene non trouvé");
+        }
         //Debug.Log(LayerMask.NameToLayer("Boss"));
     }
 
@@ -290,43 +370,6 @@ public abstract class Horsemen : MonoBehaviour
             {
                 dashCoroutine = StartCoroutine(Dash());
                 isInvincible = true;
-            }
-        }
-
-        // DEBUG pour les shoots
-        if (XIMinstance.GetButtonDown(playerID, XInputManager.XButtons.RightBumper))
-        {
-            switch (dbgStage)
-            {
-                case StageFire.One:
-                    dbgStage = StageFire.Two;
-                    fireMask += (byte)StageFire.Two;
-                    Debug.Log((fireMask & (byte)StageFire.One));
-
-                    break;
-                case StageFire.Two:
-                    dbgStage = StageFire.Three;
-                    fireMask += (byte)StageFire.Three;
-                    Debug.Log((fireMask & (byte)StageFire.One));
-                    break;
-                case StageFire.Three:
-                    dbgStage = StageFire.Four;
-                    fireMask = (byte)StageFire.Four;
-                    Debug.Log((fireMask & (byte)StageFire.One));
-                    break;
-                case StageFire.Four:
-                    dbgStage = StageFire.Five;
-                    fireMask = (byte)StageFire.Five;
-                    Debug.Log((fireMask & (byte)StageFire.One));
-                    line.enabled = false;
-                    break;
-                case StageFire.Five:
-                    dbgStage = StageFire.One;
-                    fireMask = (byte)StageFire.One;
-                    Debug.Log((fireMask & (byte)StageFire.One));
-                    break;
-                default:
-                    break;
             }
         }
 

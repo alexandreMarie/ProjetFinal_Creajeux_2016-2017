@@ -9,14 +9,12 @@ public class Character_Selection : MonoBehaviour {
     //23 24 34 mais Milestone final
     //29 30 31 Final Milestone
     SoundsManager SM;
-    [SerializeField]
-    Sprite [] Logo_Character;
     public struct Stats_Character
     {
         public float speed;
         public int attack;
-        public float PDV;
-        public int ID_perso;
+        public int PDV;
+        public SelectCharact selectCharact;
     }
     /*RAJOUTE UN STICK ABRUTIT DE PROG STEAMPUNK*/
 
@@ -27,6 +25,8 @@ public class Character_Selection : MonoBehaviour {
 
     */
 
+    /* Enum characters */
+    public enum  SelectCharact {Null, Death, Pestilence, Famine, War };
 
     Stats_Character [] Characters;
 
@@ -63,10 +63,9 @@ public class Character_Selection : MonoBehaviour {
         {
             Characters[i].attack = (int)Random.Range(1.0f, 50.0f);
             Characters[i].speed = Random.Range(1.0f, 50.0f);
-            Characters[i].PDV = Random.Range(1.0f, 50.0f);
-            Characters[i].ID_perso = i;
+            Characters[i].PDV = Random.Range(1, 50);
+            Characters[i].selectCharact = (SelectCharact)i+1;
         }
-     
     }
 	
 	// Update is called once per frame

@@ -5,16 +5,20 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
+
+    /* Player with his character */
     private Character_Selection.Stats_Character [] struc_stat_character;
+
+
     private bool dead;
 
     /* 0 = solo/standard; 1 = duo/standard; 2 = duo/Hardcore; 3 = ...*/
-    private int typeMode = 0;
+    private int typeMode = 1;
 
     int id_Arena;
     int load_Mode;
 
-
+    private int nbPlayers = 2;
     [SerializeField]
     private GameObject gameOver;
 
@@ -30,6 +34,7 @@ public class GameManager : MonoBehaviour
     private int damageByBoss = 40;
 
     private GameObject boss;
+    [SerializeField]
     private GameObject[] players;
 
     private List<int> score = new List<int>();
@@ -286,9 +291,40 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Set_Stat_Player(Character_Selection.Stats_Character State,int i,int Number_of_controller)
-      {
+    public int NbPlayers
+    {
+        get
+        {
+            return nbPlayers;
+        }
+
+        set
+        {
+            nbPlayers = value;
+        }
+    }
+
+    public Character_Selection.Stats_Character[] Struc_stat_character
+    {
+        get
+        {
+            return struc_stat_character;
+        }
+
+        set
+        {
+            struc_stat_character = value;
+        }
+    }
+    
+    public void CreateStrucCharact(int Number_of_controller)
+    {
         struc_stat_character = new Character_Selection.Stats_Character[Number_of_controller];
+        nbPlayers = Number_of_controller;
+    }
+    /* i = 0 = First Player; i = 1 = Second Player; */
+    public void Set_Stat_Player(Character_Selection.Stats_Character State,int i)
+      {
         struc_stat_character[i] = State;
       }
 
