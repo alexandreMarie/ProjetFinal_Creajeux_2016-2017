@@ -31,10 +31,10 @@ public class UI_Character : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Description_Personnage = new string[4];
-        Description_Personnage[0] = "Perso 1";
-        Description_Personnage[1] = "Perso 2";
-        Description_Personnage[2] = "Perso 3";
-        Description_Personnage[3] = "Perso 4";
+        Description_Personnage[0] = "Perso 1 : ";
+        Description_Personnage[1] = "Perso 2 : ";
+        Description_Personnage[2] = "Perso 3 : ";
+        Description_Personnage[3] = "Perso 4 : ";
         TextsUI = GetComponentsInChildren<Text>();
         //Players = Character_Selection.GetComponentsInChildren<GameObject>();
     }
