@@ -16,9 +16,8 @@ public abstract class Horsemen : MonoBehaviour
     StageFire shootStage = StageFire.One;
 
     #region Variables
-
-    [SerializeField]
-    int playerID;
+    
+    public int playerID;
 
     XInputManager XIMinstance;
     private bool isInvincible;
@@ -37,6 +36,7 @@ public abstract class Horsemen : MonoBehaviour
                 life = lifeMax;
             }
             lifeUpdater.UpdateLifebar(life);
+            GameManager.Instance.UpdateLife(playerID, life);
         }
     }
 

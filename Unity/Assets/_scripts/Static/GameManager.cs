@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int lifePlayer2;
     [SerializeField]
-    private float lifeBoss = 3000;
+    private float lifeBoss;
 
     private int nbHit = 25;
     private int nbShoot = 10;
@@ -56,6 +56,13 @@ public class GameManager : MonoBehaviour
         }
     }
     
+    public void UpdateLife( int playerId, int life)
+    {
+        if (playerId == 0)
+            lifePlayer1 = life;
+        else if (playerId == 1)
+            lifePlayer2 = life;
+    }
     public void SaveData(int scoreAdd)
     {
         GetData();
