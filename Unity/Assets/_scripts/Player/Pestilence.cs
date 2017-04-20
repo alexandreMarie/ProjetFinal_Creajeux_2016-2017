@@ -117,8 +117,8 @@ public class Pestilence : Horsemen {
     {
         Life = 100;
         Stamina = 0;
-        Speed = 20f;
-        DashDuration = 0.2f;
+        Speed = 17f;
+        DashDuration = 0.1f;
         DashBehaviour = pestilenceDashBehaviour;
         Bullet = prefabBullet;
         line = GetComponent<LineRenderer>();

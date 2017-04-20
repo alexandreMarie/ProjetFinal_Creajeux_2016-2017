@@ -119,8 +119,8 @@ public class Death : Horsemen
     {
         Life = 100;
         Stamina = 0;
-        Speed = 20f;
-        DashDuration = 0.2f;
+        Speed = 19f;
+        DashDuration = 0.1f;
         DashBehaviour = deathDashBehaviour;
         Bullet = prefabBullet;
         line = GetComponent<LineRenderer>();

@@ -70,6 +70,8 @@ public abstract class Horsemen : MonoBehaviour
 
     Transform arenaCenter = null;
 
+    int nbHitLvlDown = hitLvlDown;
+
     #endregion
 
     #region Overridable Values
@@ -166,6 +168,8 @@ public abstract class Horsemen : MonoBehaviour
     const float stickDeadZone = 0.3f;
     const float triggerDeadZone = 0.1f;
     protected const int nbBulletsPool = 30;
+
+    const int hitLvlDown = 5;
 
     [SerializeField]
     protected LayerMask fireLayer = 9;
@@ -322,7 +326,7 @@ public abstract class Horsemen : MonoBehaviour
         aimValue = Vector2.zero;
         lifeUpdater = GetComponentInChildren<LifeUpdater>();
         fireLayer.value = 1 << LayerMask.NameToLayer("Boss");
-        foreach(LifeManager manager in GameObject.FindObjectsOfType<LifeManager>())
+        foreach (LifeManager manager in GameObject.FindObjectsOfType<LifeManager>())
         {
             if ((int)manager.lifeCharacter == playerID)
             {
@@ -403,7 +407,12 @@ public abstract class Horsemen : MonoBehaviour
                 Life -= 10;
             }
 
-            UpdateLevelShoot(false);
+            nbHitLvlDown--;
+            if (nbHitLvlDown < hitLvlDown)
+            {
+                nbHitLvlDown = hitLvlDown;
+                UpdateLevelShoot(false);
+            }
         }
     }
 }
