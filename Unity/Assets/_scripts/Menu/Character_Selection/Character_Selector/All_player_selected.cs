@@ -44,9 +44,12 @@ public class All_player_selected : MonoBehaviour {
 	if(Loading_Ok == true)
         {
             Debug.Log("Ca marche! putain pour une fois t'es compétant fete ca enculé !");
-           for(int i = 0; i < XIM.NumControllers;i++)
+            //First : Create Structure
+            GM.CreateStrucCharact(XIM.NumControllers);
+            //Second : Add variable
+            for(int i = 0; i < XIM.NumControllers;i++)
             {
-                GM.Set_Stat_Player(Players[i].Return_Stats(i), i, XIM.NumControllers);
+                GM.Set_Stat_Player(Players[i].Return_Stats(Players[i].Return_Id_Player()-1), i);
             }
             Debug.Log(MManag.GetLoadState());
            switch(MManag.GetLoadState())

@@ -72,7 +72,25 @@ public class Arena_Selection : MonoBehaviour {
             Debug.Log("Test");
             Button_is_releasd_A = false;
             GM.ID_arena = Arena_ID;
-            SceneManager.LoadScene(3);
+            switch(Arena_ID)
+            {
+                case 0:
+                    //First Arena
+                    SceneManager.LoadScene(3);
+                    break;
+                case 1:
+                    //Second Arena
+                    SceneManager.LoadScene(3);
+                    break;
+                case 2:
+                    //Third Arena
+                    SceneManager.LoadScene(3);
+                    break;
+                case 3:
+                    //Fourth Arena
+                    SceneManager.LoadScene(3);
+                    break;
+            }
             SM.Play_Selector(1);
         }
 
