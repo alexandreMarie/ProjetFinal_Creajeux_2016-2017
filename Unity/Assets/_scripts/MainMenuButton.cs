@@ -19,4 +19,9 @@ public class MainMenuButton : MonoBehaviour
         MManag = MenuManager.Instance;
         SceneManager.LoadScene(stateButton);
     }
+
+    public void Exite_Game()
+    {
+        Application.Quit();
+    }
 }

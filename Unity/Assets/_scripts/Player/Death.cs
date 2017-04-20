@@ -123,6 +123,8 @@ public class Death : Horsemen
         DashDuration = 0.2f;
         DashBehaviour = deathDashBehaviour;
         Bullet = prefabBullet;
+        line = GetComponent<LineRenderer>();
+        line.enabled = false;
     }
 
     // Update is called once per frame

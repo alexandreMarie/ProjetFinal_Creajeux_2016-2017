@@ -28,7 +28,7 @@ public class All_player_selected : MonoBehaviour {
         {
             Players[i].GetComponent<Character_Selection>().Set_SM(SM);
         }
-            Debug.Log(Players.Length);
+            //Debug.Log(Players.Length);
         for (int i = 0; i < Players.Length; i++)
         {
             if (Players[i].Return_Boolen() == true)

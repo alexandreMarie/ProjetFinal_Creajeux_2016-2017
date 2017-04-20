@@ -147,6 +147,7 @@ public abstract class Horsemen : MonoBehaviour
         {
             bullet = value;
             // Init of pool
+            Debug.Log("Bullet");
             GameObject go = new GameObject("BulletPoolPlayer" + (playerID + 1), typeof(Pool));
             pool = go.GetComponent<Pool>();
             pool.Init(bullet, nbBulletsPool);

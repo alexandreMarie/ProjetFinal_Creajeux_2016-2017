@@ -121,6 +121,8 @@ public class Famine : Horsemen {
         DashDuration = 0.2f;
         DashBehaviour = famineDashBehaviour;
         Bullet = prefabBullet;
+        line = GetComponent<LineRenderer>();
+        line.enabled = false;
     }
 
     // Update is called once per frame

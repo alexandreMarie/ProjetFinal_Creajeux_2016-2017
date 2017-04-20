@@ -54,7 +54,7 @@ public class Arena_Selection : MonoBehaviour {
         prevState = state;
         state = GamePad.GetState(test);
 
-        if (prevState.DPad.Right == ButtonState.Released && prevState.DPad.Left == ButtonState.Released)
+        if (prevState.ThumbSticks.Left.X == 0)
         {
             Debug.Log("Test");
             Button_is_releasd = true;
@@ -149,7 +149,7 @@ public class Arena_Selection : MonoBehaviour {
 
     void ID_Perso_Selector()
     {
-        if (prevState.DPad.Right == ButtonState.Pressed)
+        if (prevState.ThumbSticks.Left.X >= 0.5)
         {
 
           
@@ -167,7 +167,7 @@ public class Arena_Selection : MonoBehaviour {
 
         }
 
-        if (prevState.DPad.Left == ButtonState.Pressed)
+        if (prevState.ThumbSticks.Left.X <= -0.5)
         {
             //SM.SourceMusic.clip = SM.Sfx_Menu[0];
             Arena_ID--;
