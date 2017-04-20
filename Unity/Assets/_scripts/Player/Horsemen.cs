@@ -163,7 +163,7 @@ public abstract class Horsemen : MonoBehaviour
     const int lifeMax = 100;
     const int staminaMax = 100;
     const float freezeDuration = 2f;
-    const float blinkDuration = 0.4f;
+    const float blinkDuration = 0.2f;
     const float rotateSmooth = 0.05f;
     const float stickDeadZone = 0.3f;
     const float triggerDeadZone = 0.1f;
