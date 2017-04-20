@@ -21,8 +21,7 @@ public class UI_Character : MonoBehaviour {
     Text[] TextsUI;
     [SerializeField]
     Image[] Image_UI;
-    [SerializeField]
-    Image[] Fanion_UI;
+
     Stats_Character[] Characters;
 
 
@@ -31,17 +30,30 @@ public class UI_Character : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Description_Personnage = new string[4];
-        Description_Personnage[0] = "Perso 1 : ";
-        Description_Personnage[1] = "Perso 2 : ";
-        Description_Personnage[2] = "Perso 3 : ";
-        Description_Personnage[3] = "Perso 4 : ";
+        Description_Personnage[0] = "Perso 1 : hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
+        Description_Personnage[1] = "Perso 2 :  hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
+        Description_Personnage[2] = "Perso 3 :  hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
+        Description_Personnage[3] = "Perso 4 :  hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
         TextsUI = GetComponentsInChildren<Text>();
+
+     
+
         //Players = Character_Selection.GetComponentsInChildren<GameObject>();
     }
 	
 	// Update is called once per frame
 	void Update () {
+        for (int i = 0; i < 2; i++)
+        {
+            TextsUI[i].gameObject.SetActive(false);
+            Image_UI[i].gameObject.SetActive(false);
+        }
         Players = Character_Selection.GetComponentsInChildren<Character_Selection>();
+        for(int i = 0; i < Players.Length;i++)
+        {
+            TextsUI[i].gameObject.SetActive(true);
+            Image_UI[i].gameObject.SetActive(true);
+        }
         Update_Texte();
     }
 
