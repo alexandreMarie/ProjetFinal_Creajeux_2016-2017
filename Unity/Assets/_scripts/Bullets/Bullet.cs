@@ -25,11 +25,6 @@ public class Bullet : Poolable
         set { rotateBullet = value; }
     }
 
-    void Start()
-    {
-        StartCoroutine(DisableAfter());
-    }
-
     void OnEnable()
     {
         StartCoroutine(DisableAfter());

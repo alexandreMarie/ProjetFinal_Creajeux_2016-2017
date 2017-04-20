@@ -9,7 +9,8 @@ using UnityEngine;
 
 /// <summary>
 /// TODO
-/// - stuffs
+/// - Rework pooling
+/// - Rework the eye pattern : one eye for each player? random but with colours,
 /// </summary>
 
 public class LilithAI : BossManager
@@ -80,7 +81,7 @@ public class LilithAI : BossManager
     private void BulletCancel()
     {
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("EnnemyBullet"))
-            Destroy(go);
+            go.SetActive(false);
     }
 
     void Update()
@@ -101,7 +102,7 @@ public class LilithAI : BossManager
             lifeState = LifeState.THREE;
 
             /////////////////////////TESTAI
-            StartCoroutine(TestAI());
+            StartCoroutine(AI1());
             //StartCoroutine(Snake());
         }
 
@@ -163,7 +164,7 @@ public class LilithAI : BossManager
         {
             int attack = Random.Range(1, 4);
 
-            switch (0)
+            switch (2)
             {
                 case 1:
                     StartCoroutine(EarthPowder());
@@ -302,12 +303,14 @@ public class LilithAI : BossManager
 
         yield return new WaitForSeconds(3.0f);
 
-        Vector3 hitPosition = players[0].transform.position;
+        int target = Random.Range(0, 2);
+
+        Vector3 hitPosition = players[target].transform.position;
 
         yield return new WaitForSeconds(1.0f);
 
-        if (players[0].transform.position == hitPosition)
-            players[0].GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 0.0f), ForceMode.Impulse);
+        if (players[target].transform.position == hitPosition)
+            players[target].GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 0.0f), ForceMode.Impulse);
 
         yield return new WaitForSeconds(5.0f);
 

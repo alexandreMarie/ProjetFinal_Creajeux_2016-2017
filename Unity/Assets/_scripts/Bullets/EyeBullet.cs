@@ -27,28 +27,23 @@ public class EyeBullet : MonoBehaviour
         count++;
         number = count;
 
-        if (count % 2 == 0)
-
-        {
-            transform.position = new Vector3(1.5f - Random.Range(-0.5f, 0.5f), 2.0f - Random.Range(-0.5f, 0.5f), -10.0f - Random.Range(-0.5f, 0.5f));
-            target = new Vector3(Random.Range(0.0f, 1.0f), 0, Random.Range(-1.0f, 1.0f));
-        }
-        else
-        {
-            transform.position = new Vector3(-1.5f - Random.Range(-0.5f, 0.5f), 2.0f - Random.Range(-0.5f, 0.5f), -10.0f - Random.Range(-0.5f, 0.5f));
-            target = new Vector3(Random.Range(-1.0f, 0.0f), 0, Random.Range(-1.0f, 1.0f));
-        }
-
         if (!gm)
             gm = GameManager.Instance;
+
+        int targetPlayer = Random.Range(0, 2);
+
+        if (count % 2 == 0)
+            transform.position = new Vector3(1.5f - Random.Range(-0.5f, 0.5f), 2.0f - Random.Range(-0.5f, 0.5f), -10.0f - Random.Range(-0.5f, 0.5f));
+        else
+            transform.position = new Vector3(-1.5f - Random.Range(-0.5f, 0.5f), 2.0f - Random.Range(-0.5f, 0.5f), -10.0f - Random.Range(-0.5f, 0.5f));
+
+
+        target = gm.Players[targetPlayer].transform.position;
     }
 
     void Update()
     {
-        //if (t > 2.0f)
-        //    t += Time.deltaTime * 2;
-        //else
-            t += Time.deltaTime * 1.5f;
+        t += Time.deltaTime * 1.5f;
 
         if (transform.position.y > 0.1)
         {
