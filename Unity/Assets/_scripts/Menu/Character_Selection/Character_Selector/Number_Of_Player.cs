@@ -22,7 +22,7 @@ public class Number_Of_Player : MonoBehaviour {
 	void Update () {
 
         Indice_Player = Controller_Player.NumControllers;
-        Debug.Log("Indice_Players : " + Indice_Player + "| Last_Indice_Player : " + Last_Indice_Player);
+       // Debug.Log("Indice_Players : " + Indice_Player + "| Last_Indice_Player : " + Last_Indice_Player);
         //if (Indice_Player < Last_Indice_Player)
         //{
         //    Delete_Player();
@@ -45,7 +45,7 @@ public class Number_Of_Player : MonoBehaviour {
     {
         Debug.Log(Controller_Player.NumControllers);
         
-            Debug.Log("On est dedans ! :o");
+           // Debug.Log("On est dedans ! :o");
        
             Instantiate(Players[Indice_Player - 1], Character_Selector);
             Players[Indice_Player-1].SetActive(true);
@@ -66,7 +66,7 @@ public class Number_Of_Player : MonoBehaviour {
         Debug.Log(Controller_Player.NumControllers);
         for (i = i; i < Indice_Player; i++)
         {
-            Debug.Log("On est dedans ! :o");
+            //Debug.Log("On est dedans ! :o");
             Instantiate(Players[i], Character_Selector);
             Players[i].SetActive(true);
             //Players[i].transform.SetParent(Character_Selector);
