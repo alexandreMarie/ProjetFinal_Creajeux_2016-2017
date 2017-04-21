@@ -54,9 +54,10 @@ public class EyeBullet : MonoBehaviour
     private IEnumerator Target()
     {
         yield return new WaitForSeconds(0.3f);
-
-        int targetPlayer = Random.Range(0, 2);
-
+        int targetPlayer=0;
+        if (gm.NbPlayers >1)
+            targetPlayer = Random.Range(0, gm.NbPlayers);
         target = gm.Players[targetPlayer].transform.position;
+        Debug.Log(gm.Players.Length);
     }
 }

@@ -191,7 +191,8 @@ public class LilithAI : BossManager
     {
         while (true)
         {
-            targetPlayer = Random.Range(0, 2);
+            if (GameManager.Instance.NbPlayers > 1)
+                targetPlayer = Random.Range(0, 2);
 
             yield return new WaitForSeconds(15.0f);
         }
@@ -294,6 +295,7 @@ public class LilithAI : BossManager
 
         yield return new WaitForSeconds(3.0f);
 
+      
         Vector3 scavengePosition = new Vector3(-30, 1.0f, players[targetPlayer].position.z);
 
         Transform _scavengingSnake = Instantiate(scavengingSnake, scavengePosition, Quaternion.identity) as Transform;
@@ -316,8 +318,9 @@ public class LilithAI : BossManager
         cameraShake.shakeDuration = 3.0f;
 
         yield return new WaitForSeconds(3.0f);
-
-        int target = Random.Range(0, 2);
+        int target = 0;
+        if (GameManager.Instance.NbPlayers > 1)
+             target = Random.Range(0, 2);
 
         Vector3 hitPosition = players[target].transform.position;
 

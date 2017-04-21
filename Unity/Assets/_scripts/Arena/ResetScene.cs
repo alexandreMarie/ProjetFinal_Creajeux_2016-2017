@@ -23,48 +23,49 @@ public class ResetScene : MonoBehaviour {
         manager.Struc_stat_character[0].selectCharact = (Character_Selection.SelectCharact)4;*/
         for (int i = 0; i<manager.NbPlayers; i++)
         {
+            GameObject go;
             selecCharact = manager.Struc_stat_character[i].selectCharact;
             switch(selecCharact)
             {
                 case Character_Selection.SelectCharact.Pestilence:
-                    Instantiate(prefabs[1]);
-                    prefabs[1].GetComponent<Horsemen>().playerID = i;
+                    go = Instantiate(prefabs[1]);
+                    go.GetComponent<Horsemen>().playerID = i;
                     if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
-                        prefabs[1].transform.position = pos[0].transform.position;
+                        go.transform.position = pos[0].transform.position;
                     else if(i ==1)
-                        prefabs[1].transform.position = pos[1].transform.position;
+                        go.transform.position = pos[1].transform.position;
                     else
-                        prefabs[1].transform.position = pos[2].transform.position;
+                        go.transform.position = pos[2].transform.position;
                     break;
                 case Character_Selection.SelectCharact.Death:
-                    Instantiate(prefabs[0]);
-                    prefabs[0].GetComponent<Horsemen>().playerID = i;
+                    go=Instantiate(prefabs[0]);
+                    go.GetComponent<Horsemen>().playerID = i;
                     if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
-                        prefabs[0].transform.position = pos[0].transform.position;
+                        go.transform.position = pos[0].transform.position;
                     else if(i == 1)
-                        prefabs[0].transform.position = pos[1].transform.position;
+                        go.transform.position = pos[1].transform.position;
                     else
-                        prefabs[0].transform.position = pos[2].transform.position;
+                        go.transform.position = pos[2].transform.position;
                     break;
                 case Character_Selection.SelectCharact.Famine:
-                    Instantiate(prefabs[2]);
-                    prefabs[2].GetComponent<Horsemen>().playerID = i;
+                    go=Instantiate(prefabs[2]);
+                    go.GetComponent<Horsemen>().playerID = i;
                     if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
-                        prefabs[2].transform.position = pos[0].transform.position;
+                        go.transform.position = pos[0].transform.position;
                     else if (i == 1)
-                        prefabs[2].transform.position = pos[1].transform.position;
+                        go.transform.position = pos[1].transform.position;
                     else
-                        prefabs[2].transform.position = pos[2].transform.position;
+                        go.transform.position = pos[2].transform.position;
                     break;
                 case Character_Selection.SelectCharact.War:
-                    Instantiate(prefabs[3]);
-                    prefabs[3].GetComponent<Horsemen>().playerID = i;
+                    go=Instantiate(prefabs[3]);
+                    go.GetComponent<Horsemen>().playerID = i;
                     if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
-                        prefabs[3].transform.position = pos[0].transform.position;
+                        go.transform.position = pos[0].transform.position;
                     else if (i == 1)
-                        prefabs[3].transform.position = pos[1].transform.position;
+                        go.transform.position = pos[1].transform.position;
                     else
-                        prefabs[3].transform.position = pos[2].transform.position;
+                        go.transform.position = pos[2].transform.position;
                     break;
             }
         }
