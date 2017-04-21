@@ -36,6 +36,14 @@ public class LifeManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (lifeCharacter == LifeCharacter.Player2 && GameManager.Instance.NbPlayers == 1)
+        {
+            this.gameObject.SetActive(false); // ne marchera surement pas 2 fois
+        }
+    }
+
     /*public void Start()
     {
         // Récup de l'image configurée en filled
