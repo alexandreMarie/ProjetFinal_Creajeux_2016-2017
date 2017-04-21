@@ -360,4 +360,9 @@ public class LilithAI : BossManager
 
         yield return null;
     }
+
+    void OnTriggerEnter(Collider col)
+    {
+        return;
+    }
 }
