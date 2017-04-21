@@ -116,9 +116,9 @@ public class Famine : Horsemen {
     void Start()
     {
         Life = 100;
-        Stamina = 100;
-        Speed = 20f;
-        DashDuration = 0.2f;
+        Stamina = 0;
+        Speed = 18f;
+        DashDuration = 0.1f;
         DashBehaviour = famineDashBehaviour;
         Bullet = prefabBullet;
         line = GetComponent<LineRenderer>();

@@ -70,6 +70,8 @@ public abstract class Horsemen : MonoBehaviour
 
     Transform arenaCenter = null;
 
+    int nbHitLvlDown = hitLvlDown;
+
     #endregion
 
     #region Overridable Values
@@ -161,11 +163,13 @@ public abstract class Horsemen : MonoBehaviour
     const int lifeMax = 100;
     const int staminaMax = 100;
     const float freezeDuration = 2f;
-    const float blinkDuration = 0.4f;
+    const float blinkDuration = 0.2f;
     const float rotateSmooth = 0.05f;
     const float stickDeadZone = 0.3f;
     const float triggerDeadZone = 0.1f;
     protected const int nbBulletsPool = 30;
+
+    const int hitLvlDown = 5;
 
     [SerializeField]
     protected LayerMask fireLayer = 9;
@@ -322,7 +326,7 @@ public abstract class Horsemen : MonoBehaviour
         aimValue = Vector2.zero;
         lifeUpdater = GetComponentInChildren<LifeUpdater>();
         fireLayer.value = 1 << LayerMask.NameToLayer("Boss");
-        foreach(LifeManager manager in GameObject.FindObjectsOfType<LifeManager>())
+        foreach (LifeManager manager in GameObject.FindObjectsOfType<LifeManager>())
         {
             if ((int)manager.lifeCharacter == playerID)
             {
@@ -376,11 +380,6 @@ public abstract class Horsemen : MonoBehaviour
             }
         }
 
-        //if (XIMinstance.GetButtonDown(playerID, XInputManager.XButtons.RightBumper))
-        //{
-        //    XIMinstance.SetVibration(playerID, 0.5f, 1f);
-        //}
-
         Move();
         Rotate();
     }
@@ -406,6 +405,13 @@ public abstract class Horsemen : MonoBehaviour
                 StartCoroutine(Freeze());
                 XIMinstance.SetVibration(playerID, freezeDuration, 1f);
                 Life -= 10;
+            }
+
+            nbHitLvlDown--;
+            if (nbHitLvlDown < hitLvlDown)
+            {
+                nbHitLvlDown = hitLvlDown;
+                UpdateLevelShoot(false);
             }
         }
     }
