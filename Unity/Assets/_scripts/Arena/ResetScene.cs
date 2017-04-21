@@ -29,7 +29,7 @@ public class ResetScene : MonoBehaviour {
                 case Character_Selection.SelectCharact.Pestilence:
                     Instantiate(prefabs[1]);
                     prefabs[1].GetComponent<Horsemen>().playerID = i;
-                    if (i == 0 && manager.TypeMode == 1)
+                    if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
                         prefabs[1].transform.position = pos[0].transform.position;
                     else if(i ==1)
                         prefabs[1].transform.position = pos[1].transform.position;
@@ -39,7 +39,7 @@ public class ResetScene : MonoBehaviour {
                 case Character_Selection.SelectCharact.Death:
                     Instantiate(prefabs[0]);
                     prefabs[0].GetComponent<Horsemen>().playerID = i;
-                    if (i == 0 && manager.TypeMode == 1)
+                    if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
                         prefabs[0].transform.position = pos[0].transform.position;
                     else if(i == 1)
                         prefabs[0].transform.position = pos[1].transform.position;
@@ -49,7 +49,7 @@ public class ResetScene : MonoBehaviour {
                 case Character_Selection.SelectCharact.Famine:
                     Instantiate(prefabs[2]);
                     prefabs[2].GetComponent<Horsemen>().playerID = i;
-                    if (i == 0 && manager.TypeMode == 1)
+                    if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
                         prefabs[2].transform.position = pos[0].transform.position;
                     else if (i == 1)
                         prefabs[2].transform.position = pos[1].transform.position;
@@ -59,7 +59,7 @@ public class ResetScene : MonoBehaviour {
                 case Character_Selection.SelectCharact.War:
                     Instantiate(prefabs[3]);
                     prefabs[3].GetComponent<Horsemen>().playerID = i;
-                    if (i == 0 && manager.TypeMode == 1)
+                    if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
                         prefabs[3].transform.position = pos[0].transform.position;
                     else if (i == 1)
                         prefabs[3].transform.position = pos[1].transform.position;
@@ -78,7 +78,7 @@ public class ResetScene : MonoBehaviour {
             case 0:
                 manager.LifePlayer1 = manager.Struc_stat_character[0].PDV;
                 break;
-            case 1:
+            case (GameManager.Mode)1:
                 manager.LifePlayer1 = manager.Struc_stat_character[0].PDV;
                 manager.LifePlayer2 = manager.Struc_stat_character[1].PDV;
                 break;
@@ -96,7 +96,7 @@ public class ResetScene : MonoBehaviour {
                     CameraManager.Instance.DeadPlayer1 = true;
                 }
                 break;
-            case 1:
+            case (GameManager.Mode)1:
                 if (manager.LifePlayer1 <= 0)
                 {
                     CameraManager.Instance.DeadPlayer1 = true;
@@ -114,12 +114,7 @@ public class ResetScene : MonoBehaviour {
 
         if (manager.Dead)
         {
-            manager.Boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
-            manager.Boss.GetComponent<LilithAI>().StopAllCoroutines();
-            for (int i = 0; i<manager.NbPlayers; i++)
-            {
-                manager.Players[i].GetComponent<Horsemen>().enabled = false;
-            }
+            
             manager.GameOver.SetActive(true);
         }
        else

@@ -61,7 +61,7 @@ public abstract class Horsemen : MonoBehaviour
 
     private LifeUpdater lifeUpdater;
 
-    private LifeManager lifeManager;
+    protected LifeManager lifeManager;
 
     protected LineRenderer line;
 
@@ -313,6 +313,7 @@ public abstract class Horsemen : MonoBehaviour
 
     protected virtual IEnumerator PlayerFire()
     {
+        //GameManager.Instance.NbShoot++;
         return null;
     }
 
@@ -332,6 +333,8 @@ public abstract class Horsemen : MonoBehaviour
                 lifeManager = manager;
             }
         }
+
+        GameManager.Instance.NbShoot = 0;
         //Debug.Log(LayerMask.NameToLayer("Boss"));
     }
 
@@ -406,12 +409,20 @@ public abstract class Horsemen : MonoBehaviour
                 Life -= 10;
             }
 
-            nbHitLvlDown--;
-            if (nbHitLvlDown < hitLvlDown)
+            if (other.tag != "PlayerBullet")
             {
-                nbHitLvlDown = hitLvlDown;
-                UpdateLevelShoot(false);
+                nbHitLvlDown--;
+                if (nbHitLvlDown == 0)
+                {
+                    nbHitLvlDown = hitLvlDown;
+                    UpdateLevelShoot(false);
+                }
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 }
