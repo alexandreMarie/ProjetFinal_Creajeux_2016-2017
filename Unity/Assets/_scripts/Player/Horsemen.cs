@@ -61,7 +61,7 @@ public abstract class Horsemen : MonoBehaviour
 
     private LifeUpdater lifeUpdater;
 
-    private LifeManager lifeManager;
+    protected LifeManager lifeManager;
 
     protected LineRenderer line;
 
@@ -420,5 +420,10 @@ public abstract class Horsemen : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 }
