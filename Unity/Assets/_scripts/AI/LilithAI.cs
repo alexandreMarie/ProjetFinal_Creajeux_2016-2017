@@ -103,7 +103,7 @@ public class LilithAI : BossManager
 
             /////////////////////////TESTAI
             StartCoroutine(AI1());
-            //StartCoroutine(Snake());
+            StartCoroutine(Snake());
         }
 
         if (Life / MaxLife >= 0.501f && Life / MaxLife <= 0.750f)
