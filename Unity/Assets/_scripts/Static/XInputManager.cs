@@ -137,14 +137,12 @@ public class XInputManager : MonoBehaviour
     /// <returns></returns>
     private bool UpdateControllersState()
     {
-        Debug.Log(ControllersMax);
         for (int i = 0; i < ControllersMax; i++)
         {
             if (ControllersConnected[i] == true)
             {
                 prevState[i] = currState[i];
                 currState[i] = GamePad.GetState((PlayerIndex)i);
-                Debug.Log(GamePad.GetState((PlayerIndex)i));
             }
         }
         return true;

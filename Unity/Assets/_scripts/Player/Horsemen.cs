@@ -196,7 +196,7 @@ public abstract class Horsemen : MonoBehaviour
     protected const int nbBulletsPool = 30;
     const int hitLvlDown = 10;
     const int minHeight = -2;
-    private readonly int bulletLayer = LayerMask.NameToLayer("Bullet");
+    private int bulletLayer; 
 
     [SerializeField]
     protected LayerMask fireLayer = 9;
@@ -355,6 +355,7 @@ public abstract class Horsemen : MonoBehaviour
         aimValue = Vector2.zero;
         lifeUpdater = GetComponentInChildren<LifeUpdater>();
         fireLayer.value = 1 << LayerMask.NameToLayer("Boss");
+        bulletLayer = LayerMask.NameToLayer("Bullet");
         GameManager.Instance.NbShoot = 0;
         //Debug.Log(LayerMask.NameToLayer("Boss"));
     }
