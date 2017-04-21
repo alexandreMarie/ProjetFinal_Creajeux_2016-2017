@@ -153,7 +153,10 @@ public abstract class Horsemen : MonoBehaviour
             {
                 stamina = staminaMax;
             }
-            lifeManager.UpdateStaminaBar(staminaMax, stamina);
+            if (lifeManager != null)
+            {
+                lifeManager.UpdateStaminaBar(staminaMax, stamina);
+            }
         }
     }
 
