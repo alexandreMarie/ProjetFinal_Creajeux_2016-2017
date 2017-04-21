@@ -89,15 +89,12 @@ public class LilithAI : BossManager
 
     void Update()
     {
-        transform.LookAt(new Vector3(players[targetPlayer].transform.position.x, transform.position.y, players[targetPlayer].transform.position.z));
+        transform.LookAt(new Vector3(gm.Players[targetPlayer].transform.position.x, transform.position.y, gm.Players[targetPlayer].transform.position.z));
 
-        destination.x = -players[targetPlayer].transform.position.x;
-        destination.z = -players[targetPlayer].transform.position.z;
+        destination.x = -gm.Players[targetPlayer].transform.position.x;
+        destination.z = -gm.Players[targetPlayer].transform.position.z;
 
         NavMesh.CalculatePath(transform.position, destination, 0, path);
-
-        //if (path.status != NavMeshPathStatus.PathPartial && !specialState)
-        //    lilithMovement.SetDestination(destination);
 
         if (lifeState == LifeState.FOUR)
         {
@@ -210,10 +207,10 @@ public class LilithAI : BossManager
 
         while (true)
         {
-            if (Vector3.Distance(transform.position, players[0].transform.position) < 10.0f)
+            if (Vector3.Distance(transform.position, gm.Players[0].transform.position) < 10.0f)
                 LilithAccessor.LaunchBurst(bullet, bulletQuantityBurst, 10, false);
             else
-                LilithAccessor.LaunchStraightLine(bullet, players[0], false);
+                LilithAccessor.LaunchStraightLine(bullet, gm.Players[0].transform, false);
 
             yield return new WaitForSeconds(time / 2);
         }
@@ -267,7 +264,7 @@ public class LilithAI : BossManager
             Camera.main.GetComponent<BloomController>().TurnBloom = true;
             //SoundsManager.Instance.VolumeAmbientMusic = 0.75f;
 
-            angle = players[0].position - transform.position;
+            angle = gm.Players[0].transform.position - transform.position;
             angle.y = 1.0f;
 
             yield return new WaitForSeconds(2.0f);
@@ -296,7 +293,7 @@ public class LilithAI : BossManager
         yield return new WaitForSeconds(3.0f);
 
       
-        Vector3 scavengePosition = new Vector3(-30, 1.0f, players[targetPlayer].position.z);
+        Vector3 scavengePosition = new Vector3(-30, 1.0f, gm.Players[targetPlayer].transform.position.z);
 
         Transform _scavengingSnake = Instantiate(scavengingSnake, scavengePosition, Quaternion.identity) as Transform;
         _scavengingSnake.Rotate(new Vector3(0, 90.0f, 0));
@@ -322,12 +319,12 @@ public class LilithAI : BossManager
         if (GameManager.Instance.NbPlayers > 1)
              target = Random.Range(0, 2);
 
-        Vector3 hitPosition = players[target].transform.position;
+        Vector3 hitPosition = gm.Players[target].transform.position;
 
         yield return new WaitForSeconds(1.0f);
 
-        if (players[target].transform.position == hitPosition)
-            players[target].GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 0.0f), ForceMode.Impulse);
+        if (gm.Players[target].transform.position == hitPosition)
+            gm.Players[target].GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 0.0f), ForceMode.Impulse);
 
         yield return new WaitForSeconds(5.0f);
 

@@ -12,11 +12,10 @@
 
 public class BossManager : MonoBehaviour
 {
-    [SerializeField]
-    private LifeManager lifeManager = null;
+    protected GameManager gm = null;
 
     [SerializeField]
-    static protected Transform[] players = new Transform[2];
+    private LifeManager lifeManager = null;
 
     static float maxLife;
     public static float MaxLife
@@ -54,7 +53,7 @@ public class BossManager : MonoBehaviour
 
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player"))
         {
-            players[idPlayer] = go.transform;
+            gm.Players[idPlayer] = go.transform.gameObject;
             idPlayer++;
         }
 
@@ -69,7 +68,7 @@ public class BossManager : MonoBehaviour
             life--;
             
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
-            players[0].GetComponent<Horsemen>().Stamina += 5;
+            gm.Players[0].GetComponent<Horsemen>().Stamina += 5;
             col.gameObject.SetActive(false);
             GameManager.Instance.LifeBoss = life;
         }
