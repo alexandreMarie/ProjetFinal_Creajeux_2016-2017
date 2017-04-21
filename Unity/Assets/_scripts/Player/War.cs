@@ -30,6 +30,7 @@ public class War : Horsemen
 
     protected override IEnumerator PlayerFire()
     {
+        base.PlayerFire();
         while (true)
         {
             GameObject instantiatedBullet;

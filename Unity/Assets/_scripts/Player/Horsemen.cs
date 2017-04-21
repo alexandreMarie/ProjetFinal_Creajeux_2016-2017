@@ -314,6 +314,7 @@ public abstract class Horsemen : MonoBehaviour
 
     protected virtual IEnumerator PlayerFire()
     {
+        GameManager.Instance.NbShoot++;
         return null;
     }
 
@@ -333,6 +334,8 @@ public abstract class Horsemen : MonoBehaviour
                 lifeManager = manager;
             }
         }
+
+        GameManager.Instance.NbShoot = 0;
         //Debug.Log(LayerMask.NameToLayer("Boss"));
     }
 

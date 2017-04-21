@@ -29,6 +29,7 @@ public class Famine : Horsemen {
 
     protected override IEnumerator PlayerFire()
     {
+        base.PlayerFire();
         while (true)
         {
             GameObject instantiatedBullet;

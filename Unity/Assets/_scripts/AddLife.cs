@@ -13,6 +13,9 @@ public class AddLife : MonoBehaviour
         }
 
         //Destroy(this.gameObject);
+
+        Debug.Log("POWERUP");
+
         this.gameObject.SetActive(false);
 
     }
