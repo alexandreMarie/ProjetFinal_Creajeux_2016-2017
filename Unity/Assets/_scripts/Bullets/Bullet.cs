@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : Poolable
 {
     #region Serialized fields
     [SerializeField]
@@ -9,7 +10,7 @@ public class Bullet : MonoBehaviour
 
     [SerializeField]
     [Range(1.0f, 10.0f)]
-    private float destroyTime = 5.0f;
+    private float destroyTime = 1.0f;
     #endregion
 
     private bool rotateBullet = false;
@@ -24,9 +25,9 @@ public class Bullet : MonoBehaviour
         set { rotateBullet = value; }
     }
 
-    void Start()
+    void OnEnable()
     {
-        Destroy(gameObject, destroyTime);
+        StartCoroutine(DisableAfter());
     }
 
     void Update()
@@ -41,5 +42,13 @@ public class Bullet : MonoBehaviour
 
             transform.Rotate(rotation);
         }
+    }
+    private IEnumerator DisableAfter()
+    {
+        yield return new WaitForSeconds(destroyTime);
+
+        gameObject.SetActive(false);
+
+        yield return null;
     }
 }

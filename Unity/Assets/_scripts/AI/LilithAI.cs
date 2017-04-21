@@ -9,14 +9,15 @@ using UnityEngine;
 
 /// <summary>
 /// TODO
-/// - stuffs
+/// - Rework pooling
+/// - Rework the eye pattern : one eye for each player? random but with colours,
 /// </summary>
 
 public class LilithAI : BossManager
 {
     #region Variables
     [SerializeField]
-    private Transform bullet = null;
+    private GameObject bullet = null;
     [SerializeField]
     private Transform eyeBullet = null;
     [SerializeField]
@@ -24,12 +25,13 @@ public class LilithAI : BossManager
     [SerializeField]
     private Transform scavengingSnake = null;
 
+    private int targetPlayer = 0;
+
     private uint bulletQuantityBurst = 20; // Quantity of bullets to fire for each burst
 
     private float time = 15.0f;
     private float divergence = 137.5f; // Angular divergence of the phyllotaxis
-
-    private bool specialState = false;
+    
     private bool attacking = false;
     //private bool straightLineDone = false;
 
@@ -65,6 +67,7 @@ public class LilithAI : BossManager
         Life = 1000;
 
         Lilith = GetComponentInParent<Patterns>();
+        Lilith.InitPool(bullet);
         lilithMovement = GetComponent<NavMeshAgent>();
 
         path = new NavMeshPath();
@@ -74,19 +77,22 @@ public class LilithAI : BossManager
 
         arena = GameObject.FindGameObjectWithTag("Arena") as GameObject;
         cameraShake = Camera.main.transform.parent.GetComponent<CameraShake>();
+
+        StartCoroutine(BossFocus());
     }
 
     private void BulletCancel()
     {
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("EnnemyBullet"))
-            Destroy(go);
+            go.SetActive(false);
     }
 
     void Update()
     {
-        transform.LookAt(new Vector3(players[0].transform.position.x, transform.position.y, players[0].transform.position.z));
-        destination.x = -players[0].transform.position.x;
-        destination.z = -players[0].transform.position.z;
+        transform.LookAt(new Vector3(players[targetPlayer].transform.position.x, transform.position.y, players[targetPlayer].transform.position.z));
+
+        destination.x = -players[targetPlayer].transform.position.x;
+        destination.z = -players[targetPlayer].transform.position.z;
 
         NavMesh.CalculatePath(transform.position, destination, 0, path);
 
@@ -101,7 +107,7 @@ public class LilithAI : BossManager
 
             /////////////////////////TESTAI
             StartCoroutine(AI1());
-            //StartCoroutine(Snake());
+            StartCoroutine(Snake());
         }
 
         if (Life / MaxLife >= 0.501f && Life / MaxLife <= 0.750f)
@@ -179,6 +185,22 @@ public class LilithAI : BossManager
 
             attacking = true;
         }
+    }
+
+    private IEnumerator BossFocus()
+    {
+        while (true)
+        {
+            targetPlayer = Random.Range(0, 2);
+
+            yield return new WaitForSeconds(15.0f);
+        }
+    }
+
+    private IEnumerator TestAI()
+    {
+        LilithAccessor.LaunchPhyllotaxis(bullet, divergence, false);
+        yield return null;
     }
 
     private IEnumerator AI1()
@@ -264,7 +286,7 @@ public class LilithAI : BossManager
 
     private IEnumerator ScavengingSnake()
     {
-        specialState = true;
+        //specialState = true;
 
         lilithMovement.SetDestination(default(Vector3));
 
@@ -272,14 +294,14 @@ public class LilithAI : BossManager
 
         yield return new WaitForSeconds(3.0f);
 
-        Vector3 scavengePosition = new Vector3(-30, 1.0f, players[0].position.z);
+        Vector3 scavengePosition = new Vector3(-30, 1.0f, players[targetPlayer].position.z);
 
         Transform _scavengingSnake = Instantiate(scavengingSnake, scavengePosition, Quaternion.identity) as Transform;
         _scavengingSnake.Rotate(new Vector3(0, 90.0f, 0));
 
         yield return new WaitForSeconds(2.0f);
 
-        specialState = false;
+        //specialState = false;
         arenaLights.TurnLight = false;
 
         yield return new WaitForSeconds(5.0f);
@@ -295,12 +317,14 @@ public class LilithAI : BossManager
 
         yield return new WaitForSeconds(3.0f);
 
-        Vector3 hitPosition = players[0].transform.position;
+        int target = Random.Range(0, 2);
+
+        Vector3 hitPosition = players[target].transform.position;
 
         yield return new WaitForSeconds(1.0f);
 
-        if (players[0].transform.position == hitPosition)
-            players[0].GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 0.0f), ForceMode.Impulse);
+        if (players[target].transform.position == hitPosition)
+            players[target].GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 0.0f), ForceMode.Impulse);
 
         yield return new WaitForSeconds(5.0f);
 
@@ -311,7 +335,7 @@ public class LilithAI : BossManager
 
     private IEnumerator EyeAttack()
     {
-        specialState = true;
+        //specialState = true;
 
         lilithMovement.SetDestination(new Vector3(0.0f, 0.0f, -6.5f));
 
@@ -325,7 +349,7 @@ public class LilithAI : BossManager
             yield return new WaitForSeconds(0.02f);
         }
 
-        specialState = false;
+        //specialState = false;
 
         yield return new WaitForSeconds(5.0f);
 

@@ -114,12 +114,7 @@ public class ResetScene : MonoBehaviour {
 
         if (manager.Dead)
         {
-            manager.Boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
-            manager.Boss.GetComponent<LilithAI>().StopAllCoroutines();
-            for (int i = 0; i<manager.NbPlayers; i++)
-            {
-                manager.Players[i].GetComponent<Horsemen>().enabled = false;
-            }
+            
             manager.GameOver.SetActive(true);
         }
        else

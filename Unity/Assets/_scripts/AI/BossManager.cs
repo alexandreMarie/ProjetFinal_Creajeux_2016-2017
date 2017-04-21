@@ -37,6 +37,17 @@ public class BossManager : MonoBehaviour
         }
     }
 
+    void Awake()
+    {
+        foreach (LifeManager manager in FindObjectsOfType<LifeManager>())
+        {
+            if (manager.lifeCharacter == LifeManager.LifeCharacter.Boss)
+            {
+                lifeManager = manager;
+            }
+        }
+    }
+
     void Start()
     {
         int idPlayer = 0;
@@ -56,7 +67,8 @@ public class BossManager : MonoBehaviour
         {
             GameManager.Instance.NbHit++;
             life--;
-            //lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
+            
+            lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
             players[0].GetComponent<Horsemen>().Stamina += 5;
             col.gameObject.SetActive(false);
             GameManager.Instance.LifeBoss = life;

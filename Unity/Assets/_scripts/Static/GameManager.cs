@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     int id_Arena;
     int load_Mode;
 
-    private int nbPlayers;
+    private int nbPlayers = 1;
     [SerializeField]
     private GameObject gameOver;
 
