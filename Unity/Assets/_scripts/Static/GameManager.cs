@@ -45,6 +45,21 @@ public class GameManager : MonoBehaviour
 
     private Texture2D texScreen;
 
+    private Vector3[] startPos;
+    public Vector3[] StartPos
+    {
+        get
+        {
+            return startPos;
+        }
+
+        set
+        {
+            startPos = value;
+        }
+    }
+
+
     [SerializeField]
     private float timer;
     public static GameManager Instance
