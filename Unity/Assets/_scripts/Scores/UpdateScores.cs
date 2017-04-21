@@ -3,8 +3,12 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using XInputDotNetPure;
 
 public class UpdateScores : MonoBehaviour {
+
+    XInputManager XIM;
+
     int scoreBasedTime;
 
     float seconds;
@@ -73,6 +77,8 @@ public class UpdateScores : MonoBehaviour {
     public List<GameObject> rank = new List<GameObject>();
 	// Use this for initialization
 	void Start () {
+        XIM = XInputManager.Instance;
+
         lifeMax = GameManager.Instance.LifeMax;
 
         displayHitByPlayers = GameManager.Instance.NbHit;
@@ -234,12 +240,17 @@ public class UpdateScores : MonoBehaviour {
                         rank[2].SetActive(true);
                     else
                         rank[3].SetActive(true);
+                    if(XIM.CurrState[0].Buttons.A == ButtonState.Pressed)
+                {
+                    Next();
+                }
                     /* Save */
                 //GameManager.Instance.SaveData(scoresFinal);
 
                 break;
         }
     }
+
 
     public void Next()
     {
