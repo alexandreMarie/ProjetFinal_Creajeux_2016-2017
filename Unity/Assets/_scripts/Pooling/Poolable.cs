@@ -7,17 +7,7 @@ public class Poolable : MonoBehaviour{
 
     private void OnDisable()
     {
+        if (pool)
         pool.Set(gameObject);
     }
-
-
-    // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

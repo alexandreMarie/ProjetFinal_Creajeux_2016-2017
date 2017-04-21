@@ -46,8 +46,6 @@ public class PowerUpsManager : MonoBehaviour
         if (timer >= duration)
         {
             timer = 0f;
-            Debug.Log("Timer PowerupsPool down");
-
             AddPowerUp();
         }
     }

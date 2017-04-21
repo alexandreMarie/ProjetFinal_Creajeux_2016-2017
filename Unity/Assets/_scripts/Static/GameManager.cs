@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour
     private bool dead;
 
     /* 0 = solo/standard; 1 = duo/standard; 2 = duo/Hardcore; 3 = ...*/
-    private int typeMode = 0;
+    private Mode typeMode;
+    public enum Mode { standardS , standardD, hardcoreD};
 
     int id_Arena;
     int load_Mode;
@@ -30,8 +31,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float lifeBoss;
 
+    [SerializeField]
     private int nbHit;
-    private int nbShoot = 10;
+    [SerializeField]
+    private int nbShoot;
     private int damageByBoss = 40;
 
     private GameObject boss;
@@ -41,6 +44,21 @@ public class GameManager : MonoBehaviour
     private List<int> score = new List<int>();
 
     private Texture2D texScreen;
+
+    private Vector3[] startPos;
+    public Vector3[] StartPos
+    {
+        get
+        {
+            return startPos;
+        }
+
+        set
+        {
+            startPos = value;
+        }
+    }
+
 
     [SerializeField]
     private float timer;
@@ -247,19 +265,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int TypeMode
-    {
-        get
-        {
-            return typeMode;
-        }
-
-        set
-        {
-            typeMode = value;
-        }
-    }
-
+  
     public int NbHit
     {
         get
@@ -338,8 +344,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public Mode TypeMode
+    {
+        get
+        {
+            return typeMode;
+        }
+
+        set
+        {
+            typeMode = value;
+        }
+    }
+
     public void CreateStrucCharact(int Number_of_controller)
     {
+        //Mode Standard
+        typeMode = (Mode)Number_of_controller - 1;
         struc_stat_character = new Character_Selection.Stats_Character[Number_of_controller];
         nbPlayers = Number_of_controller;
     }

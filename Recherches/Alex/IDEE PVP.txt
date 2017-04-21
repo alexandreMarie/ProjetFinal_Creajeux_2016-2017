@@ -1,0 +1,7 @@
+Idee pour pvp :
+
+Laisser le mode HARDCORE au choix des joueurs
+	- Celui qui a fait le plus de degat gagne
+	- Temps imparti (au cas ou les deux se chie dessus parce qui a plus de vie)
+	- Bonus Malus (Tjrs les shoots, Privation de dash , joueur + gros(plus facile a toucher) + petit (inverse), Ralentissement..etc)
+	- 

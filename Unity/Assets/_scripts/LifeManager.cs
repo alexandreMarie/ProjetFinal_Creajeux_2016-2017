@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class LifeManager : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class LifeManager : MonoBehaviour
 
     Image imgFilledBar;
     Image imgFilledEnduranceBar;
+    Image imgEmblem;
+
+    [SerializeField]
+    Sprite[] imgEmblems = new Sprite[4];
 
     private void FindImages()
     {
@@ -25,10 +30,13 @@ public class LifeManager : MonoBehaviour
 
             if (image.transform.tag == "StaminaBar")
                 imgFilledEnduranceBar = image;
+
+            if (image.gameObject.name == "IMG_Emblem")
+                imgEmblem = image;
         }
     }
 
-    public void Start()
+    /*public void Start()
     {
         // Récup de l'image configurée en filled
         Image[] imgsFilledBar = GetComponentsInChildren<Image>();
@@ -40,15 +48,25 @@ public class LifeManager : MonoBehaviour
 
             if (image.transform.tag == "StaminaBar")
                 imgFilledEnduranceBar = image;
+
+            if (image.gameObject.name == "IMG_Emblem")
+                imgEmblem = image;
         }
 
-        if (imgFilledBar == null)
-            Debug.Log("Aucune image trouvée");
+        if (lifeCharacter != LifeCharacter.Boss)
+        {
 
-        if (imgFilledEnduranceBar == null)
-            Debug.Log("Aucune image trouvée");
+            if (imgFilledBar == null)
+                Debug.Log("Aucune image trouvée");
+
+            if (imgFilledEnduranceBar == null)
+                Debug.Log("Aucune image trouvée");
+
+            if (imgEmblem == null)
+                Debug.Log("Aucun emblème trouvé");
+        }
     }
-
+    */
     /// <summary>
     /// MAJ de la lifebar du joueur
     /// </summary>
@@ -69,6 +87,30 @@ public class LifeManager : MonoBehaviour
         {
             FindImages();
             imgFilledEnduranceBar.fillAmount = _value / (float)_maxValue;
+        }
+    }
+
+    public void UpdateEmblem(Type type)
+    {
+        if (imgEmblem == null)
+        {
+            FindImages();
+        }
+        if (type == typeof(War))
+        {
+            imgEmblem.sprite = imgEmblems[(int)Character_Selection.SelectCharact.War - 1];
+        }
+        else if (type == typeof(Death))
+        {
+            imgEmblem.sprite = imgEmblems[(int)Character_Selection.SelectCharact.Death - 1];
+        }
+        else if (type == typeof(Pestilence))
+        {
+            imgEmblem.sprite = imgEmblems[(int)Character_Selection.SelectCharact.Pestilence - 1];
+        }
+        else if (type == typeof(Famine))
+        {
+            imgEmblem.sprite = imgEmblems[(int)Character_Selection.SelectCharact.Famine - 1];
         }
     }
 }

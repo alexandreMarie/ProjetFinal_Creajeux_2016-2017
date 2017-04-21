@@ -84,7 +84,8 @@ public class UpdateScores : MonoBehaviour {
         displayHitByPlayers = GameManager.Instance.NbHit;
         displayShootByPlayers = GameManager.Instance.NbShoot;
         displayDamageByBoss = GameManager.Instance.DamageByBoss;
-        percentageHitShoot = (float)displayHitByPlayers / displayShootByPlayers * 100;
+        percentageHitShoot = displayHitByPlayers - displayShootByPlayers;
+        percentageHitShoot = percentageHitShoot / displayHitByPlayers * 100;
 
         // Initialization of scoring conditions
         switch (GameManager.Instance.TypeMode)
@@ -99,7 +100,7 @@ public class UpdateScores : MonoBehaviour {
                 percentageHitShootScore = percentageHitShoot * scoreMod0HitPlayers;
                 displayDamageByBossScore = displayDamageByBoss * scoreMod0HitBoss;
                 break;
-            case 1:
+            case (GameManager.Mode)1:
                 scoreRankSS = scoreMode1Win;
                 scoreBasedTime = scoreMod1Time;
                 lifeTotal = lifeMax * 2 - (GameManager.Instance.LifePlayer1 + GameManager.Instance.LifePlayer2);
@@ -110,7 +111,7 @@ public class UpdateScores : MonoBehaviour {
                 displayDamageByBossScore = displayDamageByBoss * scoreMod1HitBoss;
                 Debug.Log(percentageLife);
                 break;
-            case 2:
+            case (GameManager.Mode)2:
                 scoreRankSS = scoreMode2Win;
                 scoreBasedTime = scoreMod2Time;
                 lifeTotal = lifeMax * 2 - (GameManager.Instance.LifePlayer1 + GameManager.Instance.LifePlayer2);

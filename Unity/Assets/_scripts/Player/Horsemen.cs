@@ -15,9 +15,31 @@ public abstract class Horsemen : MonoBehaviour
 
     StageFire shootStage = StageFire.One;
 
+    public GameObject goDBGIMG;
+
     #region Variables
 
-    public int playerID;
+    private int playerID;
+    public int PlayerID
+    {
+        get
+        {
+            return playerID;
+        }
+
+        set
+        {
+            playerID = value;
+            foreach (LifeManager manager in GameObject.FindObjectsOfType<LifeManager>())
+            {
+                if ((int)manager.lifeCharacter == playerID)
+                {
+                    lifeManager = manager;
+                    lifeManager.UpdateEmblem(this.GetType());
+                }
+            }
+        }
+    }
 
     XInputManager XIMinstance;
     private bool isInvincible;
@@ -61,7 +83,7 @@ public abstract class Horsemen : MonoBehaviour
 
     private LifeUpdater lifeUpdater;
 
-    private LifeManager lifeManager;
+    protected LifeManager lifeManager;
 
     protected LineRenderer line;
 
@@ -133,7 +155,11 @@ public abstract class Horsemen : MonoBehaviour
             {
                 stamina = staminaMax;
             }
-            lifeManager.UpdateStaminaBar(staminaMax, stamina);
+            if (lifeManager != null)
+            {
+                lifeManager.UpdateStaminaBar(staminaMax, stamina);
+                Debug.Log(lifeManager.gameObject.GetComponentInChildren<UnityEngine.UI.Image>().name);
+            }
         }
     }
 
@@ -149,9 +175,9 @@ public abstract class Horsemen : MonoBehaviour
         {
             bullet = value;
             // Init of pool
-            Debug.Log("Bullet");
             GameObject go = new GameObject("BulletPoolPlayer" + (playerID + 1), typeof(Pool));
             pool = go.GetComponent<Pool>();
+            bullet.GetComponent<PlayerBullet>().playerID = playerID;
             pool.Init(bullet, nbBulletsPool);
         }
     }
@@ -168,8 +194,9 @@ public abstract class Horsemen : MonoBehaviour
     const float stickDeadZone = 0.3f;
     const float triggerDeadZone = 0.1f;
     protected const int nbBulletsPool = 30;
+    const int hitLvlDown = 10;
+    const int minHeight = -2;
 
-    const int hitLvlDown = 5;
 
     [SerializeField]
     protected LayerMask fireLayer = 9;
@@ -190,6 +217,7 @@ public abstract class Horsemen : MonoBehaviour
     {
         if (levelUp)
         {
+            nbHitLvlDown = hitLvlDown;
             // PowerUp !
             switch (shootStage)
             {
@@ -314,6 +342,7 @@ public abstract class Horsemen : MonoBehaviour
 
     protected virtual IEnumerator PlayerFire()
     {
+        //GameManager.Instance.NbShoot++;
         return null;
     }
 
@@ -326,13 +355,7 @@ public abstract class Horsemen : MonoBehaviour
         aimValue = Vector2.zero;
         lifeUpdater = GetComponentInChildren<LifeUpdater>();
         fireLayer.value = 1 << LayerMask.NameToLayer("Boss");
-        foreach (LifeManager manager in GameObject.FindObjectsOfType<LifeManager>())
-        {
-            if ((int)manager.lifeCharacter == playerID)
-            {
-                lifeManager = manager;
-            }
-        }
+        GameManager.Instance.NbShoot = 0;
         //Debug.Log(LayerMask.NameToLayer("Boss"));
     }
 
@@ -380,6 +403,20 @@ public abstract class Horsemen : MonoBehaviour
             }
         }
 
+        //Gestion de l'OOB
+        if (transform.position.y < minHeight)
+        {
+            if (GameManager.Instance.TypeMode == GameManager.Mode.standardS)
+            {
+                this.transform.position = GameManager.Instance.StartPos[2];
+            }
+            else
+            {
+                this.transform.position = GameManager.Instance.StartPos[playerID];
+            }
+            Life -= lifeMax / 4;
+        }
+
         Move();
         Rotate();
     }
@@ -407,12 +444,20 @@ public abstract class Horsemen : MonoBehaviour
                 Life -= 10;
             }
 
-            nbHitLvlDown--;
-            if (nbHitLvlDown < hitLvlDown)
+            if (other.tag != "PlayerBullet")
             {
-                nbHitLvlDown = hitLvlDown;
-                UpdateLevelShoot(false);
+                nbHitLvlDown--;
+                if (nbHitLvlDown == 0)
+                {
+                    nbHitLvlDown = hitLvlDown;
+                    UpdateLevelShoot(false);
+                }
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 }

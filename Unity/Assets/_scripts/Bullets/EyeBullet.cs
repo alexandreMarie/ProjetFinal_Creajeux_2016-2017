@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EyeBullet : MonoBehaviour
 {
@@ -23,32 +24,23 @@ public class EyeBullet : MonoBehaviour
 
     void Start()
     {
-        Destroy(gameObject, 2.0f);
+        StartCoroutine(Target());
+        Destroy(gameObject, 1f);
         count++;
         number = count;
 
-        if (count % 2 == 0)
-
-        {
-            transform.position = new Vector3(1.5f - Random.Range(-0.5f, 0.5f), 2.0f - Random.Range(-0.5f, 0.5f), -10.0f - Random.Range(-0.5f, 0.5f));
-            target = new Vector3(Random.Range(0.0f, 1.0f), 0, Random.Range(-1.0f, 1.0f));
-        }
-        else
-        {
-            transform.position = new Vector3(-1.5f - Random.Range(-0.5f, 0.5f), 2.0f - Random.Range(-0.5f, 0.5f), -10.0f - Random.Range(-0.5f, 0.5f));
-            target = new Vector3(Random.Range(-1.0f, 0.0f), 0, Random.Range(-1.0f, 1.0f));
-        }
-
         if (!gm)
             gm = GameManager.Instance;
+
+        if (count % 2 == 0)
+            transform.position = new Vector3(1.5f - Random.Range(-0.5f, 0.5f), 2.0f - Random.Range(-0.5f, 0.5f), -10.0f - Random.Range(-0.5f, 0.5f));
+        else
+            transform.position = new Vector3(-1.5f - Random.Range(-0.5f, 0.5f), 2.0f - Random.Range(-0.5f, 0.5f), -10.0f - Random.Range(-0.5f, 0.5f));
     }
 
     void Update()
     {
-        //if (t > 2.0f)
-        //    t += Time.deltaTime * 2;
-        //else
-            t += Time.deltaTime * 1.5f;
+        t += Time.deltaTime * 1.5f;
 
         if (transform.position.y > 0.1)
         {
@@ -57,5 +49,16 @@ public class EyeBullet : MonoBehaviour
             else
                 transform.position = Curve(transform.position, new Vector3(-3, 6.5f, -4), new Vector3(-3, 6.5f, -1), target, t);
         }
+    }
+
+    private IEnumerator Target()
+    {
+        yield return new WaitForSeconds(0.3f);
+        int targetPlayer = 0;
+
+        if (gm.NbPlayers > 1)
+            targetPlayer = Random.Range(0, gm.NbPlayers);
+
+        target = gm.Players[targetPlayer].transform.position;
     }
 }

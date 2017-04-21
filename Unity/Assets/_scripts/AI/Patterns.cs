@@ -21,19 +21,33 @@ using UnityEngine;
 
 public class Patterns : MonoBehaviour
 {
+    private Pool pool;
+
+    public void InitPool(GameObject bullet)
+    {
+        GameObject go = new GameObject("BulletPoolLilith", typeof(Pool));
+        pool = go.GetComponent<Pool>();
+        pool.Init(bullet, 100);
+    }
+
     #region Patterns Coroutines
-    private IEnumerator Phyllotaxis(Transform bullet, float divergence, bool rotatePattern)
+    private IEnumerator Phyllotaxis(GameObject bullet, float divergence, bool rotatePattern)
     {
         float phi = 0.0f;
         uint floret = 0;
-        Transform spawnedBullet = null;
+        //Transform spawnedBullet = null;
 
         while (true)
         {
             phi = floret * divergence;
 
-            spawnedBullet = Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0)) as Transform;
+            GameObject spawnedBullet = pool.Get();
 
+            spawnedBullet.transform.rotation = Quaternion.Euler(0, phi, 0);
+            spawnedBullet.transform.position = transform.position;
+
+            //spawnedBullet = Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0)) as Transform;
+            
             if (rotatePattern)
                 spawnedBullet.GetComponent<Bullet>().RotateBullet = true;
 
@@ -43,17 +57,19 @@ public class Patterns : MonoBehaviour
         }
     }
 
-    private IEnumerator Burst(Transform bullet, uint bulletQuantity, uint bulletLineCount, bool rotatePattern)
+    private IEnumerator Burst(GameObject bullet, uint bulletQuantity, uint bulletLineCount, bool rotatePattern)
     {
         float additiveAngle = 360.0f / bulletQuantity;
         float phi = 0.0f;
-        Transform spawnedBullet = null;
 
         for (int i = 0; i < bulletLineCount; i++)
         {
             for (int j = 0; j < bulletQuantity; j++)
             {
-                spawnedBullet = Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0)) as Transform;
+                GameObject spawnedBullet = pool.Get();
+
+                spawnedBullet.transform.rotation = Quaternion.Euler(0, phi, 0);
+                spawnedBullet.transform.position = transform.position;
 
                 if (rotatePattern)
                     spawnedBullet.GetComponent<Bullet>().RotateBullet = true;
@@ -65,17 +81,19 @@ public class Patterns : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
     }
 
-    private IEnumerator StraightLine(Transform bullet, Transform player, float bulletQuantity, bool rotatePattern)
+    private IEnumerator StraightLine(GameObject bullet, Transform player, float bulletQuantity, bool rotatePattern)
     {
         Vector3 angle;
-        Transform spawnedBullet = null;
 
         angle = player.position - transform.position;
         angle.y = 1.0f;
 
         for (int i = 0; i < bulletQuantity; i++)
         {
-            spawnedBullet = Instantiate(bullet, transform.position, Quaternion.LookRotation(angle, Vector3.forward)) as Transform;
+            GameObject spawnedBullet = pool.Get();
+
+            spawnedBullet.transform.rotation = Quaternion.LookRotation(angle, Vector3.forward);
+            spawnedBullet.transform.position = transform.position;
 
             if (rotatePattern)
                 spawnedBullet.GetComponent<Bullet>().RotateBullet = true;
@@ -84,17 +102,19 @@ public class Patterns : MonoBehaviour
         }
     }
 
-    private IEnumerator RotatingStraightLine(Transform bullet, uint bulletQuantity, bool rotatePattern)
+    private IEnumerator RotatingStraightLine(GameObject bullet, uint bulletQuantity, bool rotatePattern)
     {
         float additiveAngle = 360.0f / bulletQuantity;
         float phi = 0.0f;
-        Transform spawnedBullet = null;
 
         for (int i = 0; i < bulletQuantity; i++)
         {
             for (int j = 0; j < 5; j++)
             {
-                spawnedBullet = Instantiate(bullet, transform.position, Quaternion.Euler(0, phi, 0)) as Transform;
+                GameObject spawnedBullet = pool.Get();
+
+                spawnedBullet.transform.rotation = Quaternion.Euler(0, phi, 0);
+                spawnedBullet.transform.position = transform.position;
 
                 if (rotatePattern)
                     spawnedBullet.GetComponent<Bullet>().RotateBullet = true;
@@ -108,17 +128,23 @@ public class Patterns : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
     }
 
-    private IEnumerator Malthael(Transform bullet, Transform player, bool rotatePattern)
+    private IEnumerator Malthael(GameObject bullet, Transform player, bool rotatePattern)
     {
-        Transform spawnedBullet = null;
-
         for (int phi = 20; phi < 160; phi += 5)
         {
-            spawnedBullet = Instantiate(bullet, transform.position, Quaternion.Euler(0, transform.eulerAngles.y + phi, 0)) as Transform;
+            GameObject spawnedBullet = pool.Get();
+
+            spawnedBullet.transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y + phi, 0);
+            spawnedBullet.transform.position = transform.position;
+
             if (rotatePattern)
                 spawnedBullet.GetComponent<Bullet>().RotateBullet = true;
 
-            spawnedBullet = Instantiate(bullet, transform.position, Quaternion.Euler(0, transform.eulerAngles.y - phi, 0)) as Transform;
+            spawnedBullet = pool.Get();
+
+            spawnedBullet.transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y - phi, 0);
+            spawnedBullet.transform.position = transform.position;
+
             if (rotatePattern)
                 spawnedBullet.GetComponent<Bullet>().RotateBullet = true;
 
@@ -126,17 +152,23 @@ public class Patterns : MonoBehaviour
         }
     }
 
-    private IEnumerator Wings(Transform bullet, bool rotatePattern)
+    private IEnumerator Wings(GameObject bullet, bool rotatePattern)
     {
-        Transform spawnedBullet = null;
-
         for (int phi = 20; phi < 160; phi += 5)
         {
-            spawnedBullet = Instantiate(bullet, transform.position, Quaternion.Euler(0, transform.eulerAngles.y + phi, 0)) as Transform;
+            GameObject spawnedBullet = pool.Get();
+
+            spawnedBullet.transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y + phi, 0);
+            spawnedBullet.transform.position = transform.position;
+
             if (rotatePattern)
                 spawnedBullet.GetComponent<Bullet>().RotateBullet = true;
 
-            spawnedBullet = Instantiate(bullet, transform.position, Quaternion.Euler(0, transform.eulerAngles.y - phi, 0)) as Transform;
+            spawnedBullet = pool.Get();
+
+            spawnedBullet.transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y - phi, 0);
+            spawnedBullet.transform.position = transform.position;
+
             if (rotatePattern)
                 spawnedBullet.GetComponent<Bullet>().RotateBullet = true;
         }
@@ -146,32 +178,32 @@ public class Patterns : MonoBehaviour
     #endregion
 
     #region Accessors
-    public void LaunchPhyllotaxis(Transform bullet, float divergence, bool rotatePattern)
+    public void LaunchPhyllotaxis(GameObject bullet, float divergence, bool rotatePattern)
     {
         StartCoroutine(Phyllotaxis(bullet, divergence, rotatePattern));
     }
 
-    public void LaunchBurst(Transform bullet, uint bulletQuantity, uint bulletLineCount, bool rotatePattern)
+    public void LaunchBurst(GameObject bullet, uint bulletQuantity, uint bulletLineCount, bool rotatePattern)
     {
         StartCoroutine(Burst(bullet, bulletQuantity, bulletLineCount, rotatePattern));
     }
 
-    public void LaunchStraightLine(Transform bullet, Transform player, bool rotatePattern)
+    public void LaunchStraightLine(GameObject bullet, Transform player, bool rotatePattern)
     {
         StartCoroutine(StraightLine(bullet, player, 5, rotatePattern));
     }
 
-    public void LaunchRotatingStraightLine(Transform bullet, uint bulletQuantity, bool rotatePattern)
+    public void LaunchRotatingStraightLine(GameObject bullet, uint bulletQuantity, bool rotatePattern)
     {
         StartCoroutine(RotatingStraightLine(bullet, bulletQuantity, rotatePattern));
     }
 
-    public void LaunchMalthael(Transform bullet, bool rotatePattern)
+    public void LaunchMalthael(GameObject bullet, bool rotatePattern)
     {
         StartCoroutine(Malthael(bullet, null, rotatePattern));
     }
 
-    public void LaunchWings(Transform bullet, bool rotatePattern)
+    public void LaunchWings(GameObject bullet, bool rotatePattern)
     {
         StartCoroutine(Wings(bullet, rotatePattern));
     }

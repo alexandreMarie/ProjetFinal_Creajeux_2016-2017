@@ -95,6 +95,12 @@ public class CameraFollow : MonoBehaviour
         }
         else if (CameraManager.Instance.DeadPlayer1 || CameraManager.Instance.DeadPlayer2)
         {
+            manager.Boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
+            manager.Boss.GetComponent<LilithAI>().StopAllCoroutines();
+            for (int i = 0; i < manager.NbPlayers; i++)
+            {
+                manager.Players[i].GetComponent<Horsemen>().enabled = false;
+            }
             if (CameraManager.Instance.DeadPlayer1)
             {
                 transform.position = Vector3.SmoothDamp(transform.position, targets[0].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
