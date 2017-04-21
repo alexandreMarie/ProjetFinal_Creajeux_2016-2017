@@ -332,9 +332,9 @@ public abstract class Horsemen : MonoBehaviour
             if ((int)manager.lifeCharacter == playerID)
             {
                 lifeManager = manager;
+                lifeManager.UpdateEmblem(this.GetType());
             }
         }
-
         GameManager.Instance.NbShoot = 0;
         //Debug.Log(LayerMask.NameToLayer("Boss"));
     }
