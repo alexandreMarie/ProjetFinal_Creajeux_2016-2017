@@ -31,7 +31,7 @@ public class CameraManager : MonoBehaviour
         }
         catch
         {
-            Debug.Log("Pas de targets spécifique pour cette arene");
+            //Debug.Log("Pas de targets spécifique pour cette arene");
         }
     }
 

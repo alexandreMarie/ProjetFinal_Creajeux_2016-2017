@@ -51,7 +51,7 @@ public class All_player_selected : MonoBehaviour {
             {
                 GM.Set_Stat_Player(Players[i].Return_Stats(Players[i].Return_Id_Player()-1), i);
             }
-            Debug.Log(MManag.GetLoadState());
+            //Debug.Log(MManag.GetLoadState());
            switch(MManag.GetLoadState())
             {
                 case (MenuManager.load_mode.New_Game)://NewGame

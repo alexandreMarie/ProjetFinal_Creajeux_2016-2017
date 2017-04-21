@@ -103,7 +103,7 @@ public class Character_Selection : MonoBehaviour {
 
         if (prevState.Buttons.A == ButtonState.Pressed && Button_is_releasd_A == true)
         {
-            Debug.Log("Test");
+            //Debug.Log("Test");
             Button_is_releasd_A = false;
             Selection_Validate = true;
             SM.Play_Selector(1);

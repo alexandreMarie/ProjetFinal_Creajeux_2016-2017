@@ -158,7 +158,6 @@ public abstract class Horsemen : MonoBehaviour
             if (lifeManager != null)
             {
                 lifeManager.UpdateStaminaBar(staminaMax, stamina);
-                Debug.Log(lifeManager.gameObject.GetComponentInChildren<UnityEngine.UI.Image>().name);
             }
         }
     }
@@ -193,8 +192,9 @@ public abstract class Horsemen : MonoBehaviour
     const float rotateSmooth = 0.05f;
     const float stickDeadZone = 0.3f;
     const float triggerDeadZone = 0.1f;
+    const float triggerDash = 0.75f;
     protected const int nbBulletsPool = 30;
-    const int hitLvlDown = 10;
+    const int hitLvlDown = 20;
     const int minHeight = -2;
     private int bulletLayer; 
 
@@ -394,8 +394,8 @@ public abstract class Horsemen : MonoBehaviour
         {
             SpecialShoot();
         }
-
-        if (XIMinstance.GetButtonDown(playerID, XInputManager.XButtons.LeftBumper))
+        
+        if (XIMinstance.GetStick(playerID, XInputManager.XSticks.LeftTrigger) > triggerDash)
         {
             if (dashCoroutine == null)
             {
@@ -403,6 +403,15 @@ public abstract class Horsemen : MonoBehaviour
                 isInvincible = true;
             }
         }
+
+        //if (XIMinstance.GetButtonDown(playerID, XInputManager.XButtons.LeftBumper))
+        //{
+        //    if (dashCoroutine == null)
+        //    {
+        //        dashCoroutine = StartCoroutine(Dash());
+        //        isInvincible = true;
+        //    }
+        //}
 
         //Gestion de l'OOB
         if (transform.position.y < minHeight)
@@ -448,7 +457,7 @@ public abstract class Horsemen : MonoBehaviour
             Debug.Log(other.gameObject.layer);
             Debug.Log(fireLayer);
 
-            if (other.gameObject.layer == bulletLayer)
+            if (other.gameObject.layer == bulletLayer && other.tag != "PlayerBullet")
             {
                 nbHitLvlDown--;
                 Debug.Log(other.tag);
