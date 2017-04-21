@@ -196,7 +196,7 @@ public abstract class Horsemen : MonoBehaviour
     protected const int nbBulletsPool = 30;
     const int hitLvlDown = 10;
     const int minHeight = -2;
-
+    private readonly int bulletLayer = LayerMask.NameToLayer("Bullet");
 
     [SerializeField]
     protected LayerMask fireLayer = 9;
@@ -444,9 +444,13 @@ public abstract class Horsemen : MonoBehaviour
                 Life -= 10;
             }
 
-            if (other.tag != "PlayerBullet")
+            Debug.Log(other.gameObject.layer);
+            Debug.Log(fireLayer);
+
+            if (other.gameObject.layer == bulletLayer)
             {
                 nbHitLvlDown--;
+                Debug.Log(other.tag);
                 if (nbHitLvlDown == 0)
                 {
                     nbHitLvlDown = hitLvlDown;
