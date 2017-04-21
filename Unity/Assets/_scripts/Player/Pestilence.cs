@@ -134,5 +134,4 @@ public class Pestilence : Horsemen {
     {
         base.Update();
     }
-
 }

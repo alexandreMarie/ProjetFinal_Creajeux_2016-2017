@@ -12,10 +12,13 @@
 
 public class BossManager : MonoBehaviour
 {
-    protected GameManager gm = null;
-
     [SerializeField]
     private LifeManager lifeManager = null;
+
+    [SerializeField]
+    static protected Transform[] players = new Transform[2];
+
+    protected GameManager gm;
 
     static float maxLife;
     public static float MaxLife
@@ -38,6 +41,7 @@ public class BossManager : MonoBehaviour
 
     void Awake()
     {
+        gm = GameManager.Instance;
         foreach (LifeManager manager in FindObjectsOfType<LifeManager>())
         {
             if (manager.lifeCharacter == LifeManager.LifeCharacter.Boss)
@@ -50,10 +54,9 @@ public class BossManager : MonoBehaviour
     void Start()
     {
         int idPlayer = 0;
-
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player"))
         {
-            gm.Players[idPlayer] = go.transform.gameObject;
+            players[idPlayer] = go.transform;
             idPlayer++;
         }
 
@@ -68,7 +71,12 @@ public class BossManager : MonoBehaviour
             life--;
             
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
-            gm.Players[0].GetComponent<Horsemen>().Stamina += 5;
+            players[col.GetComponent<PlayerBullet>().playerID].GetComponent<Horsemen>().Stamina += 1; 
+
+            //////////////////////////////////////////////////
+            /////////   STOP LES VALEURS EN DUR !!  //////////
+            //////////////////////////////////////////////////
+
             col.gameObject.SetActive(false);
             GameManager.Instance.LifeBoss = life;
         }

@@ -49,6 +49,7 @@ public class XInputManager : MonoBehaviour
         {
             if (instance == null)
             {
+                Debug.Log("ici");
                 instance = new GameObject("XInputManager").AddComponent<XInputManager>();
                 instance.CheckControllers();
                 DontDestroyOnLoad(instance);
@@ -61,6 +62,22 @@ public class XInputManager : MonoBehaviour
     // picture of all the inputs at the previous update and current update
     private GamePadState[] prevState = new GamePadState[ControllersMax];
     private GamePadState[] currState = new GamePadState[ControllersMax];
+
+    public GamePadState [] CurrState
+    {
+        get
+        {
+            return currState;
+        }
+    }
+
+    public GamePadState[] PrevState
+    {
+        get
+        {
+            return prevState;
+        }
+    }
 
     // Indicate which one of the four controllers is connected
     bool[] ControllersConnected = new bool[ControllersMax] { false, false, false, false };
@@ -105,6 +122,7 @@ public class XInputManager : MonoBehaviour
             GamePadState testGPS = GamePad.GetState(testPi);
             if (testGPS.IsConnected)
             {
+                Debug.Log("Player " + i + " is connected");
                 numControllers++;
                 ControllersConnected[i] = true;
                 result = true;

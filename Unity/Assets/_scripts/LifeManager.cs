@@ -36,7 +36,7 @@ public class LifeManager : MonoBehaviour
         }
     }
 
-    public void Start()
+    /*public void Start()
     {
         // Récup de l'image configurée en filled
         Image[] imgsFilledBar = GetComponentsInChildren<Image>();
@@ -66,7 +66,7 @@ public class LifeManager : MonoBehaviour
                 Debug.Log("Aucun emblème trouvé");
         }
     }
-
+    */
     /// <summary>
     /// MAJ de la lifebar du joueur
     /// </summary>

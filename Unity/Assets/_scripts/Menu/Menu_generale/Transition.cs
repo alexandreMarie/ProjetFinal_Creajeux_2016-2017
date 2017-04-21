@@ -15,6 +15,7 @@ public class Transition : MonoBehaviour {
 
     Canvas Canevas_State;
 
+    XInputManager XIM;
 
     [SerializeField]
     private GameObject goToActivate = null;
@@ -26,6 +27,7 @@ public class Transition : MonoBehaviour {
 	
         void Start()
     {
+        XIM = XInputManager.Instance;
         Animation_ended = false;
     }
 
@@ -37,24 +39,23 @@ public class Transition : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (!playerIndexSet || !prevState.IsConnected)
-        {
+        //if (!playerIndexSet || !prevState.IsConnected)
+        //{
+        //    PlayerIndex testPlayerIndex = test;
+        //    GamePadState testState = GamePad.GetState(testPlayerIndex);
+        //    if (testState.IsConnected)
+        //    {
+        //        Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
+        //        playerIndex = testPlayerIndex;
+        //        playerIndexSet = true;
+        //    }
 
-            PlayerIndex testPlayerIndex = test;
-            GamePadState testState = GamePad.GetState(testPlayerIndex);
-            if (testState.IsConnected)
-            {
-                Debug.Log(string.Format("GamePad found {0}", testPlayerIndex));
-                playerIndex = testPlayerIndex;
-                playerIndexSet = true;
-            }
+        //}
 
-        }
+        //prevState = state;
+        //state = GamePad.GetState(test);
 
-        prevState = state;
-        state = GamePad.GetState(test);
-
-        if(state.Buttons.Start == ButtonState.Pressed && Animation_ended == true)
+        if(XIM.CurrState[0].Buttons.Start == ButtonState.Pressed && Animation_ended == true)
         {
             gameObject.SetActive(false);
 
@@ -64,7 +65,7 @@ public class Transition : MonoBehaviour {
             goToActivate.SetActive(true);
         }
 
-        if (state.Buttons.Y ==  ButtonState.Pressed && Animation_ended == true)
+        if (XIM.CurrState[0].Buttons.Y ==  ButtonState.Pressed && Animation_ended == true)
         {
             Application.OpenURL("http://www.creajeux.fr/");
         }
