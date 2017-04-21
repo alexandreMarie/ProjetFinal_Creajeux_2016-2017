@@ -314,7 +314,7 @@ public abstract class Horsemen : MonoBehaviour
 
     protected virtual IEnumerator PlayerFire()
     {
-        GameManager.Instance.NbShoot++;
+        //GameManager.Instance.NbShoot++;
         return null;
     }
 
@@ -410,11 +410,14 @@ public abstract class Horsemen : MonoBehaviour
                 Life -= 10;
             }
 
-            nbHitLvlDown--;
-            if (nbHitLvlDown < hitLvlDown)
+            if (other.tag != "PlayerBullet")
             {
-                nbHitLvlDown = hitLvlDown;
-                UpdateLevelShoot(false);
+                nbHitLvlDown--;
+                if (nbHitLvlDown < hitLvlDown)
+                {
+                    nbHitLvlDown = hitLvlDown;
+                    UpdateLevelShoot(false);
+                }
             }
         }
     }

@@ -128,6 +128,7 @@ public class War : Horsemen
             if ((fireMask & (byte)StageFire.One) > 0 || (fireMask & (byte)StageFire.Five) > 0)
             {
                 // Otherwise the laser beam blink
+                GameManager.Instance.NbShoot++;
                 yield return new WaitForSeconds(0.08f);
             }
         }

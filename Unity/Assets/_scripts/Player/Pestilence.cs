@@ -112,6 +112,7 @@ public class Pestilence : Horsemen {
             {
                 // Otherwise the laser beam blink
                 yield return new WaitForSeconds(0.08f);
+                GameManager.Instance.NbShoot++;
             }
         }
     }
