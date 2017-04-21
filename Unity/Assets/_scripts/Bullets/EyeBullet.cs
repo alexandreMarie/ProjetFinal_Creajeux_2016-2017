@@ -58,6 +58,5 @@ public class EyeBullet : MonoBehaviour
         if (gm.NbPlayers >1)
             targetPlayer = Random.Range(0, gm.NbPlayers);
         target = gm.Players[targetPlayer].transform.position;
-        Debug.Log(gm.Players.Length);
     }
 }

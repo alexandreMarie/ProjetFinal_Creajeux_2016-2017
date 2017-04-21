@@ -6,10 +6,19 @@ public class ResetScene : MonoBehaviour {
     private GameManager manager;
 
     public GameObject[] prefabs;
-    public GameObject[] pos;
-	void Awake () {
-       
+    public Vector3[] pos;
+
+    void InitPos()
+    {
+        pos[0] = GameObject.Find("pos2.1").transform.position;
+        pos[1] = GameObject.Find("pos2.2").transform.position;
+        pos[2] = GameObject.Find("pos1").transform.position;
+    }
+    void Awake () {
+        InitPos();
         manager = GameManager.Instance;
+        manager.StartPos = new Vector3[3];
+        System.Array.Copy(pos, manager.StartPos, pos.Length);
         Character_Selection.SelectCharact selecCharact;
        /* manager.Struc_stat_character = new Character_Selection.Stats_Character[2];
         manager.Struc_stat_character[1].attack = 20;
@@ -31,41 +40,41 @@ public class ResetScene : MonoBehaviour {
                     go = Instantiate(prefabs[1]);
                     go.GetComponent<Horsemen>().PlayerID = i;
                     if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
-                        go.transform.position = pos[0].transform.position;
+                        go.transform.position = pos[0];
                     else if(i ==1)
-                        go.transform.position = pos[1].transform.position;
+                        go.transform.position = pos[1];
                     else
-                        go.transform.position = pos[2].transform.position;
+                        go.transform.position = pos[2];
                     break;
                 case Character_Selection.SelectCharact.Death:
                     go=Instantiate(prefabs[0]);
                     go.GetComponent<Horsemen>().PlayerID = i;
                     if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
-                        go.transform.position = pos[0].transform.position;
+                        go.transform.position = pos[0];
                     else if(i == 1)
-                        go.transform.position = pos[1].transform.position;
+                        go.transform.position = pos[1];
                     else
-                        go.transform.position = pos[2].transform.position;
+                        go.transform.position = pos[2];
                     break;
                 case Character_Selection.SelectCharact.Famine:
                     go=Instantiate(prefabs[2]);
                     go.GetComponent<Horsemen>().PlayerID = i;
                     if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
-                        go.transform.position = pos[0].transform.position;
+                        go.transform.position = pos[0];
                     else if (i == 1)
-                        go.transform.position = pos[1].transform.position;
+                        go.transform.position = pos[1];
                     else
-                        go.transform.position = pos[2].transform.position;
+                        go.transform.position = pos[2];
                     break;
                 case Character_Selection.SelectCharact.War:
                     go=Instantiate(prefabs[3]);
                     go.GetComponent<Horsemen>().PlayerID = i;
                     if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
-                        go.transform.position = pos[0].transform.position;
+                        go.transform.position = pos[0];
                     else if (i == 1)
-                        go.transform.position = pos[1].transform.position;
+                        go.transform.position = pos[1];
                     else
-                        go.transform.position = pos[2].transform.position;
+                        go.transform.position = pos[2];
                     break;
             }
         }

@@ -69,7 +69,12 @@ public class BossManager : MonoBehaviour
             life--;
             
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
-            players[0].GetComponent<Horsemen>().Stamina += 5;
+            players[col.GetComponent<PlayerBullet>().playerID].GetComponent<Horsemen>().Stamina += 1; 
+
+            //////////////////////////////////////////////////
+            /////////   STOP LES VALEURS EN DUR !!  //////////
+            //////////////////////////////////////////////////
+
             col.gameObject.SetActive(false);
             GameManager.Instance.LifeBoss = life;
         }

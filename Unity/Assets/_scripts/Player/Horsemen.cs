@@ -15,6 +15,8 @@ public abstract class Horsemen : MonoBehaviour
 
     StageFire shootStage = StageFire.One;
 
+    public GameObject goDBGIMG;
+
     #region Variables
 
     private int playerID;
@@ -156,6 +158,7 @@ public abstract class Horsemen : MonoBehaviour
             if (lifeManager != null)
             {
                 lifeManager.UpdateStaminaBar(staminaMax, stamina);
+                Debug.Log(lifeManager.gameObject.GetComponentInChildren<UnityEngine.UI.Image>().name);
             }
         }
     }
@@ -174,6 +177,7 @@ public abstract class Horsemen : MonoBehaviour
             // Init of pool
             GameObject go = new GameObject("BulletPoolPlayer" + (playerID + 1), typeof(Pool));
             pool = go.GetComponent<Pool>();
+            bullet.GetComponent<PlayerBullet>().playerID = playerID;
             pool.Init(bullet, nbBulletsPool);
         }
     }
@@ -191,6 +195,8 @@ public abstract class Horsemen : MonoBehaviour
     const float triggerDeadZone = 0.1f;
     protected const int nbBulletsPool = 30;
     const int hitLvlDown = 10;
+    const int minHeight = -2;
+
 
     [SerializeField]
     protected LayerMask fireLayer = 9;
@@ -395,6 +401,20 @@ public abstract class Horsemen : MonoBehaviour
                 dashCoroutine = StartCoroutine(Dash());
                 isInvincible = true;
             }
+        }
+
+        //Gestion de l'OOB
+        if (transform.position.y < minHeight)
+        {
+            if (GameManager.Instance.TypeMode == GameManager.Mode.standardS)
+            {
+                this.transform.position = GameManager.Instance.StartPos[2];
+            }
+            else
+            {
+                this.transform.position = GameManager.Instance.StartPos[playerID];
+            }
+            Life -= lifeMax / 4;
         }
 
         Move();

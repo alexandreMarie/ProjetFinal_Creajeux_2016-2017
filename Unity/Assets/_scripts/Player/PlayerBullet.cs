@@ -11,6 +11,8 @@ public class PlayerBullet : MonoBehaviour
     [SerializeField]
     [Range(5.0f, 20.0f)]
     private float destroyTime = 10.0f;
+
+    public int playerID = 0;
     #endregion
 
     private void OnEnable()
