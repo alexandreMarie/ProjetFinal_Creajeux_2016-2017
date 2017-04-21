@@ -54,7 +54,10 @@ public class UI_Character : MonoBehaviour {
             TextsUI[i].gameObject.SetActive(true);
             Image_UI[i].gameObject.SetActive(true);
         }
-        Update_Texte();
+        if (Players.Length ==0)
+        {
+            Update_Texte();
+        }
     }
 
     void Update_Texte()
