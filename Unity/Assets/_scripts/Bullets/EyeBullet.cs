@@ -25,7 +25,7 @@ public class EyeBullet : MonoBehaviour
     void Start()
     {
         StartCoroutine(Target());
-        Destroy(gameObject, 2.0f);
+        Destroy(gameObject, 1f);
         count++;
         number = count;
 
