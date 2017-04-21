@@ -18,6 +18,8 @@ public class BossManager : MonoBehaviour
     [SerializeField]
     static protected Transform[] players = new Transform[2];
 
+    protected GameManager gm;
+
     static float maxLife;
     public static float MaxLife
     {
@@ -39,6 +41,7 @@ public class BossManager : MonoBehaviour
 
     void Awake()
     {
+        gm = GameManager.Instance;
         foreach (LifeManager manager in FindObjectsOfType<LifeManager>())
         {
             if (manager.lifeCharacter == LifeManager.LifeCharacter.Boss)
@@ -51,7 +54,6 @@ public class BossManager : MonoBehaviour
     void Start()
     {
         int idPlayer = 0;
-
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player"))
         {
             players[idPlayer] = go.transform;
