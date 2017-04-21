@@ -37,7 +37,7 @@ public class SelectOnInput : MonoBehaviour
     int Value_Sliders_Max;
 
     bool buttonSelected = false; // to activate the right panel to navigate
-    bool A_pressed = false;
+    bool A_pressed = true;
 
 
     void Start()
@@ -57,113 +57,127 @@ public class SelectOnInput : MonoBehaviour
         //prevState = state;
         //state = GamePad.GetState(test);
 
-     
-   
-    switch(SceneManager.GetActiveScene().name)
-        {
-            case ("MainMenu"):
-                Mainmenu();
-            break;
-
-            case ("LilithFightTest"):
-                LFT();
-            break;
-            case ("Menu_Option"):
-                Option_Menu();
-                break;
-     
-        }
-        
-        //Debug.Log(buttonSelected);
       
+
+        
+                    switch (SceneManager.GetActiveScene().name)
+                {
+                    case ("MainMenu"):
+            
+                    Mainmenu();
+                    break;
+
+                    case ("LilithFightTest"):
+                        LFT();
+                    break;
+                    case ("Menu_Option"):
+                        Option_Menu();
+                        break;
+                    }
+        if (A_pressed == true)
+        {
+            if (XIM.CurrState[0].Buttons.A == ButtonState.Pressed)
+            {
+                A_pressed = true;
+            }
+            else
+            {
+                A_pressed = false;
+            }
+        }
+        //Debug.Log(buttonSelected);
+
         //if (Input.GetAxisRaw("Vertical") != 0 && buttonSelected == false)
         //{
         //    eventSystem.SetSelectedGameObject(goSelected);
         //    buttonSelected = true;
-           
+
         //}
     }
 
 
     private void Mainmenu()
     {
-        if (XIM.PrevState[0].ThumbSticks.Left.Y < -0.8 && Stick_Realeas == true)
+        if (A_pressed == false)
         {
-            ID_button++;
-            if (ID_button > Button_Menu.Length - 1)
+            if (XIM.PrevState[0].ThumbSticks.Left.Y < -0.8 && Stick_Realeas == true)
             {
-                ID_button = 0;
+                ID_button++;
+                if (ID_button > Button_Menu.Length - 1)
+                {
+                    ID_button = 0;
+                }
+                Stick_Realeas = false;
             }
-            Stick_Realeas = false;
-        }
 
 
-        if (XIM.PrevState[0].ThumbSticks.Left.Y > 0.8 && Stick_Realeas == true)
-        {
-            ID_button--;
-            if (ID_button < 0)
+            if (XIM.PrevState[0].ThumbSticks.Left.Y > 0.8 && Stick_Realeas == true)
             {
-                ID_button = 4;
+                ID_button--;
+                if (ID_button < 0)
+                {
+                    ID_button = 4;
+                }
+                Stick_Realeas = false;
             }
-            Stick_Realeas = false;
-        }
 
-        if (XIM.PrevState[0].ThumbSticks.Left.Y == 0.0f)
-        {
-            Stick_Realeas = true;
-        }
-
-        for(int i = 0; i < Button_Menu.Length; i++)
-        {
-            if(i == ID_button)
+            if (XIM.PrevState[0].ThumbSticks.Left.Y == 0.0f)
             {
-                _text = Button_Menu[i].GetComponentInChildren<Text>();
-                _text.color = Color.red;
+                Stick_Realeas = true;
             }
-            else
-           {
-                _text = Button_Menu[i].GetComponentInChildren<Text>();
-                _text.color = Color.white;
-            }
-         
-        }
 
-        if (XIM.PrevState[0].Buttons.A == ButtonState.Pressed)
-        {
-            switch (ID_button)
+            for (int i = 0; i < Button_Menu.Length; i++)
             {
-                case (0):
-                    main_menu_button.Load_Scene(5);
-             
-                    main_menu_button.Set_LoadMode(1);
-                    break;
+                if (i == ID_button)
+                {
+                    _text = Button_Menu[i].GetComponentInChildren<Text>();
+                    _text.color = Color.red;
+                }
+                else
+                {
+                    _text = Button_Menu[i].GetComponentInChildren<Text>();
+                    _text.color = Color.white;
+                }
 
-                case (1):
-                    main_menu_button.Load_Scene(3);
-               
-                    main_menu_button.Set_LoadMode(2);
-                    break;
-
-                case (2):
-                    main_menu_button.Load_Scene(5);
-               
-                    main_menu_button.Set_LoadMode(3);
-                    break;
-
-                case (3):
-                    //main_menu_button.Load_Scene(4);
-
-                    break;
-                case (4):
-                    Application.Quit();
-            
-                    break;
-                case (5):
-                  
-                    break;
             }
 
+            if (XIM.PrevState[0].Buttons.A == ButtonState.Pressed)
+            {
+                switch (ID_button)
+                {
+                    case (0):
+                        main_menu_button.Load_Scene(5);
 
+                        main_menu_button.Set_LoadMode(1);
+                        break;
+
+                    case (1):
+                        main_menu_button.Load_Scene(3);
+
+                        main_menu_button.Set_LoadMode(2);
+                        break;
+
+                    case (2):
+                        main_menu_button.Load_Scene(5);
+
+                        main_menu_button.Set_LoadMode(3);
+                        break;
+
+                    case (3):
+                        //main_menu_button.Load_Scene(4);
+
+                        break;
+                    case (4):
+                        Application.Quit();
+
+                        break;
+                    case (5):
+
+                        break;
+                }
+
+
+            }
         }
      
 
