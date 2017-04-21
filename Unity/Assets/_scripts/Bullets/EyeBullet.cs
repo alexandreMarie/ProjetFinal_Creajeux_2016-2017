@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EyeBullet : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class EyeBullet : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(Target());
         Destroy(gameObject, 2.0f);
         count++;
         number = count;
@@ -30,15 +32,10 @@ public class EyeBullet : MonoBehaviour
         if (!gm)
             gm = GameManager.Instance;
 
-        int targetPlayer = Random.Range(0, 2);
-
         if (count % 2 == 0)
             transform.position = new Vector3(1.5f - Random.Range(-0.5f, 0.5f), 2.0f - Random.Range(-0.5f, 0.5f), -10.0f - Random.Range(-0.5f, 0.5f));
         else
             transform.position = new Vector3(-1.5f - Random.Range(-0.5f, 0.5f), 2.0f - Random.Range(-0.5f, 0.5f), -10.0f - Random.Range(-0.5f, 0.5f));
-
-
-        target = gm.Players[targetPlayer].transform.position;
     }
 
     void Update()
@@ -52,5 +49,14 @@ public class EyeBullet : MonoBehaviour
             else
                 transform.position = Curve(transform.position, new Vector3(-3, 6.5f, -4), new Vector3(-3, 6.5f, -1), target, t);
         }
+    }
+
+    private IEnumerator Target()
+    {
+        yield return new WaitForSeconds(0.3f);
+
+        int targetPlayer = Random.Range(0, 2);
+
+        target = gm.Players[targetPlayer].transform.position;
     }
 }
