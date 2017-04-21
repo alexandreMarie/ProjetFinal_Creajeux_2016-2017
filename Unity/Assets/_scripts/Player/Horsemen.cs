@@ -167,8 +167,7 @@ public abstract class Horsemen : MonoBehaviour
     const float stickDeadZone = 0.3f;
     const float triggerDeadZone = 0.1f;
     protected const int nbBulletsPool = 30;
-
-    const int hitLvlDown = 5;
+    const int hitLvlDown = 10;
 
     [SerializeField]
     protected LayerMask fireLayer = 9;
@@ -189,6 +188,7 @@ public abstract class Horsemen : MonoBehaviour
     {
         if (levelUp)
         {
+            nbHitLvlDown = hitLvlDown;
             // PowerUp !
             switch (shootStage)
             {
