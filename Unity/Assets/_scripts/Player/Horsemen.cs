@@ -413,7 +413,7 @@ public abstract class Horsemen : MonoBehaviour
             if (other.tag != "PlayerBullet")
             {
                 nbHitLvlDown--;
-                if (nbHitLvlDown < hitLvlDown)
+                if (nbHitLvlDown == 0)
                 {
                     nbHitLvlDown = hitLvlDown;
                     UpdateLevelShoot(false);
