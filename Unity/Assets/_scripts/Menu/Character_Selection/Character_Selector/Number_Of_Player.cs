@@ -63,7 +63,6 @@ public class Number_Of_Player : MonoBehaviour {
 
     void New_player()
     {
-        Debug.Log(Controller_Player.NumControllers);
         for (i = i; i < Indice_Player; i++)
         {
             //Debug.Log("On est dedans ! :o");

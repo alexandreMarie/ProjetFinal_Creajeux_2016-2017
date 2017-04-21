@@ -42,7 +42,7 @@ public class UI_Character : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
         for (int i = 0; i < 2; i++)
         {
             TextsUI[i].gameObject.SetActive(false);
@@ -54,15 +54,15 @@ public class UI_Character : MonoBehaviour {
             TextsUI[i].gameObject.SetActive(true);
             Image_UI[i].gameObject.SetActive(true);
         }
-        if (Players.Length ==0)
-        {
+     
             Update_Texte();
-        }
+       
     }
 
     void Update_Texte()
     {
-        for (int i = 0; i < Players.Length; i++)
+
+        for (int i = 0; i < Players.Length-1; i++)
         {
             text_Descriptif[i].text = "Speed : " + Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player()-1).speed + "\n Life : " + Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player()-1).PDV+ "\n Attaque: " + Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player()-1).attack;
          Image_UI[i].sprite = Logo_Character[(int)Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player() - 1).selectCharact-1];

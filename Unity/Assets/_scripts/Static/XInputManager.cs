@@ -49,7 +49,6 @@ public class XInputManager : MonoBehaviour
         {
             if (instance == null)
             {
-                Debug.Log("ici");
                 instance = new GameObject("XInputManager").AddComponent<XInputManager>();
                 instance.CheckControllers();
                 DontDestroyOnLoad(instance);
@@ -122,7 +121,6 @@ public class XInputManager : MonoBehaviour
             GamePadState testGPS = GamePad.GetState(testPi);
             if (testGPS.IsConnected)
             {
-                Debug.Log("Player " + i + " is connected");
                 numControllers++;
                 ControllersConnected[i] = true;
                 result = true;
