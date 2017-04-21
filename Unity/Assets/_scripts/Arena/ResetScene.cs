@@ -29,7 +29,7 @@ public class ResetScene : MonoBehaviour {
             {
                 case Character_Selection.SelectCharact.Pestilence:
                     go = Instantiate(prefabs[1]);
-                    go.GetComponent<Horsemen>().playerID = i;
+                    go.GetComponent<Horsemen>().PlayerID = i;
                     if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
                         go.transform.position = pos[0].transform.position;
                     else if(i ==1)
@@ -39,7 +39,7 @@ public class ResetScene : MonoBehaviour {
                     break;
                 case Character_Selection.SelectCharact.Death:
                     go=Instantiate(prefabs[0]);
-                    go.GetComponent<Horsemen>().playerID = i;
+                    go.GetComponent<Horsemen>().PlayerID = i;
                     if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
                         go.transform.position = pos[0].transform.position;
                     else if(i == 1)
@@ -49,7 +49,7 @@ public class ResetScene : MonoBehaviour {
                     break;
                 case Character_Selection.SelectCharact.Famine:
                     go=Instantiate(prefabs[2]);
-                    go.GetComponent<Horsemen>().playerID = i;
+                    go.GetComponent<Horsemen>().PlayerID = i;
                     if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
                         go.transform.position = pos[0].transform.position;
                     else if (i == 1)
@@ -59,7 +59,7 @@ public class ResetScene : MonoBehaviour {
                     break;
                 case Character_Selection.SelectCharact.War:
                     go=Instantiate(prefabs[3]);
-                    go.GetComponent<Horsemen>().playerID = i;
+                    go.GetComponent<Horsemen>().PlayerID = i;
                     if (i == 0 && manager.TypeMode == (GameManager.Mode)1)
                         go.transform.position = pos[0].transform.position;
                     else if (i == 1)

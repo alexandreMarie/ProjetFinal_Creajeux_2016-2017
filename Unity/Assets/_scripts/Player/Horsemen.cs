@@ -17,7 +17,27 @@ public abstract class Horsemen : MonoBehaviour
 
     #region Variables
 
-    public int playerID;
+    private int playerID;
+    public int PlayerID
+    {
+        get
+        {
+            return playerID;
+        }
+
+        set
+        {
+            playerID = value;
+            foreach (LifeManager manager in GameObject.FindObjectsOfType<LifeManager>())
+            {
+                if ((int)manager.lifeCharacter == playerID)
+                {
+                    lifeManager = manager;
+                    lifeManager.UpdateEmblem(this.GetType());
+                }
+            }
+        }
+    }
 
     XInputManager XIMinstance;
     private bool isInvincible;
@@ -133,7 +153,10 @@ public abstract class Horsemen : MonoBehaviour
             {
                 stamina = staminaMax;
             }
-            lifeManager.UpdateStaminaBar(staminaMax, stamina);
+            if (lifeManager != null)
+            {
+                lifeManager.UpdateStaminaBar(staminaMax, stamina);
+            }
         }
     }
 
@@ -326,14 +349,6 @@ public abstract class Horsemen : MonoBehaviour
         aimValue = Vector2.zero;
         lifeUpdater = GetComponentInChildren<LifeUpdater>();
         fireLayer.value = 1 << LayerMask.NameToLayer("Boss");
-        foreach (LifeManager manager in GameObject.FindObjectsOfType<LifeManager>())
-        {
-            if ((int)manager.lifeCharacter == playerID)
-            {
-                lifeManager = manager;
-                lifeManager.UpdateEmblem(this.GetType());
-            }
-        }
         GameManager.Instance.NbShoot = 0;
         //Debug.Log(LayerMask.NameToLayer("Boss"));
     }
