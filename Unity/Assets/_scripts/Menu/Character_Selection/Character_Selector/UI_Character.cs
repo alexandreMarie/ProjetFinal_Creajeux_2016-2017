@@ -62,7 +62,7 @@ public class UI_Character : MonoBehaviour {
     void Update_Texte()
     {
 
-        for (int i = 0; i < Players.Length-1; i++)
+        for (int i = 0; i < Players.Length; i++)
         {
             text_Descriptif[i].text = "Speed : " + Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player()-1).speed + "\n Life : " + Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player()-1).PDV+ "\n Attaque: " + Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player()-1).attack;
          Image_UI[i].sprite = Logo_Character[(int)Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player() - 1).selectCharact-1];
