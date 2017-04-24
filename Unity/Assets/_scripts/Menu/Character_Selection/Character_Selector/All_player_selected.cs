@@ -4,13 +4,14 @@ using UnityEngine.SceneManagement;
 public class All_player_selected : MonoBehaviour {
 
     bool Loading_Ok;
-    [SerializeField]
-    Character_Selection[] Players;
+    Character_Selection[,] Players;
     GameManager GM;
     XInputManager XIM;
     MenuManager MManag;
     [SerializeField]
     SoundsManager SM;
+    [SerializeField]
+    Number_Of_Player NB;
     // Use this for initialization
     void Start () {
         GM = GameManager.Instance;
@@ -23,22 +24,36 @@ public class All_player_selected : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Players = GetComponentsInChildren<Character_Selection>();
-        for (int i = 0; i < Players.Length; i++)
+
+        for(int i = 0; i < XIM.NumControllers; i++)
         {
-            Players[i].GetComponent<Character_Selection>().Set_SM(SM);
-        }
-            //Debug.Log(Players.Length);
-        for (int i = 0; i < Players.Length; i++)
-        {
-            if (Players[i].Return_Boolen() == true)
+            for(int j=0; j < 4;j++)
             {
-                Loading_Ok = true;
+                Players = new Character_Selection[XIM.NumControllers,j];
+                Players[i,j] = NB.Character_liste[i,j].GetComponent<Character_Selection>();
             }
-            else
+        }
+       
+
+
+        for (int j = 0; j < 2; j++)
+        {
+            for (int i = 0; i < Players.Length; i++)
             {
-                Loading_Ok = false;
-                i = Players.Length;
+                Players[j,i].GetComponent<Character_Selection>().Set_SM(SM);
+            }
+            //Debug.Log(Players.Length);
+            for (int i = 0; i < Players.Length; i++)
+            {
+                if (Players[j,i].Return_Boolen() == true)
+                {
+                    Loading_Ok = true;
+                }
+                else
+                {
+                    Loading_Ok = false;
+                    i = Players.Length;
+                }
             }
         }
 	if(Loading_Ok == true)
@@ -47,9 +62,12 @@ public class All_player_selected : MonoBehaviour {
             //First : Create Structure
             GM.CreateStrucCharact(XIM.NumControllers);
             //Second : Add variable
-            for(int i = 0; i < XIM.NumControllers;i++)
+            for (int j = 0; j < 2; j++)
             {
-                GM.Set_Stat_Player(Players[i].Return_Stats(Players[i].Return_Id_Player()-1), i);
+                for (int i = 0; i < XIM.NumControllers; i++)
+                {
+                    GM.Set_Stat_Player(Players[j,i].Return_Stats(Players[j,i].Return_Id_Player() - 1), i);
+                }
             }
             //Debug.Log(MManag.GetLoadState());
            switch(MManag.GetLoadState())
