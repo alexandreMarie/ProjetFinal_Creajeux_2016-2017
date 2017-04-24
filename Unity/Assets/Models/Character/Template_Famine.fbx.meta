@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 080b1603cd0a7824e8d7c5b33c08a25e
-timeCreated: 1493029257
+guid: 45f3cf8b5f2067d40b483cc095b62e62
+timeCreated: 1493044671
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -10,6 +10,7 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: polySurface_famine
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -68,7 +69,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

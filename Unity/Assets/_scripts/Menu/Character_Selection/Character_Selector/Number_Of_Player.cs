@@ -95,7 +95,7 @@ public class Number_Of_Player : MonoBehaviour {
             {
                 //Debug.Log("On est dedans ! :o");
                 GameObject GO = Instantiate(Players[j],Character_Selector)as GameObject;
-                character_liste[i, j] = Players[j];
+                character_liste[i, j] = GO;
                 GO.GetComponent<Rigidbody>().useGravity = false;
                 GO.GetComponent<Horsemen>().enabled = false;
                 GO.AddComponent<Character_Selection>();
