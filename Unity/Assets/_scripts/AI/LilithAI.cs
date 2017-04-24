@@ -55,6 +55,7 @@ public class LilithAI : BossManager
     private enum LifeState { LAST, ONE, TWO, THREE, FOUR };
 
     LifeState lifeState = LifeState.FOUR;
+    private bool specialState = false;
 
     public Patterns LilithAccessor
     {
@@ -161,7 +162,7 @@ public class LilithAI : BossManager
             }
         }
 
-        if (!attacking)
+        if (!attacking && !specialState)
         {
             int attack = Random.Range(1, 4);
 
@@ -260,7 +261,7 @@ public class LilithAI : BossManager
         {
             arenaLights.TurnLight = true;
 
-            //arena.GetComponent<EmissiveController>().TurnEmissive = true;
+            arena.GetComponent<EmissiveController>().TurnEmissive = true;
             Camera.main.GetComponent<BloomController>().TurnBloom = true;
             //SoundsManager.Instance.VolumeAmbientMusic = 0.75f;
 
@@ -274,7 +275,7 @@ public class LilithAI : BossManager
             yield return new WaitForSeconds(4.0f);
 
             arenaLights.TurnLight = false;
-            //arena.GetComponent<EmissiveController>().TurnEmissive = false;
+            arena.GetComponent<EmissiveController>().TurnEmissive = false;
             Camera.main.GetComponent<BloomController>().TurnBloom = false;
             //SoundsManager.Instance.VolumeAmbientMusic = 1.0f;
 
@@ -284,7 +285,7 @@ public class LilithAI : BossManager
 
     private IEnumerator ScavengingSnake()
     {
-        //specialState = true;
+        specialState = true;
 
         lilithMovement.SetDestination(default(Vector3));
 
@@ -300,7 +301,7 @@ public class LilithAI : BossManager
 
         yield return new WaitForSeconds(2.0f);
 
-        //specialState = false;
+        specialState = false;
         arenaLights.TurnLight = false;
 
         yield return new WaitForSeconds(5.0f);
@@ -335,7 +336,7 @@ public class LilithAI : BossManager
 
     private IEnumerator EyeAttack()
     {
-        //specialState = true;
+        specialState = true;
 
         lilithMovement.SetDestination(new Vector3(0.0f, 0.0f, -6.5f));
 
@@ -349,7 +350,7 @@ public class LilithAI : BossManager
             yield return new WaitForSeconds(0.02f);
         }
 
-        //specialState = false;
+        specialState = false;
 
         yield return new WaitForSeconds(5.0f);
 

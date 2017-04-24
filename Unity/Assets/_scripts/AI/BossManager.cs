@@ -72,8 +72,7 @@ public class BossManager : MonoBehaviour
             life--;
             
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
-            Debug.Log(MaxLife);
-            Debug.Log(life);
+
             players[col.GetComponent<PlayerBullet>().playerID].GetComponent<Horsemen>().Stamina += 1; 
 
             //////////////////////////////////////////////////
