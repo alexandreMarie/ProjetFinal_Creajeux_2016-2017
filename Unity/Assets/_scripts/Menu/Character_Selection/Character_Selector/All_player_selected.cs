@@ -29,7 +29,7 @@ public class All_player_selected : MonoBehaviour {
         {
             for(int j=0; j < 4;j++)
             {
-                Players = new Character_Selection[XIM.NumControllers,j];
+                Players = new Character_Selection[i,j];
                 Players[i,j] = NB.Character_liste[i,j].GetComponent<Character_Selection>();
             }
         }
@@ -56,6 +56,7 @@ public class All_player_selected : MonoBehaviour {
                 }
             }
         }
+
 	if(Loading_Ok == true)
         {
             //Debug.Log("Ca marche! putain pour une fois t'es compétant fete ca enculé !");

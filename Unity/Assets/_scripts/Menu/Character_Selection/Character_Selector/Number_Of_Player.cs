@@ -23,13 +23,16 @@ public class Number_Of_Player : MonoBehaviour {
         character_liste = new GameObject[2, 4];
         Indice_Player = Controller_Player.NumControllers;
         if (Indice_Player < Controller_Player.NumControllers);
-
+        Indice_Player = 0;
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        Indice_Player = Controller_Player.NumControllers;
+       if(Indice_Player < 2)
+        {
+            Indice_Player++;
+        }
        // Debug.Log("Indice_Players : " + Indice_Player + "| Last_Indice_Player : " + Last_Indice_Player);
         //if (Indice_Player < Last_Indice_Player)
         //{
