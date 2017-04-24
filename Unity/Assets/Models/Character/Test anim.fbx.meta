@@ -1,0 +1,161 @@
+fileFormatVersion: 2
+guid: ec4ce035f4d623c43b90bd7c43debccf
+timeCreated: 1493044719
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: CTRL_cou
+    100002: CTRL_D_bras
+    100004: CTRL_D_coude
+    100006: CTRL_D_main
+    100008: CTRL_D_poignet
+    100010: CTRL_dos
+    100012: CTRL_G_bras
+    100014: CTRL_G_coude
+    100016: CTRL_G_main
+    100018: CTRL_G_poignet
+    100020: CTRL_principal
+    100022: CTRL_root
+    100024: CTRL_tete
+    100026: group_CTRL
+    100028: group_JOINT
+    100030: JOINT_cou
+    100032: JOINT_D_bras
+    100034: JOINT_D_cape_01
+    100036: JOINT_D_cape_02
+    100038: JOINT_D_cape_03
+    100040: JOINT_D_clavicule
+    100042: JOINT_D_coude
+    100044: JOINT_D_genou
+    100046: JOINT_D_hanche
+    100048: JOINT_D_main
+    100050: JOINT_D_pied
+    100052: JOINT_D_poignet
+    100054: JOINT_dos
+    100056: JOINT_G_bras
+    100058: JOINT_G_cape_01
+    100060: JOINT_G_cape_02
+    100062: JOINT_G_cape_03
+    100064: JOINT_G_clavicule
+    100066: JOINT_G_coude
+    100068: JOINT_G_genou
+    100070: JOINT_G_hanche
+    100072: JOINT_G_main
+    100074: JOINT_G_pied
+    100076: JOINT_G_poignet
+    100078: JOINT_Root
+    100080: JOINT_tete
+    100082: polySurface_pestilence
+    100084: //RootNode
+    400000: CTRL_cou
+    400002: CTRL_D_bras
+    400004: CTRL_D_coude
+    400006: CTRL_D_main
+    400008: CTRL_D_poignet
+    400010: CTRL_dos
+    400012: CTRL_G_bras
+    400014: CTRL_G_coude
+    400016: CTRL_G_main
+    400018: CTRL_G_poignet
+    400020: CTRL_principal
+    400022: CTRL_root
+    400024: CTRL_tete
+    400026: group_CTRL
+    400028: group_JOINT
+    400030: JOINT_cou
+    400032: JOINT_D_bras
+    400034: JOINT_D_cape_01
+    400036: JOINT_D_cape_02
+    400038: JOINT_D_cape_03
+    400040: JOINT_D_clavicule
+    400042: JOINT_D_coude
+    400044: JOINT_D_genou
+    400046: JOINT_D_hanche
+    400048: JOINT_D_main
+    400050: JOINT_D_pied
+    400052: JOINT_D_poignet
+    400054: JOINT_dos
+    400056: JOINT_G_bras
+    400058: JOINT_G_cape_01
+    400060: JOINT_G_cape_02
+    400062: JOINT_G_cape_03
+    400064: JOINT_G_clavicule
+    400066: JOINT_G_coude
+    400068: JOINT_G_genou
+    400070: JOINT_G_hanche
+    400072: JOINT_G_main
+    400074: JOINT_G_pied
+    400076: JOINT_G_poignet
+    400078: JOINT_Root
+    400080: JOINT_tete
+    400082: polySurface_pestilence
+    400084: //RootNode
+    4300000: polySurface_pestilence
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: polySurface_pestilence
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
