@@ -27,6 +27,7 @@ public class Arena_Selection : MonoBehaviour {
     bool Button_is_releasd;
     bool Button_is_releasd_A;
     bool Button_is_releasd_B;
+    [SerializeField]
     int Arena_ID;//Identifiant of the arnea
     [SerializeField]
     Animator[] Arenas;//Liste of the arena
@@ -37,7 +38,7 @@ public class Arena_Selection : MonoBehaviour {
     bool Arena_is_locked;
 	// Use this for initialization
 	void Start () {
-      
+        Arena_ID = 0;
         GM = GameManager.Instance;
         Arenas = GetComponentsInChildren<Animator>();
 
@@ -114,10 +115,11 @@ public class Arena_Selection : MonoBehaviour {
             ID_Perso_Selector();
         }
 
-        //if (Move_Camera())
-        //{
+        if (Move_Camera())
+        {
             Rotate_Arena();
-        //}
+            Rotate_One_Arena();
+        }
     }
 
     public int Get_ID()
@@ -149,16 +151,17 @@ public class Arena_Selection : MonoBehaviour {
 
     void ID_Perso_Selector()
     {
-        if (prevState.ThumbSticks.Left.X >= 0.5)
+        if (prevState.ThumbSticks.Left.X >= 0.5 || Input.GetKeyUp(KeyCode.Q))
         {
 
           
             Arena_ID++;
-            if (Arena_ID > 4)
+            if (Arena_ID > 3)
             {
-                Arena_ID = 1;
+                Arena_ID = 0;
             }
-            Rotation_Targeted += Step_of_rotation;
+            //Arenas[Arena_ID].transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
+            Rotation_Targeted -= Step_of_rotation;
             Target_cam = value_of_target_cam;
             Button_is_releasd = false;
             Arena_is_locked = false;
@@ -167,15 +170,16 @@ public class Arena_Selection : MonoBehaviour {
 
         }
 
-        if (prevState.ThumbSticks.Left.X <= -0.5)
+        if (prevState.ThumbSticks.Left.X <= -0.5 || Input.GetKeyUp(KeyCode.D))
         {
             //SM.SourceMusic.clip = SM.Sfx_Menu[0];
             Arena_ID--;
-            if (Arena_ID < 1)
+            if (Arena_ID < 0)
             {
-                Arena_ID = 4;
+                Arena_ID = 3;
             }
-            Rotation_Targeted -= Step_of_rotation;
+           // Arenas[Arena_ID].transform.eulerAngles = new Vector3(0.0f, 90.0f, 0.0f);
+            Rotation_Targeted += Step_of_rotation;
             Target_cam = value_of_target_cam;
             Button_is_releasd = false;
             Arena_is_locked = false;
@@ -206,6 +210,21 @@ public class Arena_Selection : MonoBehaviour {
         if(Arena_is_locked == true)
         {
             Target_cam = 0;
+        }
+    }
+    void Rotate_One_Arena()
+    {
+        if (prevState.ThumbSticks.Right.X >= 0.5 || Input.GetKeyUp(KeyCode.RightArrow))
+        {
+      
+            Arenas[Arena_ID].transform.eulerAngles += new Vector3(0.0f, 1.0f, 0.0f);
+        }
+
+        if (prevState.ThumbSticks.Right.X <= -0.5 || Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            //SM.SourceMusic.clip = SM.Sfx_Menu[0];
+            Arenas[Arena_ID].transform.eulerAngles -= new Vector3(0.0f, 1.0f, 0.0f);
+
         }
     }
 }

@@ -47,17 +47,17 @@ public class Arena_Description : MonoBehaviour {
 
     void Update_Name()
     {
-        text_UI[0].text = Boss_Name[Script_arena.Get_ID() - 1];
+        text_UI[0].text = Boss_Name[Script_arena.Get_ID()];
     }
 
     void Update_right_text()
     {
-        text_UI[1].text = Arena_Descrpitif[Script_arena.Get_ID()-1];
+        text_UI[1].text = Arena_Descrpitif[Script_arena.Get_ID()];
     }
 
 
     void Update_Text()
     {
-        text_UI[2].text = Name[Script_arena.Get_ID()-1];
+        text_UI[2].text = Name[Script_arena.Get_ID()];
     }
 }
