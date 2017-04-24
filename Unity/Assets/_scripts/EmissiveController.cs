@@ -43,6 +43,6 @@ public class EmissiveController : MonoBehaviour
         color.g = color.r;
         color.b = color.r;
 
-        mat.SetColor("_EmissionColor", color);
+        mat.SetFloat("_Range", color.r);
     }
 }
