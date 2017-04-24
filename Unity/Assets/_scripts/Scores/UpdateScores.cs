@@ -84,9 +84,10 @@ public class UpdateScores : MonoBehaviour {
         displayHitByPlayers = GameManager.Instance.NbHit;
         displayShootByPlayers = GameManager.Instance.NbShoot;
         displayDamageByBoss = GameManager.Instance.DamageByBoss;
-        percentageHitShoot = displayHitByPlayers - displayShootByPlayers;
-        percentageHitShoot = percentageHitShoot / displayHitByPlayers * 100;
 
+        percentageHitShoot = (float)displayHitByPlayers / displayShootByPlayers;
+        percentageHitShoot = percentageHitShoot * 100;
+        Debug.Log(percentageHitShoot);
         // Initialization of scoring conditions
         switch (GameManager.Instance.TypeMode)
         {
