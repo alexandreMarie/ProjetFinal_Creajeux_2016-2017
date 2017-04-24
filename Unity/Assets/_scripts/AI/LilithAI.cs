@@ -297,8 +297,9 @@ public class LilithAI : BossManager
 
         arenaLights.TurnLight = true;
 
-        yield return new WaitForSeconds(3.0f);
-
+        do
+        { yield return new WaitForSeconds(2.0f); }
+        while (lilithMovement.remainingDistance > 0.2f);
 
         Vector3 scavengePosition = new Vector3(-30, 1.0f, gm.Players[targetPlayer].transform.position.z);
 
