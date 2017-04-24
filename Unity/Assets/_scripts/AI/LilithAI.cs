@@ -118,6 +118,7 @@ public class LilithAI : BossManager
                 divergence = 178.5f;
 
                 Lilith.StopAllCoroutines();
+                StopAllCoroutines();
                 StopCoroutine(AI1());
 
                 LilithEvents.Invoke();
@@ -136,6 +137,7 @@ public class LilithAI : BossManager
                 divergence = 75.0f;
 
                 Lilith.StopAllCoroutines();
+                StopAllCoroutines();
                 StopCoroutine(AI2());
 
                 LilithEvents.Invoke();
@@ -154,6 +156,7 @@ public class LilithAI : BossManager
                 divergence = 137.5f;
 
                 Lilith.StopAllCoroutines();
+                StopAllCoroutines();
                 StopCoroutine(AI3());
 
                 LilithEvents.Invoke();
@@ -248,11 +251,11 @@ public class LilithAI : BossManager
 
         int i = 0;
 
-        while (i < 21)
+        while (true)
         {
             i++;
-            LilithAccessor.LaunchRotatingStraightLine(bullet, bulletQuantityBurst, true);
-            yield return new WaitForSeconds(time / 6);
+            LilithAccessor.LaunchRotatingStraightLine(bullet, bulletQuantityBurst, false);
+            yield return new WaitForSeconds(time / 4);
         }
     }
 
