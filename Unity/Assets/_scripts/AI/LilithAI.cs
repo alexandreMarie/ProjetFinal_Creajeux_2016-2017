@@ -31,7 +31,7 @@ public class LilithAI : BossManager
 
     private float time = 15.0f;
     private float divergence = 137.5f; // Angular divergence of the phyllotaxis
-    
+
     private bool attacking = false;
     //private bool straightLineDone = false;
 
@@ -96,6 +96,9 @@ public class LilithAI : BossManager
         destination.z = -gm.Players[targetPlayer].transform.position.z;
 
         NavMesh.CalculatePath(transform.position, destination, 0, path);
+
+        if (!specialState)
+            lilithMovement.SetDestination(destination);
 
         if (lifeState == LifeState.FOUR)
         {
@@ -261,7 +264,7 @@ public class LilithAI : BossManager
         {
             arenaLights.TurnLight = true;
 
-            arena.GetComponent<EmissiveController>().TurnEmissive = true;
+            arena.GetComponent<EmissiveController>().TurnEmissive = false;
             Camera.main.GetComponent<BloomController>().TurnBloom = true;
             //SoundsManager.Instance.VolumeAmbientMusic = 0.75f;
 
@@ -275,7 +278,7 @@ public class LilithAI : BossManager
             yield return new WaitForSeconds(4.0f);
 
             arenaLights.TurnLight = false;
-            arena.GetComponent<EmissiveController>().TurnEmissive = false;
+            arena.GetComponent<EmissiveController>().TurnEmissive = true;
             Camera.main.GetComponent<BloomController>().TurnBloom = false;
             //SoundsManager.Instance.VolumeAmbientMusic = 1.0f;
 
@@ -293,7 +296,7 @@ public class LilithAI : BossManager
 
         yield return new WaitForSeconds(3.0f);
 
-      
+
         Vector3 scavengePosition = new Vector3(-30, 1.0f, gm.Players[targetPlayer].transform.position.z);
 
         Transform _scavengingSnake = Instantiate(scavengingSnake, scavengePosition, Quaternion.identity) as Transform;
@@ -318,7 +321,7 @@ public class LilithAI : BossManager
         yield return new WaitForSeconds(3.0f);
         int target = 0;
         if (GameManager.Instance.NbPlayers > 1)
-             target = Random.Range(0, 2);
+            target = Random.Range(0, 2);
 
         Vector3 hitPosition = gm.Players[target].transform.position;
 
