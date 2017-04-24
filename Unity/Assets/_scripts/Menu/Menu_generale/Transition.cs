@@ -65,7 +65,7 @@ public class Transition : MonoBehaviour {
             goToActivate.SetActive(true);
         }
 
-        if (XIM.CurrState[0].Buttons.Y ==  ButtonState.Pressed && Animation_ended == true)
+        if (XIM.GetButtonDown(0, XInputManager.XButtons.Y) && Animation_ended == true)
         {
             Application.OpenURL("http://www.creajeux.fr/");
         }
