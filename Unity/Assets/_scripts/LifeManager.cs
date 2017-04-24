@@ -82,6 +82,7 @@ public class LifeManager : MonoBehaviour
     /// <param name="_value">Nombre de pdv restants du joueur</param>
     public void UpdateLifeBar(int _maxValue, int _value)
     {
+        FindImages();
         // MAJ de l'UI seulement quand appelée
         if (imgFilledBar != null)
             imgFilledBar.fillAmount = _value / (float)_maxValue;

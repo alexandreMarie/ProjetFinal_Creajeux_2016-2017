@@ -453,14 +453,11 @@ public abstract class Horsemen : MonoBehaviour
                 XIMinstance.SetVibration(playerID, freezeDuration, 1f);
                 Life -= 10;
             }
-
-            Debug.Log(other.gameObject.layer);
-            Debug.Log(fireLayer);
+            
 
             if (other.gameObject.layer == bulletLayer && other.tag != "PlayerBullet")
             {
                 nbHitLvlDown--;
-                Debug.Log(other.tag);
                 if (nbHitLvlDown == 0)
                 {
                     nbHitLvlDown = hitLvlDown;

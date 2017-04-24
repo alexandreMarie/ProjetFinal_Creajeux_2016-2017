@@ -26,7 +26,7 @@ public class BossManager : MonoBehaviour
         get { return maxLife; }
     }
 
-    static float life = 0;
+    static float life = 1000;
 
     public static float Life
     {
@@ -53,6 +53,7 @@ public class BossManager : MonoBehaviour
 
     void Start()
     {
+        life = 1000;
         int idPlayer = 0;
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player"))
         {
@@ -60,7 +61,7 @@ public class BossManager : MonoBehaviour
             idPlayer++;
         }
 
-        maxLife = life;
+       maxLife = life;
     }
 
     void OnTriggerEnter(Collider col)
@@ -71,6 +72,8 @@ public class BossManager : MonoBehaviour
             life--;
             
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
+            Debug.Log(MaxLife);
+            Debug.Log(life);
             players[col.GetComponent<PlayerBullet>().playerID].GetComponent<Horsemen>().Stamina += 1; 
 
             //////////////////////////////////////////////////

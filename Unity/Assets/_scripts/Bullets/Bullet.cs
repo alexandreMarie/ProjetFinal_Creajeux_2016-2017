@@ -10,7 +10,7 @@ public class Bullet : Poolable
 
     [SerializeField]
     [Range(1.0f, 10.0f)]
-    private float destroyTime = 3.0f;
+    private float destroyTime = 5.0f;
     #endregion
 
     private bool rotateBullet = false;
