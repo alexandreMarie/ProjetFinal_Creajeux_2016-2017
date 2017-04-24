@@ -41,7 +41,7 @@ public class Number_Of_Player : MonoBehaviour {
         Destroy(Players[Indice_Player-1]);
     }
 
-    void New_player_test()
+    /*void New_player_test()
     {
         Debug.Log(Controller_Player.NumControllers);
         
@@ -59,7 +59,7 @@ public class Number_Of_Player : MonoBehaviour {
                     Players[Indice_Player].transform.position = new Vector3(1.2f, 1.0f, -7.0f);
                     break;
             }
-    }
+    }*/
 
     void New_player()
     {
