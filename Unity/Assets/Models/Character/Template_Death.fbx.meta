@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 9f625741065aa204d95e0aeba9a5e9b3
-timeCreated: 1490599847
+guid: aa20d55a3def4ac40ae3651652722322
+timeCreated: 1493045593
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: pSphere3
+    4300000: Polysurface_Death
     9500000: //RootNode
   materials:
     importMaterials: 1
