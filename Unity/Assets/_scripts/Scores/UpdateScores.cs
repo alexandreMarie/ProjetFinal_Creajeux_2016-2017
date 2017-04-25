@@ -180,7 +180,6 @@ public class UpdateScores : MonoBehaviour
 
                     scores[i] = Mathf.Pow(0.99f, GameManager.Instance.Timer % 60 - 1) * scoreBasedTime;
                     time += Time.deltaTime * vitesse;
-                    Debug.Log(scores[i]);
                     currentTime[i] = Mathf.Lerp(0, GameManager.Instance.Timer, time);
                     currentScore[i] = Mathf.Lerp(0, scores[i], time);
                     minutes[i] = (int)currentTime[i] / 60;
@@ -291,7 +290,7 @@ public class UpdateScores : MonoBehaviour
                     {
 
                         SaveData();
-                       // Next();
+                        Next();
                     }
                     /* Save */
                     //GameManager.Instance.SaveData(scoresFinal);
@@ -311,9 +310,10 @@ public class UpdateScores : MonoBehaviour
     public void SaveData()
     {
         SaveGeneral []saveGeneral = new SaveGeneral[GameManager.Instance.NbPlayers];
-
-        
-
+        string dataPath = Application.dataPath + "/../save.dat";
+        StreamWriter file;
+        StreamReader fileR;
+        string read;
         for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
         {
             saveGeneral[i].playerId = i;
@@ -329,16 +329,45 @@ public class UpdateScores : MonoBehaviour
             saveGeneral[i].speed = GameManager.Instance.Struc_stat_character[i].speed;
             saveGeneral[i].hero = GameManager.Instance.Struc_stat_character[i].selectCharact.ToString();
         }
-        StreamWriter file = File.CreateText(Application.dataPath + "/../save.dat");
-       // file.
-        for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
+        if (!File.Exists(dataPath))
         {
-            
-            string bufferData = JsonUtility.ToJson(saveGeneral[i]);
-            
-            file.WriteLine(bufferData);
-            
+            file = File.CreateText(dataPath);
+            for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
+            {
+
+                string bufferData = JsonUtility.ToJson(saveGeneral[i]);
+
+                file.WriteLine(bufferData);
+
+            }
+            file.Close();
         }
-        file.Close();
+        else
+        {
+            fileR = File.OpenText(dataPath);
+                read = fileR.ReadLine();
+                while (read != null)
+                    read = fileR.ReadLine();
+            Debug.Log(read);
+            try
+            {
+                file = File.CreateText(dataPath);
+                string bufferData = JsonUtility.ToJson(read);
+                file.WriteLine(bufferData);
+                for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
+                {
+
+                    bufferData = JsonUtility.ToJson(saveGeneral[i]);
+
+                    file.WriteLine(bufferData);
+
+                }
+                file.Close();
+            }
+            catch
+            {
+                Debug.Log("yolo");
+            }
+        }      
     }
 }

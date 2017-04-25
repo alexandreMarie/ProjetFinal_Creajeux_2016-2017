@@ -22,10 +22,9 @@ public class GameManager : MonoBehaviour
             selectCharact = _sel_char;
         }
     }
-
-
-    Stats_Character[] struc_stat_character;
-    Stats_Character[] sauvegarde_state;
+    
+    private Stats_Character[] struc_stat_character;
+    private Stats_Character[] sauvegarde_state;
 
     private bool dead;
 

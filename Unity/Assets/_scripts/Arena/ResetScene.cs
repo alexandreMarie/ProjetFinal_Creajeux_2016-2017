@@ -38,10 +38,11 @@ public class ResetScene : MonoBehaviour
 
             for (int i = 0; i < nbPlayers; i++)
             {
+                int random = Random.Range(1, 5);
                 manager.Struc_stat_character[i].attack = 20;
                 manager.Struc_stat_character[i].PDV = 100;
                 manager.Struc_stat_character[i].speed = 20;
-                manager.Struc_stat_character[i].selectCharact = (GameManager.SelectCharact)1;
+                manager.Struc_stat_character[i].selectCharact = (GameManager.SelectCharact)random;
 
                 ;
             }
@@ -116,7 +117,6 @@ public class ResetScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         switch (manager.TypeMode)
         {
             case 0:
