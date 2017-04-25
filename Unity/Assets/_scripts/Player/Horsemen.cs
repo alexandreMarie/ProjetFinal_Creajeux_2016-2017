@@ -126,7 +126,7 @@ public abstract class Horsemen : MonoBehaviour
         }
     }
 
-    private float speed = 6.0f;
+    private float speed = 5.0f;
     public virtual float Speed
     {
         get
@@ -473,7 +473,6 @@ public abstract class Horsemen : MonoBehaviour
                 Life -= 10;
             }
             
-
             if (other.gameObject.layer == bulletLayer && other.tag != "PlayerBullet")
             {
                 nbHitLvlDown--;
