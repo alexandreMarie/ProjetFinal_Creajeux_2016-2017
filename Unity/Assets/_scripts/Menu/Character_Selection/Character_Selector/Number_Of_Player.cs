@@ -123,10 +123,10 @@ public class Number_Of_Player : MonoBehaviour {
                 switch (i)
                 {
                     case (0):
-                        GO.GetComponent<Transform>().position = new Vector3(-1.0f, 1.2f, -7.0f);
+                        GO.GetComponent<Transform>().position = new Vector3(-1.0f, 10, -7.0f);
                         break;
                     case (1):
-                        GO.GetComponent<Transform>().transform.position = new Vector3(1.2f, 1.2f, -7.0f);
+                        GO.GetComponent<Transform>().position = new Vector3(1.2f,10, -7.0f);
                         break;
                 }
             }

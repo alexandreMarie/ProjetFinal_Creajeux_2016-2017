@@ -209,15 +209,15 @@ public class Character_Selection : MonoBehaviour {
     {
         //Debug.Log(playerIndex);
 
-            for (int i = 0; i< Player.Length; i++)
-            {
-                if (i == ID_Perso - 1)
-                { 
-                    Player[i].transform.position = new Vector3(Player[i].transform.position.x, 0.17f, Player[i].transform.position.z);
-                }
-                else
-                    Player[i].transform.position = new Vector3(Player[i].transform.position.x, 11.0f, Player[i].transform.position.z);
-            }
+            //for (int i = 0; i< Player.Length; i++)
+            //{
+            //    if (i == ID_Perso - 1)
+            //    { 
+            //        Player[i].transform.position = new Vector3(Player[i].transform.position.x, 0.17f, Player[i].transform.position.z);
+            //    }
+            //    else
+            //        Player[i].transform.position = new Vector3(Player[i].transform.position.x, 11.0f, Player[i].transform.position.z);
+            //}
         
 
     }
