@@ -24,7 +24,7 @@ public class ResetScene : MonoBehaviour
         manager = GameManager.Instance;
         manager.StartPos = new Vector3[3];
         
-        manager.LifePlayers = new int[GameManager.Instance.NbPlayers];
+        
         Debug.Log(manager.NbPlayers);
         System.Array.Copy(pos, manager.StartPos, pos.Length);
         GameManager.SelectCharact selecCharact;
@@ -46,6 +46,7 @@ public class ResetScene : MonoBehaviour
                 ;
             }
         }
+        manager.LifePlayers = new int[GameManager.Instance.NbPlayers];
         for (int i = 0; i < manager.NbPlayers; i++)
         {
             GameObject go;

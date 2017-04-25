@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
         public int PDV;
         public SelectCharact selectCharact;
 
-        public Stats_Character(float _speed,int _attack,int _PDV,SelectCharact _sel_char )
+        public Stats_Character(float _speed, int _attack, int _PDV, SelectCharact _sel_char)
         {
             speed = _speed;
             attack = _attack;
@@ -26,39 +26,12 @@ public class GameManager : MonoBehaviour
 
     Stats_Character[] struc_stat_character;
     Stats_Character[] sauvegarde_state;
-    /* Player with his character */
-    //private Selection_of_character.Stats_Character [] struc_stat_character;
-
-
-
-
-
-
-    //Statistique_char[0].attack = 20;
-    //    Statistique_char[0].PDV = 200;
-    //    Statistique_char[0].speed = 5;
-    //    Statistique_char[0].selectCharact = SelectCharact.War;
-
-    //    Statistique_char[1].attack = 10;
-    //    Statistique_char[1].PDV = 100;
-    //    Statistique_char[1].speed = 10;
-    //    Statistique_char[1].selectCharact = SelectCharact.Famine;
-
-    //    Statistique_char[2].attack = 15;
-    //    Statistique_char[2].PDV = 150;
-    //    Statistique_char[2].speed = 15;
-    //    Statistique_char[2].selectCharact = SelectCharact.Pestilence;
-
-    //    Statistique_char[3].attack = 25;
-    //    Statistique_char[3].PDV = 50;
-    //    Statistique_char[3].speed = 5;
-    //    Statistique_char[3].selectCharact = SelectCharact.Death;
 
     private bool dead;
 
     /* 0 = solo/standard; 1 = duo/standard; 2 = duo/Hardcore; 3 = ...*/
     private Mode typeMode;
-    public enum Mode { standardS , standardD, hardcoreD};
+    public enum Mode { standardS, standardD, hardcoreD };
 
     public enum Arena { arena1, arena2, arena3 };
     private Arena typeArena;
@@ -77,9 +50,9 @@ public class GameManager : MonoBehaviour
     private float lifeBoss;
 
     [SerializeField]
-    private int nbHit;
+    private int[] nbHit;
     [SerializeField]
-    private int nbShoot;
+    private int[] nbShoot;
     private int damageByBoss = 40;
 
     private GameObject boss;
@@ -119,8 +92,8 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-    
-    public void UpdateLife( int playerId, int life)
+
+    public void UpdateLife(int playerId, int life)
     {
         for (int i = 0; i < playerId; i++)
         {
@@ -166,7 +139,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-   
+
 
     public GameObject GameOver
     {
@@ -286,8 +259,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-  
-    public int NbHit
+
+    public int[] NbHit
     {
         get
         {
@@ -300,7 +273,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int NbShoot
+    public int[] NbShoot
     {
         get
         {
@@ -401,6 +374,19 @@ public class GameManager : MonoBehaviour
         set
         {
             sauvegarde_state = value;
+        }
+    }
+
+    public Arena TypeArena
+    {
+        get
+        {
+            return typeArena;
+        }
+
+        set
+        {
+            typeArena = value;
         }
     }
 
