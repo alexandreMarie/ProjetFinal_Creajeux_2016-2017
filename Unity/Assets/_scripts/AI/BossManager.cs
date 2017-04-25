@@ -46,6 +46,8 @@ public class BossManager : MonoBehaviour
         foreach (LifeManager manager in FindObjectsOfType<LifeManager>())
             if (manager.lifeCharacter == LifeManager.LifeCharacter.Boss)
                 lifeManager = manager;
+
+        gm.NbHit = new int[gm.NbPlayers];
     }
 
     void Start()
@@ -59,7 +61,10 @@ public class BossManager : MonoBehaviour
     {
         if (col.tag == "PlayerBullet")
         {
-            GameManager.Instance.NbHit++;
+            if (col.GetComponent<PlayerBullet>().playerID == 0)
+                GameManager.Instance.NbHit[0]++;
+            else
+                GameManager.Instance.NbHit[1]++;
             life--;
 
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);

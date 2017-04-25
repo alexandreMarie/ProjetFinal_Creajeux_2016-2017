@@ -1,20 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
 
     /* Player with his character */
-    private Character_Selection.Stats_Character [] struc_stat_character;
+    private Character_Selection.Stats_Character[] struc_stat_character;
 
 
     private bool dead;
+    public enum Mode { standardS, standardD, hardcoreD };
 
     /* 0 = solo/standard; 1 = duo/standard; 2 = duo/Hardcore; 3 = ...*/
     private Mode typeMode;
-    public enum Mode { standardS , standardD, hardcoreD};
+
+    public enum Arena { arena1, arena2, arena3 };
+    private Arena typeArena;
 
     int id_Arena;
     int load_Mode;
@@ -24,18 +27,20 @@ public class GameManager : MonoBehaviour
     private GameObject gameOver;
 
     private int lifeMax;
-    [SerializeField]
+
+    private int[] lifePlayers;
+    /*[SerializeField]
     private int lifePlayer1;
     [SerializeField]
-    private int lifePlayer2;
+    private int lifePlayer2;*/
     [SerializeField]
     private float lifeBoss;
 
     [SerializeField]
-    private int nbHit;
+    private int[] nbHit;
     [SerializeField]
-    private int nbShoot;
-    private int damageByBoss = 40;
+    private int[] nbShoot;
+    private int[] damageByBoss;
 
     private GameObject boss;
     [SerializeField]
@@ -74,13 +79,13 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
-    
-    public void UpdateLife( int playerId, int life)
+
+    public void UpdateLife(int playerId, int life)
     {
-        if (playerId == 0)
-            lifePlayer1 = life;
-        else if (playerId == 1)
-            lifePlayer2 = life;
+        for (int i = 0; i < playerId; i++)
+        {
+            lifePlayers[i] = life;
+        }
     }
     public void SaveData(int scoreAdd)
     {
@@ -121,31 +126,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int LifePlayer1
-    {
-        get
-        {
-            return lifePlayer1;
-        }
-
-        set
-        {
-            lifePlayer1 = value;
-        }
-    }
-
-    public int LifePlayer2
-    {
-        get
-        {
-            return lifePlayer2;
-        }
-
-        set
-        {
-            lifePlayer2 = value;
-        }
-    }
 
     public GameObject GameOver
     {
@@ -265,8 +245,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-  
-    public int NbHit
+
+    public int[] NbHit
     {
         get
         {
@@ -279,7 +259,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int NbShoot
+    public int[] NbShoot
     {
         get
         {
@@ -292,7 +272,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int DamageByBoss
+    public int[] DamageByBoss
     {
         get
         {
@@ -357,21 +337,50 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public Arena TypeArena
+    {
+        get
+        {
+            return typeArena;
+        }
+
+        set
+        {
+            typeArena = value;
+        }
+    }
+
+    public int[] LifePlayers
+    {
+        get
+        {
+            return lifePlayers;
+        }
+
+        set
+        {
+            lifePlayers = value;
+        }
+    }
+
     public void CreateStrucCharact(int Number_of_controller)
     {
         //Mode Standard
         typeMode = (Mode)Number_of_controller - 1;
         struc_stat_character = new Character_Selection.Stats_Character[Number_of_controller];
         nbPlayers = Number_of_controller;
+        typeArena = Arena.arena1;
     }
     /* i = 0 = First Player; i = 1 = Second Player; */
-    public void Set_Stat_Player(Character_Selection.Stats_Character State,int i)
-      {
+    public void Set_Stat_Player(Character_Selection.Stats_Character State, int i)
+    {
         struc_stat_character[i] = State;
-      }
+    }
 
     public void Set_arena(int Arena)
     {
 
     }
+
+
 }

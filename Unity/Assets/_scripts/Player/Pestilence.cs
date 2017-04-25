@@ -104,7 +104,7 @@ public class Pestilence : Horsemen {
                     instantiatedBullet.transform.position = transform.position;
                     instantiatedBullet.transform.rotation = Quaternion.Euler(0, aimAngle, 0);
                     //instantiatedBullet.transform.Rotate(0, 0, 0);
-                    GameManager.Instance.NbShoot++;
+                    GameManager.Instance.NbShoot[PlayerID]++;
                     yield return new WaitForSeconds(0.05f);
                 }
 
