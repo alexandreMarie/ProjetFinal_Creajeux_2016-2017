@@ -31,12 +31,12 @@ public class Number_Of_Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        //if (Indice_Player < 2)
-        //    {
-        //        Indice_Player++;
-        //    }
+        if (Indice_Player < 2)
+        {
+            Indice_Player++;
+        }
 
-        Indice_Player = XIM.NumControllers;
+        //Indice_Player = XIM.NumControllers;
 
         Debug.Log("ID_PALYER " + Indice_Player);
        // Debug.Log("Indice_Players : " + Indice_Player + "| Last_Indice_Player : " + Last_Indice_Player);
@@ -123,10 +123,10 @@ public class Number_Of_Player : MonoBehaviour {
                 switch (i)
                 {
                     case (0):
-                        GO.GetComponent<Transform>().position = new Vector3(-1.0f, 10, -7.0f);
+                        GO.GetComponent<Transform>().position = new Vector3(-1.0f, 4 * j, -2.0f);
                         break;
                     case (1):
-                        GO.GetComponent<Transform>().position = new Vector3(1.2f,10, -7.0f);
+                        GO.GetComponent<Transform>().position = new Vector3(1.2f,4 * j, -2.0f);
                         break;
                 }
             }
