@@ -9,7 +9,6 @@ using UnityEngine;
 
 /// <summary>
 /// TODO
-/// - Rework pooling
 /// - Rework the eye pattern : one eye for each player? random but with colours,
 /// </summary>
 
@@ -33,7 +32,6 @@ public class LilithAI : BossManager
     private float divergence = 137.5f; // Angular divergence of the phyllotaxis
 
     private bool attacking = false;
-    //private bool straightLineDone = false;
 
     private GameObject arena = null;
 

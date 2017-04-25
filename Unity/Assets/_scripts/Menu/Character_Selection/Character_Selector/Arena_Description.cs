@@ -27,7 +27,7 @@ public class Arena_Description : MonoBehaviour {
         Boss_Name[2] = "Boss 3";
         Boss_Name[3] = "Boss 4";
 
-        Arena_Descrpitif[0] = "L'aréne de lilith est a l'image de la reine des succubes. \n Provocante , exubérant, c'est un lieux ou les adversaires de lilith meurent dans un spectacle macabre de sang, d'os et de trips\n\n maitresse d'une certaine mise en scene, lilith charme les moins determiné de ces adversaire, avant de les eparpiller";
+        Arena_Descrpitif[0] = "L'arène de Lilith est à l'image de la reine des succubes. \n Provocante, exubérante, c'est un lieu où les adversaires de Lilith meurent dans un spectacle macabre de sang, d'os et de tripes.\n\n Maîtresse d'une certaine mise en scene, elle charme les moins determinés de ses adversaire, avant de les éparpiller.";
         Arena_Descrpitif[1] = "Modele 3D 2";
         Arena_Descrpitif[2] = "Modele 3D 3";
         Arena_Descrpitif[3] = "Modele 3D 4";
