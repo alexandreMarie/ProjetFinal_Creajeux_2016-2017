@@ -1,16 +1,74 @@
 fileFormatVersion: 2
-guid: b9cd36f30e9bdd04db6596733785df84
-timeCreated: 1493041246
+guid: 1432831f932e5294aa5f39c9467ff318
+timeCreated: 1493045783
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: polySurface1
+    100000: group_JOINT
+    100002: JOINT_cou
+    100004: JOINT_D_bras
+    100006: JOINT_D_cape_01
+    100008: JOINT_D_cape_02
+    100010: JOINT_D_cape_03
+    100012: JOINT_D_clavicule
+    100014: JOINT_D_coude
+    100016: JOINT_D_genou
+    100018: JOINT_D_hanche
+    100020: JOINT_D_main
+    100022: JOINT_D_pied
+    100024: JOINT_D_poignet
+    100026: JOINT_dos
+    100028: JOINT_G_bras
+    100030: JOINT_G_cape_01
+    100032: JOINT_G_cape_02
+    100034: JOINT_G_cape_03
+    100036: JOINT_G_clavicule
+    100038: JOINT_G_coude
+    100040: JOINT_G_genou
+    100042: JOINT_G_hanche
+    100044: JOINT_G_main
+    100046: JOINT_G_pied
+    100048: JOINT_G_poignet
+    100050: JOINT_Root
+    100052: JOINT_tete
+    100054: polySurface_pestilence
+    100056: //RootNode
+    400000: group_JOINT
+    400002: JOINT_cou
+    400004: JOINT_D_bras
+    400006: JOINT_D_cape_01
+    400008: JOINT_D_cape_02
+    400010: JOINT_D_cape_03
+    400012: JOINT_D_clavicule
+    400014: JOINT_D_coude
+    400016: JOINT_D_genou
+    400018: JOINT_D_hanche
+    400020: JOINT_D_main
+    400022: JOINT_D_pied
+    400024: JOINT_D_poignet
+    400026: JOINT_dos
+    400028: JOINT_G_bras
+    400030: JOINT_G_cape_01
+    400032: JOINT_G_cape_02
+    400034: JOINT_G_cape_03
+    400036: JOINT_G_clavicule
+    400038: JOINT_G_coude
+    400040: JOINT_G_genou
+    400042: JOINT_G_hanche
+    400044: JOINT_G_main
+    400046: JOINT_G_pied
+    400048: JOINT_G_poignet
+    400050: JOINT_Root
+    400052: JOINT_tete
+    400054: polySurface_pestilence
+    400056: //RootNode
+    4300000: polySurface_pestilence
+    7400000: Run
+    7400002: Idle
+    7400004: ShootTransition
     9500000: //RootNode
+    13700000: polySurface_pestilence
   materials:
     importMaterials: 1
     materialName: 0
@@ -31,7 +89,265 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Run
+      takeName: Take 001
+      firstFrame: 10
+      lastFrame: 33
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group_JOINT
+        weight: 1
+      - path: group_JOINT/JOINT_Root
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_cape_01
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_cape_01/JOINT_D_cape_02
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_cape_01/JOINT_D_cape_02/JOINT_D_cape_03
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_hanche
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_hanche/JOINT_D_genou
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_hanche/JOINT_D_genou/JOINT_D_pied
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule/JOINT_D_bras
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule/JOINT_D_bras/JOINT_D_coude
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule/JOINT_D_bras/JOINT_D_coude/JOINT_D_poignet
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule/JOINT_D_bras/JOINT_D_coude/JOINT_D_poignet/JOINT_D_main
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule/JOINT_G_bras
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule/JOINT_G_bras/JOINT_G_coude
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule/JOINT_G_bras/JOINT_G_coude/JOINT_G_poignet
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule/JOINT_G_bras/JOINT_G_coude/JOINT_G_poignet/JOINT_G_main
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_tete
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_cape_01
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_cape_01/JOINT_G_cape_02
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_cape_01/JOINT_G_cape_02/JOINT_G_cape_03
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_hanche
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_hanche/JOINT_G_genou
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_hanche/JOINT_G_genou/JOINT_G_pied
+        weight: 1
+      - path: polySurface_pestilence
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 40
+      lastFrame: 99
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group_JOINT
+        weight: 1
+      - path: group_JOINT/JOINT_Root
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_cape_01
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_cape_01/JOINT_D_cape_02
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_cape_01/JOINT_D_cape_02/JOINT_D_cape_03
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_hanche
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_hanche/JOINT_D_genou
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_hanche/JOINT_D_genou/JOINT_D_pied
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule/JOINT_D_bras
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule/JOINT_D_bras/JOINT_D_coude
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule/JOINT_D_bras/JOINT_D_coude/JOINT_D_poignet
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule/JOINT_D_bras/JOINT_D_coude/JOINT_D_poignet/JOINT_D_main
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule/JOINT_G_bras
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule/JOINT_G_bras/JOINT_G_coude
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule/JOINT_G_bras/JOINT_G_coude/JOINT_G_poignet
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule/JOINT_G_bras/JOINT_G_coude/JOINT_G_poignet/JOINT_G_main
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_tete
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_cape_01
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_cape_01/JOINT_G_cape_02
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_cape_01/JOINT_G_cape_02/JOINT_G_cape_03
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_hanche
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_hanche/JOINT_G_genou
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_hanche/JOINT_G_genou/JOINT_G_pied
+        weight: 1
+      - path: polySurface_pestilence
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: ShootTransition
+      takeName: Take 001
+      firstFrame: 100
+      lastFrame: 108
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group_JOINT
+        weight: 1
+      - path: group_JOINT/JOINT_Root
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_cape_01
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_cape_01/JOINT_D_cape_02
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_cape_01/JOINT_D_cape_02/JOINT_D_cape_03
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_hanche
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_hanche/JOINT_D_genou
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_D_hanche/JOINT_D_genou/JOINT_D_pied
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule/JOINT_D_bras
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule/JOINT_D_bras/JOINT_D_coude
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule/JOINT_D_bras/JOINT_D_coude/JOINT_D_poignet
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_D_clavicule/JOINT_D_bras/JOINT_D_coude/JOINT_D_poignet/JOINT_D_main
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule/JOINT_G_bras
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule/JOINT_G_bras/JOINT_G_coude
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule/JOINT_G_bras/JOINT_G_coude/JOINT_G_poignet
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_G_clavicule/JOINT_G_bras/JOINT_G_coude/JOINT_G_poignet/JOINT_G_main
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_dos/JOINT_cou/JOINT_tete
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_cape_01
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_cape_01/JOINT_G_cape_02
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_cape_01/JOINT_G_cape_02/JOINT_G_cape_03
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_hanche
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_hanche/JOINT_G_genou
+        weight: 1
+      - path: group_JOINT/JOINT_Root/JOINT_G_hanche/JOINT_G_genou/JOINT_G_pied
+        weight: 1
+      - path: polySurface_pestilence
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
     isReadable: 1
   meshes:
     lODScreenPercentages: []

@@ -15,8 +15,6 @@ public abstract class Horsemen : MonoBehaviour
 
     StageFire shootStage = StageFire.One;
 
-    public GameObject goDBGIMG;
-
     #region Variables
 
     private int playerID;
@@ -75,7 +73,7 @@ public abstract class Horsemen : MonoBehaviour
 
     protected float aimAngle, prevAimAngle;
 
-    MeshRenderer meshRenderer;
+    SkinnedMeshRenderer skinnedMeshRenderer;
 
     Coroutine fireCoroutine, dashCoroutine;
 
@@ -93,6 +91,8 @@ public abstract class Horsemen : MonoBehaviour
     Transform arenaCenter = null;
 
     int nbHitLvlDown = hitLvlDown;
+
+    Animator anim;
 
     #endregion
 
@@ -281,6 +281,13 @@ public abstract class Horsemen : MonoBehaviour
             direction = ((Camera.main.transform.right * moveValue.x) + (Camera.main.transform.forward * moveValue.y)).normalized * Time.unscaledDeltaTime * speed;
             direction.y = 0; // Cancel the Y translation;
             rb.AddForce(direction * speed, ForceMode.VelocityChange);
+
+            // Gestion animator
+            anim.SetBool("Running", true);
+        }
+        else
+        {
+            anim.SetBool("Running", false);
         }
     }
 
@@ -290,12 +297,23 @@ public abstract class Horsemen : MonoBehaviour
         {
             rotation.y = Mathf.SmoothDampAngle(transform.eulerAngles.y, aimAngle, ref rotateSpeed, rotateSmooth);
             transform.eulerAngles = rotation;
+
+            anim.SetBool("Aiming", true);
+        }
+        else
+        {
+            // Not using rotation stick so it turns to the direction is running to
+            rotation = Vector3.zero; ;
+            rotation.y = Mathf.Atan2(-moveValue.x, -moveValue.y) * Mathf.Rad2Deg;
+            transform.eulerAngles = rotation;
+
+            anim.SetBool("Aiming", false);
         }
     }
 
     private IEnumerator Freeze()
     {
-        GetComponentInChildren<MeshRenderer>().material.color = Color.yellow;
+        GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.yellow;
         this.enabled = false;
         //GetComponentInChildren<Renderer>().material.color = Color.white;
 
@@ -303,7 +321,7 @@ public abstract class Horsemen : MonoBehaviour
 
         this.enabled = true;
         StartCoroutine(PlayerBlink());
-        GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+        GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.white;
     }
 
     protected virtual IEnumerator Dash()
@@ -331,12 +349,12 @@ public abstract class Horsemen : MonoBehaviour
         {
             timerBlink += Time.unscaledDeltaTime;
             isActive = !isActive;
-            meshRenderer.enabled = isActive;
+            skinnedMeshRenderer.enabled = isActive;
             yield return new WaitForSeconds(0.05f);
-            meshRenderer.enabled = true;
+            skinnedMeshRenderer.enabled = true;
 
         }
-        meshRenderer.enabled = true;
+        skinnedMeshRenderer.enabled = true;
         isInvincible = false;
     }
 
@@ -349,7 +367,7 @@ public abstract class Horsemen : MonoBehaviour
     public void Awake()
     {
         rb = GetComponentInChildren<Rigidbody>();
-        meshRenderer = GetComponentInChildren<MeshRenderer>();
+        skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         XIMinstance = XInputManager.Instance;
         moveValue = Vector2.zero;
         aimValue = Vector2.zero;
@@ -357,6 +375,7 @@ public abstract class Horsemen : MonoBehaviour
         fireLayer.value = 1 << LayerMask.NameToLayer("Boss");
         bulletLayer = LayerMask.NameToLayer("Bullet");
         GameManager.Instance.NbShoot = 0;
+        anim = GetComponentInChildren<Animator>();
         //Debug.Log(LayerMask.NameToLayer("Boss"));
     }
 
