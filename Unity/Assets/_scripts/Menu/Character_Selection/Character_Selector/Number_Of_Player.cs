@@ -5,34 +5,40 @@ using XInputDotNetPure;
 
 public class Number_Of_Player : MonoBehaviour {
 
-    XInputManager Controller_Player;
+    XInputManager XIM;
+    GameManager GM;
     [SerializeField]
     GameObject[] Players;
     [SerializeField]
     GameObject[,] character_liste;
-
+    GameObject GO;
     [SerializeField]
-    Transform Character_Selector;
+    Transform [] Character_Player_Selector;
 
     int Indice_Player = 0;
     int Last_Indice_Player = 0;
     int i = 0;
     // Use this for initialization
     void Start () {
-        Controller_Player = XInputManager.Instance;
+        GM = GameManager.Instance;
+        GM.Creat_struct_Heroes();
+        XIM = XInputManager.Instance;
         character_liste = new GameObject[2, 4];
-        Indice_Player = Controller_Player.NumControllers;
-        if (Indice_Player < Controller_Player.NumControllers);
-        Indice_Player = 0;
+        Indice_Player = XIM.NumControllers;
+        GM.CreateStrucCharact(XIM.NumControllers);
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-       if(Indice_Player < 2)
-        {
-            Indice_Player++;
-        }
+        //if (Indice_Player < 2)
+        //    {
+        //        Indice_Player++;
+        //    }
+
+        Indice_Player = XIM.NumControllers;
+
+        Debug.Log("ID_PALYER " + Indice_Player);
        // Debug.Log("Indice_Players : " + Indice_Player + "| Last_Indice_Player : " + Last_Indice_Player);
         //if (Indice_Player < Last_Indice_Player)
         //{
@@ -64,7 +70,6 @@ public class Number_Of_Player : MonoBehaviour {
 
    public GameObject [,] Character_liste
     {
-        
         get
             {
             return character_liste;
@@ -97,14 +102,21 @@ public class Number_Of_Player : MonoBehaviour {
             for (int j = 0; j < Players.Length; j++)
             {
                 //Debug.Log("On est dedans ! :o");
-                GameObject GO = Instantiate(Players[j],Character_Selector)as GameObject;
+                if (i == 0)
+                {
+                    GO = Instantiate(Players[j], Character_Player_Selector[0]) as GameObject;
+                }
+
+                if (i == 1)
+                {
+                    GO = Instantiate(Players[j], Character_Player_Selector[1]) as GameObject;
+                }
+
                 character_liste[i, j] = GO;
                 GO.GetComponent<Rigidbody>().useGravity = false;
                 GO.GetComponent<Horsemen>().enabled = false;
-                GO.AddComponent<Character_Selection>();
+                //GO.AddComponent<Character_Selection>();
                 GO.transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
-                GO.GetComponent<Character_Selection>().PlayerIndex = (PlayerIndex)i;
-                GO.GetComponent<Character_Selection>().id_player = j;
                 GO.SetActive(true);
 
                 //Players[i].transform.SetParent(Character_Selector);

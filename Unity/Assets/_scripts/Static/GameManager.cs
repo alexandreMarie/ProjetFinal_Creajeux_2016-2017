@@ -6,15 +6,62 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
 
-    /* Player with his character */
-    private Character_Selection.Stats_Character [] struc_stat_character;
+    public enum SelectCharact { Null, Death, Pestilence, Famine, War };
+    public struct Stats_Character
+    {
+        public float speed;
+        public int attack;
+        public int PDV;
+        public SelectCharact selectCharact;
 
+        public Stats_Character(float _speed,int _attack,int _PDV,SelectCharact _sel_char )
+        {
+            speed = _speed;
+            attack = _attack;
+            PDV = _PDV;
+            selectCharact = _sel_char;
+        }
+    }
+
+
+    Stats_Character[] struc_stat_character;
+    Stats_Character[] sauvegarde_state;
+    /* Player with his character */
+    //private Selection_of_character.Stats_Character [] struc_stat_character;
+
+
+
+
+
+
+    //Statistique_char[0].attack = 20;
+    //    Statistique_char[0].PDV = 200;
+    //    Statistique_char[0].speed = 5;
+    //    Statistique_char[0].selectCharact = SelectCharact.War;
+
+    //    Statistique_char[1].attack = 10;
+    //    Statistique_char[1].PDV = 100;
+    //    Statistique_char[1].speed = 10;
+    //    Statistique_char[1].selectCharact = SelectCharact.Famine;
+
+    //    Statistique_char[2].attack = 15;
+    //    Statistique_char[2].PDV = 150;
+    //    Statistique_char[2].speed = 15;
+    //    Statistique_char[2].selectCharact = SelectCharact.Pestilence;
+
+    //    Statistique_char[3].attack = 25;
+    //    Statistique_char[3].PDV = 50;
+    //    Statistique_char[3].speed = 5;
+    //    Statistique_char[3].selectCharact = SelectCharact.Death;
 
     private bool dead;
 
     /* 0 = solo/standard; 1 = duo/standard; 2 = duo/Hardcore; 3 = ...*/
     private Mode typeMode;
     public enum Mode { standardS , standardD, hardcoreD};
+
+    public enum Arena { arena1, arena2, arena3 };
+    private Arena typeArena;
 
     int id_Arena;
     int load_Mode;
@@ -23,11 +70,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject gameOver;
 
+
+    private int[] lifePlayers;
     private int lifeMax;
-    [SerializeField]
-    private int lifePlayer1;
-    [SerializeField]
-    private int lifePlayer2;
     [SerializeField]
     private float lifeBoss;
 
@@ -77,10 +122,10 @@ public class GameManager : MonoBehaviour
     
     public void UpdateLife( int playerId, int life)
     {
-        if (playerId == 0)
-            lifePlayer1 = life;
-        else if (playerId == 1)
-            lifePlayer2 = life;
+        for (int i = 0; i < playerId; i++)
+        {
+            lifePlayers[i] = life;
+        }
     }
     public void SaveData(int scoreAdd)
     {
@@ -121,31 +166,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int LifePlayer1
-    {
-        get
-        {
-            return lifePlayer1;
-        }
-
-        set
-        {
-            lifePlayer1 = value;
-        }
-    }
-
-    public int LifePlayer2
-    {
-        get
-        {
-            return lifePlayer2;
-        }
-
-        set
-        {
-            lifePlayer2 = value;
-        }
-    }
+   
 
     public GameObject GameOver
     {
@@ -318,7 +339,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public Character_Selection.Stats_Character[] Struc_stat_character
+    public Stats_Character[] Struc_stat_character
     {
         get
         {
@@ -357,18 +378,69 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public int[] LifePlayers
+    {
+        get
+        {
+            return lifePlayers;
+        }
+
+        set
+        {
+            lifePlayers = value;
+        }
+    }
+
+    public Stats_Character[] Sauvegarde_state
+    {
+        get
+        {
+            return sauvegarde_state;
+        }
+
+        set
+        {
+            sauvegarde_state = value;
+        }
+    }
+
+    public void Creat_struct_Heroes()
+    {
+        sauvegarde_state = new Stats_Character[4];
+        sauvegarde_state[0].attack = 20;
+        sauvegarde_state[0].PDV = 200;
+        sauvegarde_state[0].speed = 15;
+        sauvegarde_state[0].selectCharact = SelectCharact.War;
+
+        sauvegarde_state[1].attack = 10;
+        sauvegarde_state[1].PDV = 100;
+        sauvegarde_state[1].speed = 10;
+        sauvegarde_state[1].selectCharact = SelectCharact.Famine;
+
+        sauvegarde_state[2].attack = 15;
+        sauvegarde_state[2].PDV = 150;
+        sauvegarde_state[2].speed = 10;
+        sauvegarde_state[2].selectCharact = SelectCharact.Pestilence;
+
+        sauvegarde_state[3].attack = 25;
+        sauvegarde_state[3].PDV = 50;
+        sauvegarde_state[3].speed = 5;
+        sauvegarde_state[3].selectCharact = SelectCharact.Death;
+    }
     public void CreateStrucCharact(int Number_of_controller)
     {
         //Mode Standard
+        struc_stat_character = new Stats_Character[Number_of_controller];
         typeMode = (Mode)Number_of_controller - 1;
-        struc_stat_character = new Character_Selection.Stats_Character[Number_of_controller];
+
+
         nbPlayers = Number_of_controller;
     }
     /* i = 0 = First Player; i = 1 = Second Player; */
-    public void Set_Stat_Player(Character_Selection.Stats_Character State,int i)
-      {
-        struc_stat_character[i] = State;
-      }
+    public void Set_Stat_Player(int _ID_Player, int i)
+    {
+        struc_stat_character[i] = sauvegarde_state[_ID_Player];
+    }
 
     public void Set_arena(int Arena)
     {

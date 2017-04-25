@@ -77,19 +77,19 @@ public class Arena_Selection : MonoBehaviour {
             {
                 case 0:
                     //First Arena
-                    SceneManager.LoadScene(3);
+                    SceneManager.LoadScene("LilithFight");
                     break;
                 case 1:
                     //Second Arena
-                    SceneManager.LoadScene(3);
+                    SceneManager.LoadScene("LilithFight");
                     break;
                 case 2:
                     //Third Arena
-                    SceneManager.LoadScene(3);
+                    SceneManager.LoadScene("LilithFight");
                     break;
                 case 3:
                     //Fourth Arena
-                    SceneManager.LoadScene(3);
+                    SceneManager.LoadScene("LilithFight");
                     break;
             }
             SM.Play_Selector(1);

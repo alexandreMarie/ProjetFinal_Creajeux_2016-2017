@@ -146,25 +146,25 @@ public class SelectOnInput : MonoBehaviour
                 switch (ID_button)
                 {
                     case (0):
-                        main_menu_button.Load_Scene(5);
+                        main_menu_button.Load_Scene("CharacterSelection");
 
                         main_menu_button.Set_LoadMode(1);
                         break;
 
                     case (1):
-                        main_menu_button.Load_Scene(3);
+                        main_menu_button.Load_Scene("LilithFight");
 
                         main_menu_button.Set_LoadMode(2);
                         break;
 
                     case (2):
-                        main_menu_button.Load_Scene(5);
+                        main_menu_button.Load_Scene("CharacterSelection");
 
                         main_menu_button.Set_LoadMode(3);
                         break;
 
                     case (3):
-                        //main_menu_button.Load_Scene(4);
+                       // main_menu_button.Load_Scene(4);
 
                         break;
                     case (4):

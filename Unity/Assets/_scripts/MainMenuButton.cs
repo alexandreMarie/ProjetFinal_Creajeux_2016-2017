@@ -14,7 +14,7 @@ public class MainMenuButton : MonoBehaviour
         MManag.SetLoadState((MenuManager.load_mode)Mode_Chargement);
     }
 
-    public void Load_Scene(int stateButton)
+    public void Load_Scene(string stateButton)
     {
         MManag = MenuManager.Instance;
         SceneManager.LoadScene(stateButton);
