@@ -18,6 +18,7 @@ public class ResetScene : MonoBehaviour {
         InitPos();
         manager = GameManager.Instance;
         manager.StartPos = new Vector3[3];
+        manager.LifePlayers = new int[GameManager.Instance.NbPlayers];
         System.Array.Copy(pos, manager.StartPos, pos.Length);
         Character_Selection.SelectCharact selecCharact;
        /* manager.Struc_stat_character = new Character_Selection.Stats_Character[2];
@@ -86,11 +87,11 @@ public class ResetScene : MonoBehaviour {
         switch (manager.TypeMode)
         {
             case 0:
-                manager.LifePlayer1 = manager.Struc_stat_character[0].PDV;
+                manager.LifePlayers[0] = manager.Struc_stat_character[0].PDV;
                 break;
             case (GameManager.Mode)1:
-                manager.LifePlayer1 = manager.Struc_stat_character[0].PDV;
-                manager.LifePlayer2 = manager.Struc_stat_character[1].PDV;
+                manager.LifePlayers[0] = manager.Struc_stat_character[0].PDV;
+                manager.LifePlayers[1] = manager.Struc_stat_character[1].PDV;
                 break;
         }
     }
@@ -101,17 +102,17 @@ public class ResetScene : MonoBehaviour {
         switch(manager.TypeMode)
         {
             case 0:
-                if (manager.LifePlayer1 <= 0)
+                if (manager.LifePlayers[0] <= 0)
                 {
                     CameraManager.Instance.DeadPlayer1 = true;
                 }
                 break;
             case (GameManager.Mode)1:
-                if (manager.LifePlayer1 <= 0)
+                if (manager.LifePlayers[0] <= 0)
                 {
                     CameraManager.Instance.DeadPlayer1 = true;
                 }
-                else if (manager.LifePlayer2 <= 0)
+                else if (manager.LifePlayers[1] <= 0)
                 {
                     CameraManager.Instance.DeadPlayer2 = true;
                 }
