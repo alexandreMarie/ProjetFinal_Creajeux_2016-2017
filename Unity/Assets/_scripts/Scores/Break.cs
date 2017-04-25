@@ -5,13 +5,16 @@ public class Break : MonoBehaviour
 {
     //public Transform brokenObject;
     public float magnitudeCol, radius, power, upwards;
-    public GameObject canvas;
+    public GameObject[] canvas;
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.relativeVelocity.magnitude > magnitudeCol)
         {
-            canvas.SetActive(true);
+            if (GameManager.Instance.NbPlayers >= 2)
+                canvas[1].SetActive(true);
+            else
+                canvas[0].SetActive(true);
             Destroy(gameObject);
             Destroy(collision.gameObject);
             /*Instantiate(brokenObject, transform.position, transform.rotation);
