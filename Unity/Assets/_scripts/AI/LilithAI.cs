@@ -270,9 +270,9 @@ public class LilithAI : BossManager
             //SoundsManager.Instance.VolumeAmbientMusic = 0.75f;
 
             angle = gm.Players[0].transform.position - transform.position;
-            angle.y = 1.0f;
+            angle.y = 0.5f;
 
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(1.0f);
 
             Instantiate(snake, transform.position, Quaternion.LookRotation(angle, Vector3.forward));
 

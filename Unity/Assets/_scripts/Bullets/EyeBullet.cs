@@ -54,6 +54,7 @@ public class EyeBullet : MonoBehaviour
     private IEnumerator Target()
     {
         yield return new WaitForSeconds(0.3f);
+
         int targetPlayer = 0;
 
         if (gm.NbPlayers > 1)

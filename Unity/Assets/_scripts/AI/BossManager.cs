@@ -61,10 +61,10 @@ public class BossManager : MonoBehaviour
     {
         if (col.tag == "PlayerBullet")
         {
-            if (col.GetComponent<PlayerBullet>().playerID == 0)
-                GameManager.Instance.NbHit[0]++;
-            else
-                GameManager.Instance.NbHit[1]++;
+            //if (col.GetComponent<PlayerBullet>().playerID == 0)
+            //    GameManager.Instance.NbHit[0]++;
+            //else
+            //    GameManager.Instance.NbHit[1]++;
             life--;
 
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
