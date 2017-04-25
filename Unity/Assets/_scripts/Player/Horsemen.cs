@@ -374,7 +374,11 @@ public abstract class Horsemen : MonoBehaviour
         lifeUpdater = GetComponentInChildren<LifeUpdater>();
         fireLayer.value = 1 << LayerMask.NameToLayer("Boss");
         bulletLayer = LayerMask.NameToLayer("Bullet");
-        GameManager.Instance.NbShoot = 0;
+        GameManager.Instance.NbShoot = new int[GameManager.Instance.NbPlayers];
+        for (int i = 01; i < GameManager.Instance.NbPlayers; i++)
+        {
+            GameManager.Instance.NbShoot[i] = 0;
+        }
         anim = GetComponentInChildren<Animator>();
         //Debug.Log(LayerMask.NameToLayer("Boss"));
     }
