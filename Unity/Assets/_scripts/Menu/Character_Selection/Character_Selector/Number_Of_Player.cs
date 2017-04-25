@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using XInputDotNetPure;
 
 public class Number_Of_Player : MonoBehaviour {
 
     XInputManager Controller_Player;
     [SerializeField]
     GameObject[] Players;
+    [SerializeField]
+    GameObject[,] character_liste;
+
     [SerializeField]
     Transform Character_Selector;
 
@@ -15,13 +20,19 @@ public class Number_Of_Player : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Controller_Player = XInputManager.Instance;
-      
-	}
+        character_liste = new GameObject[2, 4];
+        Indice_Player = Controller_Player.NumControllers;
+        if (Indice_Player < Controller_Player.NumControllers);
+        Indice_Player = 0;
+    }
 	
 	// Update is called once per frame
 	void Update () {
 
-        Indice_Player = Controller_Player.NumControllers;
+       if(Indice_Player < 2)
+        {
+            Indice_Player++;
+        }
        // Debug.Log("Indice_Players : " + Indice_Player + "| Last_Indice_Player : " + Last_Indice_Player);
         //if (Indice_Player < Last_Indice_Player)
         //{
@@ -30,7 +41,14 @@ public class Number_Of_Player : MonoBehaviour {
 
 	    if(Indice_Player != Last_Indice_Player)
         {
-            New_player();
+            if(Indice_Player > Last_Indice_Player)
+            {
+                New_player();
+            }
+            else if(Indice_Player < Last_Indice_Player)
+            {
+                Delete_Player();
+            }
         }
         Last_Indice_Player = Indice_Player;
     }
@@ -38,9 +56,20 @@ public class Number_Of_Player : MonoBehaviour {
 
     void Delete_Player()
     {
-        Destroy(Players[Indice_Player-1]);
+        Debug.Log("Supression de l'objet");
+        //Destroy(Players[Indice_Player +1]);
+
     }
 
+
+   public GameObject [,] Character_liste
+    {
+        
+        get
+            {
+            return character_liste;
+            }
+    }
     /*void New_player_test()
     {
         Debug.Log(Controller_Player.NumControllers);
@@ -65,18 +94,29 @@ public class Number_Of_Player : MonoBehaviour {
     {
         for (i = i; i < Indice_Player; i++)
         {
-            //Debug.Log("On est dedans ! :o");
-            Instantiate(Players[i], Character_Selector);
-            Players[i].SetActive(true);
-            //Players[i].transform.SetParent(Character_Selector);
-            switch (i)
+            for (int j = 0; j < Players.Length; j++)
             {
-                case (0):
-                    Players[i].transform.position = new Vector3(-1.0f, 1.0f, -7.0f);
-                    break;
-                case (1):
-                    Players[i].transform.position = new Vector3(1.2f, 1.0f, -7.0f);
-                    break;
+                //Debug.Log("On est dedans ! :o");
+                GameObject GO = Instantiate(Players[j],Character_Selector)as GameObject;
+                character_liste[i, j] = GO;
+                GO.GetComponent<Rigidbody>().useGravity = false;
+                GO.GetComponent<Horsemen>().enabled = false;
+                GO.AddComponent<Character_Selection>();
+                GO.transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
+                GO.GetComponent<Character_Selection>().PlayerIndex = (PlayerIndex)i;
+                GO.GetComponent<Character_Selection>().id_player = j;
+                GO.SetActive(true);
+
+                //Players[i].transform.SetParent(Character_Selector);
+                switch (i)
+                {
+                    case (0):
+                        GO.GetComponent<Transform>().position = new Vector3(-1.0f, 1.2f, -7.0f);
+                        break;
+                    case (1):
+                        GO.GetComponent<Transform>().transform.position = new Vector3(1.2f, 1.2f, -7.0f);
+                        break;
+                }
             }
         }
 

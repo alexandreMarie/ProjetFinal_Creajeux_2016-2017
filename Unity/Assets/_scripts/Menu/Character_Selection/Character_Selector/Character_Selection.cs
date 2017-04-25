@@ -162,6 +162,30 @@ public class Character_Selection : MonoBehaviour {
         }
     }
 
+    public PlayerIndex PlayerIndex
+    {
+        get
+        {
+            return playerIndex;
+        }
+        set
+        {
+            playerIndex = value;
+        }
+    }
+
+    public int id_player
+    {
+        get
+        {
+            return ID_Perso;
+        }
+        set
+        {
+            ID_Perso = value;
+        }
+    }
+
     public bool Return_Boolen()
     {
        
