@@ -13,21 +13,20 @@ public class UpdateScores : MonoBehaviour
 
     public struct SaveGeneral
     {
-        public int NbPlayer;
+        public int playerId;
         public float time;
         public string arena;
-        public SaveCharacter[] saveCharact;
-    }
-
-    public struct SaveCharacter
-    {
         public int life;
         public int nbShoot;
         public int nbHit;
         public int damage;
         public int total;
-        public Character_Selection.Stats_Character struc_stat_character;
+        public int attack;
+        public int PDV;
+        public float speed;
+        public string hero;
     }
+    
 
 
     int scoreBasedTime;
@@ -87,15 +86,15 @@ public class UpdateScores : MonoBehaviour
     private bool pass = false;
 
     public Text timeText;
-    public Text total;
-    public Text life;
-    public Text precision;
-    public Text damage;
+    public Text[] total;
+    public Text[] life;
+    public Text[] precision;
+    public Text[] damage;
 
     public int lifeMax;
     public float vitesse = 0.01f;
 
-    public List<GameObject> rank = new List<GameObject>();
+    public GameObject[] rank;
     // Use this for initialization
     void Start()
     {
@@ -134,7 +133,6 @@ public class UpdateScores : MonoBehaviour
             // Initialization of scoring conditions
             percentageLife[i] = lifeMax - GameManager.Instance.LifePlayers[i];
             percentageLife[i] = percentageLife[i] / lifeMax * 100;
-            Debug.Log(GameManager.Instance.TypeMode);
             switch (GameManager.Instance.TypeMode)
             {
                 case 0:
@@ -175,17 +173,16 @@ public class UpdateScores : MonoBehaviour
         // Display score
         for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
         {
-            
+
             switch (cpt)
             {
                 case 0:
 
                     scores[i] = Mathf.Pow(0.99f, GameManager.Instance.Timer % 60 - 1) * scoreBasedTime;
                     time += Time.deltaTime * vitesse;
-
+                    Debug.Log(scores[i]);
                     currentTime[i] = Mathf.Lerp(0, GameManager.Instance.Timer, time);
                     currentScore[i] = Mathf.Lerp(0, scores[i], time);
-                    Debug.Log(scores[i]);
                     minutes[i] = (int)currentTime[i] / 60;
                     seconds[i] = currentTime[i] % 60;
                     fraction[i] = (currentTime[i] * 100) % 100;
@@ -200,7 +197,7 @@ public class UpdateScores : MonoBehaviour
                     scoresFinal[i] = (int)currentScore[i];
 
                     timeText.text = string.Format("TIME : {0:00} : {1:00} : {2:00}", minutes[i], seconds[i], fraction[i]);
-                    total.text = "TOTAL : " + scoresFinal[i].ToString();
+                    total[i].text = "TOTAL : " + scoresFinal[i].ToString();
                     if (currentScore[i] == scores[i])
                     {
                         cpt = 1;
@@ -211,7 +208,6 @@ public class UpdateScores : MonoBehaviour
 
                     time += Time.deltaTime * vitesse;
                     scoresFinal[i] = (int)scores[i] - lifeTotalScore[i];
-                    Debug.Log(scoresFinal[i]);
                     currentScore[i] = Mathf.Lerp(scores[i], scoresFinal[i], time);
                     lerpLife[i] = Mathf.Lerp(0, percentageLife[i], time);
                     if (time > 1 || pass)
@@ -222,8 +218,8 @@ public class UpdateScores : MonoBehaviour
                     }
                     currentLife[i] = (int)lerpLife[i];
 
-                    total.text = "TOTAL : " + currentScore[i].ToString();
-                    life.text = "LIFE : " + currentLife[i].ToString() + " %";
+                    total[i].text = "TOTAL : " + currentScore[i].ToString();
+                    life[i].text = "LIFE : " + currentLife[i].ToString() + " %";
                     if (currentScore[i] == scoresFinal[i])
                     {
                         cpt = 2;
@@ -238,7 +234,6 @@ public class UpdateScores : MonoBehaviour
 
                     time += Time.deltaTime * vitesse;
                     scoresFinal[i] = (int)(percentageHitShootScore[i] + scores[i]);
-                    Debug.Log(scoresFinal[i]);
 
                     currentScore[i] = Mathf.Lerp(scores[i], scoresFinal[i], time);
                     lerpDamagePrecision[i] = Mathf.Lerp(0, percentageHitShoot[i], time);
@@ -251,8 +246,8 @@ public class UpdateScores : MonoBehaviour
 
                     currentDamagePrecision[i] = (int)lerpDamagePrecision[i];
 
-                    total.text = "TOTAL : " + currentScore[i].ToString();
-                    precision.text = "PRECISION : " + currentDamagePrecision[i].ToString() + " %";
+                    total[i].text = "TOTAL : " + currentScore[i].ToString();
+                    precision[i].text = "PRECISION : " + currentDamagePrecision[i].ToString() + " %";
                     if (currentScore[i] == scoresFinal[i])
                     {
                         
@@ -267,7 +262,6 @@ public class UpdateScores : MonoBehaviour
 
                     time += Time.deltaTime * vitesse;
                     scoresFinal[i] = (int)(scores[i] - displayDamageByBossScore[i]);
-                    Debug.Log(scoresFinal[i]);
 
                     currentScore[i] = Mathf.Lerp(scores[i], scoresFinal[i], time);
                     lerpDamagePrecision[i] = Mathf.Lerp(0, displayDamageByBoss[i], time);
@@ -278,26 +272,26 @@ public class UpdateScores : MonoBehaviour
                         pass = false;
                     }
                     currentDamagePrecision[i] = (int)lerpDamagePrecision[i];
-                    total.text = "TOTAL : " + currentScore[i].ToString();
-                    damage.text = "DAMAGE : " + currentDamagePrecision[i].ToString();
+                    total[i].text = "TOTAL : " + currentScore[i].ToString();
+                    damage[i].text = "DAMAGE : " + currentDamagePrecision[i].ToString();
                     if (currentScore[i] == scoresFinal[i])
                         cpt = 4;
 
                     break;
                 case 4:
                     if (scoresFinal[i] >= scoreRankSS)
-                        rank[0].SetActive(true);
+                        rank[i].transform.FindChild("SS").gameObject.SetActive(true);
                     else if (scoresFinal[i] < scoreRankSS && scoresFinal[i] >= scoreRankSS / 2)
-                        rank[1].SetActive(true);
+                        rank[i].transform.FindChild("S").gameObject.SetActive(true);
                     else if (scoresFinal[i] < scoreRankSS / 2 && scoresFinal[i] >= scoreRankSS / 3)
-                        rank[2].SetActive(true);
+                        rank[i].transform.FindChild("A").gameObject.SetActive(true);
                     else
-                        rank[3].SetActive(true);
+                        rank[i].transform.FindChild("B").gameObject.SetActive(true);
                     if (XIM.CurrState[0].Buttons.A == ButtonState.Pressed)
                     {
 
                         SaveData();
-                        Next();
+                       // Next();
                     }
                     /* Save */
                     //GameManager.Instance.SaveData(scoresFinal);
@@ -316,27 +310,35 @@ public class UpdateScores : MonoBehaviour
 
     public void SaveData()
     {
-        SaveGeneral saveGeneral = new SaveGeneral();
-        SaveCharacter[] saveCharact = new SaveCharacter[GameManager.Instance.NbPlayers];
+        SaveGeneral []saveGeneral = new SaveGeneral[GameManager.Instance.NbPlayers];
 
-        saveGeneral.NbPlayer = GameManager.Instance.NbPlayers;
-        saveGeneral.time = GameManager.Instance.Timer;
-        saveGeneral.arena = GameManager.Instance.TypeArena.ToString();
+        
 
         for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
         {
-            saveCharact[i].struc_stat_character = GameManager.Instance.Struc_stat_character[i];
-            saveCharact[i].life = (int)percentageLife[i];
-            saveCharact[i].nbShoot = displayShootByPlayers[i];
-            saveCharact[i].nbHit = displayHitByPlayers[i];
-            saveCharact[i].damage = displayDamageByBoss[i];
-            saveCharact[i].total = scoresFinal[i];
+            saveGeneral[i].playerId = i;
+            saveGeneral[i].time = GameManager.Instance.Timer;
+            saveGeneral[i].arena = GameManager.Instance.TypeArena.ToString();
+            saveGeneral[i].life = (int)percentageLife[i];
+            saveGeneral[i].nbShoot = displayShootByPlayers[i];
+            saveGeneral[i].nbHit = displayHitByPlayers[i];
+            saveGeneral[i].damage = displayDamageByBoss[i];
+            saveGeneral[i].total = scoresFinal[i];
+            saveGeneral[i].attack = GameManager.Instance.Struc_stat_character[i].attack;
+            saveGeneral[i].PDV = GameManager.Instance.Struc_stat_character[i].PDV;
+            saveGeneral[i].speed = GameManager.Instance.Struc_stat_character[i].speed;
+            saveGeneral[i].hero = GameManager.Instance.Struc_stat_character[i].selectCharact.ToString();
         }
-        saveGeneral.saveCharact = saveCharact;
-
         StreamWriter file = File.CreateText(Application.dataPath + "/../save.dat");
-        string bufferData = JsonUtility.ToJson(saveGeneral);
-        file.WriteLine(bufferData);
+       // file.
+        for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
+        {
+            
+            string bufferData = JsonUtility.ToJson(saveGeneral[i]);
+            
+            file.WriteLine(bufferData);
+            
+        }
         file.Close();
     }
 }

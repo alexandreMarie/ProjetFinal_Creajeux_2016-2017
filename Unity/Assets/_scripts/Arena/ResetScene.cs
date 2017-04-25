@@ -8,6 +8,9 @@ public class ResetScene : MonoBehaviour {
     public GameObject[] prefabs;
     public Vector3[] pos;
 
+    public bool debug = false;
+    public int nbPlayers;
+    public GameManager.Mode mode;
     void InitPos()
     {
         pos[0] = GameObject.Find("pos2.1").transform.position;
@@ -18,19 +21,27 @@ public class ResetScene : MonoBehaviour {
         InitPos();
         manager = GameManager.Instance;
         manager.StartPos = new Vector3[3];
+        GameManager.Instance.NbPlayers = nbPlayers;
         manager.LifePlayers = new int[GameManager.Instance.NbPlayers];
         System.Array.Copy(pos, manager.StartPos, pos.Length);
         Character_Selection.SelectCharact selecCharact;
-       /* manager.Struc_stat_character = new Character_Selection.Stats_Character[2];
-        manager.Struc_stat_character[1].attack = 20;
-        manager.Struc_stat_character[1].PDV = 100;
-        manager.Struc_stat_character[1].speed = 20;
-        manager.Struc_stat_character[1].selectCharact = (Character_Selection.SelectCharact)1;
 
-        manager.Struc_stat_character[0].attack = 20;
-        manager.Struc_stat_character[0].PDV = 100;
-        manager.Struc_stat_character[0].speed = 20;
-        manager.Struc_stat_character[0].selectCharact = (Character_Selection.SelectCharact)4;*/
+        if (debug)
+        {
+            GameManager.Instance.TypeMode = mode;
+            GameManager.Instance.NbPlayers = nbPlayers;
+            manager.Struc_stat_character = new Character_Selection.Stats_Character[nbPlayers];
+
+            for (int i = 0; i < nbPlayers; i++)
+            {
+                manager.Struc_stat_character[i].attack = 20;
+                manager.Struc_stat_character[i].PDV = 100;
+                manager.Struc_stat_character[i].speed = 20;
+                manager.Struc_stat_character[i].selectCharact = (Character_Selection.SelectCharact)1;
+
+               ;
+            }
+        }
         for (int i = 0; i<manager.NbPlayers; i++)
         {
             GameObject go;
@@ -83,17 +94,18 @@ public class ResetScene : MonoBehaviour {
         manager.GameOver = GameObject.FindGameObjectWithTag("GameOver");
         manager.Boss = GameObject.FindGameObjectWithTag("Boss");
         manager.Players = GameObject.FindGameObjectsWithTag("Player");
-
-        switch (manager.TypeMode)
-        {
-            case 0:
-                manager.LifePlayers[0] = manager.Struc_stat_character[0].PDV;
-                break;
-            case (GameManager.Mode)1:
-                manager.LifePlayers[0] = manager.Struc_stat_character[0].PDV;
-                manager.LifePlayers[1] = manager.Struc_stat_character[1].PDV;
-                break;
-        }
+       
+            switch (manager.TypeMode)
+            {
+                case 0:
+                    manager.LifePlayers[0] = manager.Struc_stat_character[0].PDV;
+                    break;
+                case (GameManager.Mode)1:
+                    manager.LifePlayers[0] = manager.Struc_stat_character[0].PDV;
+                    manager.LifePlayers[1] = manager.Struc_stat_character[1].PDV;
+                    break;
+            }
+        
     }
 	
 	// Update is called once per frame

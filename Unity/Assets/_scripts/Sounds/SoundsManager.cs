@@ -136,6 +136,8 @@ public class SoundsManager : MonoBehaviour
     {
         if (GameManager.Instance.Dead)
             sourceMusic.Stop();
+        else if (CameraManager.Instance.DeadBoss)
+            sourceMusic.Stop();
 
         sourceMusic.volume = volumeAmbientMusic;
     }
