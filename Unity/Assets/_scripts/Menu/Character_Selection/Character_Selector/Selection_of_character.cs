@@ -35,9 +35,9 @@ public class Selection_of_character : MonoBehaviour {
         GM = GameManager.Instance;
         Bool_player = new bool[XIM.NumControllers];
         ID_Player = new int[XIM.NumControllers];
-            for(int i = 0; i < XIM.NumControllers;i++)
+        for (int i = 0; i < XIM.NumControllers; i++)
         {
-            ID_Player[i] = 1;
+            ID_Player[i] = 3;
         }
         YSticks_Realeas = new bool[XIM.NumControllers];
         
@@ -53,6 +53,10 @@ public class Selection_of_character : MonoBehaviour {
         {
             Bool_player = new bool[XIM.NumControllers];
             ID_Player = new int[XIM.NumControllers];
+            for (int i = 0; i < XIM.NumControllers; i++)
+            {
+                ID_Player[i] = 3;
+            }
             YSticks_Realeas = new bool[XIM.NumControllers];
             Get_Conneccted_Player();
         }
@@ -71,7 +75,7 @@ public class Selection_of_character : MonoBehaviour {
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    charac_tab[j, i] = NB.Character_liste[j, i];
+                    charac_tab[j, i] = NB.Character_liste[i];
                 }
             }
      
