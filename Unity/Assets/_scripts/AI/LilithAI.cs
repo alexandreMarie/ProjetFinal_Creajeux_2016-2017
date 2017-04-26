@@ -331,7 +331,7 @@ public class LilithAI : BossManager
 
         yield return new WaitForSeconds(1.0f);
 
-        if (gm.Players[target].transform.position == hitPosition)
+        if (Vector3.Distance(hitPosition, gm.Players[target].transform.position) < 5)
             gm.Players[target].GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, powerEarthPowder, 0.0f), ForceMode.Impulse);
 
         yield return new WaitForSeconds(5.0f);
