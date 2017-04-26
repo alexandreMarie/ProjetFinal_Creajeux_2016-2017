@@ -193,6 +193,7 @@ public abstract class Horsemen : MonoBehaviour
     const float stickDeadZone = 0.1f;
     const float triggerDeadZone = 0.1f;
     const float triggerDash = 0.75f;
+    const float stickDash = 0.8f;
     protected const int nbBulletsPool = 30;
     const int hitLvlDown = 20;
     const int minHeight = -2;
@@ -274,6 +275,11 @@ public abstract class Horsemen : MonoBehaviour
         }
     }
 
+    public void Hurt(int damage)
+    {
+        Life -= damage;
+        StartCoroutine(Freeze());
+    }
     void Move()
     {
         if (moveValue.magnitude > stickDeadZone)
@@ -287,6 +293,9 @@ public abstract class Horsemen : MonoBehaviour
         }
         else
         {
+            direction = Vector3.zero;
+            direction.y = rb.velocity.y;
+            rb.velocity = direction;
             anim.SetBool("Running", false);
         }
     }
@@ -419,7 +428,8 @@ public abstract class Horsemen : MonoBehaviour
             SpecialShoot();
         }
 
-        if (XIMinstance.GetStick(playerID, XInputManager.XSticks.LeftTrigger) > triggerDash)
+        if (XIMinstance.GetStick(playerID, XInputManager.XSticks.LeftTrigger) > triggerDash
+            && moveValue.magnitude > stickDash)
         {
             if (dashCoroutine == null)
             {
@@ -477,8 +487,7 @@ public abstract class Horsemen : MonoBehaviour
                 XIMinstance.SetVibration(playerID, freezeDuration, 1f);
                 Life -= 10;
             }
-
-
+            
             if (other.gameObject.layer == bulletLayer && other.tag != "PlayerBullet")
             {
                 nbHitLvlDown--;
