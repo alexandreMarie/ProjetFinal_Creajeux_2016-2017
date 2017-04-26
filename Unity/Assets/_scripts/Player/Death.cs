@@ -17,8 +17,8 @@ public class Death : Horsemen
     Vector3 pit;
 
     [SerializeField]
-    [Range(0f, 2f)]
-    private float pitY;
+    [Range(0f, 10f)]
+    private float pitY = 1;
 
     float timerSpecial = 0f;
 
@@ -52,20 +52,27 @@ public class Death : Horsemen
                 if ((fireMask & (byte)StageFire.Five) > 0)
                 {
                     // SCHPECJIAL 
-                    Debug.Log("SPECIAL");
+                    Speed = Speed / 4;
                     pit = transform.position;
                     pit.y += pitY;
                     instantiatedBullet = pool.Get();
                     instantiatedBullet.GetComponent<PlayerBullet>().enabled = false;
                     while ((timerSpecial / specialDuration) <= 1f)
                     {
+                        timerSpecial += Time.unscaledDeltaTime;
                         instantiatedBullet.transform.position = pit;
-                        instantiatedBullet.transform.localScale = Vector3.one * (timerSpecial / specialDuration);
+                        instantiatedBullet.transform.localScale = Vector3.one * (timerSpecial / specialDuration) * 3f;
                         yield return new WaitForEndOfFrame();
                     }
 
+                    timerSpecial = 0f;
+
                     instantiatedBullet.AddComponent<DeathSpecialBullet>();
-                    instantiatedBullet.GetComponent<DeathSpecialBullet>().speed = 3f;
+                    instantiatedBullet.GetComponent<DeathSpecialBullet>().speed = 0.1f;
+
+                    UpdateLevelShoot(false);
+
+                    Speed = 12f;
                 }
                 if ((fireMask & (byte)StageFire.Four) > 0)
                 {

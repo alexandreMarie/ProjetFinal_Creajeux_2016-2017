@@ -14,10 +14,12 @@ public class DeathSpecialBullet : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         pos = transform.position;
-        pos += transform.position - boss.position;
-        transform.position = pos.normalized * Time.unscaledDeltaTime * speed;
+        pos += (boss.position - transform.position).normalized * speed;
+        
+        transform.position = pos;
 	}
 
     private void OnTriggerEnter(Collider other)
