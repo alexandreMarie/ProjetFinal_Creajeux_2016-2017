@@ -110,6 +110,17 @@ public class Number_Of_Player : MonoBehaviour {
                 }
 
                 character_liste[i] = GO;
+                if(GO.GetComponent<SkinnedMeshRenderer>() != null)
+            {
+                Debug.Log("ON EST DEDANS");
+                GO.GetComponent<SkinnedMeshRenderer>().material.SetFloat("Emission",0.0f);
+            }    
+                else if(GO.GetComponentInChildren<MeshRenderer>() != null)
+            {
+                Debug.Log("ON EST DEDANS");
+                GO.GetComponentInChildren<MeshRenderer>().material.SetFloat(5, 0.0f);
+                
+            }   
                 GO.GetComponent<Rigidbody>().useGravity = false;
                 GO.GetComponent<Horsemen>().enabled = false;
                 //GO.AddComponent<Character_Selection>();

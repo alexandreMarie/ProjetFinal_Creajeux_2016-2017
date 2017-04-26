@@ -127,7 +127,7 @@ public class UpdateScores : MonoBehaviour
 
             displayHitByPlayers[i] = GameManager.Instance.NbHit[i];
             displayShootByPlayers[i] = GameManager.Instance.NbShoot[i];
-            displayDamageByBoss[i] = GameManager.Instance.DamageByBoss[i];
+           // displayDamageByBoss[i] = GameManager.Instance.DamageByBoss[i];
             percentageHitShoot[i] = (float)displayHitByPlayers[i] / displayShootByPlayers[i];
             percentageHitShoot[i] = percentageHitShoot[i] * 100;
 
