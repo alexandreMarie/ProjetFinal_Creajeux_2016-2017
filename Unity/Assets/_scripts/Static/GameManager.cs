@@ -95,10 +95,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateLife(int playerId, int life)
     {
-        for (int i = 0; i < playerId; i++)
-        {
-            lifePlayers[i] = life;
-        }
+        lifePlayers[playerId] = life;
     }
     public void SaveData(int scoreAdd)
     {

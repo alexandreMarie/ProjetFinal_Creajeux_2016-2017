@@ -172,12 +172,14 @@ public abstract class Horsemen : MonoBehaviour
 
         protected set
         {
-            bullet = value;
+            bullet = Instantiate<GameObject>(value);
+            bullet.transform.position = transform.position;
             // Init of pool
             GameObject go = new GameObject("BulletPoolPlayer" + (playerID + 1), typeof(Pool));
             pool = go.GetComponent<Pool>();
             bullet.GetComponent<PlayerBullet>().playerID = playerID;
             pool.Init(bullet, nbBulletsPool);
+            //Destroy(value.gameObject);
         }
     }
 
