@@ -25,7 +25,6 @@ public class ResetScene : MonoBehaviour
         manager.StartPos = new Vector3[3];
         
         
-        Debug.Log(manager.NbPlayers);
         System.Array.Copy(pos, manager.StartPos, pos.Length);
         GameManager.SelectCharact selecCharact;
 
