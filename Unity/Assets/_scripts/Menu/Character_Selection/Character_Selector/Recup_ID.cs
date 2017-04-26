@@ -31,10 +31,7 @@ public class Recup_ID : MonoBehaviour {
 	void Update () {
         for (int i = 0; i < XIM.NumControllers; i++)
         {
-<<<<<<< HEAD
-=======
-   
->>>>>>> master
+
             ID [i] = SC.Return_ID_player[i];
            
            _animator.SetInteger("ID_character", ID[Player-1]);

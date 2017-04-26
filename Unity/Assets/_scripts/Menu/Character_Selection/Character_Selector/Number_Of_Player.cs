@@ -38,10 +38,6 @@ public class Number_Of_Player : MonoBehaviour {
 
         Indice_Player = XIM.NumControllers;
 
-<<<<<<< HEAD
-=======
-   
->>>>>>> master
        // Debug.Log("Indice_Players : " + Indice_Player + "| Last_Indice_Player : " + Last_Indice_Player);
         //if (Indice_Player < Last_Indice_Player)
         //{
