@@ -280,6 +280,7 @@ public abstract class Horsemen : MonoBehaviour
         Life -= damage;
         StartCoroutine(Freeze());
     }
+
     void Move()
     {
         if (moveValue.magnitude > stickDeadZone)
@@ -317,6 +318,10 @@ public abstract class Horsemen : MonoBehaviour
             transform.eulerAngles = rotation;
             prevAimAngle = rotation.y;
             aimAngle = prevAimAngle;
+            anim.SetBool("Aiming", false);
+        }
+        else
+        {
             anim.SetBool("Aiming", false);
         }
     }
@@ -479,7 +484,7 @@ public abstract class Horsemen : MonoBehaviour
             {
                 StartCoroutine(PlayerBlink());
                 XIMinstance.SetVibration(playerID, blinkDuration / 2f, 0.5f);
-                Life--;
+                Life -= 5;
             }
             else if (other.tag == "ScavengingSnake")
             {
