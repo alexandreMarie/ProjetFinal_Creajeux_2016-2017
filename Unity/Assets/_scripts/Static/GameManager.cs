@@ -52,7 +52,8 @@ public class GameManager : MonoBehaviour
     private int[] nbHit;
     [SerializeField]
     private int[] nbShoot;
-    private int damageByBoss = 40;
+    [SerializeField]
+    private int[] damageByBoss;
 
     private GameObject boss;
     [SerializeField]
@@ -285,7 +286,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int DamageByBoss
+    public int[] DamageByBoss
     {
         get
         {

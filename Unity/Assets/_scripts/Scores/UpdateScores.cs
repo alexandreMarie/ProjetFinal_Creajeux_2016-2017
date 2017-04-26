@@ -127,8 +127,7 @@ public class UpdateScores : MonoBehaviour
 
             displayHitByPlayers[i] = GameManager.Instance.NbHit[i];
             displayShootByPlayers[i] = GameManager.Instance.NbShoot[i];
-            // displayDamageByBoss[i] = GameManager.Instance.DamageByBoss[i];
-            displayDamageByBoss[i] = 40;
+            displayDamageByBoss[i] = GameManager.Instance.DamageByBoss[i];
             percentageHitShoot[i] = (float)displayHitByPlayers[i] / displayShootByPlayers[i];
             percentageHitShoot[i] = percentageHitShoot[i] * 100;
 
@@ -337,7 +336,6 @@ public class UpdateScores : MonoBehaviour
                 file.WriteLine(bufferData);
             }
             file.Close();
-            Debug.Log("Exist");
         }
         else
         {
@@ -348,7 +346,6 @@ public class UpdateScores : MonoBehaviour
                 file.WriteLine(bufferData);
             }
             file.Close();
-            Debug.Log("No Exist");
         }
     }
 }

@@ -385,9 +385,11 @@ public abstract class Horsemen : MonoBehaviour
         fireLayer.value = 1 << LayerMask.NameToLayer("Boss");
         bulletLayer = LayerMask.NameToLayer("Bullet");
         GameManager.Instance.NbShoot = new int[GameManager.Instance.NbPlayers];
+        GameManager.Instance.DamageByBoss = new int[GameManager.Instance.NbPlayers];
         for (int i = 01; i < GameManager.Instance.NbPlayers; i++)
         {
             GameManager.Instance.NbShoot[i] = 0;
+            GameManager.Instance.DamageByBoss[i] = 0;
         }
         anim = GetComponentInChildren<Animator>();
         //Debug.Log(LayerMask.NameToLayer("Boss"));
@@ -474,18 +476,21 @@ public abstract class Horsemen : MonoBehaviour
                 StartCoroutine(Freeze());
                 XIMinstance.SetVibration(playerID, freezeDuration, 1f);
                 Life -= 10;
+                GameManager.Instance.DamageByBoss[playerID] +=10;
             }
             else if (other.tag == "EnnemyBullet")
             {
                 StartCoroutine(PlayerBlink());
                 XIMinstance.SetVibration(playerID, blinkDuration / 2f, 0.5f);
                 Life--;
+                GameManager.Instance.DamageByBoss[playerID] ++;
             }
             else if (other.tag == "ScavengingSnake")
             {
                 StartCoroutine(Freeze());
                 XIMinstance.SetVibration(playerID, freezeDuration, 1f);
                 Life -= 10;
+                GameManager.Instance.DamageByBoss[playerID] += 10;
             }
             
             if (other.gameObject.layer == bulletLayer && other.tag != "PlayerBullet")
