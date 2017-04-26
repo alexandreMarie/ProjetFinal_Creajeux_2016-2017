@@ -12,7 +12,6 @@
 
 public class BossManager : MonoBehaviour
 {
-    [SerializeField]
     private LifeManager lifeManager = null;
 
     [SerializeField]
@@ -47,7 +46,6 @@ public class BossManager : MonoBehaviour
             if (manager.lifeCharacter == LifeManager.LifeCharacter.Boss)
                 lifeManager = manager;
 
-       
     }
 
     void Start()

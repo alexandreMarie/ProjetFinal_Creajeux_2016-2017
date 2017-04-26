@@ -29,9 +29,7 @@ public class Recup_ID : MonoBehaviour {
 	void Update () {
         for (int i = 0; i < XIM.NumControllers; i++)
         {
-            Debug.Log("Je passe dans la boucle");
             ID [i] = SC.Return_ID_player[i];
-            Debug.Log("ID  : " + ID);
            
         }
         _animator.SetInteger("ID_character", ID[Player-1]);
