@@ -32,9 +32,9 @@ public class Number_Of_Player : MonoBehaviour {
 	void Update () {
 
         //if (Indice_Player < 2)
-        //    {
-        //        Indice_Player++;
-        //    }
+        //{
+        //    Indice_Player++;
+        //}
 
         Indice_Player = XIM.NumControllers;
 
@@ -123,10 +123,10 @@ public class Number_Of_Player : MonoBehaviour {
                 switch (i)
                 {
                     case (0):
-                        GO.GetComponent<Transform>().position = new Vector3(-1.0f, 10, -7.0f);
+                        GO.GetComponent<Transform>().position = new Vector3(-1.0f, 4 * j,0.0f);
                         break;
                     case (1):
-                        GO.GetComponent<Transform>().position = new Vector3(1.2f,10, -7.0f);
+                        GO.GetComponent<Transform>().position = new Vector3(1.2f, 4 * j, 0.0f);
                         break;
                 }
             }
