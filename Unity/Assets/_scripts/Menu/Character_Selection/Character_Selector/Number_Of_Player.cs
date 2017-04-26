@@ -112,13 +112,15 @@ public class Number_Of_Player : MonoBehaviour {
                 character_liste[i] = GO;
                 if(GO.GetComponent<SkinnedMeshRenderer>() != null)
             {
-                Debug.Log("ON EST DEDANS");
+                Debug.Log("ON EST DEDANS SMR");
                 GO.GetComponent<SkinnedMeshRenderer>().material.SetFloat("Emission",0.0f);
             }    
                 else if(GO.GetComponentInChildren<MeshRenderer>() != null)
             {
-                Debug.Log("ON EST DEDANS");
-                GO.GetComponentInChildren<MeshRenderer>().material.SetFloat(5, 0.0f);
+          
+                 
+                Debug.Log("ON EST DEDANS MR");
+                GO.GetComponentInChildren<MeshRenderer>().material.SetColor("_EmissionColor", Color.black);
                 
             }   
                 GO.GetComponent<Rigidbody>().useGravity = false;
