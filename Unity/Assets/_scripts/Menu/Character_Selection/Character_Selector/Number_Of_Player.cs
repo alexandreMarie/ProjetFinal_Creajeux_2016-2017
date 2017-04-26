@@ -10,7 +10,7 @@ public class Number_Of_Player : MonoBehaviour {
     [SerializeField]
     GameObject[] Players;
     [SerializeField]
-    GameObject[,] character_liste;
+    GameObject[] character_liste;
     GameObject GO;
     [SerializeField]
     Transform [] Character_Player_Selector;
@@ -23,7 +23,7 @@ public class Number_Of_Player : MonoBehaviour {
         GM = GameManager.Instance;
         GM.Creat_struct_Heroes();
         XIM = XInputManager.Instance;
-        character_liste = new GameObject[2, 4];
+        character_liste = new GameObject[4];
         Indice_Player = XIM.NumControllers;
         GM.CreateStrucCharact(XIM.NumControllers);
     }
@@ -38,6 +38,10 @@ public class Number_Of_Player : MonoBehaviour {
 
         Indice_Player = XIM.NumControllers;
 
+<<<<<<< HEAD
+=======
+   
+>>>>>>> master
        // Debug.Log("Indice_Players : " + Indice_Player + "| Last_Indice_Player : " + Last_Indice_Player);
         //if (Indice_Player < Last_Indice_Player)
         //{
@@ -61,13 +65,13 @@ public class Number_Of_Player : MonoBehaviour {
 
     void Delete_Player()
     {
-        Debug.Log("Supression de l'objet");
+       
         //Destroy(Players[Indice_Player +1]);
 
     }
 
 
-   public GameObject [,] Character_liste
+   public GameObject [] Character_liste
     {
         get
             {
@@ -96,8 +100,6 @@ public class Number_Of_Player : MonoBehaviour {
 
     void New_player()
     {
-        for (i = i; i < Indice_Player; i++)
-        {
             for (int j = 0; j < Players.Length; j++)
             {
                 //Debug.Log("On est dedans ! :o");
@@ -111,7 +113,7 @@ public class Number_Of_Player : MonoBehaviour {
                     GO = Instantiate(Players[j], Character_Player_Selector[1]) as GameObject;
                 }
 
-                character_liste[i, j] = GO;
+                character_liste[i] = GO;
                 GO.GetComponent<Rigidbody>().useGravity = false;
                 GO.GetComponent<Horsemen>().enabled = false;
                 //GO.AddComponent<Character_Selection>();
@@ -129,7 +131,5 @@ public class Number_Of_Player : MonoBehaviour {
                         break;
                 }
             }
-        }
-
     }
 }
