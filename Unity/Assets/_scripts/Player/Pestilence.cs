@@ -57,8 +57,12 @@ public class Pestilence : Horsemen {
 
                     line.SetPosition(0, ray.origin);
 
-                    if (Physics.Raycast(ray, out hit, Mathf.SmoothStep(0, 100, 0.1f), fireLayer))
+                    Quaternion quat = Quaternion.LookRotation(transform.forward);
+
+                    if (Physics.BoxCast(ray.origin, new Vector3(0.5f, 0.5f, 0.5f), transform.forward, out hit, quat, 100f, fireLayer))
                     {
+                        //Time.timeScale = 0;
+                        ExtDebug.DrawBoxCastOnHit(ray.origin, new Vector3(0.5f, 0.5f, 0.5f), quat, transform.forward, hit.distance, Color.red);
                         line.SetPosition(1, hit.point);
                         if (hit.rigidbody)
                         {
@@ -70,6 +74,20 @@ public class Pestilence : Horsemen {
                     {
                         line.SetPosition(1, ray.GetPoint(100));
                     }
+
+                    //if (Physics.Raycast(ray, out hit, Mathf.SmoothStep(0, 100, 0.1f), fireLayer))
+                    //{
+                    //    line.SetPosition(1, hit.point);
+                    //    if (hit.rigidbody)
+                    //    {
+                    //        // we've hit something that have a rigidbody
+                    //        hit.rigidbody.AddForceAtPosition(transform.forward * 5, hit.point);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    line.SetPosition(1, ray.GetPoint(100));
+                    //}
 
                     yield return null;
 
@@ -121,7 +139,7 @@ public class Pestilence : Horsemen {
     {
         Life = 100;
         Stamina = 0;
-        Speed = 17f;
+        Speed = 10f;
         DashDuration = 0.1f;
         DashBehaviour = pestilenceDashBehaviour;
         Bullet = prefabBullet;

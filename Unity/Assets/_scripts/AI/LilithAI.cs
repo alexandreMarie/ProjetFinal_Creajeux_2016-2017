@@ -55,6 +55,8 @@ public class LilithAI : BossManager
     LifeState lifeState = LifeState.FOUR;
     private bool specialState = false;
 
+    private const float powerEarthPowder = 150f;
+
     public Patterns LilithAccessor
     {
         get
@@ -170,7 +172,7 @@ public class LilithAI : BossManager
         {
             int attack = Random.Range(1, 4);
 
-            switch (attack)
+            switch (1)
             {
                 case 1:
                     StartCoroutine(EarthPowder());
@@ -330,7 +332,7 @@ public class LilithAI : BossManager
         yield return new WaitForSeconds(1.0f);
 
         if (gm.Players[target].transform.position == hitPosition)
-            gm.Players[target].GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 50.0f, 0.0f), ForceMode.Impulse);
+            gm.Players[target].GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, powerEarthPowder, 0.0f), ForceMode.Impulse);
 
         yield return new WaitForSeconds(5.0f);
 

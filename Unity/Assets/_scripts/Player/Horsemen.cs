@@ -190,7 +190,7 @@ public abstract class Horsemen : MonoBehaviour
     const float freezeDuration = 2f;
     const float blinkDuration = 0.2f;
     const float rotateSmooth = 0.05f;
-    const float stickDeadZone = 0.3f;
+    const float stickDeadZone = 0.1f;
     const float triggerDeadZone = 0.1f;
     const float triggerDash = 0.75f;
     protected const int nbBulletsPool = 30;
@@ -278,10 +278,10 @@ public abstract class Horsemen : MonoBehaviour
     {
         if (moveValue.magnitude > stickDeadZone)
         {
-            direction = ((Camera.main.transform.right * moveValue.x) + (Camera.main.transform.forward * moveValue.y)).normalized * Time.unscaledDeltaTime * speed;
-            direction.y = 0; // Cancel the Y translation;
-            rb.AddForce(direction * speed, ForceMode.VelocityChange);
-
+            direction = ((Camera.main.transform.right * moveValue.x) + (Camera.main.transform.forward * moveValue.y)) * speed;
+            direction.y = rb.velocity.y; // Cancel the Y translation;
+            //rb.AddForce(direction, ForceMode.VelocityChange);
+            rb.velocity = direction;
             // Gestion animator
             anim.SetBool("Running", true);
         }
@@ -300,13 +300,14 @@ public abstract class Horsemen : MonoBehaviour
 
             anim.SetBool("Aiming", true);
         }
-        else
+        else if(moveValue.magnitude > stickDeadZone)
         {
             // Not using rotation stick so it turns to the direction is running to
-            rotation = Vector3.zero; ;
+            rotation = Vector3.zero;
             rotation.y = Mathf.Atan2(-moveValue.x, -moveValue.y) * Mathf.Rad2Deg;
             transform.eulerAngles = rotation;
-
+            prevAimAngle = rotation.y;
+            aimAngle = prevAimAngle;
             anim.SetBool("Aiming", false);
         }
     }
