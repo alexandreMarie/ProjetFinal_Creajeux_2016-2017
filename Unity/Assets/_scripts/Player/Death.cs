@@ -56,8 +56,16 @@ public class Death : Horsemen
                     pit = transform.position;
                     pit.y += pitY;
                     instantiatedBullet = pool.Get();
-                    instantiatedBullet.transform.position = pit;
-                    instantiatedBullet.transform.localScale = Vector3.one * 
+                    instantiatedBullet.GetComponent<PlayerBullet>().enabled = false;
+                    while ((timerSpecial / specialDuration) <= 1f)
+                    {
+                        instantiatedBullet.transform.position = pit;
+                        instantiatedBullet.transform.localScale = Vector3.one * (timerSpecial / specialDuration);
+                        yield return new WaitForEndOfFrame();
+                    }
+
+                    instantiatedBullet.AddComponent<DeathSpecialBullet>();
+                    instantiatedBullet.GetComponent<DeathSpecialBullet>().speed = 3f;
                 }
                 if ((fireMask & (byte)StageFire.Four) > 0)
                 {

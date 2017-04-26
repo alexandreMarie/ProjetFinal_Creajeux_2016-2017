@@ -41,7 +41,7 @@ public class ResetScene : MonoBehaviour
                 manager.Struc_stat_character[i].attack = 20;
                 manager.Struc_stat_character[i].PDV = 100;
                 manager.Struc_stat_character[i].speed = 20;
-                manager.Struc_stat_character[i].selectCharact = GameManager.SelectCharact.Pestilence;
+                manager.Struc_stat_character[i].selectCharact = GameManager.SelectCharact.Death;
 
                 ;
             }
