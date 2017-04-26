@@ -14,6 +14,18 @@ public class Death : Horsemen
 
     Ray ray;
 
+    Vector3 pit;
+
+    [SerializeField]
+    [Range(0f, 2f)]
+    private float pitY;
+
+    float timerSpecial = 0f;
+
+    [SerializeField]
+    [Range(0f, 2f)]
+    float specialDuration = 1f;
+
     public override void SpecialShoot()
     {
         if (Stamina == 100)
@@ -41,6 +53,11 @@ public class Death : Horsemen
                 {
                     // SCHPECJIAL 
                     Debug.Log("SPECIAL");
+                    pit = transform.position;
+                    pit.y += pitY;
+                    instantiatedBullet = pool.Get();
+                    instantiatedBullet.transform.position = pit;
+                    instantiatedBullet.transform.localScale = Vector3.one * 
                 }
                 if ((fireMask & (byte)StageFire.Four) > 0)
                 {
@@ -139,7 +156,7 @@ public class Death : Horsemen
     {
         Life = 100;
         Stamina = 0;
-        Speed = 19f;
+        Speed = 12f;
         DashDuration = 0.1f;
         DashBehaviour = deathDashBehaviour;
         Bullet = prefabBullet;

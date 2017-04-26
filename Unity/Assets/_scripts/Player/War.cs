@@ -138,7 +138,7 @@ public class War : Horsemen
     {
         Life = 100;
         Stamina = 0;
-        Speed = 5f;
+        Speed = 9f;
         DashDuration = 0.1f;
         DashBehaviour = warDashBehaviour;
         Bullet = prefabBullet;

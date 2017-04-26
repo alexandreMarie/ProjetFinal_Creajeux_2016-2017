@@ -137,7 +137,7 @@ public class Famine : Horsemen {
     {
         Life = 100;
         Stamina = 0;
-        Speed = 18f;
+        Speed = 11f;
         DashDuration = 0.1f;
         DashBehaviour = famineDashBehaviour;
         Bullet = prefabBullet;
