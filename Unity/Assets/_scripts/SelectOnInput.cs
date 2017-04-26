@@ -73,7 +73,13 @@ public class SelectOnInput : MonoBehaviour
                     case ("Menu_Option"):
                         Option_Menu();
                         break;
-                    }
+                    case ("LilithFight"):
+                        LFT();
+                        break;
+                    case ("Score"):
+                        LFT();
+                        break;
+        }
         if (A_pressed == true)
         {
             if (XIM.CurrState[0].Buttons.A == ButtonState.Pressed)
