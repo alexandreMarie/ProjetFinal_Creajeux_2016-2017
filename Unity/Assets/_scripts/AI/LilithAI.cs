@@ -24,44 +24,40 @@ public class LilithAI : BossManager
     [SerializeField]
     private Transform scavengingSnake = null;
 
-    private int targetPlayer = 0;
-
-    private uint bulletQuantityBurst = 20; // Quantity of bullets to fire for each burst
-
-    private float time = 15.0f;
-    private float divergence = 137.5f; // Angular divergence of the phyllotaxis
-
-    private bool attacking = false;
-
     private GameObject arena = null;
 
-    private Vector3 destination;
+    private Vector3 destination = default(Vector3);
 
-    public LightsController arenaLights;
+    public LightsController arenaLights = null;
 
     private NavMeshAgent lilithMovement = null;
     private NavMeshPath path = null;
 
-    private CameraShake cameraShake;
+    private CameraShake cameraShake = null;
 
-    private Patterns Lilith; // Uppercase L on purpose
+    private int targetPlayer = 0;
+    private uint bulletQuantityBurst = 20; // Quantity of bullets to fire for each burst
+
+    private float time = 15.0f;
+    private float divergence = 137.5f; // Angular divergence of the phyllotaxis
+    private const float powerEarthPowder = 150.0f;
+
+    private bool specialState = false;
+    private bool attacking = false;
+
+    private Patterns Lilith = null; // Uppercase L on purpose
 
     public delegate void LilithEventsHandler();
-    private event LilithEventsHandler LilithEvents;
-    #endregion
-
-    private enum LifeState { LAST, ONE, TWO, THREE, FOUR };
+    private event LilithEventsHandler LilithEvents = null;
 
     LifeState lifeState = LifeState.FOUR;
-    private bool specialState = false;
-
-    private const float powerEarthPowder = 150f;
 
     public Patterns LilithAccessor
     {
         get
         { return Lilith; }
     }
+    #endregion
 
     void Start()
     {
@@ -80,12 +76,6 @@ public class LilithAI : BossManager
         cameraShake = Camera.main.transform.parent.GetComponent<CameraShake>();
 
         StartCoroutine(BossFocus());
-    }
-
-    private void BulletCancel()
-    {
-        foreach (GameObject go in GameObject.FindGameObjectsWithTag("EnnemyBullet"))
-            go.SetActive(false);
     }
 
     void Update()
@@ -364,6 +354,12 @@ public class LilithAI : BossManager
         attacking = false;
 
         yield return null;
+    }
+
+    private void BulletCancel()
+    {
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("EnnemyBullet"))
+            go.SetActive(false);
     }
 
     void OnTriggerEnter(Collider col)

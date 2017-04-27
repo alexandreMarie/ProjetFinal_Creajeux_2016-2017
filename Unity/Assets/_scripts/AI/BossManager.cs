@@ -12,6 +12,8 @@
 
 public class BossManager : MonoBehaviour
 {
+    protected enum LifeState { LAST, ONE, TWO, THREE, FOUR };
+
     private LifeManager lifeManager = null;
 
     [SerializeField]
