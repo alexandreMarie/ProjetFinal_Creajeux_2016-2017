@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// BOSS MANAGER FILE
@@ -29,7 +30,7 @@ public class BossManager : MonoBehaviour
 
     static float life = 1000;
 
-    public static float Life
+    public float Life
     {
         get { return life; }
 
@@ -37,6 +38,7 @@ public class BossManager : MonoBehaviour
         {
             life = value;
             GameManager.Instance.LifeBoss = life;
+            lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
         }
     }
 
@@ -68,7 +70,7 @@ public class BossManager : MonoBehaviour
 
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
 
-            gm.Players[col.GetComponent<PlayerBullet>().playerID].GetComponent<Horsemen>().Stamina ++;
+            gm.Players[col.GetComponent<PlayerBullet>().playerID].GetComponent<Horsemen>().Stamina++;
 
             //////////////////////////////////////////////////
             /////////   STOP LES VALEURS EN DUR !!  //////////
@@ -76,6 +78,15 @@ public class BossManager : MonoBehaviour
 
             col.gameObject.SetActive(false);
             GameManager.Instance.LifeBoss = life;
+        }
+    }
+
+    public IEnumerator DamageOverTime(int damage, float time, int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Life -= damage;
+            yield return new WaitForSeconds(time);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class FamineSpecialBullet : MonoBehaviour {
 
@@ -11,6 +10,9 @@ public class FamineSpecialBullet : MonoBehaviour {
     AnimationCurve behaviour;
 
     float timer = 0f, duration = 5f;
+
+    const int dmg = 10, dmgCount = 10;
+    const float dmgTime = 0.5f;
 
 	// Use this for initialization
 	void Start () {
@@ -28,8 +30,9 @@ public class FamineSpecialBullet : MonoBehaviour {
 
         if (timer/duration >= 1f)
         {
-            //boss.GetComponent<BossManager>().StartCoroutine(DamageOverTime(10, 10));
-            Destroy(this.gameObject);
+            boss.GetComponent<BossManager>().StartCoroutine(boss.GetComponent<BossManager>().DamageOverTime(dmg, dmgTime, dmgCount));
+            Destroy(this.gameObject, 10f);
+            Destroy(this);
             // Damage over time
         }
 	}
