@@ -9,7 +9,7 @@ using UnityEngine;
 
 /// <summary>
 /// TODO
-/// - Rework the eye pattern : one eye for each player? random but with colours,
+/// - Rework the eye pattern : one eye for each player? random but with colours?
 /// </summary>
 
 public class LilithAI : BossManager
@@ -172,7 +172,7 @@ public class LilithAI : BossManager
         {
             int attack = Random.Range(1, 4);
 
-            switch (1)
+            switch (attack)
             {
                 case 1:
                     StartCoroutine(EarthPowder());
