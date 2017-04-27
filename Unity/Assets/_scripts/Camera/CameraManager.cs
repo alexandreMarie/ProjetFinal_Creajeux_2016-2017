@@ -10,6 +10,11 @@ public class CameraManager : MonoBehaviour
     private bool deadPlayer2 = false;
     private bool deadBoss = false;
     private int deadFirst;
+
+    public enum TypePhase { Cinematique, Combat, AllDead };
+
+    private TypePhase phase = TypePhase.Cinematique;
+    
     public static CameraManager Instance
     {
         get
@@ -23,17 +28,7 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        try
-        {
-            posViewTarget = GameObject.FindGameObjectsWithTag("PosViewTarget");
-        }
-        catch
-        {
-            //Debug.Log("Pas de targets spécifique pour cette arene");
-        }
-    }
+  
 
     public bool Change
     {
@@ -90,6 +85,19 @@ public class CameraManager : MonoBehaviour
         set
         {
             deadFirst = value;
+        }
+    }
+
+    public TypePhase Phase
+    {
+        get
+        {
+            return phase;
+        }
+
+        set
+        {
+            phase = value;
         }
     }
 }

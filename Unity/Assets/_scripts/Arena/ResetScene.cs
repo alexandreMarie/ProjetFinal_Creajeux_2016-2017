@@ -5,6 +5,7 @@ public class ResetScene : MonoBehaviour
 {
 
     private GameManager manager;
+    private GameObject canvas;
 
     public GameObject[] prefabs;
     public Vector3[] pos;
@@ -29,8 +30,12 @@ public class ResetScene : MonoBehaviour
         System.Array.Copy(pos, manager.StartPos, pos.Length);
         GameManager.SelectCharact selecCharact;
 
+        CameraManager.Instance.Phase = CameraManager.TypePhase.Cinematique;
+        canvas = GameObject.Find("Canvas");
         if (debug)
         {
+            canvas.SetActive(true);
+            CameraManager.Instance.Phase = CameraManager.TypePhase.Combat;
             manager.NbPlayers = nbPlayers;
             manager.TypeMode = mode;
             manager.Struc_stat_character = new GameManager.Stats_Character[nbPlayers];
@@ -101,9 +106,11 @@ public class ResetScene : MonoBehaviour
         }
         manager.Dead = false;
         manager.GameOver = GameObject.FindGameObjectWithTag("GameOver");
+        manager.GameOver.SetActive(false);
         manager.Boss = GameObject.FindGameObjectWithTag("Boss");
         manager.Players = GameObject.FindGameObjectsWithTag("Player");
-
+        if(!debug)
+            canvas.SetActive(false);
         switch (manager.TypeMode)
         {
             case 0:
@@ -120,55 +127,55 @@ public class ResetScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (manager.TypeMode)
+        if (CameraManager.Instance.Phase != CameraManager.TypePhase.Cinematique)
         {
-            case GameManager.Mode.standardS:
-                if (manager.LifePlayers[0] <= 0)
-                {
-                    CameraManager.Instance.DeadPlayer1 = true;
-                }
-                break;
-            case GameManager.Mode.standardD:
-                if (manager.LifePlayers[0] <= 0)
-                {
-                    if (manager.LifePlayers[1] > 0)
-                        CameraManager.Instance.DeadFirst = 0;
-                    
-                    CameraManager.Instance.DeadPlayer1 = true;
-                }
-                else if (manager.LifePlayers[1] <= 0)
-                {
-                    if (manager.LifePlayers[0] > 0)
-                        CameraManager.Instance.DeadFirst = 1;
-                    CameraManager.Instance.DeadPlayer2 = true;
-                }
-                break;
-            case GameManager.Mode.hardcoreD:
-                if (manager.LifePlayers[0] <= 0)
-                {
-                    CameraManager.Instance.DeadPlayer1 = true;
-                }
-                else if (manager.LifePlayers[1] <= 0)
-                {
-                    CameraManager.Instance.DeadPlayer2 = true;
-                }
-                break;
-        }
-        if (manager.Boss != null)
-        {
-            if (manager.LifeBoss <= 0)
+            canvas.SetActive(true);
+            switch (manager.TypeMode)
             {
-                CameraManager.Instance.DeadBoss = true;
-            }
-        }
-        if (manager.Dead)
-        {
+                case GameManager.Mode.standardS:
+                    if (manager.LifePlayers[0] <= 0)
+                    {
+                        CameraManager.Instance.DeadPlayer1 = true;
+                    }
+                    break;
+                case GameManager.Mode.standardD:
+                    if (manager.LifePlayers[0] <= 0)
+                    {
+                        if (manager.LifePlayers[1] > 0)
+                            CameraManager.Instance.DeadFirst = 0;
 
-            manager.GameOver.SetActive(true);
-        }
-        else
-        {
-            manager.GameOver.SetActive(false);
+                        CameraManager.Instance.DeadPlayer1 = true;
+                    }
+                    else if (manager.LifePlayers[1] <= 0)
+                    {
+                        if (manager.LifePlayers[0] > 0)
+                            CameraManager.Instance.DeadFirst = 1;
+                        CameraManager.Instance.DeadPlayer2 = true;
+                    }
+                    break;
+                case GameManager.Mode.hardcoreD:
+                    if (manager.LifePlayers[0] <= 0)
+                    {
+                        CameraManager.Instance.DeadPlayer1 = true;
+                    }
+                    else if (manager.LifePlayers[1] <= 0)
+                    {
+                        CameraManager.Instance.DeadPlayer2 = true;
+                    }
+                    break;
+            }
+            if (manager.Boss != null)
+            {
+                if (manager.LifeBoss <= 0)
+                {
+                    CameraManager.Instance.DeadBoss = true;
+                }
+            }
+            if (manager.Dead)
+            {
+
+                manager.GameOver.SetActive(true);
+            }
         }
     }
 }

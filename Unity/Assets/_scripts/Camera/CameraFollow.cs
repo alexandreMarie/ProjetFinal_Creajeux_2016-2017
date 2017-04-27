@@ -7,9 +7,6 @@ using UnityEngine.UI;
 
 public class CameraFollow : MonoBehaviour
 {
-    private enum Phase{ Combat, AllDead};
-
-    private Phase phase = Phase.Combat;
     public float dampTime = 0.15f;
     private Vector3 velocity = Vector3.zero;
     [SerializeField]
@@ -43,12 +40,21 @@ public class CameraFollow : MonoBehaviour
     private GameManager manager;
 
     private GameManager.Mode mode;
-    
+    private CameraManager cm;
+
+    private GameObject posCinematiqueStart;
+    private GameObject posCinematiqueEnd;
+    private float dampTimeCinematique = 2f;
+    private bool launchFight = true;
+
     void Start()
     {
-        CameraManager.Instance.DeadPlayer1 = false;
-        CameraManager.Instance.DeadPlayer2 = false;
-        CameraManager.Instance.DeadBoss = false;
+        posCinematiqueStart = GameObject.Find("posCinematiqueStart");
+        posCinematiqueEnd = GameObject.Find("posCinematiqueEnd");
+        cm = CameraManager.Instance;
+        cm.DeadPlayer1 = false;
+        cm.DeadPlayer2 = false;
+        cm.DeadBoss = false;
         manager = GameManager.Instance;
         if (manager.Boss != null)
         {
@@ -58,22 +64,26 @@ public class CameraFollow : MonoBehaviour
         else
             targets = new Transform[manager.NbPlayers];
 
-        Debug.Log(targets.Length);
         for (int i = 0; i < manager.NbPlayers; i++)
         {
             targets[i] = manager.Players[i].transform;
         }
-        
         camDistance = 3.0f;
         setFieldOfView = 60;
         rotateCam = 35;
         mode = manager.TypeMode;
-
+        if (CameraManager.Instance.Phase == CameraManager.TypePhase.Cinematique)
+        {
+            transform.position = posCinematiqueStart.transform.position;
+            for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
+                targets[i].GetComponent<Horsemen>().enabled = false;
+            
+        }
     }
 
     void OnPostRender()
     {
-        if (CameraManager.Instance.DeadBoss && takeScreen)
+        if (cm.DeadBoss && takeScreen)
         {
             if (tex2D == null)
             {
@@ -87,21 +97,42 @@ public class CameraFollow : MonoBehaviour
     }
     void FixedUpdate()
     {
-        switch(phase)
+       
+        switch (cm.Phase)
         {
-            case Phase.Combat:
+            case CameraManager.TypePhase.Cinematique:
+               
+                manager.Boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
+                manager.Boss.GetComponent<LilithAI>().StopAllCoroutines();
+                transform.position = Vector3.SmoothDamp(transform.position, posCinematiqueEnd.transform.position, ref velocity, dampTimeCinematique);
+                transform.rotation = Quaternion.Slerp(transform.rotation, posCinematiqueEnd.transform.rotation, 0.03f);
+                if (transform.position.z > 6.0f)
+                {
+                    for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
+                        targets[i].GetComponent<Horsemen>().enabled = true;
+                    cm.Phase = CameraManager.TypePhase.Combat;
+
+                }
+                    break;
+
+
+            case CameraManager.TypePhase.Combat:
+                Debug.Log("yolo");
                 Gravity();
                 DistanceMax();
-
-
                 Vector3 delta = gravity - GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camDistance + CamOffset));
                 Vector3 destinationPos = transform.position + delta;
                 Quaternion destinationRot = Quaternion.Euler(rotateCam, camRotation.y, camRotation.z);
+                if (launchFight)
+                {
+                    transform.position = destinationPos;
+                    launchFight = false;
+                }
                 transform.position = Vector3.SmoothDamp(transform.position, destinationPos, ref velocity, dampTime);
                 transform.rotation = Quaternion.Slerp(transform.rotation, destinationRot, 0.03f);
                 Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, setFieldOfView, 0.03f);
                 break;
-            case Phase.AllDead:
+            case CameraManager.TypePhase.AllDead:
                 manager.Boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
                 manager.Boss.GetComponent<LilithAI>().StopAllCoroutines();
                 for (int i = 0; i < manager.NbPlayers; i++)
@@ -110,12 +141,12 @@ public class CameraFollow : MonoBehaviour
                 }
                 if (mode == GameManager.Mode.hardcoreD || mode == GameManager.Mode.standardS)
                 {
-                    if (CameraManager.Instance.DeadPlayer1)
+                    if (cm.DeadPlayer1)
                     {
                         transform.position = Vector3.SmoothDamp(transform.position, targets[0].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
                         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
                     }
-                    else if (CameraManager.Instance.DeadPlayer2)
+                    else if (cm.DeadPlayer2)
                     {
                         transform.position = Vector3.SmoothDamp(transform.position, targets[1].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
                         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
@@ -123,12 +154,12 @@ public class CameraFollow : MonoBehaviour
                 }
                 else if(mode == GameManager.Mode.standardD)
                 {
-                    if (CameraManager.Instance.DeadFirst == 0)
+                    if (cm.DeadFirst == 0)
                     {
                         transform.position = Vector3.SmoothDamp(transform.position, targets[1].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
                         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
                     }
-                    else if (CameraManager.Instance.DeadFirst == 1)
+                    else if (cm.DeadFirst == 1)
                     {
                         transform.position = Vector3.SmoothDamp(transform.position, targets[0].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
                         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
@@ -155,43 +186,45 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
-        if (takeScreen)
-            time += Time.deltaTime;
-        manager.Timer = time;
-
-        switch(mode)
+        if (cm.Phase != CameraManager.TypePhase.Cinematique)
         {
-            case GameManager.Mode.standardS:
-                if (CameraManager.Instance.DeadPlayer1)
-                    phase = Phase.AllDead;
-                break;
-            case GameManager.Mode.standardD:
-                if (CameraManager.Instance.DeadPlayer1 && CameraManager.Instance.DeadPlayer2)
-                    phase = Phase.AllDead;
-                else if (CameraManager.Instance.DeadPlayer1 || CameraManager.Instance.DeadPlayer2)
-                {
-                    targets = new Transform[2];
-                    if (CameraManager.Instance.DeadPlayer1)
+            if (takeScreen)
+                time += Time.deltaTime;
+            manager.Timer = time;
+
+            switch (mode)
+            {
+                case GameManager.Mode.standardS:
+                    if (cm.DeadPlayer1)
+                        cm.Phase = CameraManager.TypePhase.AllDead;
+                    break;
+                case GameManager.Mode.standardD:
+                    if (cm.DeadPlayer1 && cm.DeadPlayer2)
+                        cm.Phase = CameraManager.TypePhase.AllDead;
+                    else if (cm.DeadPlayer1 || cm.DeadPlayer2)
                     {
-                        manager.Players[0].GetComponent<Horsemen>().enabled = false;
-                       
-                        targets[0] = manager.Players[1].transform;
-                        targets[1] = manager.Boss.transform;
+                        targets = new Transform[2];
+                        if (cm.DeadPlayer1)
+                        {
+                            manager.Players[0].GetComponent<Horsemen>().enabled = false;
+
+                            targets[0] = manager.Players[1].transform;
+                            targets[1] = manager.Boss.transform;
+                        }
+                        else if (cm.DeadPlayer2)
+                        {
+                            manager.Players[1].GetComponent<Horsemen>().enabled = false;
+                            targets[0] = manager.Players[0].transform;
+                            targets[1] = manager.Boss.transform;
+                        }
                     }
-                    else if (CameraManager.Instance.DeadPlayer2)
-                    {
-                        manager.Players[1].GetComponent<Horsemen>().enabled = false;
-                        targets[0] = manager.Players[0].transform;
-                        targets[1] = manager.Boss.transform;
-                    }
-                }
-                break;
-            case GameManager.Mode.hardcoreD:
-                if (CameraManager.Instance.DeadPlayer1 || CameraManager.Instance.DeadPlayer2)
-                    phase = Phase.AllDead;
-                break;  
+                    break;
+                case GameManager.Mode.hardcoreD:
+                    if (cm.DeadPlayer1 || cm.DeadPlayer2)
+                        cm.Phase = CameraManager.TypePhase.AllDead;
+                    break;
+            }
         }
-      
         /*if (Input.GetKey(KeyCode.A))
         {
             CameraManager.Instance.Change = true;
@@ -244,7 +277,6 @@ public class CameraFollow : MonoBehaviour
         else
             setFieldOfView = 60;
 
-        dampTime = 0.15f;
         distanceAll.Clear();
     }
 

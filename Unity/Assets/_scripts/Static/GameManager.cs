@@ -416,6 +416,7 @@ public class GameManager : MonoBehaviour
     {
         //Mode Standard
         struc_stat_character = new Stats_Character[Number_of_controller];
+        lifeMax = new int[Number_of_controller];
         typeMode = (Mode)Number_of_controller - 1;
         nbPlayers = Number_of_controller;
     }
