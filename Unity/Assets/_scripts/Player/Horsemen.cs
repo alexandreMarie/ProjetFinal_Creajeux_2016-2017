@@ -269,7 +269,6 @@ public abstract class Horsemen : MonoBehaviour
         else
         {
             // PowerDown
-            Debug.Log("PowerDown " + shootStage);
             switch (shootStage)
             {
                 case StageFire.Two:
@@ -288,7 +287,6 @@ public abstract class Horsemen : MonoBehaviour
                 case StageFire.Five:
                     shootStage = StageFire.Four;
                     fireMask = (byte)StageFire.Four;
-                    Debug.Log("Five to four");
                     break;
                 default:
                     break;
