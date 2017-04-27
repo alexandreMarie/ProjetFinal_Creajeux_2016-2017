@@ -328,6 +328,7 @@ public class UpdateScores : MonoBehaviour
             saveGeneral[i].speed = GameManager.Instance.Struc_stat_character[i].speed;
             saveGeneral[i].hero = GameManager.Instance.Struc_stat_character[i].selectCharact.ToString();
         }
+#if UNITY_XBOXONE
         if (File.Exists(dataPath))
         {
             file = File.AppendText(dataPath);
@@ -348,5 +349,6 @@ public class UpdateScores : MonoBehaviour
             }
             file.Close();
         }
+#endif
     }
 }
