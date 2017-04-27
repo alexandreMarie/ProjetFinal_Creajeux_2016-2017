@@ -22,6 +22,7 @@ public class Selection_of_character : MonoBehaviour {
 
     int Number_of_payers;
     int Last_Number_of_Player;
+    [SerializeField]
     bool[] Bool_player;
     [SerializeField]
     int[] ID_Player;
@@ -34,6 +35,9 @@ public class Selection_of_character : MonoBehaviour {
         XIM = XInputManager.Instance;
         ID_Player = new int[2];
         GM = GameManager.Instance;
+
+
+
         Bool_player = new bool[XIM.NumControllers];
         ID_Player = new int[XIM.NumControllers];
         Bbutton_Realeas = new bool[XIM.NumControllers];
@@ -56,19 +60,24 @@ public class Selection_of_character : MonoBehaviour {
 
         if (Number_of_payers != Last_Number_of_Player)
         {
+            Debug.Log("TEST");
             Bool_player = new bool[XIM.NumControllers];
             ID_Player = new int[XIM.NumControllers];
             Bbutton_Realeas = new bool[XIM.NumControllers];
             Abutton_Realeas = new bool[XIM.NumControllers];
             for (int i = 0; i < XIM.NumControllers; i++)
             {
-                ID_Player[i] = 3;
+                ID_Player[i] = 0;
                 Bbutton_Realeas[i] = false;
                 Abutton_Realeas[i] = false;
+                Bool_player[i] = false;
             }
             YSticks_Realeas = new bool[XIM.NumControllers];
             Get_Conneccted_Player();
         }
+
+
+      
         Select_character();
         //Placement_Character();
 

@@ -79,7 +79,7 @@ public class XInputManager : MonoBehaviour
     }
 
     // Indicate which one of the four controllers is connected
-    bool[] ControllersConnected = new bool[ControllersMax] { false, false, false, false };
+   public bool[] ControllersConnected = new bool[ControllersMax] { false, false, false, false };
 
     private int numControllers = 0;
     /// <summary>

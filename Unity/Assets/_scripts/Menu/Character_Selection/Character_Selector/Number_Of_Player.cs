@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using XInputDotNetPure;
+using UnityEngine.UI;
 
 public class Number_Of_Player : MonoBehaviour {
 
@@ -14,7 +15,10 @@ public class Number_Of_Player : MonoBehaviour {
     GameObject GO;
     [SerializeField]
     Transform [] Character_Player_Selector;
-
+    [SerializeField]
+    Recup_ID[] Recup_ID_List;
+    [SerializeField]
+    Camera[] CameraList;
     int Indice_Player = 0;
     int Last_Indice_Player = 0;
     int i = 0;
@@ -26,17 +30,45 @@ public class Number_Of_Player : MonoBehaviour {
         character_liste = new GameObject[4];
         Indice_Player = XIM.NumControllers;
         GM.CreateStrucCharact(XIM.NumControllers);
+        for(int i = 0; i < 2; i++)
+        {
+            Recup_ID_List[i].gameObject.SetActive(false);
+        }
+
+        New_player();
+
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        Indice_Player = XIM.NumControllers;
+
+        for(int i = 0; i < 2; i++)
+        {
+            if (i <= Indice_Player-1)
+            {
+
+
+                Recup_ID_List[i].gameObject.SetActive(true);
+                CameraList[i].transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+
+            }
+             if(i > Indice_Player-1)
+            {
+
+                CameraList[i].transform.eulerAngles = new Vector3(0.0f, -180.0f, 0.0f);
+                Recup_ID_List[i].gameObject.SetActive(false);
+
+            }
+        }
 
         //if (Indice_Player < 2)
         //{
         //    Indice_Player++;
         //}
 
-        Indice_Player = XIM.NumControllers;
+        
 
        // Debug.Log("Indice_Players : " + Indice_Player + "| Last_Indice_Player : " + Last_Indice_Player);
         //if (Indice_Player < Last_Indice_Player)
@@ -44,17 +76,17 @@ public class Number_Of_Player : MonoBehaviour {
         //    Delete_Player();
         //}
 
-	    if(Indice_Player != Last_Indice_Player)
-        {
-            if(Indice_Player > Last_Indice_Player)
-            {
-                New_player();
-            }
-            else if(Indice_Player < Last_Indice_Player)
-            {
-                Delete_Player();
-            }
-        }
+	    //if(Indice_Player != Last_Indice_Player)
+     //   {
+     //       if(Indice_Player > Last_Indice_Player)
+     //       {
+       
+     //       }
+     //       else if(Indice_Player < Last_Indice_Player)
+     //       {
+     //           Delete_Player();
+     //       }
+     //   }
         Last_Indice_Player = Indice_Player;
     }
 
@@ -112,14 +144,12 @@ public class Number_Of_Player : MonoBehaviour {
                 character_liste[i] = GO;
                 if(GO.GetComponent<SkinnedMeshRenderer>() != null)
             {
-                Debug.Log("ON EST DEDANS SMR");
+                
                 GO.GetComponent<SkinnedMeshRenderer>().material.SetFloat("Emission",0.0f);
             }    
                 else if(GO.GetComponentInChildren<MeshRenderer>() != null)
             {
-          
-                 
-                Debug.Log("ON EST DEDANS MR");
+  
                 GO.GetComponentInChildren<MeshRenderer>().material.SetColor("_EmissionColor", Color.black);
                 
             }   

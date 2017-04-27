@@ -14,6 +14,8 @@ public class All_player_selected : MonoBehaviour {
     Number_Of_Player NB;
     [SerializeField]
     Selection_of_character SC;
+    int i;
+    int Number_of_Player;
     // Use this for initialization
     void Start () {
         GM = GameManager.Instance;
@@ -29,9 +31,13 @@ public class All_player_selected : MonoBehaviour {
         
         void Validation_all_player()
         {
-            if (SC.Return_Bool[0] == true)
+        Debug.Log(SC.Return_Bool.Length);
+        for (i=0; i < Number_of_Player; i++)
             {
-            Change_Menu();
+                if (SC.Return_Bool[i] == true)
+                {
+                    Change_Menu();
+                }
             }
         }
 
@@ -60,6 +66,7 @@ public class All_player_selected : MonoBehaviour {
     }
         // Update is called once per frame
 	void Update () {
+      
         Players = new Selection_of_character[2, 4];
         for (int i = 0; i < XIM.NumControllers; i++)
         {
@@ -69,7 +76,7 @@ public class All_player_selected : MonoBehaviour {
             }
         }
         Validation_all_player();
-
+        Number_of_Player = XIM.NumControllers;
 
         //for (int j = 0; j < 2; j++)
         //{
