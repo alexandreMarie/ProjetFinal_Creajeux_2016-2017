@@ -12,14 +12,16 @@
 
 public class BossManager : MonoBehaviour
 {
+    protected enum LifeState { LAST, ONE, TWO, THREE, FOUR };
+
     private LifeManager lifeManager = null;
 
     [SerializeField]
     static protected Transform[] players = new Transform[2];
 
-    protected GameManager gm;
+    protected GameManager gm = null;
 
-    static float maxLife;
+    static float maxLife = 1000;
     public static float MaxLife
     {
         get { return maxLife; }
@@ -60,15 +62,13 @@ public class BossManager : MonoBehaviour
     {
         if (col.tag == "PlayerBullet")
         {
-            if (col.GetComponent<PlayerBullet>().playerID == 0)
-                gm.NbHit[0]++;
-            else
-                gm.NbHit[1]++;
-            life--;
+
+            gm.NbHit[col.GetComponent<PlayerBullet>().playerID]++;
+            life -= col.GetComponent<PlayerBullet>().damage;
 
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
 
-            gm.Players[col.GetComponent<PlayerBullet>().playerID].GetComponent<Horsemen>().Stamina += 1;
+            gm.Players[col.GetComponent<PlayerBullet>().playerID].GetComponent<Horsemen>().Stamina ++;
 
             //////////////////////////////////////////////////
             /////////   STOP LES VALEURS EN DUR !!  //////////

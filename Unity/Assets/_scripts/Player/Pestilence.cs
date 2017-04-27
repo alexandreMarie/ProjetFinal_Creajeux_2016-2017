@@ -137,9 +137,11 @@ public class Pestilence : Horsemen {
     // Use this for initialization
     void Start()
     {
-        Life = 100;
+        LifeMax = GameManager.Instance.Sauvegarde_state[2].PDV;
+        Life = LifeMax;
         Stamina = 0;
-        Speed = 10f;
+        Speed = GameManager.Instance.Sauvegarde_state[2].speed;
+        Damage = GameManager.Instance.Sauvegarde_state[2].attack;
         DashDuration = 0.1f;
         DashBehaviour = pestilenceDashBehaviour;
         Bullet = prefabBullet;

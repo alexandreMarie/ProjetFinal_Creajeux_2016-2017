@@ -135,9 +135,11 @@ public class Famine : Horsemen {
     // Use this for initialization
     void Start()
     {
-        Life = 100;
+        LifeMax = GameManager.Instance.Sauvegarde_state[1].PDV;
+        Life = LifeMax;
         Stamina = 0;
-        Speed = 11f;
+        Speed = GameManager.Instance.Sauvegarde_state[1].speed;
+        Damage = GameManager.Instance.Sauvegarde_state[1].attack;
         DashDuration = 0.1f;
         DashBehaviour = famineDashBehaviour;
         Bullet = prefabBullet;

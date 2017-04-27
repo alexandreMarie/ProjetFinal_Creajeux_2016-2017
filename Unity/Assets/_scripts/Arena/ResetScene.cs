@@ -31,27 +31,30 @@ public class ResetScene : MonoBehaviour
 
         if (debug)
         {
-            GameManager.Instance.NbPlayers = nbPlayers;
-            GameManager.Instance.TypeMode = mode;
-            GameManager.Instance.NbPlayers = nbPlayers;
+            manager.NbPlayers = nbPlayers;
+            manager.TypeMode = mode;
             manager.Struc_stat_character = new GameManager.Stats_Character[nbPlayers];
-
+            manager.Creat_struct_Heroes();
+            manager.LifeMax = new int[nbPlayers];
             for (int i = 0; i < nbPlayers; i++)
             {
-                int random = Random.Range(1, 5);
-                manager.Struc_stat_character[i].attack = 20;
+                manager.Struc_stat_character[i].attack =10;
                 manager.Struc_stat_character[i].PDV = 100;
-                manager.Struc_stat_character[i].speed = 20;
+                manager.Struc_stat_character[i].speed = 11f;
                 manager.Struc_stat_character[i].selectCharact = GameManager.SelectCharact.Death;
 
-                ;
+                manager.LifeMax[i] = manager.Struc_stat_character[i].PDV;
             }
         }
+
         manager.LifePlayers = new int[GameManager.Instance.NbPlayers];
+        manager.DamageByBoss = new int[GameManager.Instance.NbPlayers];
+
         for (int i = 0; i < manager.NbPlayers; i++)
         {
             GameObject go;
             selecCharact = manager.Struc_stat_character[i].selectCharact;
+            manager.DamageByBoss[i] = 0;
             switch (selecCharact)
             {
                 case GameManager.SelectCharact.Pestilence:
@@ -151,11 +154,13 @@ public class ResetScene : MonoBehaviour
                 }
                 break;
         }
-        if (manager.LifeBoss <= 0)
+        if (manager.Boss != null)
         {
-            CameraManager.Instance.DeadBoss = true;
+            if (manager.LifeBoss <= 0)
+            {
+                CameraManager.Instance.DeadBoss = true;
+            }
         }
-
         if (manager.Dead)
         {
 
