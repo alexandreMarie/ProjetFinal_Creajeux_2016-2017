@@ -41,7 +41,7 @@ public class ResetScene : MonoBehaviour
                 manager.Struc_stat_character[i].attack =10;
                 manager.Struc_stat_character[i].PDV = 100;
                 manager.Struc_stat_character[i].speed = 11f;
-                manager.Struc_stat_character[i].selectCharact = GameManager.SelectCharact.Famine;
+                manager.Struc_stat_character[i].selectCharact = GameManager.SelectCharact.Death;
 
                 manager.LifeMax[i] = manager.Struc_stat_character[i].PDV;
             }
@@ -154,11 +154,13 @@ public class ResetScene : MonoBehaviour
                 }
                 break;
         }
-        if (manager.LifeBoss <= 0)
+        if (manager.Boss != null)
         {
-            CameraManager.Instance.DeadBoss = true;
+            if (manager.LifeBoss <= 0)
+            {
+                CameraManager.Instance.DeadBoss = true;
+            }
         }
-
         if (manager.Dead)
         {
 

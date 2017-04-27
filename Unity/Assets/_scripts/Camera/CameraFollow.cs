@@ -50,13 +50,20 @@ public class CameraFollow : MonoBehaviour
         CameraManager.Instance.DeadPlayer2 = false;
         CameraManager.Instance.DeadBoss = false;
         manager = GameManager.Instance;
-        targets = new Transform[manager.NbPlayers+1];
-        
+        if (manager.Boss != null)
+        {
+            targets = new Transform[manager.NbPlayers + 1];
+            targets[manager.NbPlayers] = manager.Boss.transform;
+        }
+        else
+            targets = new Transform[manager.NbPlayers];
+
+        Debug.Log(targets.Length);
         for (int i = 0; i < manager.NbPlayers; i++)
         {
             targets[i] = manager.Players[i].transform;
         }
-        targets[manager.NbPlayers] = manager.Boss.transform;
+        
         camDistance = 3.0f;
         setFieldOfView = 60;
         rotateCam = 35;
