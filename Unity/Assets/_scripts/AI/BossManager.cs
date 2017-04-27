@@ -64,7 +64,8 @@ public class BossManager : MonoBehaviour
                 gm.NbHit[0]++;
             else
                 gm.NbHit[1]++;
-            life--;
+            
+            life -= col.GetComponent<PlayerBullet>().damage;
 
             lifeManager.UpdateLifeBar((int)MaxLife, (int)life);
 

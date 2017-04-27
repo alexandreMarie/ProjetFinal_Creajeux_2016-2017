@@ -41,7 +41,7 @@ public abstract class Horsemen : MonoBehaviour
 
     XInputManager XIMinstance;
     private bool isInvincible;
-    private int life = lifeMax;
+    private int life;
     public int Life
     {
         get
@@ -58,10 +58,21 @@ public abstract class Horsemen : MonoBehaviour
             lifeUpdater.UpdateLifebar(life);
             lifeManager.UpdateLifeBar(lifeMax, life);
             GameManager.Instance.UpdateLife(playerID, life);
-            GameManager.Instance.LifeMax = lifeMax;
         }
     }
 
+    private int lifeMax;
+    public int LifeMax
+    {
+        get
+        {
+            return lifeMax;
+        }
+        set
+        {
+            lifeMax = value;
+        }
+    }
     private Rigidbody rb;
     float timer = 0f;
 
@@ -125,7 +136,12 @@ public abstract class Horsemen : MonoBehaviour
             dashBehaviour = value;
         }
     }
-
+    private int damage;
+    public int Damage
+    {
+        get { return damage; }
+        set { damage = value; }
+    }
     private float speed = 6.0f;
     public virtual float Speed
     {
@@ -178,16 +194,17 @@ public abstract class Horsemen : MonoBehaviour
             GameObject go = new GameObject("BulletPoolPlayer" + (playerID + 1), typeof(Pool));
             pool = go.GetComponent<Pool>();
             bullet.GetComponent<PlayerBullet>().playerID = playerID;
+            bullet.GetComponent<PlayerBullet>().damage = damage;
             pool.Init(bullet, nbBulletsPool);
             //Destroy(value.gameObject);
         }
     }
 
+
     #endregion
 
     #region Constants
-
-    const int lifeMax = 100;
+    
     const int staminaMax = 100;
     const float freezeDuration = 2f;
     const float blinkDuration = 0.2f;
@@ -483,18 +500,21 @@ public abstract class Horsemen : MonoBehaviour
                 StartCoroutine(Freeze());
                 XIMinstance.SetVibration(playerID, freezeDuration, 1f);
                 Life -= 10;
+                GameManager.Instance.DamageByBoss[playerID] += 10;
             }
             else if (other.tag == "EnnemyBullet")
             {
                 StartCoroutine(PlayerBlink());
                 XIMinstance.SetVibration(playerID, blinkDuration / 2f, 0.5f);
                 Life -= 5;
+                GameManager.Instance.DamageByBoss[playerID] += 5;
             }
             else if (other.tag == "ScavengingSnake")
             {
                 StartCoroutine(Freeze());
                 XIMinstance.SetVibration(playerID, freezeDuration, 1f);
                 Life -= 10;
+                GameManager.Instance.DamageByBoss[playerID] += 10;
             }
             
             if (other.gameObject.layer == bulletLayer && other.tag != "PlayerBullet")

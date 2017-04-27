@@ -12,15 +12,9 @@ public class GameManager : MonoBehaviour
         public float speed;
         public int attack;
         public int PDV;
+        public string specialStage5;
+        public string specialA;
         public SelectCharact selectCharact;
-
-        public Stats_Character(float _speed, int _attack, int _PDV, SelectCharact _sel_char)
-        {
-            speed = _speed;
-            attack = _attack;
-            PDV = _PDV;
-            selectCharact = _sel_char;
-        }
     }
     
     private Stats_Character[] struc_stat_character;
@@ -44,7 +38,7 @@ public class GameManager : MonoBehaviour
 
 
     private int[] lifePlayers;
-    private int lifeMax;
+    private int[] lifeMax;
     [SerializeField]
     private float lifeBoss;
 
@@ -322,7 +316,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public int LifeMax
+    public int[] LifeMax
     {
         get
         {
@@ -392,22 +386,30 @@ public class GameManager : MonoBehaviour
         sauvegarde_state = new Stats_Character[4];
         sauvegarde_state[0].attack = 20;
         sauvegarde_state[0].PDV = 200;
-        sauvegarde_state[0].speed = 15;
+        sauvegarde_state[0].speed = 9f;
+        sauvegarde_state[0].specialStage5 = "Boomar";
+        sauvegarde_state[0].specialA = "HorseWar";
         sauvegarde_state[0].selectCharact = SelectCharact.War;
 
         sauvegarde_state[1].attack = 10;
         sauvegarde_state[1].PDV = 100;
-        sauvegarde_state[1].speed = 10;
+        sauvegarde_state[1].speed = 11f;
+        sauvegarde_state[1].specialStage5 = "BoomFamine";
+        sauvegarde_state[1].specialA = "HorseFamine";
         sauvegarde_state[1].selectCharact = SelectCharact.Famine;
 
         sauvegarde_state[2].attack = 15;
         sauvegarde_state[2].PDV = 150;
-        sauvegarde_state[2].speed = 10;
+        sauvegarde_state[2].speed = 10f;
+        sauvegarde_state[2].specialStage5 = "BoomPestilence";
+        sauvegarde_state[2].specialA = "HorsePestilence";
         sauvegarde_state[2].selectCharact = SelectCharact.Pestilence;
 
         sauvegarde_state[3].attack = 25;
-        sauvegarde_state[3].PDV = 50;
-        sauvegarde_state[3].speed = 5;
+        sauvegarde_state[3].PDV = 100;
+        sauvegarde_state[3].speed = 12f;
+        sauvegarde_state[3].specialStage5 = "BoomDeath";
+        sauvegarde_state[3].specialA = "HorseDeath";
         sauvegarde_state[3].selectCharact = SelectCharact.Death;
     }
     public void CreateStrucCharact(int Number_of_controller)
@@ -415,14 +417,13 @@ public class GameManager : MonoBehaviour
         //Mode Standard
         struc_stat_character = new Stats_Character[Number_of_controller];
         typeMode = (Mode)Number_of_controller - 1;
-
-
         nbPlayers = Number_of_controller;
     }
     /* i = 0 = First Player; i = 1 = Second Player; */
     public void Set_Stat_Player(int _ID_Player, int i)
     {
         struc_stat_character[i] = sauvegarde_state[_ID_Player];
+        lifeMax[i] = sauvegarde_state[_ID_Player].PDV;
     }
 
     public void Set_arena(int Arena)
