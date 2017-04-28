@@ -9,6 +9,9 @@ public class Pestilence : Horsemen {
     GameObject prefabBullet;
 
     [SerializeField]
+    GameObject prefabPestilenceSpecialBullet = null;
+
+    [SerializeField]
     private AnimationCurve pestilenceDashBehaviour = null;
 
     Ray ray;
@@ -40,8 +43,8 @@ public class Pestilence : Horsemen {
             {
                 if ((fireMask & (byte)StageFire.Five) > 0)
                 {
-                    // SCHPECJIAL 
-                    Debug.Log("SPECIAL");
+                    Instantiate<GameObject>(prefabPestilenceSpecialBullet);
+                    UpdateLevelShoot(false);
                 }
                 if ((fireMask & (byte)StageFire.Four) > 0)
                 {

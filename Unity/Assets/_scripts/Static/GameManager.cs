@@ -395,7 +395,7 @@ public class GameManager : MonoBehaviour
         sauvegarde_state[1].attack = 20;
         sauvegarde_state[1].PDV = 200;
         sauvegarde_state[1].speed = 9f;
-        sauvegarde_state[1].specialStage5 = "Boomar";
+        sauvegarde_state[1].specialStage5 = "BoomWar";
         sauvegarde_state[1].specialA = "HorseWar";
         sauvegarde_state[1].selectCharact = SelectCharact.War;
 

@@ -10,6 +10,9 @@ public class War : Horsemen
     GameObject prefabBullet;
 
     [SerializeField]
+    GameObject prefabWarSpecialBullet = null;
+
+    [SerializeField]
     private AnimationCurve warDashBehaviour = null;
 
     Ray ray;
@@ -39,8 +42,8 @@ public class War : Horsemen
             {
                 if ((fireMask & (byte)StageFire.Five) > 0)
                 {
-                    // SCHPECJIAL 
-                    Debug.Log("SPECIAL");
+                    Instantiate<GameObject>(prefabWarSpecialBullet);
+                    UpdateLevelShoot(false);
                 }
                 if ((fireMask & (byte)StageFire.Four) > 0)
                 {
