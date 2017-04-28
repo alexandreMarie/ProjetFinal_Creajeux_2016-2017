@@ -46,7 +46,7 @@ public class ResetScene : MonoBehaviour
                 manager.Struc_stat_character[i].attack =10;
                 manager.Struc_stat_character[i].PDV = 100;
                 manager.Struc_stat_character[i].speed = 11f;
-                manager.Struc_stat_character[i].selectCharact = GameManager.SelectCharact.Death;
+                manager.Struc_stat_character[i].selectCharact = GameManager.SelectCharact.War;
 
                 manager.LifeMax[i] = manager.Struc_stat_character[i].PDV;
             }
