@@ -43,7 +43,7 @@ public class War : Horsemen
                 if ((fireMask & (byte)StageFire.Five) > 0)
                 {
                     Instantiate<GameObject>(prefabWarSpecialBullet);
-                    UpdateLevelShoot(false);
+                    UpdateLevelShoot(true);
                 }
                 if ((fireMask & (byte)StageFire.Four) > 0)
                 {
@@ -156,6 +156,7 @@ public class War : Horsemen
     new void Update()
     {
         base.Update();
+        
     }
 
 }
