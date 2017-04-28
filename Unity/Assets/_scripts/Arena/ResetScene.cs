@@ -34,8 +34,8 @@ public class ResetScene : MonoBehaviour
         canvas = GameObject.Find("Canvas");
         if (debug)
         {
-            //canvas.SetActive(true);
-            //CameraManager.Instance.Phase = CameraManager.TypePhase.Combat;
+            canvas.SetActive(true);
+            CameraManager.Instance.Phase = CameraManager.TypePhase.Combat;
             manager.NbPlayers = nbPlayers;
             manager.TypeMode = mode;
             manager.Struc_stat_character = new GameManager.Stats_Character[nbPlayers];
@@ -109,7 +109,7 @@ public class ResetScene : MonoBehaviour
         manager.GameOver.SetActive(false);
         manager.Boss = GameObject.FindGameObjectWithTag("Boss");
         manager.Players = GameObject.FindGameObjectsWithTag("Player");
-        //if(!debug)
+        if(!debug)
             canvas.SetActive(false);
         switch (manager.TypeMode)
         {
