@@ -11,10 +11,10 @@ FBXHeaderExtension:  {
 		Year: 2017
 		Month: 4
 		Day: 28
-		Hour: 10
-		Minute: 44
-		Second: 17
-		Millisecond: 352
+		Hour: 11
+		Minute: 1
+		Second: 39
+		Millisecond: 99
 	}
 	Creator: "FBX SDK/FBX Plugins version 2016.1.2"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -30,20 +30,20 @@ FBXHeaderExtension:  {
 			Comment: ""
 		}
 		Properties70:  {
-			P: "DocumentUrl", "KString", "Url", "", "C:\Repos\ProjetFinal_Creajeux_2016-2017\Asset\model\CHARACTERS\Template_sword_war_transparency.fbx"
-			P: "SrcDocumentUrl", "KString", "Url", "", "C:\Repos\ProjetFinal_Creajeux_2016-2017\Asset\model\CHARACTERS\Template_sword_war_transparency.fbx"
+			P: "DocumentUrl", "KString", "Url", "", "C:\Repos\ProjetFinal_Creajeux_2016-2017\Asset\FBX\Template_sword_war_transparency.fbx"
+			P: "SrcDocumentUrl", "KString", "Url", "", "C:\Repos\ProjetFinal_Creajeux_2016-2017\Asset\FBX\Template_sword_war_transparency.fbx"
 			P: "Original", "Compound", "", ""
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "2016"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "28/04/2017 08:44:17.350"
-			P: "Original|FileName", "KString", "", "", "C:\Repos\ProjetFinal_Creajeux_2016-2017\Asset\model\CHARACTERS\Template_sword_war_transparency.fbx"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "28/04/2017 09:01:39.098"
+			P: "Original|FileName", "KString", "", "", "C:\Repos\ProjetFinal_Creajeux_2016-2017\Asset\FBX\Template_sword_war_transparency.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "2016"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "28/04/2017 08:44:17.350"
-			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Repos\ProjetFinal_Creajeux_2016-2017\Asset\model\CHARACTERS"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "28/04/2017 09:01:39.098"
+			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Repos\ProjetFinal_Creajeux_2016-2017\Asset\FBX"
 			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Repos\ProjetFinal_Creajeux_2016-2017\Asset\model\CHARACTERS\Template_sword.ma"
 		}
 	}
@@ -79,7 +79,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 2953511950480, "", "Scene" {
+	Document: 2953511950224, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -252,7 +252,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 2954031046768, "Geometry::", "Mesh" {
+	Geometry: 2954031036016, "Geometry::", "Mesh" {
 		Vertices: *150 {
 			a: -1.2457526922226,-1.2457526922226,0.399213820695877,1.2457526922226,-1.2457526922226,0.399213820695877,-0.750308454036713,9.43963718414307,0.239999458193779,0.750308454036713,9.43963718414307,0.239999458193779,-0.750308454036713,9.43963718414307,-0.239999458193779,0.750308454036713,9.43963718414307,-0.239999458193779,-1.2457526922226,-1.2457526922226,-0.399213820695877,1.2457526922226,-1.2457526922226,-0.399213820695877,0,-3.8376407623291,-0.110894158482552,0,-3.8376407623291,0.110894158482552,-0.829699993133545,11.9002065658569,0.265394240617752,0.829699993133545,11.9002065658569,0.265394240617752,0.829699993133545,11.9002065658569,-0.265394240617752,-0.829699993133545,11.9002065658569,-0.265394240617752,-0.829699993133545,12.9913702011108,0.265394240617752,0.829699993133545,12.9913702011108,0.265394240617752,0.829699993133545,12.9913702011108,-0.265394240617752,-0.829699993133545,12.9913702011108,-0.265394240617752,0,-1.2457526922226,0.399213820695877,0,9.43963718414307,0.239999458193779,0,11.9002065658569,0.321340054273605,0,13.1225156784058,0.265394240617752,0,13.1225156784058,-0.265394240617752,0,11.9002065658569,-0.321340054273605,0,9.43963718414307,-0.239999458193779,0,-1.2457526922226,-0.399213820695877,-0.653275847434998,11.8007402420044,0.208961859345436,0,11.8007402420044,0.253011554479599,0.653275847434998,11.8007402420044,0.208961859345436,0.653275847434998,11.8007402420044,-0.208961859345436,0,11.8007402420044,-0.253011554479599,-0.653275847434998,11.8007402420044,-0.208961859345436,-0.6579430103302,10.2558536529541,0.210454761981964,0,10.2558536529541,0.254819184541702,0.6579430103302,10.2558536529541,0.210454761981964,0.6579430103302,10.2558536529541,-0.210454761981964,0,10.2558536529541,-0.254819184541702,-0.6579430103302,10.2558536529541,-0.210454761981964,-1.87230277061462,9.43963718414307,0.356527209281921,0,9.43963718414307,0.382632970809937,0,10.2558536529541,0.382632970809937,-1.87230277061462,10.2558536529541,0.356527209281921,1.87230277061462,10.2558536529541,0.356527209281921,
 1.87230277061462,9.43963718414307,0.356527209281921,1.87230277061462,9.43963718414307,-0.356527209281921,1.87230277061462,10.2558536529541,-0.356527209281921,0,9.43963718414307,-0.382632970809937,0,10.2558536529541,-0.382632970809937,-1.87230277061462,10.2558536529541,-0.356527209281921,-1.87230277061462,9.43963718414307,-0.356527209281921
@@ -316,9 +316,11 @@ Objects:  {
 			}
 		}
 	}
-	Model: 2953792970576, "Model::pCube1", "Mesh" {
+	Model: 2953792956656, "Model::pCube1", "Mesh" {
 		Version: 232
 		Properties70:  {
+			P: "RotationPivot", "Vector3D", "Vector", "",0,13.1225156784058,0
+			P: "ScalingPivot", "Vector3D", "Vector", "",0,13.1225156784058,0
 			P: "RotationActive", "bool", "", "",1
 			P: "InheritType", "enum", "", "",1
 			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
@@ -328,7 +330,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 2953455451744, "Material::lambert1", "" {
+	Material: 2953455454144, "Material::lambert1", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -351,14 +353,14 @@ Objects:  {
 Connections:  {
 	
 	;Model::pCube1, Model::RootNode
-	C: "OO",2953792970576,0
+	C: "OO",2953792956656,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",2953789519152,2954030685952
+	C: "OO",2953789536176,2954030685744
 	
 	;Geometry::, Model::pCube1
-	C: "OO",2954031046768,2953792970576
+	C: "OO",2954031036016,2953792956656
 	
 	;Material::lambert1, Model::pCube1
-	C: "OO",2953455451744,2953792970576
+	C: "OO",2953455454144,2953792956656
 }
