@@ -9,10 +9,10 @@ public class Recup_ID : MonoBehaviour {
     Animator _animator;
     XInputManager XIM;
     [SerializeField]
-    int [] ID;
+    int  ID;
     [SerializeField]
     int Player;
-    int [] LastID;
+    int LastID;
     int Number_of_players;
     int Last_Number_Player;
 	// Use this for initialization
@@ -20,37 +20,19 @@ public class Recup_ID : MonoBehaviour {
         XIM = XInputManager.Instance;
         SC.GetComponentInParent<Selection_of_character>();
         //_animator = GetComponentInParent<Animator>();
-        ID = new int[2];
-        LastID = new int[2];
-        for (int i = 0; i < 2; i++)
-        {
-            ID[i] = 0;
-        }
+    
     }
 
 
 	// Update is called once per frame
 	void Update () {
-        Number_of_players = XIM.NumControllers;
-        if (Number_of_players != Last_Number_Player)
-        {
-            ID = new int[Number_of_players];
+   
+                ID = SC.Return_ID_player[Player];
 
-            for (int i = 0; i < Number_of_players; i++)
-            {
-                ID[i] = 0;
-            }
-        }
+                _animator.SetInteger("ID_character", ID);
 
-        for (int i = 0; i < Number_of_players; i++)
-        {
-
-            ID [i] = SC.Return_ID_player[i];
-           
-           _animator.SetInteger("ID_character", ID[Player]);
-
-            LastID[i] = ID[i];
-        }
+                LastID = ID;
+     
         //if (lastID != ID[Player - 1])
         //{
         //    lastID = ID[Player - 1];

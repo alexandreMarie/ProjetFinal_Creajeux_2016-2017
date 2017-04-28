@@ -22,7 +22,8 @@ public class Arena_Selection : MonoBehaviour {
     int Speed_of_cam;//Rotation of the camera
     [SerializeField]
     float value_of_target_cam;//Value of the camera target
-
+    [SerializeField]
+    int NB_ARENA;
 
     bool Button_is_releasd;
     bool Button_is_releasd_A;
@@ -42,7 +43,7 @@ public class Arena_Selection : MonoBehaviour {
         GM = GameManager.Instance;
         Arenas = GetComponentsInChildren<Animator>();
 
-        Step_of_rotation = 360 / Arenas.Length;
+        Step_of_rotation = 360 / NB_ARENA;
 
         Arena_is_locked = true;
 
@@ -132,13 +133,13 @@ public class Arena_Selection : MonoBehaviour {
     {
         if(Actual_pos_cam < Target_cam)
         {
-            _cam.transform.localPosition -= _cam.transform.forward * (Time.deltaTime * Speed_of_cam);
+            _cam.transform.localPosition += _cam.transform.worldToLocalMatrix.MultiplyVector(_cam.transform.up + _cam.transform.forward) * (Time.deltaTime * Speed_of_cam);
             Actual_pos_cam++;
         }
 
         if (Actual_pos_cam > Target_cam)
         {
-            _cam.transform.localPosition += _cam.transform.forward * (Time.deltaTime* Speed_of_cam);
+            _cam.transform.localPosition -= _cam.transform.worldToLocalMatrix.MultiplyVector(_cam.transform.up + _cam.transform.forward) * (Time.deltaTime* Speed_of_cam);
             Actual_pos_cam--;
         }
 

@@ -78,56 +78,25 @@ public class UI_Character : MonoBehaviour {
         {
             menu_ui_update[0].Is_active = false;
         }
-    else
+        else if (XIM.ControllersConnected[0] == true)
         {
+            menu_ui_update[0].enabled = true;
             menu_ui_update[0].Is_active = true;
         }
 
-        if (XIM.ControllersConnected[1] == false)
+    if (XIM.ControllersConnected[1] == false)
         {
             menu_ui_update[1].Is_active = false;
         }
-        else
+    else if (XIM.ControllersConnected[1] == true)
         {
+            menu_ui_update[1].enabled = true;
             menu_ui_update[1].Is_active = true;
         }
-
-
-        Update_Texte();
         Laste_ID_connected = XIM.NumControllers;
     }
 
-    void Update_Texte()
-    {
-        //if (XIM.NumControllers != Laste_ID_connected)
-        //{
-        //    for (int i = 0; i < 2; i++)
-        //    {
 
-        //        if (i <= XIM.NumControllers - 1)
-        //        {
-        //            text_Descriptif[i].gameObject.SetActive(true);
-        //            image_UI[i].gameObject.SetActive(true);
-        //            press_start[i].gameObject.SetActive(false);
-        //        }
-
-
-        //        if (i >= XIM.NumControllers - 1)
-        //        {
-        //            text_Descriptif[i].gameObject.SetActive(false);
-        //            image_UI[i].gameObject.SetActive(false);
-        //            press_start[i].gameObject.SetActive(true);
-        //        }
-
-        //        //text_Descriptif[i].text = "Speed : " + Players[i].GetComponent<Selection_of_character>().Return_ID_player(Players[i].GetComponent<Selection_of_character>().Return_Id_Player()-1).speed + "\n Life : " + Players[i].GetComponent<Selection_of_character>().Return_Stats(Players[i].GetComponent<Selection_of_character>().Return_Id_Player()-1).PDV+ "\n Attaque: " + Players[i].GetComponent<Selection_of_character>().Return_Stats(Players[i].GetComponent<Selection_of_character>().Return_Id_Player()-1).attack;
-        //    }
-        //}
-
-
-
-        //Fanion_UI[i].sprite = UI_fanion[Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player() - 1).selectCharact];
-        //text_Descriptif[i].text = Description_Personnage[(int)Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player() - 1).selectCharact-1];        
-    }
 
     public Text[] Text_Descriptife
     {
