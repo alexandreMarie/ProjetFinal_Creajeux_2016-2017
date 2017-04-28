@@ -74,20 +74,22 @@ public class UI_Character : MonoBehaviour {
         //    press_start[i].gameObject.SetActive(false);
         //}
 
-
-        for (int i = 0; i < 2; i++)
+    if(XIM.ControllersConnected[0] == false)
         {
-            if (i <= Indice_Player - 1)
-            {
-                menu_ui_update[i].GetComponent<Menu_UI_Update>().enabled = true;
-                menu_ui_update[i].Is_active = true;
+            menu_ui_update[0].Is_active = false;
+        }
+    else
+        {
+            menu_ui_update[0].Is_active = true;
+        }
 
-            }
-            if (i > Indice_Player - 1)
-            {
-               menu_ui_update[i].Is_active = false;
-                //menu_ui_update[i].GetComponent<Menu_UI_Update>().enabled = false;
-            }
+        if (XIM.ControllersConnected[1] == false)
+        {
+            menu_ui_update[1].Is_active = false;
+        }
+        else
+        {
+            menu_ui_update[1].Is_active = true;
         }
 
 
