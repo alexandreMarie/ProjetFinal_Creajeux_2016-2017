@@ -42,7 +42,7 @@ public class XInputManager : MonoBehaviour
     }
 
     #region Singleton
-    private static XInputManager instance;
+    private static XInputManager instance = null;
     public static XInputManager Instance
     {
         get
@@ -62,7 +62,7 @@ public class XInputManager : MonoBehaviour
     private GamePadState[] prevState = new GamePadState[ControllersMax];
     private GamePadState[] currState = new GamePadState[ControllersMax];
 
-    public GamePadState [] CurrState
+    public GamePadState[] CurrState
     {
         get
         {
@@ -79,13 +79,20 @@ public class XInputManager : MonoBehaviour
     }
 
     // Indicate which one of the four controllers is connected
-   public bool[] ControllersConnected = new bool[ControllersMax] { false, false, false, false };
+    bool[] controllersConnected = new bool[ControllersMax] { false, false, false, false };
+    public bool[] ControllersConnected
+    {
+        get
+        {
+            return controllersConnected;
+        }
+    }
 
     private int numControllers = 0;
     /// <summary>
     /// Indicate the number of controllers connected
     /// </summary>
-    public int NumControllers  // 
+    public int NumControllers
     {
         get
         {
@@ -93,6 +100,10 @@ public class XInputManager : MonoBehaviour
             return numControllers;
         }
     }
+
+    public delegate void ControllerUpdate(XInputManager manager);
+
+    public event ControllerUpdate ControllerConnected;
 
     // Use this for initialization
     void Start()
@@ -103,6 +114,7 @@ public class XInputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckControllers();
         UpdateControllersState();
     }
 
@@ -113,9 +125,10 @@ public class XInputManager : MonoBehaviour
     private bool CheckControllers()
     {
         bool result = false;
+        int oldNumControllers = numControllers;
         numControllers = 0;
         // Test of all connected controllers
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < ControllersMax; i++)
         {
             PlayerIndex testPi = (PlayerIndex)i;
             GamePadState testGPS = GamePad.GetState(testPi);
@@ -124,6 +137,19 @@ public class XInputManager : MonoBehaviour
                 numControllers++;
                 ControllersConnected[i] = true;
                 result = true;
+            }
+            else
+            {
+                ControllersConnected[i] = false;
+            }
+        }
+
+        if (numControllers != oldNumControllers)
+        {
+            // A controller has been connected or disconnected
+            if (ControllerConnected != null)
+            {
+                ControllerConnected(this);
             }
         }
         return result;
@@ -540,6 +566,5 @@ public class XInputManager : MonoBehaviour
         yield return new WaitForSeconds(duration);
         GamePad.SetVibration(index, 0f, 0f);
     }
-}
 
-// Milestone (24 25 26 avril ALPHA) (9 10 Mai BETA) (22 23 24 Mai GOLD) (29 30 31 MASTER GOLD)
+}
