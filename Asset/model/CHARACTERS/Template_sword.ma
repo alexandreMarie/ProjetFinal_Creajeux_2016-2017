@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: Template_sword.ma
-//Last modified: Fri, Apr 28, 2017 10:41:53 AM
+//Last modified: Fri, Apr 28, 2017 12:04:51 PM
 //Codeset: 1252
 requires maya "2016";
 currentUnit -l centimeter -a degree -t film;
@@ -12,13 +12,13 @@ fileInfo "osv" "Microsoft Windows 8 Business Edition, 64-bit  (Build 9200)\n";
 createNode transform -s -n "persp";
 	rename -uid "0DF08B50-4F69-1492-4232-F3A7CA9DF347";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" -1.2969994078765121 15.237825399746864 -50.744163232020256 ;
-	setAttr ".r" -type "double3" -12.938352729294936 -1616.5999999997862 0 ;
+	setAttr ".t" -type "double3" -0.67885273993585038 7.5568133452311645 35.97704322511624 ;
+	setAttr ".r" -type "double3" -3.3383527292774327 -1803.3999999995142 -1.2445948735887761e-016 ;
 createNode camera -s -n "perspShape" -p "persp";
 	rename -uid "6DBBDF8D-44AF-3613-FF96-DD8B956AC7A8";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999993;
-	setAttr ".coi" 52.003082389871146;
+	setAttr ".coi" 36.119695600740855;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -72,6 +72,8 @@ createNode camera -s -n "sideShape" -p "side";
 	setAttr ".o" yes;
 createNode transform -n "pCube1";
 	rename -uid "48042574-49BC-AE20-3D86-70A85BCF55E4";
+	setAttr ".rp" -type "double3" 0 13.122515678405762 0 ;
+	setAttr ".sp" -type "double3" 0 13.122515678405762 0 ;
 createNode mesh -n "pCubeShape1" -p "pCube1";
 	rename -uid "1969BB98-427D-F79E-FE32-02B79A71A319";
 	setAttr -k off ".v";
@@ -300,6 +302,11 @@ createNode script -n "sceneConfigurationScriptNode";
 	rename -uid "7F3220EC-45B8-1446-C95D-95AFC32C6C12";
 	setAttr ".b" -type "string" "playbackOptions -min 1 -max 120 -ast 1 -aet 200 ";
 	setAttr ".st" 6;
+createNode nodeGraphEditorInfo -n "hyperShadePrimaryNodeEditorSavedTabsInfo";
+	rename -uid "2C40834D-4952-AF18-DE76-23896A4CB561";
+	setAttr ".tgi[0].tn" -type "string" "Untitled_1";
+	setAttr ".tgi[0].vl" -type "double2" -109.52380517172455 -259.52379921126033 ;
+	setAttr ".tgi[0].vh" -type "double2" 108.33332902855363 270.23808449979856 ;
 select -ne :time1;
 	setAttr ".o" 1;
 	setAttr ".unw" 1;
@@ -317,6 +324,10 @@ select -ne :defaultShaderList1;
 select -ne :postProcessList1;
 	setAttr -s 2 ".p";
 select -ne :defaultRenderingList1;
+select -ne :lambert1;
+	setAttr ".dc" 1;
+	setAttr ".c" -type "float3" 1 0 0 ;
+	setAttr ".it" -type "float3" 0.56129032 0.56129032 0.56129032 ;
 select -ne :initialShadingGroup;
 	setAttr ".ro" yes;
 select -ne :initialParticleSE;
