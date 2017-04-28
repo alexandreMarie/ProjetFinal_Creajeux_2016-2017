@@ -27,6 +27,7 @@ public class Selection_of_character : MonoBehaviour {
     [SerializeField]
     int[] ID_Player;
     bool[] YSticks_Realeas;
+    bool[] XSticks_Realeas;
     bool[] Bbutton_Realeas;
     bool[] Abutton_Realeas;
 
@@ -38,18 +39,19 @@ public class Selection_of_character : MonoBehaviour {
 
 
 
-        Bool_player = new bool[XIM.NumControllers];
-        ID_Player = new int[XIM.NumControllers];
-        Bbutton_Realeas = new bool[XIM.NumControllers];
-        Abutton_Realeas = new bool[XIM.NumControllers];
+        Bool_player = new bool[2];
+        ID_Player = new int[2];
+        Bbutton_Realeas = new bool[2];
+        Abutton_Realeas = new bool[2];
         for (int i = 0; i < XIM.NumControllers; i++)
         {
-            ID_Player[i] = 3;
+            ID_Player[i] = Random.Range(0,3);
             Bbutton_Realeas[i] = false;
             Abutton_Realeas[i] = false;
+            Bool_player[i] = false;
         }
-        YSticks_Realeas = new bool[XIM.NumControllers];
-        
+        YSticks_Realeas = new bool[2];
+        XSticks_Realeas = new bool[2];
     }
 
 
@@ -60,19 +62,13 @@ public class Selection_of_character : MonoBehaviour {
 
         if (Number_of_payers != Last_Number_of_Player)
         {
-            Debug.Log("TEST");
-            Bool_player = new bool[XIM.NumControllers];
-            ID_Player = new int[XIM.NumControllers];
-            Bbutton_Realeas = new bool[XIM.NumControllers];
-            Abutton_Realeas = new bool[XIM.NumControllers];
-            for (int i = 0; i < XIM.NumControllers; i++)
+            for (int i = 0; i < Number_of_payers; i++)
             {
-                ID_Player[i] = 0;
+                //ID_Player[i] = 0;
                 Bbutton_Realeas[i] = false;
                 Abutton_Realeas[i] = false;
                 Bool_player[i] = false;
             }
-            YSticks_Realeas = new bool[XIM.NumControllers];
             Get_Conneccted_Player();
         }
 
@@ -146,12 +142,12 @@ public class Selection_of_character : MonoBehaviour {
                 Bbutton_Realeas[i] = true;
             }
 
-            if (XIM.CurrState[i].ThumbSticks.Left.Y == 0.0f)
+            if (XIM.CurrState[i].ThumbSticks.Left.X == 0.0f)
             {
-                YSticks_Realeas[i] = true;
+                XSticks_Realeas[i] = true;
             }
 
-            if (XIM.CurrState[i].ThumbSticks.Left.Y > 0.5f && YSticks_Realeas[i] == true)
+            if (XIM.CurrState[i].ThumbSticks.Left.X > 0.5f && XSticks_Realeas[i] == true && Return_Bool[i] == false)
             {
                 ID_Player[i]++;
                 if(ID_Player[i] > 3)
@@ -159,10 +155,10 @@ public class Selection_of_character : MonoBehaviour {
                     ID_Player[i] = 0;
                 }
 
-                YSticks_Realeas[i] = false;
+                XSticks_Realeas[i] = false;
             }
 
-            if (XIM.CurrState[i].ThumbSticks.Left.Y < -0.5f && YSticks_Realeas[i] == true)
+            if (XIM.CurrState[i].ThumbSticks.Left.X < -0.5f && XSticks_Realeas[i] == true && Return_Bool[i] == false)
             {
                 ID_Player[i]--;
 
@@ -170,7 +166,7 @@ public class Selection_of_character : MonoBehaviour {
                 {
                     ID_Player[i] = 3;
                 }
-                YSticks_Realeas[i] = false;
+                XSticks_Realeas[i] = false;
             }
 
 

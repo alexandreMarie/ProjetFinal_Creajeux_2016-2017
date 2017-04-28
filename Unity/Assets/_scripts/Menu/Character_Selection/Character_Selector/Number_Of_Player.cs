@@ -19,6 +19,8 @@ public class Number_Of_Player : MonoBehaviour {
     Recup_ID[] Recup_ID_List;
     [SerializeField]
     Camera[] CameraList;
+    [SerializeField]
+    Material[] Unlit_mater;
     int Indice_Player = 0;
     int Last_Indice_Player = 0;
     int i = 0;
@@ -32,7 +34,7 @@ public class Number_Of_Player : MonoBehaviour {
         GM.CreateStrucCharact(XIM.NumControllers);
         for(int i = 0; i < 2; i++)
         {
-            Recup_ID_List[i].gameObject.SetActive(false);
+            Recup_ID_List[i].enabled = false;
         }
 
         New_player();
@@ -44,60 +46,35 @@ public class Number_Of_Player : MonoBehaviour {
 
         Indice_Player = XIM.NumControllers;
 
-        for(int i = 0; i < 2; i++)
+
+        if (XIM.ControllersConnected[0] == false)
         {
-            if (i <= Indice_Player-1)
-            {
 
+            CameraList[0].transform.eulerAngles = new Vector3(0.0f, -180.0f, 0.0f);
+            Recup_ID_List[0].enabled = false;
+        }
+        else if (XIM.ControllersConnected[0] == true)
+        {
 
-                Recup_ID_List[i].gameObject.SetActive(true);
-                CameraList[i].transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
-
-            }
-             if(i > Indice_Player-1)
-            {
-
-                CameraList[i].transform.eulerAngles = new Vector3(0.0f, -180.0f, 0.0f);
-                Recup_ID_List[i].gameObject.SetActive(false);
-
-            }
+            Recup_ID_List[0].enabled = true;
+            CameraList[0].transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+           
         }
 
-        //if (Indice_Player < 2)
-        //{
-        //    Indice_Player++;
-        //}
+        if (XIM.ControllersConnected[1] == false)
+        {
 
-        
+            CameraList[1].transform.eulerAngles = new Vector3(0.0f, -180.0f, 0.0f);
+            Recup_ID_List[1].enabled = false;
+        }
+        else if (XIM.ControllersConnected[1] == true)
+        {
 
-       // Debug.Log("Indice_Players : " + Indice_Player + "| Last_Indice_Player : " + Last_Indice_Player);
-        //if (Indice_Player < Last_Indice_Player)
-        //{
-        //    Delete_Player();
-        //}
-
-	    //if(Indice_Player != Last_Indice_Player)
-     //   {
-     //       if(Indice_Player > Last_Indice_Player)
-     //       {
-       
-     //       }
-     //       else if(Indice_Player < Last_Indice_Player)
-     //       {
-     //           Delete_Player();
-     //       }
-     //   }
+            Recup_ID_List[1].enabled = true;
+            CameraList[1].transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+        }
         Last_Indice_Player = Indice_Player;
     }
-
-
-    void Delete_Player()
-    {
-       
-        //Destroy(Players[Indice_Player +1]);
-
-    }
-
 
    public GameObject [] Character_liste
     {
@@ -106,25 +83,6 @@ public class Number_Of_Player : MonoBehaviour {
             return character_liste;
             }
     }
-    /*void New_player_test()
-    {
-        Debug.Log(Controller_Player.NumControllers);
-        
-           // Debug.Log("On est dedans ! :o");
-       
-            Instantiate(Players[Indice_Player - 1], Character_Selector);
-            Players[Indice_Player-1].SetActive(true);
-            //Players[i].transform.SetParent(Character_Selector);
-            switch (Indice_Player-1)
-            {
-                case (0):
-                    Players[Indice_Player].transform.position = new Vector3(-1.0f, 1.0f, -7.0f);
-                    break;
-                case (1):
-                    Players[Indice_Player].transform.position = new Vector3(1.2f, 1.0f, -7.0f);
-                    break;
-            }
-    }*/
 
     void New_player()
     {
@@ -142,15 +100,15 @@ public class Number_Of_Player : MonoBehaviour {
                 }
 
                 character_liste[i] = GO;
-                if(GO.GetComponent<SkinnedMeshRenderer>() != null)
+                if(GO.GetComponentInChildren<SkinnedMeshRenderer>() != null)
             {
                 
-                GO.GetComponent<SkinnedMeshRenderer>().material.SetFloat("Emission",0.0f);
+                GO.GetComponentInChildren<SkinnedMeshRenderer>().material = Unlit_mater[j] ;
             }    
                 else if(GO.GetComponentInChildren<MeshRenderer>() != null)
             {
-  
-                GO.GetComponentInChildren<MeshRenderer>().material.SetColor("_EmissionColor", Color.black);
+
+                GO.GetComponentInChildren<MeshRenderer>().material = Unlit_mater[j];
                 
             }   
                 GO.GetComponent<Rigidbody>().useGravity = false;

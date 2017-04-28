@@ -14,7 +14,6 @@ public class All_player_selected : MonoBehaviour {
     Number_Of_Player NB;
     [SerializeField]
     Selection_of_character SC;
-    int i;
     int Number_of_Player;
     // Use this for initialization
     void Start () {
@@ -31,14 +30,20 @@ public class All_player_selected : MonoBehaviour {
         
         void Validation_all_player()
         {
-        Debug.Log(SC.Return_Bool.Length);
-        for (i=0; i < Number_of_Player; i++)
+        int j = 0;
+             for (int i = 0; i < Number_of_Player;i++)
             {
-                if (SC.Return_Bool[i] == true)
+           
+                    if(SC.Return_Bool[i] == true)
                 {
-                    Change_Menu();
+                   j++;
                 }
+                  if(j == Number_of_Player)
+                    {
+                Change_Menu();
+                    }
             }
+      
         }
 
 
@@ -66,38 +71,9 @@ public class All_player_selected : MonoBehaviour {
     }
         // Update is called once per frame
 	void Update () {
-      
-        Players = new Selection_of_character[2, 4];
-        for (int i = 0; i < XIM.NumControllers; i++)
-        {
-            for(int j=0; j < 4;j++)
-            {
-               // Players[i,j] = NB.Character_liste[i,j].GetComponent<Selection_of_character>();
-            }
-        }
-        Validation_all_player();
         Number_of_Player = XIM.NumControllers;
-
-        //for (int j = 0; j < 2; j++)
-        //{
-        //    for (int i = 0; i < Players.Length; i++)
-        //    {
-        //        Players[j,i].GetComponent<Character_Selection>().Set_SM(SM);
-        //    }
-        //    //Debug.Log(Players.Length);
-        //    for (int i = 0; i < Players.Length; i++)
-        //    {
-        //        if (Players[j,i].Return_Boolen() == true)
-        //        {
-        //            Loading_Ok = true;
-        //        }
-        //        else
-        //        {
-        //            Loading_Ok = false;
-        //            i = Players.Length;
-        //        }
-        //    }
-        //}
+        Players = new Selection_of_character[2, 4];
+        Validation_all_player();
     }
 
 }

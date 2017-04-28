@@ -13,8 +13,11 @@ public class Menu_UI_Update : MonoBehaviour {
     bool is_active;
     bool Last_Bool;
     int Number_Of_Players;
+
+
+
     // Use this for initialization
-	void Start () {
+    void Start () {
         UC = GetComponentInParent<UI_Character>();
         GM = GameManager.Instance;
         XIM = XInputManager.Instance;
@@ -42,7 +45,6 @@ public class Menu_UI_Update : MonoBehaviour {
                 UC.Text_Descriptife[Players_ID].gameObject.SetActive(false);
                 UC.Image_UI[Players_ID].gameObject.SetActive(false);
                 UC.Press_start[Players_ID].gameObject.SetActive(true);
-                enabled = false;
             }
         }
 
@@ -55,7 +57,7 @@ public class Menu_UI_Update : MonoBehaviour {
 
     void Update_text()
     {
-      
+       
 
             UC.Text_Descriptife[Players_ID].text = "Speed : " + GM.Sauvegarde_state[Players.GetComponent<Selection_of_character>().Return_ID_player[Players_ID]].speed
 
@@ -66,8 +68,8 @@ public class Menu_UI_Update : MonoBehaviour {
             //text_Descriptif[i].text = "Speed : " + GM.Sauvegarde_state[0].speed;
 
 
-
             UC.Image_UI[Players_ID].sprite = UC.Logo_Character[Players.Return_ID_player[Players_ID]];
+
      
     }
 
