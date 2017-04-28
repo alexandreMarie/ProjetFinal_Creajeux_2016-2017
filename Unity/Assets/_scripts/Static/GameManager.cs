@@ -383,20 +383,22 @@ public class GameManager : MonoBehaviour
 
     public void Creat_struct_Heroes()
     {
-        sauvegarde_state = new Stats_Character[4];
-        sauvegarde_state[0].attack = 20;
-        sauvegarde_state[0].PDV = 200;
-        sauvegarde_state[0].speed = 9f;
-        sauvegarde_state[0].specialStage5 = "Boomar";
-        sauvegarde_state[0].specialA = "HorseWar";
-        sauvegarde_state[0].selectCharact = SelectCharact.War;
 
-        sauvegarde_state[1].attack = 10;
-        sauvegarde_state[1].PDV = 100;
-        sauvegarde_state[1].speed = 11f;
-        sauvegarde_state[1].specialStage5 = "BoomFamine";
-        sauvegarde_state[1].specialA = "HorseFamine";
-        sauvegarde_state[1].selectCharact = SelectCharact.Famine;
+        sauvegarde_state = new Stats_Character[4];
+        sauvegarde_state[0].attack = 10;
+        sauvegarde_state[0].PDV = 100;
+        sauvegarde_state[0].speed = 11f;
+        sauvegarde_state[0].specialStage5 = "BoomFamine";
+        sauvegarde_state[0].specialA = "HorseFamine";
+        sauvegarde_state[0].selectCharact = SelectCharact.Famine;
+
+        sauvegarde_state[1].attack = 20;
+        sauvegarde_state[1].PDV = 200;
+        sauvegarde_state[1].speed = 9f;
+        sauvegarde_state[1].specialStage5 = "Boomar";
+        sauvegarde_state[1].specialA = "HorseWar";
+        sauvegarde_state[1].selectCharact = SelectCharact.War;
+
 
         sauvegarde_state[2].attack = 15;
         sauvegarde_state[2].PDV = 150;

@@ -117,7 +117,6 @@ public class CameraFollow : MonoBehaviour
 
 
             case CameraManager.TypePhase.Combat:
-                Debug.Log("yolo");
                 Gravity();
                 DistanceMax();
                 Vector3 delta = gravity - GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camDistance + CamOffset));

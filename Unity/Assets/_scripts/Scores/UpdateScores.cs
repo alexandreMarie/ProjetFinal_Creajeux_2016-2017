@@ -291,7 +291,9 @@ public class UpdateScores : MonoBehaviour
                     if (XIM.CurrState[0].Buttons.A == ButtonState.Pressed)
                     {
                         cpt = 5;
+#if !UNITY_UWP
                         SaveData();
+#endif
                         SceneManager.LoadScene((int)MenuManager.StateMenu.MainMenu);
                     }
                     /* Save */
@@ -328,7 +330,7 @@ public class UpdateScores : MonoBehaviour
             saveGeneral[i].speed = GameManager.Instance.Struc_stat_character[i].speed;
             saveGeneral[i].hero = GameManager.Instance.Struc_stat_character[i].selectCharact.ToString();
         }
-#if UNITY_XBOXONE
+//#if UNITY_XBOXONE
         if (File.Exists(dataPath))
         {
             file = File.AppendText(dataPath);
@@ -349,6 +351,6 @@ public class UpdateScores : MonoBehaviour
             }
             file.Close();
         }
-#endif
+//#endif
     }
 }

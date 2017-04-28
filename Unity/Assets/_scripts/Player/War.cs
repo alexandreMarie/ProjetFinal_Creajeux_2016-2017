@@ -136,11 +136,11 @@ public class War : Horsemen
     // Use this for initialization
     void Start()
     {
-        LifeMax = GameManager.Instance.Sauvegarde_state[0].PDV;
+        LifeMax = GameManager.Instance.Sauvegarde_state[1].PDV;
         Life = LifeMax;
         Stamina = 0;
-        Speed = GameManager.Instance.Sauvegarde_state[0].speed;
-        Damage = GameManager.Instance.Sauvegarde_state[0].attack;
+        Speed = GameManager.Instance.Sauvegarde_state[1].speed;
+        Damage = GameManager.Instance.Sauvegarde_state[1].attack;
         DashDuration = 0.1f;
         DashBehaviour = warDashBehaviour;
         Bullet = prefabBullet;
