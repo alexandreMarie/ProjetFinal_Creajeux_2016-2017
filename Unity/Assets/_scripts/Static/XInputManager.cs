@@ -79,13 +79,20 @@ public class XInputManager : MonoBehaviour
     }
 
     // Indicate which one of the four controllers is connected
-    bool[] ControllersConnected = new bool[ControllersMax] { false, false, false, false };
+    bool[] controllersConnected = new bool[ControllersMax] { false, false, false, false };
+    public bool[] ControllersConnected
+    {
+        get
+        {
+            return controllersConnected;
+        }
+    }
 
     private int numControllers = 0;
     /// <summary>
     /// Indicate the number of controllers connected
     /// </summary>
-    public int NumControllers  // 
+    public int NumControllers 
     {
         get
         {
@@ -93,7 +100,7 @@ public class XInputManager : MonoBehaviour
             return numControllers;
         }
     }
-    
+
     public delegate void ControllerUpdate(XInputManager manager);
 
     public event ControllerUpdate ControllerConnected;
@@ -121,7 +128,7 @@ public class XInputManager : MonoBehaviour
         int oldNumControllers = numControllers;
         numControllers = 0;
         // Test of all connected controllers
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < ControllersMax; i++)
         {
             PlayerIndex testPi = (PlayerIndex)i;
             GamePadState testGPS = GamePad.GetState(testPi);
@@ -131,11 +138,15 @@ public class XInputManager : MonoBehaviour
                 ControllersConnected[i] = true;
                 result = true;
             }
+            else
+            {
+                ControllersConnected[i] = false;
+            }
         }
 
         if (numControllers != oldNumControllers)
         {
-            // a controller has been connected or disconnected
+            // A controller has been connected or disconnected
             if (ControllerConnected != null)
             {
                 ControllerConnected(this);
