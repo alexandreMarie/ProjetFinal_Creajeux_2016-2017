@@ -13,6 +13,7 @@ public class Number_Of_Player : MonoBehaviour {
     [SerializeField]
     GameObject[] character_liste;
     GameObject GO;
+    GameObject Plane;
     [SerializeField]
     Transform [] Character_Player_Selector;
     [SerializeField]
@@ -91,13 +92,16 @@ public class Number_Of_Player : MonoBehaviour {
                 //Debug.Log("On est dedans ! :o");
                 if (i == 0)
                 {
+                   
                     GO = Instantiate(Players[j], Character_Player_Selector[0]) as GameObject;
-                }
+                    Plane = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Plane),GO.transform) as GameObject;
+            }
 
                 if (i == 1)
                 {
                     GO = Instantiate(Players[j], Character_Player_Selector[1]) as GameObject;
-                }
+                    Plane = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Plane), GO.transform) as GameObject;
+            }
 
                 character_liste[i] = GO;
                 if(GO.GetComponentInChildren<SkinnedMeshRenderer>() != null)

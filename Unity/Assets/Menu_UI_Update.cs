@@ -69,6 +69,7 @@ public class Menu_UI_Update : MonoBehaviour {
 
 
             UC.Image_UI[Players_ID].sprite = UC.Logo_Character[Players.Return_ID_player[Players_ID]];
+            UC.lore_perso[Players_ID].text = UC.Description_Personnage[Players.GetComponent<Selection_of_character>().Return_ID_player[Players_ID]];
 
      
     }
