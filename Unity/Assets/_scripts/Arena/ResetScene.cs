@@ -5,6 +5,7 @@ public class ResetScene : MonoBehaviour
 {
 
     private GameManager manager;
+    private GameObject canvas;
 
     public GameObject[] prefabs;
     public Vector3[] pos;
@@ -29,29 +30,36 @@ public class ResetScene : MonoBehaviour
         System.Array.Copy(pos, manager.StartPos, pos.Length);
         GameManager.SelectCharact selecCharact;
 
+        CameraManager.Instance.Phase = CameraManager.TypePhase.Cinematique;
+        canvas = GameObject.Find("Canvas");
         if (debug)
         {
-            GameManager.Instance.NbPlayers = nbPlayers;
-            GameManager.Instance.TypeMode = mode;
-            GameManager.Instance.NbPlayers = nbPlayers;
+            canvas.SetActive(true);
+            CameraManager.Instance.Phase = CameraManager.TypePhase.Combat;
+            manager.NbPlayers = nbPlayers;
+            manager.TypeMode = mode;
             manager.Struc_stat_character = new GameManager.Stats_Character[nbPlayers];
-
+            manager.Creat_struct_Heroes();
+            manager.LifeMax = new int[nbPlayers];
             for (int i = 0; i < nbPlayers; i++)
             {
-                int random = Random.Range(1, 5);
-                manager.Struc_stat_character[i].attack = 20;
+                manager.Struc_stat_character[i].attack =10;
                 manager.Struc_stat_character[i].PDV = 100;
-                manager.Struc_stat_character[i].speed = 20;
+                manager.Struc_stat_character[i].speed = 11f;
                 manager.Struc_stat_character[i].selectCharact = GameManager.SelectCharact.Death;
 
-                ;
+                manager.LifeMax[i] = manager.Struc_stat_character[i].PDV;
             }
         }
+
         manager.LifePlayers = new int[GameManager.Instance.NbPlayers];
+        manager.DamageByBoss = new int[GameManager.Instance.NbPlayers];
+
         for (int i = 0; i < manager.NbPlayers; i++)
         {
             GameObject go;
             selecCharact = manager.Struc_stat_character[i].selectCharact;
+            manager.DamageByBoss[i] = 0;
             switch (selecCharact)
             {
                 case GameManager.SelectCharact.Pestilence:
@@ -98,9 +106,11 @@ public class ResetScene : MonoBehaviour
         }
         manager.Dead = false;
         manager.GameOver = GameObject.FindGameObjectWithTag("GameOver");
+        manager.GameOver.SetActive(false);
         manager.Boss = GameObject.FindGameObjectWithTag("Boss");
         manager.Players = GameObject.FindGameObjectsWithTag("Player");
-
+        if(!debug)
+            canvas.SetActive(false);
         switch (manager.TypeMode)
         {
             case 0:
@@ -117,53 +127,55 @@ public class ResetScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (manager.TypeMode)
+        if (CameraManager.Instance.Phase != CameraManager.TypePhase.Cinematique)
         {
-            case GameManager.Mode.standardS:
-                if (manager.LifePlayers[0] <= 0)
-                {
-                    CameraManager.Instance.DeadPlayer1 = true;
-                }
-                break;
-            case GameManager.Mode.standardD:
-                if (manager.LifePlayers[0] <= 0)
-                {
-                    if (manager.LifePlayers[1] > 0)
-                        CameraManager.Instance.DeadFirst = 0;
-                    
-                    CameraManager.Instance.DeadPlayer1 = true;
-                }
-                else if (manager.LifePlayers[1] <= 0)
-                {
-                    if (manager.LifePlayers[0] > 0)
-                        CameraManager.Instance.DeadFirst = 1;
-                    CameraManager.Instance.DeadPlayer2 = true;
-                }
-                break;
-            case GameManager.Mode.hardcoreD:
-                if (manager.LifePlayers[0] <= 0)
-                {
-                    CameraManager.Instance.DeadPlayer1 = true;
-                }
-                else if (manager.LifePlayers[1] <= 0)
-                {
-                    CameraManager.Instance.DeadPlayer2 = true;
-                }
-                break;
-        }
-        if (manager.LifeBoss <= 0)
-        {
-            CameraManager.Instance.DeadBoss = true;
-        }
+            canvas.SetActive(true);
+            switch (manager.TypeMode)
+            {
+                case GameManager.Mode.standardS:
+                    if (manager.LifePlayers[0] <= 0)
+                    {
+                        CameraManager.Instance.DeadPlayer1 = true;
+                    }
+                    break;
+                case GameManager.Mode.standardD:
+                    if (manager.LifePlayers[0] <= 0)
+                    {
+                        if (manager.LifePlayers[1] > 0)
+                            CameraManager.Instance.DeadFirst = 0;
 
-        if (manager.Dead)
-        {
+                        CameraManager.Instance.DeadPlayer1 = true;
+                    }
+                    else if (manager.LifePlayers[1] <= 0)
+                    {
+                        if (manager.LifePlayers[0] > 0)
+                            CameraManager.Instance.DeadFirst = 1;
+                        CameraManager.Instance.DeadPlayer2 = true;
+                    }
+                    break;
+                case GameManager.Mode.hardcoreD:
+                    if (manager.LifePlayers[0] <= 0)
+                    {
+                        CameraManager.Instance.DeadPlayer1 = true;
+                    }
+                    else if (manager.LifePlayers[1] <= 0)
+                    {
+                        CameraManager.Instance.DeadPlayer2 = true;
+                    }
+                    break;
+            }
+            if (manager.Boss != null)
+            {
+                if (manager.LifeBoss <= 0)
+                {
+                    CameraManager.Instance.DeadBoss = true;
+                }
+            }
+            if (manager.Dead)
+            {
 
-            manager.GameOver.SetActive(true);
-        }
-        else
-        {
-            manager.GameOver.SetActive(false);
+                manager.GameOver.SetActive(true);
+            }
         }
     }
 }

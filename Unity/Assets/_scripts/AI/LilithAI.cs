@@ -9,7 +9,7 @@ using UnityEngine;
 
 /// <summary>
 /// TODO
-/// - Rework the eye pattern : one eye for each player? random but with colours,
+/// - Rework the eye pattern : one eye for each player? random but with colours?
 /// </summary>
 
 public class LilithAI : BossManager
@@ -24,49 +24,46 @@ public class LilithAI : BossManager
     [SerializeField]
     private Transform scavengingSnake = null;
 
-    private int targetPlayer = 0;
-
-    private uint bulletQuantityBurst = 20; // Quantity of bullets to fire for each burst
-
-    private float time = 15.0f;
-    private float divergence = 137.5f; // Angular divergence of the phyllotaxis
-
-    private bool attacking = false;
-
     private GameObject arena = null;
 
-    private Vector3 destination;
+    private Vector3 destination = default(Vector3);
 
-    public LightsController arenaLights;
+    public LightsController arenaLights = null;
 
     private NavMeshAgent lilithMovement = null;
     private NavMeshPath path = null;
 
-    private CameraShake cameraShake;
+    private CameraShake cameraShake = null;
 
-    private Patterns Lilith; // Uppercase L on purpose
+    private int targetPlayer = 0;
+    private uint bulletQuantityBurst = 20; // Quantity of bullets to fire for each burst
+
+    private float time = 15.0f;
+    private float divergence = 137.5f; // Angular divergence of the phyllotaxis
+    private const float powerEarthPowder = 150.0f;
+
+    private bool specialState = false;
+    private bool attacking = false;
+
+    private Patterns Lilith = null; // Uppercase L on purpose
 
     public delegate void LilithEventsHandler();
-    private event LilithEventsHandler LilithEvents;
-    #endregion
-
-    private enum LifeState { LAST, ONE, TWO, THREE, FOUR };
+    private event LilithEventsHandler LilithEvents = null;
 
     LifeState lifeState = LifeState.FOUR;
-    private bool specialState = false;
-
-    private const float powerEarthPowder = 150f;
 
     public Patterns LilithAccessor
     {
         get
         { return Lilith; }
     }
+    #endregion
 
     void Start()
     {
         Life = 1000;
 
+        arenaLights.TurnLight = false;
         Lilith = GetComponentInParent<Patterns>();
         Lilith.InitPool(bullet);
         lilithMovement = GetComponent<NavMeshAgent>();
@@ -82,112 +79,109 @@ public class LilithAI : BossManager
         StartCoroutine(BossFocus());
     }
 
-    private void BulletCancel()
-    {
-        foreach (GameObject go in GameObject.FindGameObjectsWithTag("EnnemyBullet"))
-            go.SetActive(false);
-    }
-
     void Update()
     {
-        transform.LookAt(new Vector3(gm.Players[targetPlayer].transform.position.x, transform.position.y, gm.Players[targetPlayer].transform.position.z));
-
-        destination.x = -gm.Players[targetPlayer].transform.position.x;
-        destination.z = -gm.Players[targetPlayer].transform.position.z;
-
-        NavMesh.CalculatePath(transform.position, destination, 0, path);
-
-        if (!specialState)
-            lilithMovement.SetDestination(destination);
-
-        if (lifeState == LifeState.FOUR)
+        if (CameraManager.Instance.Phase != CameraManager.TypePhase.Cinematique)
         {
-            divergence = 111.5f;
+            transform.LookAt(new Vector3(gm.Players[targetPlayer].transform.position.x, transform.position.y, gm.Players[targetPlayer].transform.position.z));
 
-            lifeState = LifeState.THREE;
+            destination.x = -gm.Players[targetPlayer].transform.position.x;
+            destination.z = -gm.Players[targetPlayer].transform.position.z;
 
-            /////////////////////////TESTAI
-            StartCoroutine(AI1());
-            StartCoroutine(Snake());
-        }
+            NavMesh.CalculatePath(transform.position, destination, 0, path);
 
-        if (Life / MaxLife >= 0.501f && Life / MaxLife <= 0.750f)
-        {
-            if (lifeState == LifeState.THREE)
+            if (!specialState)
+                lilithMovement.SetDestination(destination);
+
+            if (lifeState == LifeState.FOUR)
             {
-                divergence = 178.5f;
+                divergence = 111.5f;
 
-                Lilith.StopAllCoroutines();
-                StopAllCoroutines();
-                StopCoroutine(AI1());
+                lifeState = LifeState.THREE;
 
-                LilithEvents.Invoke();
-
-                lifeState = LifeState.TWO;
-
-                StartCoroutine(AI2());
+                /////////////////////////TESTAI
+                StartCoroutine(AI1());
                 StartCoroutine(Snake());
             }
-        }
 
-        if (Life / MaxLife >= 0.251f && Life / MaxLife <= 0.500f)
-        {
-            if (lifeState == LifeState.TWO)
+            if (Life / MaxLife >= 0.501f && Life / MaxLife <= 0.750f)
             {
-                divergence = 75.0f;
+                if (lifeState == LifeState.THREE)
+                {
+                    divergence = 178.5f;
 
-                Lilith.StopAllCoroutines();
-                StopAllCoroutines();
-                StopCoroutine(AI2());
+                    Lilith.StopAllCoroutines();
+                    StopAllCoroutines();
+                    StopCoroutine(AI1());
 
-                LilithEvents.Invoke();
+                    LilithEvents.Invoke();
 
-                lifeState = LifeState.ONE;
+                    lifeState = LifeState.TWO;
 
-                StartCoroutine(AI3());
-                StartCoroutine(Snake());
-            }
-        }
-
-        if (Life / MaxLife <= 0.250f)
-        {
-            if (lifeState == LifeState.ONE)
-            {
-                divergence = 137.5f;
-
-                Lilith.StopAllCoroutines();
-                StopAllCoroutines();
-                StopCoroutine(AI3());
-
-                LilithEvents.Invoke();
-
-                lifeState = LifeState.LAST;
-
-                StartCoroutine(AI4());
-                StartCoroutine(Snake());
-            }
-        }
-
-        if (!attacking && !specialState)
-        {
-            int attack = Random.Range(1, 4);
-
-            switch (1)
-            {
-                case 1:
-                    StartCoroutine(EarthPowder());
-                    break;
-                case 2:
-                    StartCoroutine(EyeAttack());
-                    break;
-                case 3:
-                    StartCoroutine(ScavengingSnake());
-                    break;
-                default:
-                    break;
+                    StartCoroutine(AI2());
+                    StartCoroutine(Snake());
+                }
             }
 
-            attacking = true;
+            if (Life / MaxLife >= 0.251f && Life / MaxLife <= 0.500f)
+            {
+                if (lifeState == LifeState.TWO)
+                {
+                    divergence = 75.0f;
+
+                    Lilith.StopAllCoroutines();
+                    StopAllCoroutines();
+                    StopCoroutine(AI2());
+
+                    LilithEvents.Invoke();
+
+                    lifeState = LifeState.ONE;
+
+                    StartCoroutine(AI3());
+                    StartCoroutine(Snake());
+                }
+            }
+
+            if (Life / MaxLife <= 0.250f)
+            {
+                if (lifeState == LifeState.ONE)
+                {
+                    divergence = 137.5f;
+
+                    Lilith.StopAllCoroutines();
+                    StopAllCoroutines();
+                    StopCoroutine(AI3());
+
+                    LilithEvents.Invoke();
+
+                    lifeState = LifeState.LAST;
+
+                    StartCoroutine(AI4());
+                    StartCoroutine(Snake());
+                }
+            }
+
+            if (!attacking && !specialState)
+            {
+                int attack = Random.Range(1, 4);
+
+                switch (attack)
+                {
+                    case 1:
+                        StartCoroutine(EarthPowder());
+                        break;
+                    case 2:
+                        StartCoroutine(EyeAttack());
+                        break;
+                    case 3:
+                        StartCoroutine(ScavengingSnake());
+                        break;
+                    default:
+                        break;
+                }
+
+                attacking = true;
+            }
         }
     }
 
@@ -364,6 +358,12 @@ public class LilithAI : BossManager
         attacking = false;
 
         yield return null;
+    }
+
+    private void BulletCancel()
+    {
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("EnnemyBullet"))
+            go.SetActive(false);
     }
 
     void OnTriggerEnter(Collider col)

@@ -3,10 +3,13 @@ using System.Collections;
 
 public class Famine : Horsemen {
 
-    int nbrBullets;
+    int nbrBullets = 0;
 
     [SerializeField]
-    GameObject prefabBullet;
+    GameObject prefabBullet = null;
+
+    [SerializeField]
+    GameObject prefabFamineSpecialBullet = null;
 
     [SerializeField]
     private AnimationCurve famineDashBehaviour = null;
@@ -38,8 +41,8 @@ public class Famine : Horsemen {
             {
                 if ((fireMask & (byte)StageFire.Five) > 0)
                 {
-                    // SCHPECJIAL 
-                    Debug.Log("SPECIAL");
+                    Instantiate<GameObject>(prefabFamineSpecialBullet);
+                    UpdateLevelShoot(false);
                 }
                 if ((fireMask & (byte)StageFire.Four) > 0)
                 {
@@ -135,9 +138,11 @@ public class Famine : Horsemen {
     // Use this for initialization
     void Start()
     {
-        Life = 100;
+        LifeMax = GameManager.Instance.Sauvegarde_state[1].PDV;
+        Life = LifeMax;
         Stamina = 0;
-        Speed = 11f;
+        Speed = GameManager.Instance.Sauvegarde_state[1].speed;
+        Damage = GameManager.Instance.Sauvegarde_state[1].attack;
         DashDuration = 0.1f;
         DashBehaviour = famineDashBehaviour;
         Bullet = prefabBullet;

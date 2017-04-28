@@ -92,7 +92,7 @@ public class UpdateScores : MonoBehaviour
     public Text[] precision;
     public Text[] damage;
 
-    public int lifeMax;
+    public int[] lifeMax;
     public float vitesse = 0.01f;
 
     public GameObject[] rank;
@@ -120,26 +120,27 @@ public class UpdateScores : MonoBehaviour
         currentLife = new int[GameManager.Instance.NbPlayers];
         percentageHitShootScore = new float[GameManager.Instance.NbPlayers];
         currentDamagePrecision = new int[GameManager.Instance.NbPlayers];
+        lifeMax = new int[GameManager.Instance.NbPlayers];
 
-        lifeMax = GameManager.Instance.LifeMax;
+       
         for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
         {
-
+            lifeMax[i] = GameManager.Instance.LifeMax[i];
             displayHitByPlayers[i] = GameManager.Instance.NbHit[i];
             displayShootByPlayers[i] = GameManager.Instance.NbShoot[i];
-           // displayDamageByBoss[i] = GameManager.Instance.DamageByBoss[i];
+            displayDamageByBoss[i] = GameManager.Instance.DamageByBoss[i];
             percentageHitShoot[i] = (float)displayHitByPlayers[i] / displayShootByPlayers[i];
             percentageHitShoot[i] = percentageHitShoot[i] * 100;
 
             // Initialization of scoring conditions
-            percentageLife[i] = lifeMax - GameManager.Instance.LifePlayers[i];
-            percentageLife[i] = percentageLife[i] / lifeMax * 100;
+            percentageLife[i] = lifeMax[i] - GameManager.Instance.LifePlayers[i];
+            percentageLife[i] = percentageLife[i] / lifeMax[i] * 100;
             switch (GameManager.Instance.TypeMode)
             {
                 case 0:
                     scoreRankSS = scoreMode0Win;
                     scoreBasedTime = scoreMod0Time;
-                    lifeTotal[i] = lifeMax - GameManager.Instance.LifePlayers[i];
+                    lifeTotal[i] = lifeMax[i] - GameManager.Instance.LifePlayers[i];
                     lifeTotalScore[i] = lifeTotal[i] * scoreMod0Life;
                     displayDamageByBossScore[i] = displayDamageByBoss[i] * scoreMod0HitBoss;
                     percentageHitShootScore[i] = percentageHitShoot[i] * scoreMod0HitPlayers;
@@ -147,7 +148,7 @@ public class UpdateScores : MonoBehaviour
                 case (GameManager.Mode)1:
                     scoreRankSS = scoreMode1Win;
                     scoreBasedTime = scoreMod1Time;
-                    lifeTotal[i] = lifeMax * 2 - (GameManager.Instance.LifePlayers[i] + GameManager.Instance.LifePlayers[i]);
+                    lifeTotal[i] = lifeMax[i] * 2 - (GameManager.Instance.LifePlayers[i] + GameManager.Instance.LifePlayers[i]);
                     lifeTotalScore[i] = lifeTotal[i] * scoreMod1Life;
                     displayDamageByBossScore[i] = displayDamageByBoss[i] * scoreMod1HitBoss;
                     percentageHitShootScore[i] = percentageHitShoot[i] * scoreMod1HitPlayers;
@@ -155,7 +156,7 @@ public class UpdateScores : MonoBehaviour
                 case (GameManager.Mode)2:
                     scoreRankSS = scoreMode2Win;
                     scoreBasedTime = scoreMod2Time;
-                    lifeTotal[i] = lifeMax * 2 - (GameManager.Instance.LifePlayers[i] + GameManager.Instance.LifePlayers[i]);
+                    lifeTotal[i] = lifeMax[i] * 2 - (GameManager.Instance.LifePlayers[i] + GameManager.Instance.LifePlayers[i]);
                     lifeTotalScore[i] = lifeTotal[i] * scoreMod2Life;
                     displayDamageByBossScore[i] = displayDamageByBoss[i] * scoreMod2HitBoss;
                     percentageHitShootScore[i] = percentageHitShoot[i] * scoreMod2HitPlayers;
@@ -327,6 +328,7 @@ public class UpdateScores : MonoBehaviour
             saveGeneral[i].speed = GameManager.Instance.Struc_stat_character[i].speed;
             saveGeneral[i].hero = GameManager.Instance.Struc_stat_character[i].selectCharact.ToString();
         }
+#if UNITY_XBOXONE
         if (File.Exists(dataPath))
         {
             file = File.AppendText(dataPath);
@@ -347,5 +349,6 @@ public class UpdateScores : MonoBehaviour
             }
             file.Close();
         }
+#endif
     }
 }

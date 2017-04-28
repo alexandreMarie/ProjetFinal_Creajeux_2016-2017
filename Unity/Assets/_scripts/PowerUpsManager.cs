@@ -42,11 +42,14 @@ public class PowerUpsManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.unscaledDeltaTime;
-        if (timer >= duration)
+        if (CameraManager.Instance.Phase != CameraManager.TypePhase.Cinematique)
         {
-            timer = 0f;
-            AddPowerUp();
+            timer += Time.unscaledDeltaTime;
+            if (timer >= duration)
+            {
+                timer = 0f;
+                AddPowerUp();
+            }
         }
     }
 

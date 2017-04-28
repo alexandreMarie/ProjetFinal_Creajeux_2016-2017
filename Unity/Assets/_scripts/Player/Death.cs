@@ -169,9 +169,11 @@ public class Death : Horsemen
     // Use this for initialization
     void Start()
     {
-        Life = 100;
+        LifeMax = GameManager.Instance.Sauvegarde_state[3].PDV;
+        Life = LifeMax;
         Stamina = 0;
-        Speed = 12f;
+        Speed = GameManager.Instance.Sauvegarde_state[3].speed;
+        Damage = GameManager.Instance.Sauvegarde_state[3].attack;
         DashDuration = 0.1f;
         DashBehaviour = deathDashBehaviour;
         Bullet = prefabBullet;
