@@ -4,18 +4,21 @@ using UnityEngine.UI;
 using XInputDotNetPure;
 public class UI_Character : MonoBehaviour {
     XInputManager XIM;
+
     [SerializeField]
     Sprite[] UI_fanion;
     [SerializeField]
-    Sprite [] Logo_Character;
+    Sprite[] logo_Character;
     [SerializeField]
     Text[] text_Descriptif;
 
+    [SerializeField]
+    Menu_UI_Update[] menu_ui_update;
     struct Stats_Character
     {
-       public float speed;
-       public int attack;
-       public float PDV;
+        public float speed;
+        public int attack;
+        public float PDV;
     }
 
     [SerializeField]
@@ -24,16 +27,17 @@ public class UI_Character : MonoBehaviour {
     Selection_of_character Players;
 
     [SerializeField]
-    Image[] Image_UI;
+    Image[] image_UI;
     [SerializeField]
-    Text[] Press_start;
+    Text[] press_start;
     Stats_Character[] Characters;
     GameManager GM;
 
     string[] Description_Personnage;
-
-	// Use this for initialization
-	void Start () {
+    int Laste_ID_connected;
+    int Indice_Player = 0;
+    // Use this for initialization
+    void Start() {
 
 
         GM = GameManager.Instance;
@@ -46,54 +50,82 @@ public class UI_Character : MonoBehaviour {
         Description_Personnage[2] = "Perso 3 :  hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
         Description_Personnage[3] = "Perso 4 :  hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
 
-        
+
         for (int i = 0; i < 2; i++)
         {
             text_Descriptif[i].gameObject.SetActive(false);
-            Image_UI[i].gameObject.SetActive(false);
+            image_UI[i].gameObject.SetActive(false);
             Press_start[i].gameObject.SetActive(true);
+            menu_ui_update[i].GetComponent<Menu_UI_Update>().enabled = false;
         }
 
+      
         //Players = Character_Selection.GetComponentsInChildren<GameObject>();
     }
-	
-	// Update is called once per frame
-	void LateUpdate () {
 
+    // Update is called once per frame
+    void LateUpdate() {
+        Indice_Player = XIM.NumControllers;
         Players = Character_Selection.GetComponentInChildren<Selection_of_character>();
-        for (int i = 0; i < XIM.NumControllers; i++)
+        //for (int i = 0; i < XIM.NumControllers; i++)
+        //{
+        //    text_Descriptif[i].gameObject.SetActive(true);
+        //    Image_UI[i].gameObject.SetActive(true);
+        //    press_start[i].gameObject.SetActive(false);
+        //}
+
+    if(XIM.ControllersConnected[0] == false)
         {
-            text_Descriptif[i].gameObject.SetActive(true);
-            Image_UI[i].gameObject.SetActive(true);
-            Press_start[i].gameObject.SetActive(false);
+            menu_ui_update[0].Is_active = false;
         }
-     
-            Update_Texte();
-       
+        else if (XIM.ControllersConnected[0] == true)
+        {
+            menu_ui_update[0].enabled = true;
+            menu_ui_update[0].Is_active = true;
+        }
+
+    if (XIM.ControllersConnected[1] == false)
+        {
+            menu_ui_update[1].Is_active = false;
+        }
+    else if (XIM.ControllersConnected[1] == true)
+        {
+            menu_ui_update[1].enabled = true;
+            menu_ui_update[1].Is_active = true;
+        }
+        Laste_ID_connected = XIM.NumControllers;
     }
 
-    void Update_Texte()
+
+
+    public Text[] Text_Descriptife
     {
-
-        for (int i = 0; i < XIM.NumControllers; i++)
+        get
         {
-            //text_Descriptif[i].text = "Speed : " + Players[i].GetComponent<Selection_of_character>().Return_ID_player(Players[i].GetComponent<Selection_of_character>().Return_Id_Player()-1).speed + "\n Life : " + Players[i].GetComponent<Selection_of_character>().Return_Stats(Players[i].GetComponent<Selection_of_character>().Return_Id_Player()-1).PDV+ "\n Attaque: " + Players[i].GetComponent<Selection_of_character>().Return_Stats(Players[i].GetComponent<Selection_of_character>().Return_Id_Player()-1).attack;
-            
-   
-            text_Descriptif[i].text = "Speed : " +  GM.Sauvegarde_state[Players.GetComponent<Selection_of_character>().Return_ID_player[i]].speed
-
-               + "\nAttack : " + GM.Sauvegarde_state[Players.GetComponent<Selection_of_character>().Return_ID_player[i]].attack 
-
-                + "\nLife point : " + GM.Sauvegarde_state[Players.GetComponent<Selection_of_character>().Return_ID_player[i]].PDV; 
-
-            //text_Descriptif[i].text = "Speed : " + GM.Sauvegarde_state[0].speed;
-
-
-
-            Image_UI[i].sprite = Logo_Character[Players.Return_ID_player[i]];
-
-            //Fanion_UI[i].sprite = UI_fanion[Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player() - 1).selectCharact];
-         //text_Descriptif[i].text = Description_Personnage[(int)Players[i].GetComponent<Character_Selection>().Return_Stats(Players[i].GetComponent<Character_Selection>().Return_Id_Player() - 1).selectCharact-1];        
+            return text_Descriptif;
         }
     }
+
+    public Text[] Press_start
+    {
+        get
+        {
+            return press_start;
+        }
+    }
+    public Image[] Image_UI
+       {
+        get
+        {
+            return image_UI;
+        }
+    }
+    public Sprite[] Logo_Character
+    {
+        get
+        {
+            return logo_Character;
+        }
+    }
+
 }

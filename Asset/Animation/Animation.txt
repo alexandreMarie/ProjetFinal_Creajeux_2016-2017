@@ -1,0 +1,7 @@
+Animation
+
+Death
+
+course - 1 to 24
+dash - 31 to 52
+mort - 61 to 94

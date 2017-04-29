@@ -1,18 +1,166 @@
 fileFormatVersion: 2
-guid: aa20d55a3def4ac40ae3651652722322
-timeCreated: 1493045593
+guid: fd0e3a05df4c2b74db5f8ad80718af40
+timeCreated: 1493214506
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Polysurface_Death
+    100000: CONTROLER_Chest
+    100002: CONTROLER_clavicle_L
+    100004: CONTROLER_clavicle_R
+    100006: CONTROLER_Foot_R
+    100008: CONTROLER_head
+    100010: CONTROLER_Neck
+    100012: CONTROLER_rigg_skin
+    100014: CONTROLER_Root
+    100016: CONTROLER_Spine
+    100018: //RootNode
+    100020: FK_CONTROLER_elbow_L
+    100022: FK_CONTROLER_elbow_R
+    100024: FK_CONTROLER_shoulder_L
+    100026: FK_CONTROLER_shoulder_R
+    100028: FK_CONTROLER_Wrist_L
+    100030: FK_CONTROLER_Wrist_R
+    100032: FK_Joint_clavicle_02_L
+    100034: FK_Joint_clavicle_02_R
+    100036: FK_Joint_elbow_L
+    100038: FK_Joint_elbow_R
+    100040: FK_Joint_forearm_L
+    100042: FK_Joint_forearm_R
+    100044: FK_Joint_shoulder_L
+    100046: FK_Joint_shoulder_R
+    100048: FK_Joint_wrist_L
+    100050: FK_Joint_wrist_R
+    100052: IK_Leg_R
+    100054: Joint_chest
+    100056: Joint_Clavicle_L
+    100058: Joint_Clavicle_R
+    100060: Joint_Foot_L
+    100062: Joint_Foot_R
+    100064: Joint_head
+    100066: Joint_Leg_L
+    100068: Joint_Leg_R
+    100070: Joint_neck
+    100072: Joint_spine
+    100074: Joint_UpLeg_L
+    100076: Joint_UpLeg_R
+    100078: Loc_clavicle_L
+    100080: Loc_clavicle_R
+    100082: Loc_elbow_L
+    100084: Loc_elbow_R
+    100086: Loc_Foot_R
+    100088: Loc_Shoulder_L
+    100090: Loc_Shoulder_R
+    100092: Loc_Wrist_L
+    100094: Loc_wrist_R
+    100096: Main_CONTROLER
+    100098: polySurface3
+    100100: Polysurface_Death
+    100102: Rigg_setup
+    100104: skin_chest
+    100106: skin_clavicle_02_L
+    100108: skin_clavicle_02_R
+    100110: skin_Clavicle_L
+    100112: skin_Clavicle_R
+    100114: skin_elbow_L
+    100116: skin_elbow_R
+    100118: skin_Foot_L
+    100120: skin_Foot_R
+    100122: skin_forearm_L
+    100124: skin_forearm_R
+    100126: skin_head
+    100128: skin_Leg_L
+    100130: skin_Leg_R
+    100132: skin_neck
+    100134: skin_rigg
+    100136: skin_shoulder_L
+    100138: skin_shoulder_R
+    100140: skin_spine
+    100142: skin_UpLeg_L
+    100144: skin_UpLeg_R
+    100146: skin_wrist_L
+    100148: skin_wrist_R
+    400000: CONTROLER_Chest
+    400002: CONTROLER_clavicle_L
+    400004: CONTROLER_clavicle_R
+    400006: CONTROLER_Foot_R
+    400008: CONTROLER_head
+    400010: CONTROLER_Neck
+    400012: CONTROLER_rigg_skin
+    400014: CONTROLER_Root
+    400016: CONTROLER_Spine
+    400018: //RootNode
+    400020: FK_CONTROLER_elbow_L
+    400022: FK_CONTROLER_elbow_R
+    400024: FK_CONTROLER_shoulder_L
+    400026: FK_CONTROLER_shoulder_R
+    400028: FK_CONTROLER_Wrist_L
+    400030: FK_CONTROLER_Wrist_R
+    400032: FK_Joint_clavicle_02_L
+    400034: FK_Joint_clavicle_02_R
+    400036: FK_Joint_elbow_L
+    400038: FK_Joint_elbow_R
+    400040: FK_Joint_forearm_L
+    400042: FK_Joint_forearm_R
+    400044: FK_Joint_shoulder_L
+    400046: FK_Joint_shoulder_R
+    400048: FK_Joint_wrist_L
+    400050: FK_Joint_wrist_R
+    400052: IK_Leg_R
+    400054: Joint_chest
+    400056: Joint_Clavicle_L
+    400058: Joint_Clavicle_R
+    400060: Joint_Foot_L
+    400062: Joint_Foot_R
+    400064: Joint_head
+    400066: Joint_Leg_L
+    400068: Joint_Leg_R
+    400070: Joint_neck
+    400072: Joint_spine
+    400074: Joint_UpLeg_L
+    400076: Joint_UpLeg_R
+    400078: Loc_clavicle_L
+    400080: Loc_clavicle_R
+    400082: Loc_elbow_L
+    400084: Loc_elbow_R
+    400086: Loc_Foot_R
+    400088: Loc_Shoulder_L
+    400090: Loc_Shoulder_R
+    400092: Loc_Wrist_L
+    400094: Loc_wrist_R
+    400096: Main_CONTROLER
+    400098: polySurface3
+    400100: Polysurface_Death
+    400102: Rigg_setup
+    400104: skin_chest
+    400106: skin_clavicle_02_L
+    400108: skin_clavicle_02_R
+    400110: skin_Clavicle_L
+    400112: skin_Clavicle_R
+    400114: skin_elbow_L
+    400116: skin_elbow_R
+    400118: skin_Foot_L
+    400120: skin_Foot_R
+    400122: skin_forearm_L
+    400124: skin_forearm_R
+    400126: skin_head
+    400128: skin_Leg_L
+    400130: skin_Leg_R
+    400132: skin_neck
+    400134: skin_rigg
+    400136: skin_shoulder_L
+    400138: skin_shoulder_R
+    400140: skin_spine
+    400142: skin_UpLeg_L
+    400144: skin_UpLeg_R
+    400146: skin_wrist_L
+    400148: skin_wrist_R
+    4300000: polySurface3
+    7400000: Run
     9500000: //RootNode
+    13700000: polySurface3
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
@@ -31,7 +179,185 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Run
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CONTROLER_rigg_skin
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine/skin_Clavicle_L
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine/skin_Clavicle_L/skin_clavicle_02_L
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine/skin_Clavicle_L/skin_clavicle_02_L/skin_shoulder_L
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine/skin_Clavicle_L/skin_clavicle_02_L/skin_shoulder_L/skin_elbow_L
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine/skin_Clavicle_L/skin_clavicle_02_L/skin_shoulder_L/skin_elbow_L/skin_forearm_L
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine/skin_Clavicle_L/skin_clavicle_02_L/skin_shoulder_L/skin_elbow_L/skin_forearm_L/skin_wrist_L
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine/skin_Clavicle_R
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine/skin_Clavicle_R/skin_clavicle_02_R
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine/skin_Clavicle_R/skin_clavicle_02_R/skin_shoulder_R
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine/skin_Clavicle_R/skin_clavicle_02_R/skin_shoulder_R/skin_elbow_R
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine/skin_Clavicle_R/skin_clavicle_02_R/skin_shoulder_R/skin_elbow_R/skin_forearm_R
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine/skin_Clavicle_R/skin_clavicle_02_R/skin_shoulder_R/skin_elbow_R/skin_forearm_R/skin_wrist_R
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine/skin_neck
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_chest/skin_spine/skin_neck/skin_head
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_UpLeg_L
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_UpLeg_L/skin_Leg_L
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_UpLeg_L/skin_Leg_L/skin_Foot_L
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_UpLeg_R
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_UpLeg_R/skin_Leg_R
+        weight: 1
+      - path: CONTROLER_rigg_skin/skin_rigg/skin_UpLeg_R/skin_Leg_R/skin_Foot_R
+        weight: 1
+      - path: Main_CONTROLER
+        weight: 1
+      - path: Main_CONTROLER/CONTROLER_Foot_R
+        weight: 1
+      - path: Main_CONTROLER/CONTROLER_Foot_R/Loc_Foot_R
+        weight: 1
+      - path: Main_CONTROLER/CONTROLER_Foot_R/Loc_Foot_R/IK_Leg_R
+        weight: 1
+      - path: Main_CONTROLER/CONTROLER_Root
+        weight: 1
+      - path: Main_CONTROLER/CONTROLER_Root/CONTROLER_Chest
+        weight: 1
+      - path: Main_CONTROLER/CONTROLER_Root/CONTROLER_Chest/CONTROLER_Spine
+        weight: 1
+      - path: Main_CONTROLER/CONTROLER_Root/CONTROLER_Chest/CONTROLER_Spine/CONTROLER_Neck
+        weight: 1
+      - path: Main_CONTROLER/CONTROLER_Root/CONTROLER_Chest/CONTROLER_Spine/CONTROLER_Neck/CONTROLER_head
+        weight: 1
+      - path: Polysurface_Death
+        weight: 1
+      - path: Polysurface_Death/polySurface3
+        weight: 1
+      - path: Rigg_setup
+        weight: 1
+      - path: Rigg_setup/Joint_chest
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_L
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_L/FK_Joint_clavicle_02_L
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_L/FK_Joint_clavicle_02_L/FK_Joint_shoulder_L
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_L/FK_Joint_clavicle_02_L/FK_Joint_shoulder_L/FK_Joint_elbow_L
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_L/FK_Joint_clavicle_02_L/FK_Joint_shoulder_L/FK_Joint_elbow_L/FK_Joint_forearm_L
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_L/FK_Joint_clavicle_02_L/FK_Joint_shoulder_L/FK_Joint_elbow_L/FK_Joint_forearm_L/FK_Joint_wrist_L
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_L/FK_Joint_clavicle_02_L/FK_Joint_shoulder_L/FK_Joint_elbow_L/Loc_Wrist_L
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_L/FK_Joint_clavicle_02_L/FK_Joint_shoulder_L/FK_Joint_elbow_L/Loc_Wrist_L/FK_CONTROLER_Wrist_L
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_L/FK_Joint_clavicle_02_L/FK_Joint_shoulder_L/Loc_elbow_L
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_L/FK_Joint_clavicle_02_L/FK_Joint_shoulder_L/Loc_elbow_L/FK_CONTROLER_elbow_L
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_L/FK_Joint_clavicle_02_L/Loc_Shoulder_L
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_L/FK_Joint_clavicle_02_L/Loc_Shoulder_L/FK_CONTROLER_shoulder_L
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_R
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_R/FK_Joint_clavicle_02_R
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_R/FK_Joint_clavicle_02_R/FK_Joint_shoulder_R
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_R/FK_Joint_clavicle_02_R/FK_Joint_shoulder_R/FK_Joint_elbow_R
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_R/FK_Joint_clavicle_02_R/FK_Joint_shoulder_R/FK_Joint_elbow_R/FK_Joint_forearm_R
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_R/FK_Joint_clavicle_02_R/FK_Joint_shoulder_R/FK_Joint_elbow_R/FK_Joint_forearm_R/FK_Joint_wrist_R
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_R/FK_Joint_clavicle_02_R/FK_Joint_shoulder_R/FK_Joint_elbow_R/Loc_wrist_R
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_R/FK_Joint_clavicle_02_R/FK_Joint_shoulder_R/FK_Joint_elbow_R/Loc_wrist_R/FK_CONTROLER_Wrist_R
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_R/FK_Joint_clavicle_02_R/FK_Joint_shoulder_R/Loc_elbow_R
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_R/FK_Joint_clavicle_02_R/FK_Joint_shoulder_R/Loc_elbow_R/FK_CONTROLER_elbow_R
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_R/FK_Joint_clavicle_02_R/Loc_Shoulder_R
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_Clavicle_R/FK_Joint_clavicle_02_R/Loc_Shoulder_R/FK_CONTROLER_shoulder_R
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_neck
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Joint_neck/Joint_head
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Loc_clavicle_L
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Loc_clavicle_L/CONTROLER_clavicle_L
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Loc_clavicle_R
+        weight: 1
+      - path: Rigg_setup/Joint_chest/Joint_spine/Loc_clavicle_R/CONTROLER_clavicle_R
+        weight: 1
+      - path: Rigg_setup/Joint_UpLeg_L
+        weight: 1
+      - path: Rigg_setup/Joint_UpLeg_L/Joint_Leg_L
+        weight: 1
+      - path: Rigg_setup/Joint_UpLeg_L/Joint_Leg_L/Joint_Foot_L
+        weight: 1
+      - path: Rigg_setup/Joint_UpLeg_R
+        weight: 1
+      - path: Rigg_setup/Joint_UpLeg_R/Joint_Leg_R
+        weight: 1
+      - path: Rigg_setup/Joint_UpLeg_R/Joint_Leg_R/Joint_Foot_R
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

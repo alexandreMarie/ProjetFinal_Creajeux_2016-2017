@@ -22,25 +22,36 @@ public class Selection_of_character : MonoBehaviour {
 
     int Number_of_payers;
     int Last_Number_of_Player;
+    [SerializeField]
     bool[] Bool_player;
     [SerializeField]
     int[] ID_Player;
     bool[] YSticks_Realeas;
-
+    bool[] XSticks_Realeas;
+    bool[] Bbutton_Realeas;
+    bool[] Abutton_Realeas;
 
 
     void Start () {
         XIM = XInputManager.Instance;
         ID_Player = new int[2];
         GM = GameManager.Instance;
-        Bool_player = new bool[XIM.NumControllers];
-        ID_Player = new int[XIM.NumControllers];
-            for(int i = 0; i < XIM.NumControllers;i++)
+
+
+
+        Bool_player = new bool[2];
+        ID_Player = new int[2];
+        Bbutton_Realeas = new bool[2];
+        Abutton_Realeas = new bool[2];
+        for (int i = 0; i < XIM.NumControllers; i++)
         {
-            ID_Player[i] = 1;
+            ID_Player[i] = Random.Range(0,3);
+            Bbutton_Realeas[i] = false;
+            Abutton_Realeas[i] = false;
+            Bool_player[i] = false;
         }
-        YSticks_Realeas = new bool[XIM.NumControllers];
-        
+        YSticks_Realeas = new bool[2];
+        XSticks_Realeas = new bool[2];
     }
 
 
@@ -51,11 +62,18 @@ public class Selection_of_character : MonoBehaviour {
 
         if (Number_of_payers != Last_Number_of_Player)
         {
-            Bool_player = new bool[XIM.NumControllers];
-            ID_Player = new int[XIM.NumControllers];
-            YSticks_Realeas = new bool[XIM.NumControllers];
+            for (int i = 0; i < Number_of_payers; i++)
+            {
+                //ID_Player[i] = 0;
+                Bbutton_Realeas[i] = false;
+                Abutton_Realeas[i] = false;
+                Bool_player[i] = false;
+            }
             Get_Conneccted_Player();
         }
+
+
+      
         Select_character();
         //Placement_Character();
 
@@ -71,7 +89,7 @@ public class Selection_of_character : MonoBehaviour {
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    charac_tab[j, i] = NB.Character_liste[j, i];
+                    charac_tab[j, i] = NB.Character_liste[i];
                 }
             }
      
@@ -114,13 +132,22 @@ public class Selection_of_character : MonoBehaviour {
         for(int i = 0; i < XIM.NumControllers; i++)
         {
 
-
-            if (XIM.CurrState[i].ThumbSticks.Left.Y == 0.0f)
+            if (XIM.CurrState[i].Buttons.A == ButtonState.Released)
             {
-                YSticks_Realeas[i] = true;
+                Abutton_Realeas[i] = true;
             }
 
-            if (XIM.CurrState[i].ThumbSticks.Left.Y > 0.5f && YSticks_Realeas[i] == true)
+            if (XIM.CurrState[i].Buttons.B == ButtonState.Released)
+            {
+                Bbutton_Realeas[i] = true;
+            }
+
+            if (XIM.CurrState[i].ThumbSticks.Left.X == 0.0f)
+            {
+                XSticks_Realeas[i] = true;
+            }
+
+            if (XIM.CurrState[i].ThumbSticks.Left.X > 0.5f && XSticks_Realeas[i] == true && Return_Bool[i] == false)
             {
                 ID_Player[i]++;
                 if(ID_Player[i] > 3)
@@ -128,10 +155,10 @@ public class Selection_of_character : MonoBehaviour {
                     ID_Player[i] = 0;
                 }
 
-                YSticks_Realeas[i] = false;
+                XSticks_Realeas[i] = false;
             }
 
-            if (XIM.CurrState[i].ThumbSticks.Left.Y < -0.5f && YSticks_Realeas[i] == true)
+            if (XIM.CurrState[i].ThumbSticks.Left.X < -0.5f && XSticks_Realeas[i] == true && Return_Bool[i] == false)
             {
                 ID_Player[i]--;
 
@@ -139,19 +166,24 @@ public class Selection_of_character : MonoBehaviour {
                 {
                     ID_Player[i] = 3;
                 }
-                YSticks_Realeas[i] = false;
+                XSticks_Realeas[i] = false;
             }
 
 
-            if (XIM.CurrState[i].Buttons.A == ButtonState.Pressed)
+            if (XIM.CurrState[i].Buttons.A == ButtonState.Pressed && Abutton_Realeas[i] == true)
             {
                 Bool_player[i] = true;
+                Abutton_Realeas[i] = false;
             }
 
-            if (XIM.CurrState[i].Buttons.B == ButtonState.Pressed)
+            if (XIM.CurrState[i].Buttons.B == ButtonState.Pressed && Bbutton_Realeas[i] == true)
             {
                 SceneManager.LoadScene("MainMenu");
+                Bbutton_Realeas[i] = false;
             }
+
+
+
         }
     }
     

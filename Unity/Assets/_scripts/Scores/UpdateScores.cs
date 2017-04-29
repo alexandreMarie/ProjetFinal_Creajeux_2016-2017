@@ -13,6 +13,7 @@ public class UpdateScores : MonoBehaviour
 
     public struct SaveGeneral
     {
+        public string date;
         public int playerId;
         public float time;
         public string arena;
@@ -26,9 +27,9 @@ public class UpdateScores : MonoBehaviour
         public float speed;
         public string hero;
     }
-    
 
 
+    int cpt = 0;
     int scoreBasedTime;
 
     float[] seconds;
@@ -57,7 +58,7 @@ public class UpdateScores : MonoBehaviour
     int[] displayDamageByBoss;
     int[] displayDamageByBossScore;
 
-    int cpt = 0;
+    int cptLine = 0;
 
     float time;
 
@@ -91,7 +92,7 @@ public class UpdateScores : MonoBehaviour
     public Text[] precision;
     public Text[] damage;
 
-    public int lifeMax;
+    public int[] lifeMax;
     public float vitesse = 0.01f;
 
     public GameObject[] rank;
@@ -119,26 +120,27 @@ public class UpdateScores : MonoBehaviour
         currentLife = new int[GameManager.Instance.NbPlayers];
         percentageHitShootScore = new float[GameManager.Instance.NbPlayers];
         currentDamagePrecision = new int[GameManager.Instance.NbPlayers];
+        lifeMax = new int[GameManager.Instance.NbPlayers];
 
-        lifeMax = GameManager.Instance.LifeMax;
+       
         for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
         {
+            lifeMax[i] = GameManager.Instance.LifeMax[i];
             displayHitByPlayers[i] = GameManager.Instance.NbHit[i];
             displayShootByPlayers[i] = GameManager.Instance.NbShoot[i];
-            // displayDamageByBoss[i] = GameManager.Instance.DamageByBoss[i];
-            displayDamageByBoss[i] = 40;
+            displayDamageByBoss[i] = GameManager.Instance.DamageByBoss[i];
             percentageHitShoot[i] = (float)displayHitByPlayers[i] / displayShootByPlayers[i];
             percentageHitShoot[i] = percentageHitShoot[i] * 100;
 
             // Initialization of scoring conditions
-            percentageLife[i] = lifeMax - GameManager.Instance.LifePlayers[i];
-            percentageLife[i] = percentageLife[i] / lifeMax * 100;
+            percentageLife[i] = lifeMax[i] - GameManager.Instance.LifePlayers[i];
+            percentageLife[i] = percentageLife[i] / lifeMax[i] * 100;
             switch (GameManager.Instance.TypeMode)
             {
                 case 0:
                     scoreRankSS = scoreMode0Win;
                     scoreBasedTime = scoreMod0Time;
-                    lifeTotal[i] = lifeMax - GameManager.Instance.LifePlayers[i];
+                    lifeTotal[i] = lifeMax[i] - GameManager.Instance.LifePlayers[i];
                     lifeTotalScore[i] = lifeTotal[i] * scoreMod0Life;
                     displayDamageByBossScore[i] = displayDamageByBoss[i] * scoreMod0HitBoss;
                     percentageHitShootScore[i] = percentageHitShoot[i] * scoreMod0HitPlayers;
@@ -146,7 +148,7 @@ public class UpdateScores : MonoBehaviour
                 case (GameManager.Mode)1:
                     scoreRankSS = scoreMode1Win;
                     scoreBasedTime = scoreMod1Time;
-                    lifeTotal[i] = lifeMax * 2 - (GameManager.Instance.LifePlayers[i] + GameManager.Instance.LifePlayers[i]);
+                    lifeTotal[i] = lifeMax[i] * 2 - (GameManager.Instance.LifePlayers[i] + GameManager.Instance.LifePlayers[i]);
                     lifeTotalScore[i] = lifeTotal[i] * scoreMod1Life;
                     displayDamageByBossScore[i] = displayDamageByBoss[i] * scoreMod1HitBoss;
                     percentageHitShootScore[i] = percentageHitShoot[i] * scoreMod1HitPlayers;
@@ -154,7 +156,7 @@ public class UpdateScores : MonoBehaviour
                 case (GameManager.Mode)2:
                     scoreRankSS = scoreMode2Win;
                     scoreBasedTime = scoreMod2Time;
-                    lifeTotal[i] = lifeMax * 2 - (GameManager.Instance.LifePlayers[i] + GameManager.Instance.LifePlayers[i]);
+                    lifeTotal[i] = lifeMax[i] * 2 - (GameManager.Instance.LifePlayers[i] + GameManager.Instance.LifePlayers[i]);
                     lifeTotalScore[i] = lifeTotal[i] * scoreMod2Life;
                     displayDamageByBossScore[i] = displayDamageByBoss[i] * scoreMod2HitBoss;
                     percentageHitShootScore[i] = percentageHitShoot[i] * scoreMod2HitPlayers;
@@ -288,34 +290,33 @@ public class UpdateScores : MonoBehaviour
                         rank[i].transform.FindChild("B").gameObject.SetActive(true);
                     if (XIM.CurrState[0].Buttons.A == ButtonState.Pressed)
                     {
-
+                        cpt = 5;
+#if !UNITY_UWP
                         SaveData();
-                        Next();
+#endif
+                        SceneManager.LoadScene((int)MenuManager.StateMenu.MainMenu);
                     }
                     /* Save */
                     //GameManager.Instance.SaveData(scoresFinal);
 
                     break;
+                default:
+                    break;
             }
         }
     }
 
-
-    public void Next()
-    {
-        if (cpt == 4)
-            SceneManager.LoadScene((int)MenuManager.StateMenu.MainMenu);
-    }
+    
 
     public void SaveData()
     {
-        SaveGeneral []saveGeneral = new SaveGeneral[GameManager.Instance.NbPlayers];
+        
         string dataPath = Application.dataPath + "/../save.dat";
         StreamWriter file;
-        StreamReader fileR;
-        string read;
+        SaveGeneral[] saveGeneral = new SaveGeneral[GameManager.Instance.NbPlayers];
         for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
         {
+            saveGeneral[i].date = System.DateTime.Now.ToString();
             saveGeneral[i].playerId = i;
             saveGeneral[i].time = GameManager.Instance.Timer;
             saveGeneral[i].arena = GameManager.Instance.TypeArena.ToString();
@@ -329,45 +330,27 @@ public class UpdateScores : MonoBehaviour
             saveGeneral[i].speed = GameManager.Instance.Struc_stat_character[i].speed;
             saveGeneral[i].hero = GameManager.Instance.Struc_stat_character[i].selectCharact.ToString();
         }
-        if (!File.Exists(dataPath))
+//#if UNITY_XBOXONE
+        if (File.Exists(dataPath))
         {
-            file = File.CreateText(dataPath);
-            for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
+            file = File.AppendText(dataPath);
+            for (int i = 0; i < GameManager.Instance.NbPlayers + cptLine; i++)
             {
-
                 string bufferData = JsonUtility.ToJson(saveGeneral[i]);
-
                 file.WriteLine(bufferData);
-
             }
             file.Close();
         }
         else
         {
-            fileR = File.OpenText(dataPath);
-                read = fileR.ReadLine();
-                while (read != null)
-                    read = fileR.ReadLine();
-            Debug.Log(read);
-            try
+            file = File.CreateText(dataPath);
+            for (int i = 0; i < GameManager.Instance.NbPlayers + cptLine; i++)
             {
-                file = File.CreateText(dataPath);
-                string bufferData = JsonUtility.ToJson(read);
+                string bufferData = JsonUtility.ToJson(saveGeneral[i]);
                 file.WriteLine(bufferData);
-                for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
-                {
-
-                    bufferData = JsonUtility.ToJson(saveGeneral[i]);
-
-                    file.WriteLine(bufferData);
-
-                }
-                file.Close();
             }
-            catch
-            {
-                Debug.Log("yolo");
-            }
-        }      
+            file.Close();
+        }
+//#endif
     }
 }

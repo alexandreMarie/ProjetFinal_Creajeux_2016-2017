@@ -5,9 +5,12 @@ public class War : Horsemen
 {
 
     int nbrBullets;
-
+    bool specialStage5 = false;
     [SerializeField]
     GameObject prefabBullet;
+
+    [SerializeField]
+    GameObject prefabWarSpecialBullet = null;
 
     [SerializeField]
     private AnimationCurve warDashBehaviour = null;
@@ -37,10 +40,11 @@ public class War : Horsemen
 
             for (int j = 0; j < 5; j++)
             {
-                if ((fireMask & (byte)StageFire.Five) > 0)
+                if ((fireMask & (byte)StageFire.Five) > 0 && !specialStage5)
                 {
-                    // SCHPECJIAL 
-                    Debug.Log("SPECIAL");
+                    Instantiate<GameObject>(prefabWarSpecialBullet);
+                    UpdateLevelShoot(false);
+                    specialStage5 = true;
                 }
                 if ((fireMask & (byte)StageFire.Four) > 0)
                 {
@@ -136,9 +140,11 @@ public class War : Horsemen
     // Use this for initialization
     void Start()
     {
-        Life = 100;
+        LifeMax = GameManager.Instance.Sauvegarde_state[1].PDV;
+        Life = LifeMax;
         Stamina = 0;
-        Speed = 16f;
+        Speed = GameManager.Instance.Sauvegarde_state[1].speed;
+        Damage = GameManager.Instance.Sauvegarde_state[1].attack;
         DashDuration = 0.1f;
         DashBehaviour = warDashBehaviour;
         Bullet = prefabBullet;
@@ -151,6 +157,7 @@ public class War : Horsemen
     new void Update()
     {
         base.Update();
+        
     }
 
 }

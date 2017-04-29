@@ -13,6 +13,7 @@ public class PlayerBullet : MonoBehaviour
     private float destroyTime = 10.0f;
 
     public int playerID = 0;
+    public int damage;
     #endregion
 
     private void OnEnable()

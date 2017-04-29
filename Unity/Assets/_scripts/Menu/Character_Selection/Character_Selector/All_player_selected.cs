@@ -14,6 +14,7 @@ public class All_player_selected : MonoBehaviour {
     Number_Of_Player NB;
     [SerializeField]
     Selection_of_character SC;
+    int Number_of_Player;
     // Use this for initialization
     void Start () {
         GM = GameManager.Instance;
@@ -29,10 +30,20 @@ public class All_player_selected : MonoBehaviour {
         
         void Validation_all_player()
         {
-            if (SC.Return_Bool[0] == true)
+        int j = 0;
+             for (int i = 0; i < Number_of_Player;i++)
             {
-            Change_Menu();
+           
+                    if(SC.Return_Bool[i] == true)
+                {
+                   j++;
+                }
+                  if(j == Number_of_Player)
+                    {
+                Change_Menu();
+                    }
             }
+      
         }
 
 
@@ -60,37 +71,9 @@ public class All_player_selected : MonoBehaviour {
     }
         // Update is called once per frame
 	void Update () {
+        Number_of_Player = XIM.NumControllers;
         Players = new Selection_of_character[2, 4];
-        for (int i = 0; i < XIM.NumControllers; i++)
-        {
-            for(int j=0; j < 4;j++)
-            {
-               // Players[i,j] = NB.Character_liste[i,j].GetComponent<Selection_of_character>();
-            }
-        }
         Validation_all_player();
-
-
-        //for (int j = 0; j < 2; j++)
-        //{
-        //    for (int i = 0; i < Players.Length; i++)
-        //    {
-        //        Players[j,i].GetComponent<Character_Selection>().Set_SM(SM);
-        //    }
-        //    //Debug.Log(Players.Length);
-        //    for (int i = 0; i < Players.Length; i++)
-        //    {
-        //        if (Players[j,i].Return_Boolen() == true)
-        //        {
-        //            Loading_Ok = true;
-        //        }
-        //        else
-        //        {
-        //            Loading_Ok = false;
-        //            i = Players.Length;
-        //        }
-        //    }
-        //}
     }
 
 }

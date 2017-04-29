@@ -22,26 +22,29 @@ public class CameraShake : MonoBehaviour
 
     void Update()
     {
-        if (shakeDuration > 0)
+        if (CameraManager.Instance.Phase != CameraManager.TypePhase.Cinematique)
         {
-            if (!vibrationSet)
-                xIM.SetVibration(targetPlayer, shakeDuration, 1.0f);
+            if (shakeDuration > 0)
+            {
+                if (!vibrationSet)
+                    xIM.SetVibration(targetPlayer, shakeDuration, 1.0f);
 
-            camTransform = transform;
+                camTransform = transform;
 
-            originalPos = transform.position;
+                originalPos = transform.position;
 
-            camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
+                camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
 
-            shakeDuration -= Time.deltaTime * decreaseFactor;
+                shakeDuration -= Time.deltaTime * decreaseFactor;
 
-            vibrationSet = true;
-        }
-        else
-        {
-            shakeDuration = 0f;
-            camTransform.localPosition = originalPos;
-            vibrationSet = false;
+                vibrationSet = true;
+            }
+            else
+            {
+                shakeDuration = 0f;
+                camTransform.localPosition = originalPos;
+                vibrationSet = false;
+            }
         }
     }
 }

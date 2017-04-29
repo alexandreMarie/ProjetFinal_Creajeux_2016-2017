@@ -41,7 +41,7 @@ public abstract class Horsemen : MonoBehaviour
 
     XInputManager XIMinstance;
     private bool isInvincible;
-    private int life = lifeMax;
+    private int life;
     public int Life
     {
         get
@@ -58,10 +58,21 @@ public abstract class Horsemen : MonoBehaviour
             lifeUpdater.UpdateLifebar(life);
             lifeManager.UpdateLifeBar(lifeMax, life);
             GameManager.Instance.UpdateLife(playerID, life);
-            GameManager.Instance.LifeMax = lifeMax;
         }
     }
 
+    private int lifeMax;
+    public int LifeMax
+    {
+        get
+        {
+            return lifeMax;
+        }
+        set
+        {
+            lifeMax = value;
+        }
+    }
     private Rigidbody rb;
     float timer = 0f;
 
@@ -125,7 +136,12 @@ public abstract class Horsemen : MonoBehaviour
             dashBehaviour = value;
         }
     }
-
+    private int damage;
+    public int Damage
+    {
+        get { return damage; }
+        set { damage = value; }
+    }
     private float speed = 6.0f;
     public virtual float Speed
     {
@@ -172,27 +188,31 @@ public abstract class Horsemen : MonoBehaviour
 
         protected set
         {
-            bullet = value;
+            bullet = Instantiate<GameObject>(value);
+            bullet.transform.position = transform.position;
             // Init of pool
             GameObject go = new GameObject("BulletPoolPlayer" + (playerID + 1), typeof(Pool));
             pool = go.GetComponent<Pool>();
             bullet.GetComponent<PlayerBullet>().playerID = playerID;
+            bullet.GetComponent<PlayerBullet>().damage = damage;
             pool.Init(bullet, nbBulletsPool);
+            //Destroy(value.gameObject);
         }
     }
+
 
     #endregion
 
     #region Constants
-
-    const int lifeMax = 100;
+    
     const int staminaMax = 100;
     const float freezeDuration = 2f;
     const float blinkDuration = 0.2f;
     const float rotateSmooth = 0.05f;
-    const float stickDeadZone = 0.3f;
+    const float stickDeadZone = 0.1f;
     const float triggerDeadZone = 0.1f;
     const float triggerDash = 0.75f;
+    const float stickDash = 0.8f;
     protected const int nbBulletsPool = 30;
     const int hitLvlDown = 20;
     const int minHeight = -2;
@@ -265,8 +285,8 @@ public abstract class Horsemen : MonoBehaviour
                     line.enabled = false;
                     break;
                 case StageFire.Five:
-                    shootStage = StageFire.One;
-                    fireMask = (byte)StageFire.One;
+                    shootStage = StageFire.Four;
+                    fireMask = (byte)StageFire.Four;
                     break;
                 default:
                     break;
@@ -274,19 +294,28 @@ public abstract class Horsemen : MonoBehaviour
         }
     }
 
+    public void Hurt(int damage)
+    {
+        Life -= damage;
+        StartCoroutine(Freeze());
+    }
+
     void Move()
     {
         if (moveValue.magnitude > stickDeadZone)
         {
-            direction = ((Camera.main.transform.right * moveValue.x) + (Camera.main.transform.forward * moveValue.y)).normalized * Time.unscaledDeltaTime * speed;
-            direction.y = 0; // Cancel the Y translation;
-            rb.AddForce(direction * speed, ForceMode.VelocityChange);
-
+            direction = ((Camera.main.transform.right * moveValue.x) + (Camera.main.transform.forward * moveValue.y)) * speed;
+            direction.y = rb.velocity.y; // Cancel the Y translation;
+            //rb.AddForce(direction, ForceMode.VelocityChange);
+            rb.velocity = direction;
             // Gestion animator
             anim.SetBool("Running", true);
         }
         else
         {
+            direction = Vector3.zero;
+            direction.y = rb.velocity.y;
+            rb.velocity = direction;
             anim.SetBool("Running", false);
         }
     }
@@ -300,13 +329,18 @@ public abstract class Horsemen : MonoBehaviour
 
             anim.SetBool("Aiming", true);
         }
-        else
+        else if(moveValue.magnitude > stickDeadZone)
         {
             // Not using rotation stick so it turns to the direction is running to
-            rotation = Vector3.zero; ;
+            rotation = Vector3.zero;
             rotation.y = Mathf.Atan2(-moveValue.x, -moveValue.y) * Mathf.Rad2Deg;
             transform.eulerAngles = rotation;
-
+            prevAimAngle = rotation.y;
+            aimAngle = prevAimAngle;
+            anim.SetBool("Aiming", false);
+        }
+        else
+        {
             anim.SetBool("Aiming", false);
         }
     }
@@ -396,7 +430,7 @@ public abstract class Horsemen : MonoBehaviour
             aimAngle = (Mathf.Atan2(-aimValue.x, -aimValue.y) * Mathf.Rad2Deg);
         }
 
-        if (XIMinstance.GetStick(playerID, XInputManager.XSticks.RightTrigger) > triggerDeadZone)
+        if (XIMinstance.GetStick(playerID, XInputManager.XSticks.RightTrigger) > triggerDeadZone || Input.GetKeyDown(KeyCode.Space))
         {
             if (fireCoroutine == null)
             {
@@ -418,7 +452,8 @@ public abstract class Horsemen : MonoBehaviour
             SpecialShoot();
         }
 
-        if (XIMinstance.GetStick(playerID, XInputManager.XSticks.LeftTrigger) > triggerDash)
+        if (XIMinstance.GetStick(playerID, XInputManager.XSticks.LeftTrigger) > triggerDash
+            && moveValue.magnitude > stickDash)
         {
             if (dashCoroutine == null)
             {
@@ -463,21 +498,23 @@ public abstract class Horsemen : MonoBehaviour
                 StartCoroutine(Freeze());
                 XIMinstance.SetVibration(playerID, freezeDuration, 1f);
                 Life -= 10;
+                GameManager.Instance.DamageByBoss[playerID] += 10;
             }
             else if (other.tag == "EnnemyBullet")
             {
                 StartCoroutine(PlayerBlink());
                 XIMinstance.SetVibration(playerID, blinkDuration / 2f, 0.5f);
-                Life--;
+                Life -= 5;
+                GameManager.Instance.DamageByBoss[playerID] += 5;
             }
             else if (other.tag == "ScavengingSnake")
             {
                 StartCoroutine(Freeze());
                 XIMinstance.SetVibration(playerID, freezeDuration, 1f);
                 Life -= 10;
+                GameManager.Instance.DamageByBoss[playerID] += 10;
             }
-
-
+            
             if (other.gameObject.layer == bulletLayer && other.tag != "PlayerBullet")
             {
                 nbHitLvlDown--;

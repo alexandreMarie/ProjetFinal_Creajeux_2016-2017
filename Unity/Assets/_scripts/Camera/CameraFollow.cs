@@ -38,28 +38,52 @@ public class CameraFollow : MonoBehaviour
 
     private float time = 0;
     private GameManager manager;
-    
+
+    private GameManager.Mode mode;
+    private CameraManager cm;
+
+    private GameObject posCinematiqueStart;
+    private GameObject posCinematiqueEnd;
+    private float dampTimeCinematique = 2f;
+    private bool launchFight = true;
+
     void Start()
     {
-        CameraManager.Instance.DeadPlayer1 = false;
-        CameraManager.Instance.DeadPlayer2 = false;
-        CameraManager.Instance.DeadBoss = false;
+        posCinematiqueStart = GameObject.Find("posCinematiqueStart");
+        posCinematiqueEnd = GameObject.Find("posCinematiqueEnd");
+        cm = CameraManager.Instance;
+        cm.DeadPlayer1 = false;
+        cm.DeadPlayer2 = false;
+        cm.DeadBoss = false;
         manager = GameManager.Instance;
-        targets = new Transform[manager.NbPlayers+1];
-        
+        if (manager.Boss != null)
+        {
+            targets = new Transform[manager.NbPlayers + 1];
+            targets[manager.NbPlayers] = manager.Boss.transform;
+        }
+        else
+            targets = new Transform[manager.NbPlayers];
+
         for (int i = 0; i < manager.NbPlayers; i++)
         {
             targets[i] = manager.Players[i].transform;
         }
-        targets[manager.NbPlayers] = manager.Boss.transform;
         camDistance = 3.0f;
         setFieldOfView = 60;
         rotateCam = 35;
+        mode = manager.TypeMode;
+        if (CameraManager.Instance.Phase == CameraManager.TypePhase.Cinematique)
+        {
+            transform.position = posCinematiqueStart.transform.position;
+            for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
+                targets[i].GetComponent<Horsemen>().enabled = false;
+            
+        }
     }
 
     void OnPostRender()
     {
-        if (CameraManager.Instance.DeadBoss && takeScreen)
+        if (cm.DeadBoss && takeScreen)
         {
             if (tex2D == null)
             {
@@ -73,47 +97,85 @@ public class CameraFollow : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (!CameraManager.Instance.Change && !CameraManager.Instance.DeadPlayer1 && !CameraManager.Instance.DeadPlayer2 && !CameraManager.Instance.DeadBoss)
+       
+        switch (cm.Phase)
         {
-            Gravity();
-            DistanceMax();
+            case CameraManager.TypePhase.Cinematique:
+               
+                manager.Boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
+                manager.Boss.GetComponent<LilithAI>().StopAllCoroutines();
+                transform.position = Vector3.SmoothDamp(transform.position, posCinematiqueEnd.transform.position, ref velocity, dampTimeCinematique);
+                transform.rotation = Quaternion.Slerp(transform.rotation, posCinematiqueEnd.transform.rotation, 0.03f);
+                if (transform.position.z > 6.0f)
+                {
+                    for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
+                        targets[i].GetComponent<Horsemen>().enabled = true;
+                    cm.Phase = CameraManager.TypePhase.Combat;
+
+                }
+                    break;
 
 
-            Vector3 delta = gravity - GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camDistance + CamOffset));
-            Vector3 destinationPos = transform.position + delta;
-            Quaternion destinationRot = Quaternion.Euler(rotateCam, camRotation.y, camRotation.z);
-            transform.position = Vector3.SmoothDamp(transform.position, destinationPos, ref velocity, dampTime);
-            transform.rotation = Quaternion.Slerp(transform.rotation, destinationRot, 0.03f);
-            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, setFieldOfView, 0.03f);
+            case CameraManager.TypePhase.Combat:
+                Gravity();
+                DistanceMax();
+                Vector3 delta = gravity - GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camDistance + CamOffset));
+                Vector3 destinationPos = transform.position + delta;
+                Quaternion destinationRot = Quaternion.Euler(rotateCam, camRotation.y, camRotation.z);
+                if (launchFight)
+                {
+                    transform.position = destinationPos;
+                    launchFight = false;
+                }
+                transform.position = Vector3.SmoothDamp(transform.position, destinationPos, ref velocity, dampTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, destinationRot, 0.03f);
+                Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, setFieldOfView, 0.03f);
+                break;
+            case CameraManager.TypePhase.AllDead:
+                manager.Boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
+                manager.Boss.GetComponent<LilithAI>().StopAllCoroutines();
+                for (int i = 0; i < manager.NbPlayers; i++)
+                {
+                    manager.Players[i].GetComponent<Horsemen>().enabled = false;
+                }
+                if (mode == GameManager.Mode.hardcoreD || mode == GameManager.Mode.standardS)
+                {
+                    if (cm.DeadPlayer1)
+                    {
+                        transform.position = Vector3.SmoothDamp(transform.position, targets[0].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
+                    }
+                    else if (cm.DeadPlayer2)
+                    {
+                        transform.position = Vector3.SmoothDamp(transform.position, targets[1].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
+                    }
+                }
+                else if(mode == GameManager.Mode.standardD)
+                {
+                    if (cm.DeadFirst == 0)
+                    {
+                        transform.position = Vector3.SmoothDamp(transform.position, targets[1].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
+                    }
+                    else if (cm.DeadFirst == 1)
+                    {
+                        transform.position = Vector3.SmoothDamp(transform.position, targets[0].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
+                    }
+                }
+                if (transform.localEulerAngles.x > 59.0f)
+                    manager.Dead = true;
+                break;
         }
-        else if (!takeScreen)
+        if (!takeScreen)
         {
             transform.position = posScreen.position;
             transform.rotation = posScreen.rotation;
             manager.TexScreen = tex2D;
             SceneManager.LoadScene("Score");
         }
-        else if (CameraManager.Instance.DeadPlayer1 || CameraManager.Instance.DeadPlayer2)
-        {
-            manager.Boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
-            manager.Boss.GetComponent<LilithAI>().StopAllCoroutines();
-            for (int i = 0; i < manager.NbPlayers; i++)
-            {
-                manager.Players[i].GetComponent<Horsemen>().enabled = false;
-            }
-            if (CameraManager.Instance.DeadPlayer1)
-            {
-                transform.position = Vector3.SmoothDamp(transform.position, targets[0].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
-            }
-            else if (CameraManager.Instance.DeadPlayer2)
-            {
-                transform.position = Vector3.SmoothDamp(transform.position, targets[1].position + new Vector3(.0f, distanceDead.y, distanceDead.z), ref velocity, dampTime);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(60.0f, camRotation.y, camRotation.z), 0.03f);
-            }
-            if (transform.localEulerAngles.x > 59.0f)
-                manager.Dead = true;
-        }
+       
         /* else
          {
              transform.position = Vector3.SmoothDamp(transform.position, CameraManager.Instance.CameraDoor[0].transform.position, ref velocity, dampTime);
@@ -123,17 +185,53 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
-        if (takeScreen)
-            time += Time.deltaTime;
-        manager.Timer = time;
-        if (Input.GetKey(KeyCode.A))
+        if (cm.Phase != CameraManager.TypePhase.Cinematique)
+        {
+            if (takeScreen)
+                time += Time.deltaTime;
+            manager.Timer = time;
+
+            switch (mode)
+            {
+                case GameManager.Mode.standardS:
+                    if (cm.DeadPlayer1)
+                        cm.Phase = CameraManager.TypePhase.AllDead;
+                    break;
+                case GameManager.Mode.standardD:
+                    if (cm.DeadPlayer1 && cm.DeadPlayer2)
+                        cm.Phase = CameraManager.TypePhase.AllDead;
+                    else if (cm.DeadPlayer1 || cm.DeadPlayer2)
+                    {
+                        targets = new Transform[2];
+                        if (cm.DeadPlayer1)
+                        {
+                            manager.Players[0].GetComponent<Horsemen>().enabled = false;
+
+                            targets[0] = manager.Players[1].transform;
+                            targets[1] = manager.Boss.transform;
+                        }
+                        else if (cm.DeadPlayer2)
+                        {
+                            manager.Players[1].GetComponent<Horsemen>().enabled = false;
+                            targets[0] = manager.Players[0].transform;
+                            targets[1] = manager.Boss.transform;
+                        }
+                    }
+                    break;
+                case GameManager.Mode.hardcoreD:
+                    if (cm.DeadPlayer1 || cm.DeadPlayer2)
+                        cm.Phase = CameraManager.TypePhase.AllDead;
+                    break;
+            }
+        }
+        /*if (Input.GetKey(KeyCode.A))
         {
             CameraManager.Instance.Change = true;
         }
         if (Input.GetKey(KeyCode.E))
         {
             CameraManager.Instance.Change = false;
-        }
+        }*/
     }
 
 
@@ -178,7 +276,6 @@ public class CameraFollow : MonoBehaviour
         else
             setFieldOfView = 60;
 
-        dampTime = 0.15f;
         distanceAll.Clear();
     }
 

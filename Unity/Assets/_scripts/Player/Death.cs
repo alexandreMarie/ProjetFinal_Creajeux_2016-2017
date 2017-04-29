@@ -14,6 +14,18 @@ public class Death : Horsemen
 
     Ray ray;
 
+    Vector3 pit;
+
+    [SerializeField]
+    [Range(0f, 10f)]
+    private float pitY = 1;
+
+    float timerSpecial = 0f;
+
+    [SerializeField]
+    [Range(0f, 2f)]
+    float specialDuration = 1f;
+
     public override void SpecialShoot()
     {
         if (Stamina == 100)
@@ -40,7 +52,27 @@ public class Death : Horsemen
                 if ((fireMask & (byte)StageFire.Five) > 0)
                 {
                     // SCHPECJIAL 
-                    Debug.Log("SPECIAL");
+                    Speed = Speed / 4;
+                    pit = transform.position;
+                    pit.y += pitY;
+                    instantiatedBullet = pool.Get();
+                    instantiatedBullet.GetComponent<PlayerBullet>().enabled = false;
+                    while ((timerSpecial / specialDuration) <= 1f)
+                    {
+                        timerSpecial += Time.unscaledDeltaTime;
+                        instantiatedBullet.transform.position = pit;
+                        instantiatedBullet.transform.localScale = Vector3.one * (timerSpecial / specialDuration) * 3f;
+                        yield return new WaitForEndOfFrame();
+                    }
+
+                    timerSpecial = 0f;
+
+                    instantiatedBullet.AddComponent<DeathSpecialBullet>();
+                    instantiatedBullet.GetComponent<DeathSpecialBullet>().speed = 0.1f;
+
+                    UpdateLevelShoot(false);
+
+                    Speed = 12f;
                 }
                 if ((fireMask & (byte)StageFire.Four) > 0)
                 {
@@ -56,8 +88,12 @@ public class Death : Horsemen
 
                     line.SetPosition(0, ray.origin);
 
-                    if (Physics.Raycast(ray, out hit, Mathf.SmoothStep(0, 100, 0.1f), fireLayer))
+                    Quaternion quat = Quaternion.LookRotation(transform.forward);
+
+                    if (Physics.BoxCast(ray.origin, new Vector3(0.5f, 0.5f, 0.5f), transform.forward, out hit, quat, 100f, fireLayer))
                     {
+                        //Time.timeScale = 0;
+                        ExtDebug.DrawBoxCastOnHit(ray.origin, new Vector3(0.5f, 0.5f, 0.5f), quat, transform.forward, hit.distance, Color.red);
                         line.SetPosition(1, hit.point);
                         if (hit.rigidbody)
                         {
@@ -69,6 +105,20 @@ public class Death : Horsemen
                     {
                         line.SetPosition(1, ray.GetPoint(100));
                     }
+
+                    //if (Physics.Raycast(ray, out hit, Mathf.SmoothStep(0, 100, 0.1f), fireLayer))
+                    //{
+                    //    line.SetPosition(1, hit.point);
+                    //    if (hit.rigidbody)
+                    //    {
+                    //        // we've hit something that have a rigidbody
+                    //        hit.rigidbody.AddForceAtPosition(transform.forward * 5, hit.point);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    line.SetPosition(1, ray.GetPoint(100));
+                    //}
 
                     yield return null;
 
@@ -119,9 +169,11 @@ public class Death : Horsemen
     // Use this for initialization
     void Start()
     {
-        Life = 100;
+        LifeMax = GameManager.Instance.Sauvegarde_state[3].PDV;
+        Life = LifeMax;
         Stamina = 0;
-        Speed = 19f;
+        Speed = GameManager.Instance.Sauvegarde_state[3].speed;
+        Damage = GameManager.Instance.Sauvegarde_state[3].attack;
         DashDuration = 0.1f;
         DashBehaviour = deathDashBehaviour;
         Bullet = prefabBullet;
