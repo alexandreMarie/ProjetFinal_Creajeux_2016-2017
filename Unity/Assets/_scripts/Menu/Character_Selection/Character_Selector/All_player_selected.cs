@@ -15,6 +15,8 @@ public class All_player_selected : MonoBehaviour {
     [SerializeField]
     Selection_of_character SC;
     int Number_of_Player;
+    [SerializeField]
+    bool Debug_Clavier;
     // Use this for initialization
     void Start () {
         GM = GameManager.Instance;
@@ -71,7 +73,14 @@ public class All_player_selected : MonoBehaviour {
     }
         // Update is called once per frame
 	void Update () {
-        Number_of_Player = XIM.NumControllers;
+        if (Debug_Clavier == true)
+        {
+            Number_of_Player = 2;
+        }
+        else
+        {
+            Number_of_Player = XIM.NumControllers;
+        }
         Players = new Selection_of_character[2, 4];
         Validation_all_player();
     }

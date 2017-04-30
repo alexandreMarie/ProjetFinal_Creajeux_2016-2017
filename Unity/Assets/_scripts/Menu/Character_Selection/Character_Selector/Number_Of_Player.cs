@@ -10,127 +10,124 @@ public class Number_Of_Player : MonoBehaviour {
     [SerializeField]
     GameObject[] Players;
     [SerializeField]
-    GameObject[,] character_liste;
+    GameObject[] character_liste;
     GameObject GO;
     [SerializeField]
     Transform [] Character_Player_Selector;
-
+    [SerializeField]
+    Camera[] CameraListe;
+    [SerializeField]
+    Recup_ID[] Recup_ID_List;
+    [SerializeField]
+    Material[] unlit_mater;
     int Indice_Player = 0;
     int Last_Indice_Player = 0;
-    int i = 0;
+    [SerializeField]
+    bool Debug_clavier;
+    [SerializeField]
+    bool CameraOn;
+    //int i = 0;
     // Use this for initialization
     void Start () {
         GM = GameManager.Instance;
         GM.Creat_struct_Heroes();
         XIM = XInputManager.Instance;
-        character_liste = new GameObject[2, 4];
+        character_liste = new GameObject[4];
         Indice_Player = XIM.NumControllers;
         GM.CreateStrucCharact(XIM.NumControllers);
+        New_player();
     }
 	
 	// Update is called once per frame
 	void Update () {
-
-        if (Indice_Player < 2)
+        if (Debug_clavier == true)
         {
-            Indice_Player++;
+            for (int i = 0; i < 2; i++)
+            {
+                if (CameraOn == false)
+                {
+                    CameraListe[i].transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
+                    Recup_ID_List[i].enabled = false;
+                }
+
+                else if (CameraOn == true)
+                {
+                    CameraListe[i].transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+                    Recup_ID_List[i].enabled = true;
+                }
+            }
+        }
+        else
+        {
+
+            if (XIM.ControllersConnected[0] == false && CameraOn == false)
+            {
+                CameraListe[0].transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
+                Recup_ID_List[0].enabled = false;
+            }
+
+            else if (XIM.ControllersConnected[0] == true || CameraOn == true)
+            {
+                CameraListe[0].transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+                Recup_ID_List[0].enabled = true;
+            }
+
+            if (XIM.ControllersConnected[1] == false && CameraOn == false)
+            {
+                CameraListe[1].transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
+                Recup_ID_List[1].enabled = false;
+            }
+
+            else if (XIM.ControllersConnected[1] == true || CameraOn == true)
+            {
+                CameraListe[1].transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+                Recup_ID_List[1].enabled = true;
+            }
         }
 
-        //Indice_Player = XIM.NumControllers;
-
-        Debug.Log("ID_PALYER " + Indice_Player);
-       // Debug.Log("Indice_Players : " + Indice_Player + "| Last_Indice_Player : " + Last_Indice_Player);
-        //if (Indice_Player < Last_Indice_Player)
+        //if (Indice_Player < 2)
         //{
-        //    Delete_Player();
+        //    Indice_Player++;
         //}
 
-	    if(Indice_Player != Last_Indice_Player)
-        {
-            if(Indice_Player > Last_Indice_Player)
-            {
-                New_player();
-            }
-            else if(Indice_Player < Last_Indice_Player)
-            {
-                Delete_Player();
-            }
-        }
         Last_Indice_Player = Indice_Player;
     }
 
 
-    void Delete_Player()
-    {
-        Debug.Log("Supression de l'objet");
-        //Destroy(Players[Indice_Player +1]);
 
-    }
-
-
-   public GameObject [,] Character_liste
+   public GameObject [] Character_liste
     {
         get
             {
             return character_liste;
             }
     }
-    /*void New_player_test()
-    {
-        Debug.Log(Controller_Player.NumControllers);
-        
-           // Debug.Log("On est dedans ! :o");
-       
-            Instantiate(Players[Indice_Player - 1], Character_Selector);
-            Players[Indice_Player-1].SetActive(true);
-            //Players[i].transform.SetParent(Character_Selector);
-            switch (Indice_Player-1)
-            {
-                case (0):
-                    Players[Indice_Player].transform.position = new Vector3(-1.0f, 1.0f, -7.0f);
-                    break;
-                case (1):
-                    Players[Indice_Player].transform.position = new Vector3(1.2f, 1.0f, -7.0f);
-                    break;
-            }
-    }*/
+
 
     void New_player()
     {
-        for (i = i; i < Indice_Player; i++)
-        {
-            for (int j = 0; j < Players.Length; j++)
+        //Debug.Log(Players.Length);
+            for(int i = 0; i < Players.Length; i++)  
             {
-                //Debug.Log("On est dedans ! :o");
-                if (i == 0)
-                {
-                    GO = Instantiate(Players[j], Character_Player_Selector[0]) as GameObject;
-                }
+                GO = Instantiate(Players[i], Character_Player_Selector[0]) as GameObject;
+            character_liste[i] = GO;
+            if (GO.GetComponentInChildren<SkinnedMeshRenderer>() != null)
+            {
+                GO.GetComponentInChildren<SkinnedMeshRenderer>().material = unlit_mater[i];
+            }
 
-                if (i == 1)
-                {
-                    GO = Instantiate(Players[j], Character_Player_Selector[1]) as GameObject;
-                }
+          else if (GO.GetComponentInChildren<MeshRenderer>() != null)
+            {
+                GO.GetComponentInChildren<MeshRenderer>().material = unlit_mater[i];
+            }
 
-                character_liste[i, j] = GO;
                 GO.GetComponent<Rigidbody>().useGravity = false;
                 GO.GetComponent<Horsemen>().enabled = false;
-                //GO.AddComponent<Character_Selection>();
                 GO.transform.eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
                 GO.SetActive(true);
+                GO.GetComponent<Transform>().localPosition = new Vector3(0.0f, 4f * i, 1.0f);
+               
 
-                //Players[i].transform.SetParent(Character_Selector);
-                switch (i)
-                {
-                    case (0):
-                        GO.GetComponent<Transform>().position = new Vector3(-1.0f, 4 * j, -2.0f);
-                        break;
-                    case (1):
-                        GO.GetComponent<Transform>().position = new Vector3(1.2f,4 * j, -2.0f);
-                        break;
-                }
             }
-        }
-
     }
 }

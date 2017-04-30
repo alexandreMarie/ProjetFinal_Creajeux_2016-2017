@@ -18,8 +18,8 @@ public class Recup_ID : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         XIM = XInputManager.Instance;
-        SC.GetComponentInParent<Selection_of_character>();
-        //_animator = GetComponentInParent<Animator>();
+        //SC.GetComponentInParent<Selection_of_character>();
+        _animator = GetComponentInParent<Animator>();
     
     }
 
