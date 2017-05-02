@@ -231,7 +231,7 @@ public class XInputManager : MonoBehaviour
                 }
                 break;
             case XButtons.Start:
-                if (prevState[numPlayer].Buttons.Start == ButtonState.Released && currState[numPlayer].Buttons.A == ButtonState.Pressed)
+                if (prevState[numPlayer].Buttons.Start == ButtonState.Released && currState[numPlayer].Buttons.Start == ButtonState.Pressed)
                 {
                     return true;
                 }
@@ -337,7 +337,7 @@ public class XInputManager : MonoBehaviour
                 }
                 break;
             case XButtons.Start:
-                if (prevState[numPlayer].Buttons.Start == ButtonState.Pressed && currState[numPlayer].Buttons.A == ButtonState.Released)
+                if (prevState[numPlayer].Buttons.Start == ButtonState.Pressed && currState[numPlayer].Buttons.Start == ButtonState.Released)
                 {
                     return true;
                 }
@@ -443,7 +443,7 @@ public class XInputManager : MonoBehaviour
                 }
                 break;
             case XButtons.Start:
-                if (currState[numPlayer].Buttons.A == ButtonState.Pressed)
+                if (currState[numPlayer].Buttons.Start == ButtonState.Pressed)
                 {
                     return true;
                 }
