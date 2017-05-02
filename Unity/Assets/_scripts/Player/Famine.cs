@@ -43,6 +43,7 @@ public class Famine : Horsemen {
                 {
                     Instantiate<GameObject>(prefabFamineSpecialBullet);
                     UpdateLevelShoot(false);
+                    GameManager.Instance.SpecialStage5[0] = true;
                 }
                 if ((fireMask & (byte)StageFire.Four) > 0)
                 {

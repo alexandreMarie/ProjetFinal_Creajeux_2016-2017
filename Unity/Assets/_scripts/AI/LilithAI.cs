@@ -81,9 +81,10 @@ public class LilithAI : BossManager
 
     void Update()
     {
-        if (CameraManager.Instance.Phase != CameraManager.TypePhase.Cinematique)
+        transform.LookAt(new Vector3(gm.Players[targetPlayer].transform.position.x, transform.position.y, gm.Players[targetPlayer].transform.position.z));
+        if (CameraManager.Instance.Phase != CameraManager.TypePhase.Cinematique && CameraManager.Instance.Phase != CameraManager.TypePhase.Special)
         {
-            transform.LookAt(new Vector3(gm.Players[targetPlayer].transform.position.x, transform.position.y, gm.Players[targetPlayer].transform.position.z));
+
 
             destination.x = -gm.Players[targetPlayer].transform.position.x;
             destination.z = -gm.Players[targetPlayer].transform.position.z;

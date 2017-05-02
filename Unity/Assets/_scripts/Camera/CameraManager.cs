@@ -11,7 +11,9 @@ public class CameraManager : MonoBehaviour
     private bool deadBoss = false;
     private int deadFirst;
 
-    public enum TypePhase { Cinematique, Combat, AllDead };
+    private bool specialIsFinish = false;
+
+    public enum TypePhase { Cinematique, Combat, Special, AllDead };
 
     private TypePhase phase = TypePhase.Cinematique;
     
@@ -98,6 +100,19 @@ public class CameraManager : MonoBehaviour
         set
         {
             phase = value;
+        }
+    }
+
+    public bool SpecialIsFinish
+    {
+        get
+        {
+            return specialIsFinish;
+        }
+
+        set
+        {
+            specialIsFinish = value;
         }
     }
 }

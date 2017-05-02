@@ -45,6 +45,8 @@ public class Pestilence : Horsemen {
                 {
                     Instantiate<GameObject>(prefabPestilenceSpecialBullet);
                     UpdateLevelShoot(false);
+
+                    GameManager.Instance.SpecialStage5[2] = true;
                 }
                 if ((fireMask & (byte)StageFire.Four) > 0)
                 {
