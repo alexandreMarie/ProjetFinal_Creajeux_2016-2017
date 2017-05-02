@@ -61,7 +61,7 @@ public class LilithAI : BossManager
 
     void Start()
     {
-        Life = 1000;
+        Life = 4000;
 
         arenaLights.TurnLight = false;
         Lilith = GetComponentInParent<Patterns>();

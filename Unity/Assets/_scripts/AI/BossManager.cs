@@ -22,13 +22,13 @@ public class BossManager : MonoBehaviour
 
     protected GameManager gm = null;
 
-    static float maxLife = 1000;
+    static float maxLife = 4000;
     public static float MaxLife
     {
         get { return maxLife; }
     }
 
-    static float life = 1000;
+    static float life = 4000;
 
     public float Life
     {
@@ -55,7 +55,7 @@ public class BossManager : MonoBehaviour
     void Start()
     {
         gm.NbHit = new int[gm.NbPlayers];
-        life = 1000;
+        life = 4000;
 
         maxLife = life;
     }
