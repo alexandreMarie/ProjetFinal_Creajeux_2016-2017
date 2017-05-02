@@ -55,7 +55,7 @@ public abstract class Horsemen : MonoBehaviour
             {
                 life = lifeMax;
             }
-            lifeUpdater.UpdateLifebar(life);
+            lifeUpdater.UpdateLifebar(life, lifeMax);
             lifeManager.UpdateLifeBar(lifeMax, life);
             GameManager.Instance.UpdateLife(playerID, life);
         }
