@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     private bool dead;
 
+    private bool[] specialStage5;
+
     /* 0 = solo/standard; 1 = duo/standard; 2 = duo/Hardcore; 3 = ...*/
     private Mode typeMode;
     public enum Mode { standardS, standardD, hardcoreD };
@@ -381,9 +383,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool[] SpecialStage5
+    {
+        get
+        {
+            return specialStage5;
+        }
+
+        set
+        {
+            specialStage5 = value;
+        }
+    }
+
     public void Creat_struct_Heroes()
     {
-
+        specialStage5 = new bool[4];
         sauvegarde_state = new Stats_Character[4];
         sauvegarde_state[0].attack = 10;
         sauvegarde_state[0].PDV = 100;

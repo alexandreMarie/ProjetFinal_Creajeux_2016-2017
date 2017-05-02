@@ -52,6 +52,7 @@ public class Death : Horsemen
                 if ((fireMask & (byte)StageFire.Five) > 0)
                 {
                     // SCHPECJIAL 
+                    GameManager.Instance.SpecialStage5[3] = true;
                     Speed = Speed / 4;
                     pit = transform.position;
                     pit.y += pitY;

@@ -42,8 +42,10 @@ public class War : Horsemen
             {
                 if ((fireMask & (byte)StageFire.Five) > 0 && !specialStage5)
                 {
+                    CameraManager.Instance.Phase = CameraManager.TypePhase.Special;
+                    GameManager.Instance.SpecialStage5[1] = true;
                     Instantiate<GameObject>(prefabWarSpecialBullet);
-                    UpdateLevelShoot(false);
+                    UpdateLevelShoot(true);
                     specialStage5 = true;
                 }
                 if ((fireMask & (byte)StageFire.Four) > 0)

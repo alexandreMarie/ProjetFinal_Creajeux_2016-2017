@@ -47,6 +47,9 @@ public class CameraFollow : MonoBehaviour
     private float dampTimeCinematique = 2f;
     private bool launchFight = true;
 
+    public GameObject[] posSpecial;
+    
+
     void Start()
     {
         posCinematiqueStart = GameObject.Find("posCinematiqueStart");
@@ -74,7 +77,10 @@ public class CameraFollow : MonoBehaviour
         mode = manager.TypeMode;
         if (CameraManager.Instance.Phase == CameraManager.TypePhase.Cinematique)
         {
+
+            
             transform.position = posCinematiqueStart.transform.position;
+            transform.rotation = posCinematiqueStart.transform.rotation;
             for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
                 targets[i].GetComponent<Horsemen>().enabled = false;
             
@@ -97,11 +103,11 @@ public class CameraFollow : MonoBehaviour
     }
     void FixedUpdate()
     {
-       
+
         switch (cm.Phase)
         {
             case CameraManager.TypePhase.Cinematique:
-               
+
                 manager.Boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
                 manager.Boss.GetComponent<LilithAI>().StopAllCoroutines();
                 transform.position = Vector3.SmoothDamp(transform.position, posCinematiqueEnd.transform.position, ref velocity, dampTimeCinematique);
@@ -113,7 +119,7 @@ public class CameraFollow : MonoBehaviour
                     cm.Phase = CameraManager.TypePhase.Combat;
 
                 }
-                    break;
+                break;
 
 
             case CameraManager.TypePhase.Combat:
@@ -122,14 +128,54 @@ public class CameraFollow : MonoBehaviour
                 Vector3 delta = gravity - GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camDistance + CamOffset));
                 Vector3 destinationPos = transform.position + delta;
                 Quaternion destinationRot = Quaternion.Euler(rotateCam, camRotation.y, camRotation.z);
-                if (launchFight)
-                {
-                    transform.position = destinationPos;
-                    launchFight = false;
-                }
                 transform.position = Vector3.SmoothDamp(transform.position, destinationPos, ref velocity, dampTime);
                 transform.rotation = Quaternion.Slerp(transform.rotation, destinationRot, 0.03f);
                 Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, setFieldOfView, 0.03f);
+                break;
+
+            case CameraManager.TypePhase.Special:
+
+                /* Stop allCoroutine and move */
+                manager.Boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();
+                manager.Boss.GetComponent<LilithAI>().StopAllCoroutines();
+                for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
+                {
+                    targets[i].GetComponent<Horsemen>().enabled = false;
+                    targets[i].GetComponentInChildren<MeshRenderer>().enabled = false;
+                }
+                /* FAMINE */
+                if (manager.SpecialStage5[0] == true)
+                {
+                    manager.SpecialStage5[0] = false;
+                }
+                /* WAR */
+                else if(manager.SpecialStage5[1] == true)
+                {
+                    transform.position = Vector3.SmoothDamp(transform.position,posSpecial[0].transform.position, ref velocity, 0.04f);
+                    transform.rotation = Quaternion.Slerp(transform.rotation,posSpecial[0].transform.rotation, 0.07f);
+                }
+                /* PESTILENCE */
+                else if (manager.SpecialStage5[2] == true)
+                {
+                    manager.SpecialStage5[2] = false;
+                }
+                /* DEATH */
+                else if (manager.SpecialStage5[3] == true)
+                {
+                    manager.SpecialStage5[3] = false;
+                }
+                if(cm.SpecialIsFinish == true)
+                {
+                    for (int i = 0; i < GameManager.Instance.NbPlayers; i++)
+                    {
+                        targets[i].GetComponent<Horsemen>().enabled = true;
+                        targets[i].GetComponentInChildren<MeshRenderer>().enabled = true;
+                    }
+                    transform.position =  posCinematiqueEnd.transform.position;
+                    transform.rotation =  posCinematiqueEnd.transform.rotation;
+                    cm.Phase = CameraManager.TypePhase.Combat;
+                    cm.SpecialIsFinish = false;
+                }
                 break;
             case CameraManager.TypePhase.AllDead:
                 manager.Boss.GetComponent<LilithAI>().LilithAccessor.StopAllCoroutines();

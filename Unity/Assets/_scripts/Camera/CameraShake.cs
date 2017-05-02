@@ -22,7 +22,7 @@ public class CameraShake : MonoBehaviour
 
     void Update()
     {
-        if (CameraManager.Instance.Phase != CameraManager.TypePhase.Cinematique)
+        if (CameraManager.Instance.Phase != CameraManager.TypePhase.Cinematique && CameraManager.Instance.Phase != CameraManager.TypePhase.Special)
         {
             if (shakeDuration > 0)
             {
