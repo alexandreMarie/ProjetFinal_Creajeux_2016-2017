@@ -55,7 +55,7 @@ public abstract class Horsemen : MonoBehaviour
             {
                 life = lifeMax;
             }
-            lifeUpdater.UpdateLifebar(life);
+            lifeUpdater.UpdateLifebar(life, lifeMax);
             lifeManager.UpdateLifeBar(lifeMax, life);
             GameManager.Instance.UpdateLife(playerID, life);
         }
@@ -430,7 +430,7 @@ public abstract class Horsemen : MonoBehaviour
             aimAngle = (Mathf.Atan2(-aimValue.x, -aimValue.y) * Mathf.Rad2Deg);
         }
 
-        if (XIMinstance.GetStick(playerID, XInputManager.XSticks.RightTrigger) > triggerDeadZone)
+        if (XIMinstance.GetStick(playerID, XInputManager.XSticks.RightTrigger) > triggerDeadZone || Input.GetKeyDown(KeyCode.Space))
         {
             if (fireCoroutine == null)
             {

@@ -14,6 +14,9 @@ public class UI_Character : MonoBehaviour {
 
     [SerializeField]
     Menu_UI_Update[] menu_ui_update;
+
+    [SerializeField]
+    Text[] lore_Perso;
     struct Stats_Character
     {
         public float speed;
@@ -33,7 +36,7 @@ public class UI_Character : MonoBehaviour {
     Stats_Character[] Characters;
     GameManager GM;
 
-    string[] Description_Personnage;
+    string[] description_Personnage;
     int Laste_ID_connected;
     int Indice_Player = 0;
     // Use this for initialization
@@ -44,11 +47,11 @@ public class UI_Character : MonoBehaviour {
 
         XIM = XInputManager.Instance;
 
-        Description_Personnage = new string[4];
-        Description_Personnage[0] = "Perso 1 : hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
-        Description_Personnage[1] = "Perso 2 :  hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
-        Description_Personnage[2] = "Perso 3 :  hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
-        Description_Personnage[3] = "Perso 4 :  hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
+        description_Personnage = new string[4];
+        description_Personnage[0] = "Perso 1 : hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
+        description_Personnage[1] = "Perso 2 :  hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
+        description_Personnage[2] = "Perso 3 :  hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
+        description_Personnage[3] = "Perso 4 :  hjkhvjdfsjfhsq cdyfhoihuihfqdf joifgfb hofgqdsifbdshifd hdigsifsdf uhfd fhdsofhsd fdsfhds sjf dshs";
 
 
         for (int i = 0; i < 2; i++)
@@ -97,7 +100,13 @@ public class UI_Character : MonoBehaviour {
     }
 
 
-
+    public string[] Description_Personnage
+    {
+        get
+        {
+            return description_Personnage;
+        }
+    }
     public Text[] Text_Descriptife
     {
         get
@@ -128,4 +137,11 @@ public class UI_Character : MonoBehaviour {
         }
     }
 
+    public Text[] lore_perso
+    {
+        get
+        {
+            return lore_Perso;
+        }
+    }
 }

@@ -14,12 +14,12 @@ public class LifeUpdater : MonoBehaviour
         IMG_Life = GetComponent<Image>();
     }
 
-    public void UpdateLifebar(int newLife)
+    public void UpdateLifebar(int newLife, int lifeMax)
     {
         if (IMG_Life != null)
         {
-            IMG_Life.fillAmount = newLife / 100f;
-            IMG_Life.color = lifeColor.Evaluate(newLife / 100f);
+            IMG_Life.fillAmount = newLife / (float)lifeMax;
+            IMG_Life.color = lifeColor.Evaluate(newLife / (float)lifeMax);
         }
     }
 }
