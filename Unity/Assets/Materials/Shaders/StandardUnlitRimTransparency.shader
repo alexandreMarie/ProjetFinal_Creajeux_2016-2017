@@ -29,6 +29,8 @@
 
 		float _RangeTwoTexture;
 
+		bool setRim = false;
+
 		struct Input {
 			float2 uv_MainTex;
 			float3 viewDir;
