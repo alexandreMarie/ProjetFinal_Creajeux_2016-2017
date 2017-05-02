@@ -32,6 +32,9 @@ public class SelectOnInput : MonoBehaviour
     [SerializeField]
     int ID_button;
 
+    [SerializeField]
+    bool Clavier_Mode;
+
     bool Stick_Realeas;
     int Value_Sliders;
     int Value_Sliders_Max;
@@ -104,88 +107,176 @@ public class SelectOnInput : MonoBehaviour
 
     private void Mainmenu()
     {
-        if (A_pressed == false)
+        if (Clavier_Mode == true)
         {
-            if (XIM.PrevState[0].ThumbSticks.Left.Y < -0.8 && Stick_Realeas == true)
+           
+            A_pressed = false;
+            if (A_pressed == false)
             {
-                ID_button++;
-                if (ID_button > Button_Menu.Length - 1)
+           
+                if (Input.GetKeyDown(KeyCode.LeftArrow) && Stick_Realeas == true)
                 {
-                    ID_button = 0;
-                }
-                Stick_Realeas = false;
-            }
-
-
-            if (XIM.PrevState[0].ThumbSticks.Left.Y > 0.8 && Stick_Realeas == true)
-            {
-                ID_button--;
-                if (ID_button < 0)
-                {
-                    ID_button = 4;
-                }
-                Stick_Realeas = false;
-            }
-
-            if (XIM.PrevState[0].ThumbSticks.Left.Y == 0.0f)
-            {
-                Stick_Realeas = true;
-            }
-
-            for (int i = 0; i < Button_Menu.Length; i++)
-            {
-                if (i == ID_button)
-                {
-                    _text = Button_Menu[i].GetComponentInChildren<Text>();
-                    _text.color = Color.red;
-                }
-                else
-                {
-                    _text = Button_Menu[i].GetComponentInChildren<Text>();
-                    _text.color = Color.white;
-                }
-
-            }
-
-            if (XIM.PrevState[0].Buttons.A == ButtonState.Pressed)
-            {
-                switch (ID_button)
-                {
-                    case (0):
-                        main_menu_button.Load_Scene("CharacterSelection");
-
-                        main_menu_button.Set_LoadMode(1);
-                        break;
-
-                    case (1):
-                        main_menu_button.Load_Scene("LilithFight");
-
-                        main_menu_button.Set_LoadMode(2);
-                        break;
-
-                    case (2):
-                        main_menu_button.Load_Scene("CharacterSelection");
-
-                        main_menu_button.Set_LoadMode(3);
-                        break;
-
-                    case (3):
-                       // main_menu_button.Load_Scene(4);
-
-                        break;
-                    case (4):
-                        Application.Quit();
-
-                        break;
-                    case (5):
-
-                        break;
+                    
+                    ID_button++;
+                    if (ID_button > Button_Menu.Length - 1)
+                    {
+                        ID_button = 0;
+                    }
+                    Stick_Realeas = false;
                 }
 
 
+                if (Input.GetKeyDown(KeyCode.RightArrow) && Stick_Realeas == true)
+                {
+                    ID_button--;
+                    if (ID_button < 0)
+                    {
+                        ID_button = 4;
+                    }
+                    Stick_Realeas = false;
+                }
+
+                if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow))
+                {
+                    Stick_Realeas = true;
+                }
+
+                for (int i = 0; i < Button_Menu.Length; i++)
+                {
+                    if (i == ID_button)
+                    {
+                        _text = Button_Menu[i].GetComponentInChildren<Text>();
+                        _text.color = Color.red;
+                    }
+                    else
+                    {
+                        _text = Button_Menu[i].GetComponentInChildren<Text>();
+                        _text.color = Color.white;
+                    }
+
+                }
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    switch (ID_button)
+                    {
+                        case (0):
+                            main_menu_button.Load_Scene("CharacterSelection");
+
+                            main_menu_button.Set_LoadMode(1);
+                            break;
+
+                        case (1):
+                            main_menu_button.Load_Scene("LilithFight");
+
+                            main_menu_button.Set_LoadMode(2);
+                            break;
+
+                        case (2):
+                            main_menu_button.Load_Scene("CharacterSelection");
+
+                            main_menu_button.Set_LoadMode(3);
+                            break;
+
+                        case (3):
+                            // main_menu_button.Load_Scene(4);
+
+                            break;
+                        case (4):
+                            Application.Quit();
+
+                            break;
+                        case (5):
+
+                            break;
+                    }
+                }
             }
         }
-     
+        else
+        {
+            if (A_pressed == false)
+            {
+                if (XIM.PrevState[0].ThumbSticks.Left.Y < -0.8 && Stick_Realeas == true)
+                {
+                    ID_button++;
+                    if (ID_button > Button_Menu.Length - 1)
+                    {
+                        ID_button = 0;
+                    }
+                    Stick_Realeas = false;
+                }
+
+
+                if (XIM.PrevState[0].ThumbSticks.Left.Y > 0.8 && Stick_Realeas == true)
+                {
+                    ID_button--;
+                    if (ID_button < 0)
+                    {
+                        ID_button = 4;
+                    }
+                    Stick_Realeas = false;
+                }
+
+                if (XIM.PrevState[0].ThumbSticks.Left.Y == 0.0f)
+                {
+                    Stick_Realeas = true;
+                }
+
+                for (int i = 0; i < Button_Menu.Length; i++)
+                {
+                    if (i == ID_button)
+                    {
+                        _text = Button_Menu[i].GetComponentInChildren<Text>();
+                        _text.color = Color.red;
+                    }
+                    else
+                    {
+                        _text = Button_Menu[i].GetComponentInChildren<Text>();
+                        _text.color = Color.white;
+                    }
+
+                }
+
+                if (XIM.PrevState[0].Buttons.A == ButtonState.Pressed)
+                {
+                    switch (ID_button)
+                    {
+                        case (0):
+                            main_menu_button.Load_Scene("CharacterSelection");
+
+                            main_menu_button.Set_LoadMode(1);
+                            break;
+
+                        case (1):
+                            main_menu_button.Load_Scene("LilithFight");
+
+                            main_menu_button.Set_LoadMode(2);
+                            break;
+
+                        case (2):
+                            main_menu_button.Load_Scene("CharacterSelection");
+
+                            main_menu_button.Set_LoadMode(3);
+                            break;
+
+                        case (3):
+                            // main_menu_button.Load_Scene(4);
+
+                            break;
+                        case (4):
+                            Application.Quit();
+
+                            break;
+                        case (5):
+
+                            break;
+                    }
+
+
+                }
+            }
+        }
 
     }
     private void LFT()
